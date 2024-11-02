@@ -66,10 +66,10 @@ export default function PostCard({ post }: PostCardProps) {
         <div className="text-base font-medium leading-6">
           <NextLink
             href={`/post/${slugPath}`}
-            className="text-primary hover:text-primary/80"
+            className="inline-flex items-center text-primary hover:text-primary/80"
             aria-label={`Read more: "${title}"`}
           >
-            Read more <IconArrowRight className="inline h-5 w-5" />
+            Read more <IconArrowRight className="ml-1 inline h-5 w-5" />
           </NextLink>
         </div>
       </div>

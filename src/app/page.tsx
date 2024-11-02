@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { PageHeader, PageHeaderDescription } from '@/components/page-header'
 import siteConfig from '@/lib/site-config'
 import PostCard from '@/components/post-card'
@@ -6,9 +7,7 @@ import PopularTags from '@/components/popular-tags'
 import Timeline from '@/components/timeline'
 import timelineNews from '@/data/timeline-news'
 import HomepageIntro from '@/components/homepage-intro'
-import Twemojify from '@/components/twemoji'
-import NextLink from 'next/link'
-import homepageGreetings from '@/data/homepage-greetings'
+import HomepageSection from '@/components/homepage-section'
 
 export default function HomePage() {
   const posts = allPostsSorted.slice(0, siteConfig.postPerPage)
@@ -21,40 +20,28 @@ export default function HomePage() {
       </div>
 
       {recentNews.length > 0 && (
-        <div>
-          <PageHeader>
-            <h2 className="text-3xl font-bold leading-tight tracking-tighter hover:opacity-80 md:text-4xl lg:leading-[1.1]">
-              <NextLink href={'/news'}>Latest News</NextLink>
-            </h2>
-            <PageHeaderDescription>
-              <Twemojify>{siteConfig.pageGreetings.news}</Twemojify>
-            </PageHeaderDescription>
-          </PageHeader>
+        <HomepageSection
+          href="/news"
+          title="Latest News"
+          description={siteConfig.pageGreetings.news}
+        >
           <Timeline timelineNews={recentNews} findMore />
-        </div>
+        </HomepageSection>
       )}
 
-      <div>
-        <PageHeader>
-          <h2 className="text-3xl font-bold leading-tight tracking-tighter hover:opacity-80 md:text-4xl lg:leading-[1.1]">
-            <NextLink href={'/tags'}>Popular Tags</NextLink>
-          </h2>
-          <PageHeaderDescription>
-            <Twemojify>{siteConfig.pageGreetings.tags}</Twemojify>
-          </PageHeaderDescription>
-        </PageHeader>
+      <HomepageSection
+        href="/tags"
+        title="Popular Tags"
+        description={siteConfig.pageGreetings.tags}
+      >
         <PopularTags />
-      </div>
+      </HomepageSection>
 
-      <div>
-        <PageHeader>
-          <h2 className="text-3xl font-bold leading-tight tracking-tighter hover:opacity-80 md:text-4xl lg:leading-[1.1]">
-            <NextLink href={'/archive'}>Recent Posts</NextLink>
-          </h2>
-          <PageHeaderDescription>
-            <Twemojify>{siteConfig.pageGreetings.archive}</Twemojify>
-          </PageHeaderDescription>
-        </PageHeader>
+      <HomepageSection
+        href="/archive"
+        title="Recent Posts"
+        description={siteConfig.pageGreetings.archive}
+      >
         <div>
           <ul>
             {!posts.length && 'No posts found.'}
@@ -65,7 +52,7 @@ export default function HomePage() {
             ))}
           </ul>
         </div>
-      </div>
+      </HomepageSection>
     </div>
   )
 }
