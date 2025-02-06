@@ -17,7 +17,7 @@ function Kbd({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <kbd
       className={cn(
-        'rounded-lg border border-input px-2 py-1 text-sm font-semibold text-muted-foreground shadow-sm',
+        'rounded-lg border border-input px-2 py-1 text-sm font-semibold text-muted-foreground shadow-xs',
         className
       )}
       {...rest}
@@ -36,14 +36,14 @@ export default function KBarModal({
 
   return (
     <KBarPortal>
-      <KBarPositioner className="bg-background/50 p-4 backdrop-blur backdrop-filter dark:bg-background/50">
+      <KBarPositioner className="bg-background/50 p-4 backdrop-blur-sm backdrop-filter dark:bg-background/50">
         <KBarAnimator className="w-full max-w-xl">
           <div className="overflow-hidden rounded-xl border border-border bg-card">
             <div className="flex items-center space-x-4 p-4">
               <span className="block w-5">
                 <IconSearch className="text-muted-foreground" />
               </span>
-              <KBarSearch className="h-8 w-full bg-transparent text-foreground placeholder-muted-foreground focus:outline-none" />
+              <KBarSearch className="h-8 w-full bg-transparent text-foreground placeholder-muted-foreground focus:outline-hidden" />
               <Kbd>ESC</Kbd>
             </div>
             {!isLoading && <RenderResults />}

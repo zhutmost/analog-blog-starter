@@ -39,7 +39,7 @@ export default function SiteHeader() {
             <div className="text-xl font-bold">{siteConfig.header.title}</div>
           )}
         </NextLink>
-        <ul className="flex h-full flex-grow basis-0 flex-row flex-nowrap items-center justify-end gap-1">
+        <ul className="flex h-full grow basis-0 flex-row flex-nowrap items-center justify-end gap-1">
           {Object.entries(siteConfig.header.menu).map(([label, href]) => (
             <li
               key={label}

@@ -25,7 +25,7 @@ const timelineNews: TimelineItemProps[] = [
   },
   {
     date: new Date('2020-06-13'),
-    title: '15 Keypoints Is All You Need -- accepted by CVPR 2020',
+    title: '15 Keypoints Is All You Need — accepted by CVPR 2020',
     description:
       'Aquae haec fragorem, non tua tonitruque manu, ad distamus, inde si videri et quique dicitur? Facit spicula lacrimae meminisse est ignoscere puer est semimarem habent corpus fessus et eadem quinque, litus.',
   },

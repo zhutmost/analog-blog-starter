@@ -23,7 +23,7 @@ export default function HomepageIntro() {
     <>
       <h1 className="mb-8 text-5xl font-extrabold leading-[60px] tracking-tight text-foreground/70 lg:text-6xl lg:leading-[86px]">
         {greetingWeOrI}
-        <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+        <span className="bg-linear-to-r from-primary to-primary/60 bg-clip-text text-transparent">
           {siteConfig.author}
         </span>
         <Twemojify size={'lg'} className="ml-6">

@@ -145,7 +145,7 @@ export default function PostLayout({
           <header className="pb-6 pt-6">
             {banner && (
               <div className="w-full pb-10">
-                <div className="relative aspect-[5/2] w-full">
+                <div className="relative aspect-5/2 w-full">
                   <SmartImage src={banner} alt={title} fill className="object-cover" />
                 </div>
               </div>
