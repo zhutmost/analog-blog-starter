@@ -38,13 +38,13 @@ Analog includes plentiful search, comment, sharing and other plugins out of the 
 - **Style-rich Writing**
 
   MDX (Markdown + JSX) · Katex (math support) · highlighting.js (code highlighting) · License
-- [**Comment System**](https://analog-demo.zhutmost.com/post/docs/comment)
+- [**Comment System**](https://analog-demo.zhutmost.com/post/doc/comment)
 
   Giscus · Utterances · Disqus
 - **Built-in Search**
 
   KBar (support Cmd+K shortcuts, including pages & posts)
-- [**Analytics**](https://analog-demo.zhutmost.com/post/docs/analytics)
+- [**Analytics**](https://analog-demo.zhutmost.com/post/doc/analytics)
 
   Umami · Posthog · Google Analytics · Plausible · Simple Analytics
 - **Other**
@@ -75,4 +75,4 @@ If you find any bugs in my code or have any ideas to improve this, please feel f
 
 ## 💡 Inspiration
 
-This project is on the shoulder of giants. See [Tech Stack](https://analog-demo.zhutmost.com/posts/docs/tech-stack) for more details.
+This project is on the shoulder of giants. See [Tech Stack](https://analog-demo.zhutmost.com/post/doc/tech-stack) for more details.
