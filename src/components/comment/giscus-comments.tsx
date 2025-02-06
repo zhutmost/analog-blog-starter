@@ -38,7 +38,7 @@ export default function GiscusComments({
   lang = 'en',
 }: GiscusProps) {
   const { resolvedTheme } = useTheme()
-  const commentsTheme = themeURL ? themeURL : resolvedTheme !== 'dark' ? theme : darkTheme
+  const commentsTheme = (themeURL ?? resolvedTheme !== 'dark') ? theme : darkTheme
 
   const COMMENTS_ID = 'comments-container'
 

@@ -31,7 +31,7 @@ export async function generateMetadata(props: {
   const authorsCurr: Author[] = authorsFind(postCurr.authors)
   const datePublish: string = postCurr.datePublish.toISOString()
   const dateUpdate: string = postCurr.dateUpdate.toISOString()
-  const seoImage: string = postCurr.banner ? postCurr.banner : siteConfig.seo.socialBanner
+  const seoImage: string = postCurr.banner ?? siteConfig.seo.socialBanner
   const ogImage: string = seoImage.includes('http')
     ? seoImage
     : new URL(seoImage, siteConfig.siteUrl).toString()
