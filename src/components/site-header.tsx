@@ -11,18 +11,17 @@ import siteConfig from '@/lib/site-config'
 import { cn } from '@/lib/utils'
 
 export default function SiteHeader() {
-  const isBlurred = true
-  const isSticky = true
+  const isBlurred = false
   const menuLength: number = Object.keys(siteConfig.header.menu).length
 
   return (
     <header
       className={cn(
-        'z-50 flex h-auto w-full items-center justify-center',
+        'z-50 flex h-auto w-full items-center justify-center sticky inset-x-0 top-0',
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        isSticky ? 'sticky inset-x-0 top-0' : 'static',
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        isBlurred ? 'bg-background/70 backdrop-blur-lg backdrop-saturate-150' : 'bg-background'
+        isBlurred
+          ? 'bg-background/70 backdrop-blur-lg backdrop-saturate-150'
+          : 'bg-background border-b-2 border-border/20'
       )}
     >
       <nav className="relative flex h-14 w-full max-w-5xl flex-row flex-nowrap items-center justify-between gap-4 px-3">
