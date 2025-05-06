@@ -3,12 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "dev": "cross-env node prepare-data.ts && next dev --turbopack",
+    "build": "cross-env node prepare-data.ts && next build",
     "start": "next start",
     "lint": "next lint",
-    "predev": "cross-env node prepare-data.ts",
-    "prebuild": "cross-env node prepare-data.ts",
     "postinstall": "cross-env node prepare-data.ts"
   },
   "dependencies": {
