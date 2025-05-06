@@ -1,12 +1,10 @@
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+const fs = require('fs')
+const path = require('path')
 
 const TARGET_DATA_DIR = './data'
 const DEFAULT_DATA_DIR = './example-data'
 
-const __filename = fileURLToPath(import.meta.url)
-const projectRoot = path.dirname(__filename)
+const projectRoot = __filename
 
 function createSafeSymlink() {
   const dataDir = process.env.USER_DATA_DIR ?? DEFAULT_DATA_DIR
