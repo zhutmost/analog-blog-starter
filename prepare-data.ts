@@ -20,12 +20,12 @@ function createSafeSymlink() {
   }
 
   try {
-    // 创建规范化绝对路径
+    // create absolute path for the source directory
     const sourcePath = path.resolve(
       dataDir.startsWith('.') ? path.join(projectRoot, dataDir) : dataDir
     )
 
-    // 验证源路径存在
+    // check if the source directory exists
     if (!fs.existsSync(sourcePath)) {
       throw new Error(`Data directory ${sourcePath} does not exist`)
     }

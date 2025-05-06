@@ -1,0 +1,20 @@
+{
+  "extends": "@tsconfig/next/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "es6",
+    "forceConsistentCasingInFileNames": true,
+    "composite": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/content-collections": ["./.content-collections/generated"],
+      "@/data/*": ["./data/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ]
+}

@@ -14,8 +14,6 @@
 
 /data/
 
-/tsconfig.json
-
 # rss feed
 /public/feed.xml
 
@@ -24,6 +22,7 @@
 # search
 /public/search.json
 /public/sitemap.xml
+/public/data/
 
 # ==============================================================================
 # Language & Build Tool - Content Collections
