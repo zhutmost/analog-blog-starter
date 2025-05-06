@@ -4,7 +4,7 @@ const path = require('path')
 const TARGET_DATA_DIR = './data'
 const DEFAULT_DATA_DIR = './example-data'
 
-const projectRoot = __filename
+const projectRoot = path.dirname(__filename)
 
 function createSafeSymlink() {
   const dataDir = process.env.USER_DATA_DIR ?? DEFAULT_DATA_DIR
