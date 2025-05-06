@@ -18,7 +18,7 @@ export default function MdxImage({
     <figure className="relative mx-auto h-auto max-w-3xl">
       <SmartImage
         className={cn('mx-auto h-auto max-w-full rounded-lg object-fill', className)}
-        src={src}
+        src={src as string}
         alt={alt ?? 'image'}
         width={parseInt(width! as string)}
         height={parseInt(height! as string)}
