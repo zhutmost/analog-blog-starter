@@ -26,7 +26,7 @@ import remarkMath from 'remark-math'
 import rehypeAssetCopy, { assetSourceRedirect } from '@/lib/content-collections/asset-copy'
 import { countPostCategories, countPostTags } from '@/lib/content-collections/post-counter'
 
-const dataDir: string = 'data'
+const dataDir: string = process.env.USE_DATA_DIR ?? 'data-demo'
 
 interface BaseDoc {
   _meta: Meta
@@ -163,9 +163,9 @@ const Posts = defineCollection({
   },
   onSuccess: (docs) => {
     const tagCounter = countPostTags(docs)
-    writeFileSync('./data/tag-data.json', JSON.stringify(tagCounter))
+    writeFileSync(path.join(dataDir, 'tag-data.json'), JSON.stringify(tagCounter))
     const categoryCounter = countPostCategories(docs)
-    writeFileSync('./data/category-data.json', JSON.stringify(categoryCounter))
+    writeFileSync(path.join(dataDir, 'category-data.json'), JSON.stringify(categoryCounter))
     console.log('... Tag & Category count generated')
   },
 })

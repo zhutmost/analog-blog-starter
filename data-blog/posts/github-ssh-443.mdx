@@ -1,0 +1,57 @@
+---
+title: SSH 通过 443 端口连接 GitHub
+datePublish: 2022-07-30
+summary: GitHub 提供了两种协议供用户使用 Git 连接—— SSH 和 HTTPS。理论上我可以随意选择两者之一连接到我在 GitHub 上的代码仓库，无论是将云端的仓库 clone 到本地，还是将本地的修改 push 到云端。然而，出于一些奇奇怪怪的原因，我所在的办公网络环境禁止了 22 端口。为了一劳永逸地解决这个问题，最理想的解决方式是让 Git 的 SSH 协议改用 22 以外的其他端口连接 GitHub。
+category: ⚙️ Engineering
+tags:
+  - GitHub
+banner: github-wood.jpg
+---
+
+GitHub 提供了两种协议供用户使用 Git 连接—— SSH 和 HTTPS。理论上我可以随意选择两者之一连接到我在 GitHub 上的代码仓库，无论是将云端的仓库 `clone` 到本地，还是将本地的修改 `push` 到云端。然而，出于一些奇奇怪怪的原因，我所在的办公网络环境禁止了 22 端口，而 22 端口正是 GitHub 提供 SSH 访问的端口号。尽管可以换用 HTTPS 协议，但无论如何将我电脑上的所有代码仓库的上游都从 `git@github.com:...` 修改成 `https://github.com/...` 仍然是一个繁重的体力活。
+
+为了一劳永逸地解决这个问题，最理想的解决方式是让 Git 的 SSH 协议改用 22 以外的其他端口连接 GitHub。
+
+
+## SSH 连接失败
+
+我们在 clone GitHub 上的代码仓库时，可以看到 GitHub 提供了两种不同的链接（以我的 SpinalHDL 模版仓库为例）：
+
+```shell
+git clone https://github.com/zhutmost/spinalhdl-template.git # HTTPS
+git clone git@github.com:zhutmost/spinalhdl-template.git # SSH
+```
+
+其中第一种方式，即 HTTPS 协议，一般总能可以工作（只要能在浏览器里打开 GitHub），而后者依赖 SSH 的正常工作。因为我的网络环境阻断了 22 端口的连接，所以我测试 GitHub 的 SSH 连接时会出现以下报错：
+```shell
+❯ ssh -T git@github.com
+kex_exchange_identification: Connection closed by remote host
+Connection closed by xx.xx.xx.xx port 22
+```
+
+而在理想情况下，上述命令应当输出：
+```shell
+❯ ssh -T git@github.com
+Hi zhutmost! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+## 奇妙的冒名顶替
+
+仔细发掘 [GitHub 的文档](https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port)，可以发现 GitHub 在另一个域名（ssh.github.com）上提供了一个 443 端口的 SSH 服务。显然，防火墙一般不会阻拦 443 端口（只要能浏览 GitHub 网站就能连上），可以用下面的命令进行测试：
+```shell
+❯ ssh -T -p 443 git@ssh.github.com
+```
+
+为了让Git也能通过上述端口用 SSH 访问 GitHub，我们为上述 SSH 连接方式设置一个别名。首先找到SSH的配置文件，它的路径一般是 `~/.ssh/config`，如果这个文件不存在的话也可以创建一个。然后，在其中增加以下内容：
+```
+// ssh_config
+Host github.com
+  HostName ssh.github.com
+  User git
+  Port 443
+```
+其中，`Host` 是别名，`HostName` 是实际的域名地址，`Port` 是端口号。因为我希望当我在用 SSH 连接 github.com 时，实际访问的是 ssh.github.com，所以 `Host` 和 `HostName` 分别设置成这两个域名（注意不要颠倒顺序）。
+
+如此一来，ssh.github.com 就成为了 github.com 的“冒名顶替”者。当 Git 通过 SSH 协议试图访问 github.com 的时候，SSH 会发现它是 ssh.github.com 的别名，因此会用 443 端口实际连接到后者。这样，就绕开了本地网路环境对 22 端口的限制。
+
+（我之所以使用上述方法，是因为我的网络情况比较复杂。建议公司的朋友在使用暗渡陈仓之策前，先和 IT 部门确认下是否合规。）
