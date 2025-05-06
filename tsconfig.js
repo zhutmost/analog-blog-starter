@@ -13,6 +13,7 @@ const baseConfig = {
       '@/data/*': ['./data/*'],
     },
   },
+  include: ['next-env.d.ts', '**/*.ts', '**/*.tsx', '.next/types/**/*.ts'],
 }
 
 const userDataDir = [process.env.USER_DATA_DIR ? `${process.env.USER_DATA_DIR}/*` : './data-demo/*']
