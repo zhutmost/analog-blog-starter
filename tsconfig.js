@@ -16,8 +16,9 @@ const baseConfig = {
   include: ['next-env.d.ts', '**/*.ts', '**/*.tsx', '.next/types/**/*.ts'],
 }
 
-const dataDir = process.env.USER_DATA_DIR
-  ? [process.env.DATA_DIR.endsWith('/*') ? process.env.DATA_DIR : `${process.env.DATA_DIR}/*`]
+const userDataDirEnv = process.env.USER_DATA_DIR
+const dataDir = userDataDirEnv
+  ? [userDataDirEnv.endsWith('/*') ? userDataDirEnv : `${userDataDirEnv}/*`]
   : ['./data/*']
 
 baseConfig.compilerOptions.paths = {
