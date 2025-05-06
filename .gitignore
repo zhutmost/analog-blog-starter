@@ -12,6 +12,8 @@
 # ==============================================================================
 # Generated Files
 
+/tsconfig.json
+
 # rss feed
 /public/feed.xml
 
