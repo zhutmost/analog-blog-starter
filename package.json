@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env node tsconfig.js && next dev --turbopack",
-    "build": "cross-env node tsconfig.js && next build",
-    "start": "cross-env node tsconfig.js && next start",
-    "lint": "cross-env node tsconfig.js && next lint"
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "predev": "cross-env node prepare-data.ts",
+    "prebuild": "cross-env node prepare-data.ts",
+    "postinstall": "cross-env node prepare-data.ts"
   },
   "dependencies": {
     "@radix-ui/react-aspect-ratio": "^1.1.4",

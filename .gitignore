@@ -12,6 +12,8 @@
 # ==============================================================================
 # Generated Files
 
+/data/
+
 /tsconfig.json
 
 # rss feed
@@ -22,10 +24,6 @@
 # search
 /public/search.json
 /public/sitemap.xml
-
-# post statistics
-/data/tag-data.json
-/data/category-data.json
 
 # ==============================================================================
 # Language & Build Tool - Content Collections

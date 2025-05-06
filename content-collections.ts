@@ -26,7 +26,7 @@ import remarkMath from 'remark-math'
 import rehypeAssetCopy, { assetSourceRedirect } from '@/lib/content-collections/asset-copy'
 import { countPostCategories, countPostTags } from '@/lib/content-collections/post-counter'
 
-const userDataDir: string = process.env.USER_DATA_DIR ?? 'data'
+const dataDir: string = 'data'
 
 interface BaseDoc {
   _meta: Meta
@@ -132,7 +132,7 @@ async function commonTransform(
 
 const Posts = defineCollection({
   name: 'posts',
-  directory: path.join(userDataDir, 'posts'),
+  directory: path.join(dataDir, 'posts'),
   include: ['**/*.mdx'],
   schema: (z) => ({
     title: z.string(),
@@ -172,7 +172,7 @@ const Posts = defineCollection({
 
 const Authors = defineCollection({
   name: 'authors',
-  directory: path.join(userDataDir, 'authors'),
+  directory: path.join(dataDir, 'authors'),
   include: ['**/*.mdx'],
   schema: (z) => ({
     name: z.string(),
