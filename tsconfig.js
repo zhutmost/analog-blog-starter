@@ -10,18 +10,19 @@ const baseConfig = {
     paths: {
       '@/*': ['./src/*'],
       '@/content-collections': ['./.content-collections/generated'],
-      '@/data/*': ['./data/*'],
     },
   },
-  include: ['next-env.d.ts', '**/*.ts', '**/*.tsx', '.next/types/**/*.ts'],
+  include: ['next-env.d.ts', 'src/**/*.ts', 'src/**/*.tsx', '.next/types/**/*.ts'],
 }
 
-const userDataDir = [process.env.USER_DATA_DIR ? `${process.env.USER_DATA_DIR}/*` : './data-demo/*']
+const userDataDir = process.env.USER_DATA_DIR ?? './data-demo'
 
 baseConfig.compilerOptions.paths = {
   ...baseConfig.compilerOptions.paths,
-  '@/data/*': userDataDir,
+  '@/data/*': [`${userDataDir}/*`],
 }
+
+baseConfig.include.push(`${userDataDir}/**/*.ts`, `${userDataDir}/**/*.tsx`)
 
 fs.writeFileSync(
   'tsconfig.json',
