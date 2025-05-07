@@ -155,7 +155,7 @@ export const defaultSiteConfig: SiteConfig = {
   teamPage: true,
   keywords: [],
   homepage: {
-    sections: ['latestNews', 'popularTags', 'recentPosts'],
+    sections: [],
     popularTags: [],
     githubCalendar: null,
     latestNewsNum: 5,
@@ -196,6 +196,11 @@ const siteConfig: SiteConfig = (() => {
   const c = deepmerge(defaultSiteConfig, userConfig) as SiteConfig
 
   c.siteUrl = new URL(c.siteUrl).toString()
+
+  // Set default values for homepage sections
+  c.homepage.sections = c.homepage.sections.length
+    ? c.homepage.sections
+    : ['latestNews', 'popularTags', 'recentPosts']
 
   // Set default values for Open Graph and Twitter SEO
   c.seo.openGraph = {

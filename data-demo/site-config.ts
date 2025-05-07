@@ -8,6 +8,7 @@ const userConfig: DeepPartial<SiteConfig> = {
   locale: 'en-US',
   author: 'John Doe',
   homepage: {
+    sections: ['latestNews', 'popularTags', 'recentPosts'],
     popularTags: [
       { tag: 'markdown', icon: 'IconMarkdown', title: 'Markdown' },
       { tag: 'mac', icon: 'IconCommand', title: 'MacOS' },
