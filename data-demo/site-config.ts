@@ -18,7 +18,7 @@ const userConfig: DeepPartial<SiteConfig> = {
     githubCalendar: 'zhutmost',
   },
   header: {
-    logo: '/favicons/favicon.svg',
+    logo: '/icon.svg',
     title: 'Analog Demo',
     themeSwitch: true,
     menu: {

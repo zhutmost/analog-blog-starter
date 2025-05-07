@@ -168,7 +168,7 @@ export const defaultSiteConfig: SiteConfig = {
     team: 'Meet the team behind the scenes.',
   },
   header: {
-    logo: '/favicons/favicon.svg',
+    logo: '/icon.svg',
     title: 'Analog Demo',
     themeSwitch: true,
     menu: {
