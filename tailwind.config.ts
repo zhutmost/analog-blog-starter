@@ -65,13 +65,15 @@ const pluginTwColors = createThemes({
   },
 })
 
+const userDataDir = process.env.USER_DATA_DIR ?? 'data-demo'
+
 const config: TwConfig = {
   plugins: [pluginTwTypography, pluginTwAnimate, pluginTwColors],
   content: [
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/layouts/**/*.{js,ts,jsx,tsx,mdx}',
-    './data/**/*.{js,ts,jsx,tsx,mdx}',
+    `./${userDataDir}/**/*.{js,ts,jsx,tsx,mdx}`,
   ],
   theme: {
     extend: {
