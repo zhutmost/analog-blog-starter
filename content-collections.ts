@@ -26,7 +26,7 @@ import remarkMath from 'remark-math'
 import rehypeAssetCopy, { assetSourceRedirect } from '@/lib/content-collections/asset-copy'
 import { countPostCategories, countPostTags } from '@/lib/content-collections/post-counter'
 
-const dataDir: string = process.env.USE_DATA_DIR ?? 'data-demo'
+const dataDir: string = process.env.USER_DATA_DIR ?? 'data-demo'
 
 interface BaseDoc {
   _meta: Meta
