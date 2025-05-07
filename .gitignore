@@ -20,6 +20,9 @@ tsconfig.json
 !/public/banner-default.png
 !/public/images/posts/test/image-test
 
+tag-data.json
+category-data.json
+
 # ==============================================================================
 # Language & Build Tool - Content Collections
 
