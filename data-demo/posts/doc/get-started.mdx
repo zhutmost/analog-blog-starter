@@ -105,7 +105,13 @@ Open your browser and visit http://localhost:3000 to preview your blog.
 
 #### Writing Your First Post
 
-You can add a new post by creating a new MDX file in the `data/posts` directory.
+By default, Analog will create a demo site with the content in the `data-demo` directory. To use your own content directory, you need to set the `USER_DATA_DIR` environment variable before deploying.
+
+For example, if you want to specify the content directory as `data` on Vercel, you can set the environment variable in the Vercel dashboard.
+
+![Screenshot of Vercel deployment - Environment Variable](vercel-environment-variables.png "Set environment variables on Vercel")
+
+After that, you can add a new post by creating a new MDX file in the `data/posts` directory.
 
 ```shell
 cat << EOF > data/posts/hello-world.mdx

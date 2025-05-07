@@ -24,8 +24,8 @@ tags:
 ```
 其中，图片的路径可以是 URL 以下三种情况之一：
 - URL：路径以 `http://` 或 `https://` 开头，例如 `https://picsum.photos/300`。此时图片将从网络加载。
-- 本地路径—`public` 目录：路径以 `/` 开头，图片位于站点的 `public` 目录下。例如，`/images/hello.jpg` 指的是 `/public/images/hello.jpg`。
 - 本地路径—asset 目录：图片应当放置在 MDX 博文同一目录下的一个同名文件夹内。例如，`images/hello.jpg` 指的是 `/data/posts/[this_post]/images/hello.jpg`。
+- 本地路径—`public` 目录（不推荐）：路径以 `/` 开头，图片位于站点的 `public` 目录下。例如，`/images/hello.jpg` 指的是 `/public/images/hello.jpg`。
 
 上述代码最终会被编译为：
 
@@ -37,14 +37,14 @@ tags:
 
 ```markdown
 ![Image A from Internet](https://picsum.photos/300/200?grayscale)
-![Image B from Public Folder](/images/posts/test/image-test/17-300x200-grayscale.jpg)
-![Image C from Asset Folder](392-300x200-grayscale.jpg)
+![Image B from Asset Folder](392-300x200-grayscale.jpg)
+![Image C from Public Folder](/images/posts/test/image-test/17-300x200-grayscale.jpg)
 ```
 ![Image A from Internet](https://picsum.photos/300/200?grayscale)
 
-![Image B from Public Folder](/images/posts/test/image-test/17-300x200-grayscale.jpg)
+![Image B from Asset Folder](392-300x200-grayscale.jpg)
 
-![Image C from Asset Folder](392-300x200-grayscale.jpg)
+![Image C from Public Folder](/images/posts/test/image-test/17-300x200-grayscale.jpg)
 
 ### Image Caption
 
