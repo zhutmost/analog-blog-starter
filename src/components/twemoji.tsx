@@ -54,17 +54,30 @@ function StringTwemojify({
   className: string
 }): React.ReactNode[] {
   const emojiEntities = parse(text)
+  const result = []
   let currentIndex = 0
-  const result = emojiEntities.flatMap((entity) => {
+  emojiEntities.forEach((entity) => {
     const textBeforeEmoji = text.slice(currentIndex, entity.indices[0])
+    if (textBeforeEmoji) {
+      result.push(
+        <span key={`text-${currentIndex}-${entity.indices[0]}`} className="inline">
+          {textBeforeEmoji}
+        </span>
+      )
+    }
+    result.push(
+      // eslint-disable-next-line @next/next/no-img-element
+      <img key={`img-${currentIndex}`} src={entity.url} alt={entity.text} className={className} />
+    )
     currentIndex = entity.indices[1]
-    // eslint-disable-next-line @next/next/no-img-element
-    const svgEmoji = <img src={entity.url} alt={entity.text} className={className} />
-    return textBeforeEmoji ? [textBeforeEmoji, svgEmoji] : [svgEmoji]
   })
 
   if (currentIndex < text.length) {
-    result.push(text.slice(currentIndex))
+    result.push(
+      <span key={`text-${currentIndex}-end`} className="inline">
+        {text.slice(currentIndex)}
+      </span>
+    )
   }
 
   return result
