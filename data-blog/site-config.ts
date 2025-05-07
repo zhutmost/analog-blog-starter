@@ -50,6 +50,9 @@ const userConfig: DeepPartial<SiteConfig> = {
       categoryId: 'DIC_kwDONUD9-M4Ckkm1',
     },
   },
+  seo: {
+    socialBanner: '/banner-zhutmost-com.png',
+  },
   license: 'cc-by-nc-sa',
 }
 

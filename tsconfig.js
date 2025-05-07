@@ -15,11 +15,11 @@ const baseConfig = {
   include: ['next-env.d.ts', 'src/**/*.ts', 'src/**/*.tsx', '.next/types/**/*.ts'],
 }
 
-const userDataDir = process.env.USER_DATA_DIR ?? './data-demo'
+const userDataDir = process.env.USER_DATA_DIR ?? 'data-demo'
 
 baseConfig.compilerOptions.paths = {
   ...baseConfig.compilerOptions.paths,
-  '@/data/*': [`${userDataDir}/*`],
+  '@/data/*': [`./${userDataDir}/*`],
 }
 
 baseConfig.include.push(`${userDataDir}/**/*.ts`, `${userDataDir}/**/*.tsx`)

@@ -15,7 +15,7 @@ import siteConfig from '@/lib/site-config'
 
 function PersonCard({ author }: { author: Author }) {
   const { name, avatar, bio, slug, icons } = author
-  const avatarSrc: string = path.join(siteConfig.siteRoot ?? '', avatar ?? '/default-avatar.jpg')
+  const avatarSrc: string = path.join(siteConfig.siteRoot ?? '', avatar ?? '/avatar-default.jpg')
 
   return (
     <div className="p-4 md:w-1/2 lg:w-1/4">

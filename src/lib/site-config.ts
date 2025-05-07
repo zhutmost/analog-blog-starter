@@ -119,7 +119,7 @@ export interface SiteConfig {
 
   // SEO settings (OpenGraph & Twitter card)
   seo: {
-    // The path to the default social banner image. (Example: '/banner.png')
+    // The path to the default social banner image. (Example: '/banner-default.png')
     socialBanner: string
     // OpenGraph settings. Keep them blank to use the default values.
     openGraph?: {
@@ -184,7 +184,7 @@ export const defaultSiteConfig: SiteConfig = {
   },
   analytics: {},
   seo: {
-    socialBanner: '/banner.png',
+    socialBanner: '/banner-default.png',
     openGraph: undefined,
     twitter: undefined,
   },

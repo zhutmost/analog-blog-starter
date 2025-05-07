@@ -13,17 +13,12 @@
 # Generated Files
 
 tsconfig.json
-/data/
 
-# rss feed
-/public/feed.xml
-
-/public/_assets/
-
-# search
-/public/search.json
-/public/sitemap.xml
-/public/data/
+/public/*
+!/public/favicons/
+!/public/avatar-default.jpg
+!/public/banner-default.png
+!/public/images/posts/test/image-test
 
 # ==============================================================================
 # Language & Build Tool - Content Collections
