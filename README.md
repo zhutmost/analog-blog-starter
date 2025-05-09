@@ -13,7 +13,7 @@
 **Analog** is easy to customize and reconfigure to suit your needs. It is perfect for individual blogs, especially **academic or technology blogs**.
 
 **Live Preview**:
-- [Analog Demo](https://analog-demo.zhutmost.com)
+- [Analog Demo](https://analog-demo.zhutmost.com) - Demo blog (i.e., Docs site) of the Analog Blog Starter.
 - [zhutmost.com](https://blog.zhutmost.com) - My personal blog.
 
 Check out the documentation below to get started.

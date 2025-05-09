@@ -17,8 +17,8 @@ tsconfig.json
 /public/*
 !/public/favicons/
 !/public/avatar-default.jpg
-!/public/banner-default.png
-!/public/images/posts/test/image-test
+!/public/banner-*.png
+!/public/images/posts/
 
 tag-data.json
 category-data.json
