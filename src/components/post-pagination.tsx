@@ -29,10 +29,10 @@ export default function PostPagination({
   const nextPage = currentPage + 1
 
   const firstPageLink = `${parentPath}/page/1`
-  const prevPageLink = `${parentPath}/page/${prevPage}`
-  const nextPageLink = `${parentPath}/page/${nextPage}`
-  const lastPageLink = `${parentPath}/page/${totalPages}`
-  const currentPageLink = `${parentPath}/page/${currentPage}`
+  const prevPageLink = `${parentPath}/page/${prevPage.toString()}`
+  const nextPageLink = `${parentPath}/page/${nextPage.toString()}`
+  const lastPageLink = `${parentPath}/page/${totalPages.toString()}`
+  const currentPageLink = `${parentPath}/page/${currentPage.toString()}`
 
   return (
     <Pagination>

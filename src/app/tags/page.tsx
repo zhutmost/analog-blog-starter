@@ -35,7 +35,7 @@ export default async function Page() {
                   className="-ml-2 text-sm font-semibold uppercase text-foreground/80"
                   aria-label={`View posts tagged ${t}`}
                 >
-                  {` (${tagCounter[t]})`}
+                  {` (${tagCounter[t].toString()})`}
                 </NextLink>
               </div>
             )

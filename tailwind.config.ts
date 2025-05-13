@@ -67,7 +67,7 @@ const pluginTwColors = createThemes({
 
 const userDataDir = process.env.USER_DATA_DIR ?? 'data-demo'
 
-const config: TwConfig = {
+const twConfig: TwConfig = {
   plugins: [pluginTwTypography, pluginTwAnimate, pluginTwColors],
   content: [
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -94,4 +94,5 @@ const config: TwConfig = {
   },
   darkMode: 'class',
 }
-export default config
+
+export default twConfig

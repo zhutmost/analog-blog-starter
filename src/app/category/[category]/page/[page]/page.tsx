@@ -57,7 +57,7 @@ export default async function Page(props: { params: Promise<{ category: string; 
 
   if (filteredPosts.length != categoryCounter[category]) {
     console.error(
-      `Category "${category}" should include ${categoryCounter[category]} posts but got ${filteredPosts.length}`
+      `Category "${category}" should include ${categoryCounter[category].toString()} posts but got ${filteredPosts.length.toString()}`
     )
     return notFound()
   }

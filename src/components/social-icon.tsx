@@ -27,7 +27,7 @@ export default function SocialIcon({ name, icon, href, size = 6 }: SocialIconPro
             href={href}
           >
             <span className="sr-only">{name}</span>
-            <IconSvg title={name} className={`h-${size} w-${size}`} />
+            <IconSvg title={name} className={`h-${size.toString()} w-${size.toString()}`} />
           </SmartLink>
         </TooltipTrigger>
         <TooltipContent>

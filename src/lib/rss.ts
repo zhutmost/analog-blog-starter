@@ -5,7 +5,8 @@ import allPostsSorted from '@/lib/post-sort'
 import siteConfig from '@/lib/site-config'
 
 export default function generateRssFeed(): Feed {
-  const siteUrl = siteConfig.siteUrl
+  const siteUrl: string = siteConfig.siteUrl
+  const thisYear: number = new Date().getFullYear()
 
   const feedOptions: FeedOptions = {
     title: `RSS Feed | ${siteConfig.siteTitle}`,
@@ -16,7 +17,7 @@ export default function generateRssFeed(): Feed {
     favicon: new URL('favicon.ico', siteUrl).toString(),
     language: siteConfig.locale,
     updated: new Date(),
-    copyright: `All rights reserved ${new Date().getFullYear()} ${siteConfig.author}`,
+    copyright: `All rights reserved ${thisYear.toString()} ${siteConfig.author}`,
     author: {
       name: siteConfig.author,
       link: new URL('about', siteUrl).toString(),

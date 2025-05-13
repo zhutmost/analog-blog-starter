@@ -1,6 +1,6 @@
 import { FlatCompat } from '@eslint/eslintrc'
 import eslintJs from '@eslint/js'
-import eslintConfigPrettier from 'eslint-config-prettier'
+import eslintConfigPrettier from 'eslint-config-prettier/flat'
 import eslintTs from 'typescript-eslint'
 
 const compat = new FlatCompat({
@@ -9,10 +9,10 @@ const compat = new FlatCompat({
 
 export default eslintTs.config(
   eslintJs.configs.recommended,
-  ...eslintTs.configs.strictTypeChecked,
-  ...eslintTs.configs.stylisticTypeChecked,
-  ...compat.extends('plugin:@next/next/core-web-vitals'),
+  eslintTs.configs.strictTypeChecked,
+  eslintTs.configs.stylisticTypeChecked,
   eslintConfigPrettier,
+  compat.extends('next/core-web-vitals'),
   {
     languageOptions: {
       parserOptions: {
@@ -22,16 +22,6 @@ export default eslintTs.config(
     },
     rules: {
       '@typescript-eslint/no-non-null-assertion': 'off',
-      '@typescript-eslint/restrict-template-expressions': [
-        'error',
-        {
-          allowAny: true,
-          allowBoolean: true,
-          allowNullish: true,
-          allowNumber: true,
-          allowRegExp: true,
-        },
-      ],
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -40,13 +30,9 @@ export default eslintTs.config(
           caughtErrors: 'none',
         },
       ],
-      '@typescript-eslint/no-unnecessary-condition': [
-        'error',
-        { allowConstantLoopConditions: true, checkTypePredicates: true },
-      ],
     },
   },
   {
-    ignores: ['**/dist/', '**/node_modules/', '**/*.config.mjs', '**/.content-collections/'],
+    ignores: ['/node_modules/', '/.content-collections/', '/*.config.mjs'],
   }
 )

@@ -60,21 +60,29 @@ function StringTwemojify({
     const textBeforeEmoji = text.slice(currentIndex, entity.indices[0])
     if (textBeforeEmoji) {
       result.push(
-        <span key={`text-${currentIndex}-${entity.indices[0]}`} className="inline">
+        <span
+          key={`text-${currentIndex.toString()}-${entity.indices[0].toString()}`}
+          className="inline"
+        >
           {textBeforeEmoji}
         </span>
       )
     }
     result.push(
       // eslint-disable-next-line @next/next/no-img-element
-      <img key={`img-${currentIndex}`} src={entity.url} alt={entity.text} className={className} />
+      <img
+        key={`img-${currentIndex.toString()}`}
+        src={entity.url}
+        alt={entity.text}
+        className={className}
+      />
     )
     currentIndex = entity.indices[1]
   })
 
   if (currentIndex < text.length) {
     result.push(
-      <span key={`text-${currentIndex}-end`} className="inline">
+      <span key={`text-${currentIndex.toString()}-end`} className="inline">
         {text.slice(currentIndex)}
       </span>
     )

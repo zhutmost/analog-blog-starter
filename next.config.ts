@@ -1,11 +1,11 @@
 import { withContentCollections } from '@content-collections/next'
+import { NextConfig } from 'next'
 
 const output = process.env.STATIC_EXPORT ? 'export' : undefined
 const unoptimized = process.env.STATIC_EXPORT ? true : undefined
 const basePath = process.env.BASE_PATH ?? undefined
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   output,
   basePath,
   reactStrictMode: true,

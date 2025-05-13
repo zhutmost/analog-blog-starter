@@ -53,7 +53,7 @@ export default async function Page(props: { params: Promise<{ tag: string; page:
 
   if (filteredPosts.length != tagCounter[tag]) {
     console.error(
-      `Tag "${tag}" should include ${tagCounter[tag]} posts but got ${filteredPosts.length}`
+      `Tag "${tag}" should include ${tagCounter[tag].toString()} posts but got ${filteredPosts.length.toString()}`
     )
     return notFound()
   }
