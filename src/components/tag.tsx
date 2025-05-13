@@ -7,7 +7,7 @@ const Tag = ({ text }: { text: string }) => {
       href={`/tags/${slugify(text)}`}
       className="mr-3 text-sm font-medium uppercase text-primary hover:text-primary/80"
     >
-      {text.split(' ').join('-')}
+      # {text.split(' ').join('-')}
     </NextLink>
   )
 }
