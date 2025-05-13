@@ -9,10 +9,9 @@ interface SocialIconProps {
   name: string
   icon: string
   href: string
-  size?: number
 }
 
-export default function SocialIcon({ name, icon, href, size = 6 }: SocialIconProps) {
+export default function SocialIcon({ name, icon, href }: SocialIconProps) {
   const IconSvg = icon in icons ? icons[icon as keyof typeof icons] : icons.IconFileUnknown
 
   return (
@@ -27,7 +26,7 @@ export default function SocialIcon({ name, icon, href, size = 6 }: SocialIconPro
             href={href}
           >
             <span className="sr-only">{name}</span>
-            <IconSvg title={name} className={`h-${size.toString()} w-${size.toString()}`} />
+            <IconSvg title={name} />
           </SmartLink>
         </TooltipTrigger>
         <TooltipContent>

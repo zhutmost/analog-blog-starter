@@ -35,7 +35,7 @@ export default function HomepageSection({
             href={href}
             className="inline-flex items-center text-base font-medium leading-6 text-primary hover:text-primary/80"
           >
-            View all <IconArrowRight className="ml-1 h-5 w-5" />
+            View all <IconArrowRight className="ml-1 size-5" />
           </NextLink>
         </div>
         <PageHeaderDescription>

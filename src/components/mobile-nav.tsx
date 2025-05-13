@@ -33,7 +33,7 @@ export default function MobileNav() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <IconMenu2 className="h-6 w-6" />
+              <IconMenu2 />
             </TooltipTrigger>
             <TooltipContent>
               <p>Menu</p>
@@ -55,13 +55,13 @@ export default function MobileNav() {
                   />
                 )}
                 {siteConfig.header.title && (
-                  <div className="text-lg font-semibold">{siteConfig.header.title}</div>
+                  <div className="text-xl font-bold">{siteConfig.header.title}</div>
                 )}
               </div>
             </MobileLink>
           </SheetTitle>
         </SheetHeader>
-        <div className="flex flex-col gap-2 py-4">
+        <div className="flex flex-col gap-2">
           {Object.entries(siteConfig.header.menu).map(([name, href]) => (
             <MobileLink
               key={name}
@@ -81,7 +81,7 @@ export default function MobileNav() {
               variant="ghost"
               size="icon"
             >
-              <IconChevronsUp className="h-6 w-6" />
+              <IconChevronsUp />
             </Button>
           </SheetClose>
         </SheetFooter>

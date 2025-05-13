@@ -7,9 +7,9 @@ import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
-const IconLight = () => <IconSun className="h-6 w-6" />
-const IconDark = () => <IconMoon className="h-6 w-6" />
-const IconBlank = () => <IconSunMoon className="h-6 w-6" />
+const IconLight = () => <IconSun />
+const IconDark = () => <IconMoon />
+const IconBlank = () => <IconSunMoon />
 
 export default function ThemeSwitch() {
   const [mounted, setMounted] = React.useState(false)

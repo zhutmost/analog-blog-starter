@@ -21,7 +21,7 @@ function PersonCard({ author }: { author: Author }) {
     <div className="p-4 md:w-1/2 lg:w-1/4">
       <div className="flex h-full flex-col items-center text-center">
         <NextLink href={`/about/${slug}`}>
-          <Avatar className="mb-4 h-48 w-48">
+          <Avatar className="mb-4 size-48">
             <AvatarImage className="object-cover" src={avatarSrc} />
             <AvatarFallback>{name}</AvatarFallback>
           </Avatar>

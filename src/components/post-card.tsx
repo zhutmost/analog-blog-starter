@@ -76,7 +76,7 @@ export default function PostCard({ post }: PostCardProps) {
             className="inline-flex items-center text-primary hover:text-primary/80"
             aria-label={`Read more: "${title}"`}
           >
-            Read more <IconArrowRight className="ml-1 inline h-5 w-5" />
+            Read more <IconArrowRight className="ml-1 inline size-5" />
           </NextLink>
         </div>
       </div>

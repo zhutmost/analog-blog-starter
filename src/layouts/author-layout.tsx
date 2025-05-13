@@ -31,14 +31,14 @@ export default function AuthorLayout({ children, author }: AuthorLayoutProps) {
         </PageHeader>
         <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
           <div className="flex flex-col items-center space-x-2 pt-8">
-            <Avatar className="h-48 w-48">
+            <Avatar className="size-48">
               <AvatarImage className="object-cover" src={avatarSrc} />
               <AvatarFallback>{name}</AvatarFallback>
             </Avatar>
             <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 tracking-tight">{name}</h3>
             <div className="text-muted-foreground">{bio}</div>
             <div className="flex items-center gap-1.5 pt-1 text-muted-foreground">
-              <IconMapPinFilled className="h-5 w-5" />
+              <IconMapPinFilled className="size-5" />
               {affiliation}
             </div>
             <div className="flex space-x-3 pt-6">

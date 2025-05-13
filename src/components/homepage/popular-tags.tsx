@@ -48,7 +48,7 @@ export default function PopularTags() {
               `${bgColor} mx-auto w-[160px] space-x-2 px-3 text-white`
             )}
           >
-            <IconSvg className="h-6 w-6" />
+            <IconSvg className="size-6" />
             <div className="my-auto truncate text-base">{title ?? tag}</div>
           </NextLink>
         )

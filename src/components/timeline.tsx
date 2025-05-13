@@ -32,7 +32,7 @@ function TimelineItem({ date, title, description, icons }: TimelineItemProps) {
       {icons && (
         <div className="flex gap-2 py-1">
           {Object.entries(icons).map(([key, item]) => (
-            <SocialIcon key={key} name={key} icon={item.icon} href={item.href} size={6} />
+            <SocialIcon key={key} name={key} icon={item.icon} href={item.href} />
           ))}
         </div>
       )}
@@ -62,7 +62,7 @@ export default function Timeline({ timelineNews, findMore = false }: TimelinePro
         <div className="group relative pb-6 pl-8 pt-2 sm:pl-32">
           <div className="mb-1 flex flex-col items-start before:absolute before:left-2 before:h-full before:-translate-x-1/2 before:translate-y-3 before:self-start before:bg-accent before:px-px after:absolute after:left-2 after:box-content after:h-2 after:w-2 after:-translate-x-1/2 after:translate-y-1.5 after:rounded-full after:border-4 after:border-muted after:bg-primary group-last:before:hidden sm:flex-row sm:before:left-0 sm:before:ml-[6.5rem] sm:after:left-0 sm:after:ml-[6.5rem]">
             <NextLink href="/news" className={buttonVariants({ variant: 'outline' })}>
-              Find more <IconArrowRight className="ml-2 h-5 w-5" />
+              Find more <IconArrowRight className="ml-2 size-5" />
             </NextLink>
           </div>
         </div>
