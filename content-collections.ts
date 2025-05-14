@@ -23,8 +23,8 @@ import remarkFlexibleToc, { HeadingDepth, HeadingParent } from 'remark-flexible-
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 
-import rehypeAssetCopy, { assetSourceRedirect } from '@/lib/content-collections/asset-copy'
 import { countPostCategories, countPostTags } from '@/lib/content-collections/post-counter'
+import rehypeAssetCopy, { assetSourceRedirect } from '@/lib/content-collections/rehype-asset-copy'
 
 const dataDir: string = process.env.USER_DATA_DIR ?? 'data-demo'
 
