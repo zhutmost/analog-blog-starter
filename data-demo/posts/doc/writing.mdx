@@ -1,0 +1,140 @@
+---
+title: "Analog User Guide - How to Create Content"
+datePublish: 2024-11-03
+summary: "This article explains how to create content with Analog, including blog posts, author pages, and general pages."
+category: 🌈 Docs
+banner: banner.jpg
+tags:
+  - analog
+  - mdx
+---
+
+Analog uses [Content Collections](https://content-collections.dev) to manage your content. It is a open-source tool that can transforms your content into type-safe data collections.
+
+During the build process, Content Collections scans your content folders (`/data/{posts,authors,pages}`), and then convert the MDX files into JavaScript objects according to the configuration `/content-collection.ts`.
+These objects are then used by Next.js to generate the HTML pages.
+
+Analog uses the following content collections:
+
+| Content        | Source Path                 | Target Route    | Layout Template                  |
+|----------------|-----------------------------|-----------------|----------------------------------|
+| Blog Posts     | `/data/posts/[slug].mdx`    | `/post/[slug]`  | `/src/layouts/post-layout.tsx`   |
+| Default Author | `/data/authors/default.mdx` | `/about`        | `/src/layouts/author-layout.tsx` |
+| Authors        | `/data/authors/[slug].mdx`  | `/about/[slug]` | `/src/layouts/author-layout.tsx` |
+| General Pages  | `/data/pages/[slug].mdx`    | `/[slug]`       | `/src/layouts/page-layout.tsx`   |
+
+For example, if you create a MDX file `/data/posts/sub/path/hello-world.mdx`, it will be available at `https://base.url/post/sub/path/hello-world`.
+
+## Front Matter
+
+The front matter is a YAML block at the top of your MDX file. It contains metadata about the content, such as the title, date, and tags.
+
+### Blog Posts
+
+The front matter for blog posts includes the following fields:
+
+| Field         | Required (Default Value)        | Description                                   |
+|---------------|---------------------------------|-----------------------------------------------|
+| `title`       | Y                               | The title of the post. It will be displayed as the main heading of the post. |
+| `authors`     | N (`['default']`)               | A list of authors for the post. |
+| `datePublish` | Y                               | The date when the post was published. It should be in the format `YYYY-MM-DD`. |
+| `summary`     | Y                               | A short summary displayed on the post list page. It is also used for SEO. |
+| `category`    | N (`'Uncategorized'`)           | The category of the post. |
+| `tags`        | N (`[]`)                        | A list of tags for the post. |
+| `banner`      | N (null)                        | The file name of the banner image. It should be in the local asset directory. |
+| `draft`       | N (`false`)                     | Whether the post is a draft or not. If it is a draft, it will not be built. |
+| `locale`      | N (`'en-US'`)                   | The locale of the post. |
+| `license`     | N (follow `siteConfig`) | The license of the post. It will be displayed at the bottom of the post page. |
+
+Here is an example:
+
+```yaml
+title: "My First Post"
+authors:
+  - default
+  - Ron Weasley
+datePublish: 2025-05-12
+summary: "This is a summary of my first post."
+category: 🌈 Docs
+banner: banner.jpg
+tags:
+  - analog
+  - mdx
+banner: banner.jpg
+draft: false
+locale: en-US
+license: cc-by-nc-sa
+```
+
+### Author Pages
+
+The front matter for author pages includes the following fields:
+
+| Field         | Required (Default Value) | Description                                   |
+|---------------|--------------------------|-----------------------------------------------|
+| `name`        | Y                        | The displayed name of the author. |
+| `avatar`      | N (null)                 | The file name of the avatar image. It should be in the local asset directory. |
+| `bio`         | N (null)                 | A short bio of the author, displayed in the sidebar of the author page. |
+| `affiliation` | N (null)                 | The affiliation of the author, displayed in the sidebar of the author page. |
+| `icons`       | N (null)                 | A list of social media icons for the author. |
+
+Here is an example:
+
+```yaml
+name: Draco Malfoy
+avatar: avatar.jpg
+bio: Wizard & Death Eater
+affiliation: Slytherin, Hogwarts
+icons:
+  GitHub:
+    icon: IconBrandGithub
+    href: https://github.com
+  LinkedIn:
+    icon: IconBrandLinkedin
+    href: https://linkedin.com
+```
+
+### General Pages
+
+The front matter for general pages includes the following fields:
+
+| Field         | Required (Default Value) | Description                                   |
+|---------------|--------------------------|-----------------------------------------------|
+| `title`       | Y                        | The title of the page, displayed as the main heading of the page. |
+| `description` | N (null)                 | A short greeting message displayed near the main heading of the page. |
+| `locale`      | N (`'en-US'`)            | The locale of the page. |
+
+Here is an example:
+
+```yaml
+title: "Publications"
+description: "This is my personal blog."
+locale: en-US
+```
+
+## Local Assests
+
+Assets used within posts (such as images) should be placed under the `public` directory to ensure they are accessible after deployment.
+However, storing MDX files and their associated assets in separate locations complicates asset management.
+
+To address this, Analog allows users to create a folder with the same name as the MDX file to store related assets.
+That is to say, you can reference an image directly as `abc.png` in your MDX file instead of using a lengthy path like `/images/posts/test/image-test/17-300x200-grayscale.jpg`.
+During the build process, Content Collections will automatically copy the contents of this folder to the `public` directory and prepend the correct path prefix, ensuring seamless asset resolution.
+
+For example, if you have a post file `/data/posts/sub/folder/hello-world.mdx`, you can create a folder named `hello-world` in the same directory as the post file (i.e., `/data/posts/sub/folder/hello-world`).
+Then, you can place your images inside this folder and reference them in your MDX file.
+
+> [!TIP]
+>
+> You can still use the `/public` directory to store your assets.
+> Paths starting with `/` will be treated as assets in the `public` directory, and other internal paths will be treated as assets in the local asset folder.
+
+## About MDX
+
+MDX is a superset of Markdown that lets you write JSX directly in your markdown files.
+If you are familiar with Markdown, you can think of MDX as Markdown with the ability to use React components.
+For most cases, you can just write your content in Markdown syntax, and rename the file extension from `.md` to `.mdx`.
+
+You can also insert React components in your MDX files to implement complex features. In the post [Image Test](/post/test/image-test), you can find a case where we use the `figure` component to insert a blurred images.
+
+The official MDX documentation is [here](https://mdxjs.com/docs/). The post [MDX Style Demo](/post/test/markdown-style) shows some MDX examples in Analog.

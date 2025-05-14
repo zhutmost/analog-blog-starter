@@ -337,27 +337,4 @@ tags:
 Write your post content here.
 ```
 
-### Post Front-matter
-
-| Field         | Required | Type       | Description                                                                                                                       |
-|---------------|----------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| `title`       | Yes      | `string`   | The title of the post.                                                                                                            |
-| `authors`     | No       | `string[]` | The author(s) of the post. Leave it blank to use `/data/about/default`                                                            |
-| `datePublish` | Yes      | `string`   | The publish date of the post. It should be in `YYYY-MM-DD` format.                                                                |
-| `summary`     | Yes      | `string`   | The summary of the post. It will be displayed on post archive pages.                                                              |
-| `category`    | No       | `string`   | The category of the post. Default: `Uncategorized`.                                                                               |
-| `tags`        | No       | `string[]` | The tags of the post.                                                                                                             |
-| `banner`      | No       | `string`   | The path to the banner image of the post. It should be a absolute path from the `public` folder.                                  |
-| `draft`       | No       | `boolean`  | Whether the post is a draft. If `true`, the post will not be excluded during deployment.                                          |
-| `locale`      | No       | `string`   | The locale of the post. Default: `en-US`.                                                                                         |
-| `license`     | No       | `string`   | The license of the post. Leave it blank to use the license specified in the user configuration.                                   |
-
-### Author Front-matter
-
-| Field         | Required | Type                                              | Description                                                                                        |
-|---------------|----------|---------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| `name`        | Yes      | `string`                                          | The name of the author.                                                                            |
-| `avatar`      | No       | `string`                                          | The path to the avatar image of the author. It should be a absolute path from the `public` folder. |
-| `bio`         | No       | `string`                                          | The bio of the author.                                                                             |
-| `affiliation` | No       | `string`                                          | The affiliation of the author.                                                                     |
-| `icons`       | No       | `{[key: string]: {icon: string; href: string}}[]` | The social media links of the author.                                                              |
+See [Writing](/post/doc/writing) for more information about the front-matter.

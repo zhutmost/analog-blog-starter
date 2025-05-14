@@ -16,6 +16,20 @@ This article will not cover the complex web front-end technology stack.
 Analog is based on Next.js, TailwindCSS, and React, and is mainly written in TypeScript.
 If you need to customize it in depth, you may need to master these open source tools and some necessary web front-end skills. If you have a need for this, you can read Analog's [Technology Stack](/post/doc/tech-stack) first.
 
+## Favicons and Site Logo
+
+Analog includes a default site logo and favicons. You can replace them with your own logo and favicons. Here are their locations:
+
+- `/src/app/favicon.ico`
+- `/src/app/icon.svg`
+- `/src/app/iconXXX.png`
+- `/src/app/apple-icon.png`
+- `/public/favicons/web-app-manifest-XXXxXXX.png`, referenced by `/src/app/manifest.ts`.
+
+Among them, `logo.svg` is also used as the logo on the site header.
+
+You can visit [Favicon Generator](https://realfavicongenerator.net) to generate favicons of different sizes.
+
 ## Color Scheme
 
 Analog's style is managed by [TailwindCSS](https://tailwindcss.com/docs), which is configured by `/tailwind.config.ts`.
@@ -98,7 +112,7 @@ The highlighted theme is defined in the `/src/styles/highlight.css` file. Feel f
 
 Rehype-highlight and [highlighting.js](https://highlightjs.readthedocs.io/en/latest/index.html) have the same class names, so you can find a highlighting.js theme on the Internet and then paste the corresponding CSS code into the above file. The default theme is atom-dark-pro. You can find it and many other themes [here](https://highlightjs.org/examples).
 
-### Supported Languages
+### Supported Programming Languages
 
 Lowlight supports a huge number of languages, however by default it only enables a subset. You can find a full list of supported languages and enabled ones on [its README](https://github.com/wooorm/lowlight#data).
 
@@ -117,7 +131,7 @@ const mdx = await compileMdx(content, {
 })
 ```
 
-You can also enable all supported languages directly, but it may cause performance loss on the visitor side.
+You can also enable all supported programming languages directly, but it may cause performance loss on the visitor side.
 
 ```typescript
 import { all as allLanguages } from 'lowlight'
@@ -131,4 +145,4 @@ const mdx = await compileMdx(content, {
 })
 ```
 
-If you need to add a new language syntax, please refer to the [related lightnight documentation](https://github.com/wooorm/lowlight#lowlightregistergrammars).
+If you need to add a new programming language syntax, please refer to the [related lightnight documentation](https://github.com/wooorm/lowlight#lowlightregistergrammars).

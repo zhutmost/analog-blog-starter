@@ -43,7 +43,7 @@ export async function generateMetadata(props: {
       title: postCurr.title,
       description: postCurr.summary,
       siteName: siteConfig.siteTitle,
-      locale: postCurr.locale,
+      locale: postCurr.locale ?? siteConfig.seo.openGraph?.locale,
       type: 'article',
       publishedTime: datePublish,
       modifiedTime: dateUpdate,

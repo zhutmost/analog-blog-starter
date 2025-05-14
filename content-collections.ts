@@ -143,7 +143,7 @@ const Posts = defineCollection({
     tags: z.string().array().default([]),
     banner: z.string().optional(),
     draft: z.boolean().default(false),
-    locale: z.string().default('en-US'),
+    locale: z.string().optional(),
     license: z.string().optional(),
   }),
   transform: async (document, context) => {
@@ -203,6 +203,23 @@ const Authors = defineCollection({
   },
 })
 
+const Pages = defineCollection({
+  name: 'pages',
+  directory: path.join(dataDir, 'pages'),
+  include: ['**/*.mdx'],
+  schema: (z) => ({
+    title: z.string(),
+    description: z.string().optional(),
+    locale: z.string().default('en-US'),
+  }),
+  transform: async (document, context) => {
+    return {
+      ...document,
+      ...(await commonTransform(document, context)),
+    }
+  },
+})
+
 export default defineConfig({
-  collections: [Posts, Authors],
+  collections: [Posts, Authors, Pages],
 })
