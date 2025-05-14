@@ -12,17 +12,17 @@ export default function MdxLink({
 }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   const isExternal = href && !(href.startsWith('/') || href.startsWith('#'))
 
-  const inlineLinkStyles =
-    'break-words text-primary no-underline hover:text-primary/80 hover:underline hover:underline-offset-2'
-
   return (
     <SmartLink
-      className={cn(isExternal && 'inline-flex items-center', inlineLinkStyles, className)}
+      className={cn(
+        'text-primary no-underline hover:text-primary/80 hover:underline hover:underline-offset-2',
+        className
+      )}
       href={href}
       {...rest}
     >
       {children}
-      {isExternal && <IconExternalLink className="ml-1 inline h-[1em] w-[1em]" />}
+      {isExternal && <IconExternalLink className="ml-1 inline size-[1em] shrink-0" />}
     </SmartLink>
   )
 }
