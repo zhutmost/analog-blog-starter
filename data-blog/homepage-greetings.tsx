@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 import { HomepageGreetings } from '@/components/homepage/homepage-intro'
 
 const homepageGreetings: HomepageGreetings = {
@@ -11,7 +12,7 @@ const homepageGreetings: HomepageGreetings = {
   ],
   scrolled: [
     <>
-      I am currently a <b className="font-medium">post-doctor</b> 🔬 at{' '}
+      I am currently a <b className="font-medium">Assistant Professor</b> 🔬 at{' '}
       <b className="font-medium">Fudan University</b>.
     </>,
     <>

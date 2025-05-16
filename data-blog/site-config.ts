@@ -23,6 +23,7 @@ const userConfig: DeepPartial<SiteConfig> = {
       Blog: '/archive',
       Tags: '/tags',
       News: '/news',
+      Publication: '/publication',
       About: '/about',
     },
   },
