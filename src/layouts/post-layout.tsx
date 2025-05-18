@@ -7,6 +7,7 @@ import PostLicense from '@/components/post-license'
 import PostToc from '@/components/post-toc'
 import SmartImage from '@/components/smart-image'
 import Tag from '@/components/tag'
+import Twemojify from '@/components/twemoji'
 import type { Author, Post } from '@/content-collections'
 import siteConfig from '@/lib/site-config'
 import { cn } from '@/lib/utils'
@@ -181,7 +182,7 @@ export default function PostLayout({
 
             <div className="gap-16 pb-8 pt-10 xl:col-span-3 xl:pb-0">
               <div className="prose prose-slate max-w-none pb-8 dark:prose-invert prose-code:font-mono prose-pre:p-0">
-                {children}
+                <Twemojify className="not-prose">{children}</Twemojify>
               </div>
 
               {siteConfig.license && <PostLicense post={content} authors={authors} />}

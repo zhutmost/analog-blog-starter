@@ -50,7 +50,7 @@ export default function AuthorLayout({ children, author }: AuthorLayoutProps) {
           </div>
           <div className="pb-8 pt-8 xl:col-span-2">
             <div className="prose prose-slate max-w-none dark:prose-invert prose-code:font-mono prose-pre:p-0">
-              {children}
+              <Twemojify className="not-prose">{children}</Twemojify>
             </div>
           </div>
         </div>

@@ -23,7 +23,7 @@ export default function PageLayout({ children, content }: PageLayoutProps) {
           </PageHeaderDescription>
         </PageHeader>
         <div className="prose prose-slate max-w-none pt-10 pb-8 dark:prose-invert prose-code:font-mono prose-pre:p-0">
-          {children}
+          <Twemojify className="not-prose">{children}</Twemojify>
         </div>
       </div>
     </>

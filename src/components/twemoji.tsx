@@ -39,54 +39,46 @@ export default function Twemojify({ children, size, className }: TwemojifyProps)
       className: twemojifyClassName,
     }
     return (
-      <Twemoji noWrapper={true} options={mergedOptions}>
+      <Twemoji noWrapper options={mergedOptions}>
         {children as TwemojiProps['children']}
       </Twemoji>
     )
   }
 }
 
-function StringTwemojify({
-  text,
-  className,
-}: {
-  text: string
-  className: string
-}): React.ReactNode[] {
+function StringTwemojify({ text, className }: { text: string; className: string }) {
   const emojiEntities = parse(text)
-  const result = []
-  let currentIndex = 0
-  emojiEntities.forEach((entity) => {
-    const textBeforeEmoji = text.slice(currentIndex, entity.indices[0])
-    if (textBeforeEmoji) {
-      result.push(
-        <span
-          key={`text-${currentIndex.toString()}-${entity.indices[0].toString()}`}
-          className="inline"
-        >
-          {textBeforeEmoji}
-        </span>
+  let lastIndex = 0
+  const resultNodes: React.ReactNode[] = []
+
+  for (const [index, entity] of emojiEntities.entries()) {
+    // process text before emoji
+    if (entity.indices[0] > lastIndex) {
+      resultNodes.push(
+        <span key={`text-${lastIndex.toString()}`}>{text.slice(lastIndex, entity.indices[0])}</span>
       )
     }
-    result.push(
+
+    // process emoji
+    resultNodes.push(
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        key={`img-${currentIndex.toString()}`}
+        key={`emoji-${index.toString()}`}
         src={entity.url}
-        alt={entity.text}
+        alt=""
         className={className}
+        draggable={false}
+        aria-label={entity.text}
       />
     )
-    currentIndex = entity.indices[1]
-  })
 
-  if (currentIndex < text.length) {
-    result.push(
-      <span key={`text-${currentIndex.toString()}-end`} className="inline">
-        {text.slice(currentIndex)}
-      </span>
-    )
+    lastIndex = entity.indices[1]
   }
 
-  return result
+  // process text after the last emoji
+  if (lastIndex < text.length) {
+    resultNodes.push(<span key={`text-${lastIndex.toString()}`}>{text.slice(lastIndex)}</span>)
+  }
+
+  return <>{resultNodes}</>
 }
