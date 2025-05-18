@@ -13,25 +13,29 @@ export default function HeadingLinkIcon({
   children,
   className,
   ...rest
-}: HeadingLinkIconProps) {
-  const Heading = `h${level.toString()}` as keyof React.JSX.IntrinsicElements
-  if (id) {
-    return React.createElement(
-      Heading,
-      { ...rest, id, className: cn('group relative', className) },
-      <>
-        {children}
-        {id && (
-          <a
-            className="hidden px-2 align-middle text-primary no-underline hover:block hover:text-primary/80 group-hover:inline-block"
-            href={'#' + id}
-            tabIndex={-1}
-            aria-hidden="true"
-          >
-            <IconLink />
-          </a>
-        )}
-      </>
-    )
-  }
+}: HeadingLinkIconProps): React.ReactElement<HTMLHeadingElement> {
+  const HeadingTag = `h${level.toString()}` as Extract<
+    keyof React.JSX.IntrinsicElements,
+    'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  >
+
+  return (
+    <HeadingTag
+      {...rest}
+      id={id}
+      className={cn('group relative hover:[&_a]:opacity-100', className)}
+    >
+      {children}
+      {id && (
+        <a
+          href={`#${id}`}
+          className="ml-2 inline-block align-middle text-primary/0 transition-opacity hover:text-primary/80 group-hover:text-primary/60"
+          aria-label="Jump to this heading"
+          tabIndex={-1}
+        >
+          <IconLink className="size-[1em]" />
+        </a>
+      )}
+    </HeadingTag>
+  )
 }

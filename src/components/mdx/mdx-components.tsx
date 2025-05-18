@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { MDXComponents } from 'mdx/types'
-import Image from 'next/image'
 
 import HeadingLinkIcon from '@/components/mdx/heading-link-icon'
 import MdxImage from '@/components/mdx/mdx-image'
 import MdxLink from '@/components/mdx/mdx-link'
 import MdxTable from '@/components/mdx/mdx-table'
 import PreCodeCopy from '@/components/mdx/pre-code-copy'
+import Image from '@/components/smart-image'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 const components: MDXComponents = {
