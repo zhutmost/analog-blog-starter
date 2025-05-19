@@ -25,7 +25,7 @@ const homepageGreetings: HomepageGreetings = {
       My programming journey began with <b className="font-medium">Pascal and C</b>.
     </>,
     <>
-      I am passionate about creating cutting-edge <b className="font-medium">AI chips</b>🤖.
+      I am passionate about creating cutting-edge <b className="font-medium">AI chips </b>🤖.
     </>,
     <>
       I work mostly with <b className="font-medium">Verilog/Chisel</b> technologies.

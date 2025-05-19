@@ -25,8 +25,9 @@ const userConfig: DeepPartial<SiteConfig> = {
     menu: {
       Home: '/',
       Blog: '/archive',
-      Tags: '/tags',
       News: '/news',
+      Tags: '/tags',
+      Team: '/team',
       About: '/about',
     },
   },
