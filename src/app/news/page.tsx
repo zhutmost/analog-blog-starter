@@ -18,7 +18,7 @@ export default function Page() {
       <PageHeader>
         <PageHeaderHeading>News</PageHeaderHeading>
         <PageHeaderDescription>
-          <Twemojify>{siteConfig.pageGreetings.news}</Twemojify>
+          <Twemojify>{siteConfig.pages.greetings.news}</Twemojify>
         </PageHeaderDescription>
       </PageHeader>
       <div className="py-10">

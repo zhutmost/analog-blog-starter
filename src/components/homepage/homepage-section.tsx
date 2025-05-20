@@ -59,7 +59,7 @@ export function HomepageSectionRecentPosts() {
     <HomepageSection
       href="/archive"
       title="Recent Posts"
-      description={siteConfig.pageGreetings.archive}
+      description={siteConfig.pages.greetings.archive}
     >
       <div>
         <ul>
@@ -80,7 +80,7 @@ export function HomepageSectionLatestNews() {
   if (recentNews.length === 0) return
 
   return (
-    <HomepageSection href="/news" title="Latest News" description={siteConfig.pageGreetings.news}>
+    <HomepageSection href="/news" title="Latest News" description={siteConfig.pages.greetings.news}>
       <Timeline timelineNews={recentNews} findMore />
     </HomepageSection>
   )
@@ -88,7 +88,11 @@ export function HomepageSectionLatestNews() {
 
 export function HomepageSectionPopularTags() {
   return (
-    <HomepageSection href="/tags" title="Popular Tags" description={siteConfig.pageGreetings.tags}>
+    <HomepageSection
+      href="/tags"
+      title="Popular Tags"
+      description={siteConfig.pages.greetings.tags}
+    >
       <PopularTags />
     </HomepageSection>
   )

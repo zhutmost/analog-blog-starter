@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: Promise<{ page: string 
       <PageHeader>
         <PageHeaderHeading>All Posts</PageHeaderHeading>
         <PageHeaderDescription>
-          <Twemojify>{siteConfig.pageGreetings.archive}</Twemojify>
+          <Twemojify>{siteConfig.pages.greetings.archive}</Twemojify>
         </PageHeaderDescription>
       </PageHeader>
       <div>

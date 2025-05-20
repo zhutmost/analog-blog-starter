@@ -6,7 +6,6 @@ import mdxComponents from '@/components/mdx/mdx-components'
 import { allPages, Page as PageType } from '@/content-collections'
 import PageLayout from '@/layouts/page-layout'
 import { generatePageMetadata } from '@/lib/page-metadata'
-import siteConfig from '@/lib/site-config'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
@@ -24,7 +23,7 @@ export async function generateMetadata(props: {
 
   return generatePageMetadata({
     title: page.title,
-    description: page.description ?? siteConfig.description,
+    description: page.description,
   })
 }
 

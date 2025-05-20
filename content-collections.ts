@@ -209,6 +209,7 @@ const Pages = defineCollection({
   include: ['**/*.mdx'],
   schema: (z) => ({
     title: z.string(),
+    greeting: z.string().optional(),
     description: z.string().optional(),
     locale: z.string().default('en-US'),
   }),

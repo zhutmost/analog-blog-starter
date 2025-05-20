@@ -12,7 +12,7 @@ interface PageMetadataProps {
 export function generatePageMetadata({ title, description, ...rest }: PageMetadataProps): Metadata {
   return {
     title,
-    description,
+    description: description ?? siteConfig.description,
     openGraph: {
       title: `${title} | ${siteConfig.seo.openGraph!.title}`,
       description: description ?? siteConfig.seo.openGraph!.description,

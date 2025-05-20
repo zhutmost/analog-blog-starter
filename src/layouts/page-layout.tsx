@@ -19,7 +19,7 @@ export default function PageLayout({ children, content }: PageLayoutProps) {
         <PageHeader>
           <PageHeaderHeading>{content.title}</PageHeaderHeading>
           <PageHeaderDescription>
-            <Twemojify>{content.description ?? siteConfig.pageGreetings.about}</Twemojify>
+            <Twemojify>{content.greeting ?? siteConfig.pages.greetings.otherDefault}</Twemojify>
           </PageHeaderDescription>
         </PageHeader>
         <div className="prose prose-slate max-w-none pt-10 pb-8 dark:prose-invert prose-code:font-mono prose-pre:p-0">

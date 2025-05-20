@@ -45,7 +45,7 @@ function PersonCard({ author }: { author: Author }) {
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function generateMetadata(): Promise<Metadata | undefined> {
-  if (!siteConfig.teamPage) {
+  if (!siteConfig.pages.team || allAuthorsNonDefault.length === 0) {
     return
   }
   return generatePageMetadata({
@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata | undefined> {
 }
 
 export default function Page() {
-  if (!siteConfig.teamPage) {
+  if (!siteConfig.pages.team || allAuthorsNonDefault.length === 0) {
     return notFound()
   }
 
@@ -72,7 +72,7 @@ export default function Page() {
       <PageHeader>
         <PageHeaderHeading>Our Team</PageHeaderHeading>
         <PageHeaderDescription>
-          <Twemojify>{siteConfig.pageGreetings.team}</Twemojify>
+          <Twemojify>{siteConfig.pages.greetings.team}</Twemojify>
         </PageHeaderDescription>
       </PageHeader>
       <div>

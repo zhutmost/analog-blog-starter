@@ -43,10 +43,6 @@ export interface SiteConfig {
   // Keywords used for SEO and social media. It is unnecessary for most modern sites.
   keywords: string[]
 
-  // Whether to use multiple categories to classify posts. (Default: true)
-  multiCategories: boolean
-  // Whether to have a team page. (Default: true)
-  teamPage: boolean
   // The number of posts per page in the pagination. (Default: 10)
   postPerPage: number
 
@@ -62,20 +58,6 @@ export interface SiteConfig {
     githubCalendar: string | null
     // The number of latest news displayed on the homepage. (Default: 5)
     latestNewsNum: number
-  }
-
-  // Set the greetings (displayed under the page header) for different pages.
-  pageGreetings: {
-    // Greetings for 'Authors'(/about/[...]) pages.
-    about: string
-    // Greetings for 'All Posts'(/archive & /category/... & /tags/...) pages.
-    archive: string
-    // Greetings for 'News'(/news) pages
-    news: string
-    // Greetings for the 'Popular Tags' section on the homepage.
-    tags: string
-    // Greetings for 'Team'(/team) page.
-    team: string
   }
 
   header: {
@@ -94,6 +76,28 @@ export interface SiteConfig {
     icons?: Record<string, { icon: string; href: string }>
     // The Beian number of your site (which is needed for websites deployed in China).
     beian?: string
+  }
+
+  pages: {
+    // Whether to have a team page. (Default: true)
+    team: boolean
+    // Whether to use multiple categories to classify posts. (Default: true)
+    category: boolean
+    // Set the greetings (displayed under the page header) for different pages.
+    greetings: {
+      // Greetings for 'Authors' (/about/[...]) pages.
+      about: string
+      // Greetings for 'All Posts' (/archive & /category/... & /tags/...) pages.
+      archive: string
+      // Greetings for 'News'(/news) pages
+      news: string
+      // Greetings for the 'Popular Tags' section on the homepage.
+      tags: string
+      // Greetings for 'Our Team'(/team) page.
+      team: string
+      // Greetings for user pages (/[...slug]).
+      otherDefault: string
+    }
   }
 
   // Comment support (provided by Pliny)
@@ -151,8 +155,6 @@ export const defaultSiteConfig: SiteConfig = {
   locale: 'en-US',
   author: 'John Doe',
   postPerPage: 10,
-  multiCategories: true,
-  teamPage: true,
   keywords: [],
   homepage: {
     sections: [],
@@ -160,13 +162,19 @@ export const defaultSiteConfig: SiteConfig = {
     githubCalendar: null,
     latestNewsNum: 5,
   },
-  pageGreetings: {
-    about: 'Hello, Bonjour, こんにちは, 你好! Glad to see you!',
-    archive: 'My digital garden, where I share my thoughts and ideas.',
-    news: 'Stay up-to-date with the latest happenings.',
-    tags: 'Popular tags feature the most widely favored topics.',
-    team: 'Meet the team behind the scenes.',
+  pages: {
+    team: true,
+    category: true,
+    greetings: {
+      about: 'Hello, Bonjour, こんにちは, 你好! Glad to see you!',
+      archive: 'My digital garden, where I share my thoughts and ideas.',
+      news: 'Stay up-to-date with the latest happenings.',
+      tags: 'Popular tags feature the most widely favored topics.',
+      team: 'Meet the team behind the scenes.',
+      otherDefault: 'Hello, Bonjour, こんにちは, 你好! Glad to see you!',
+    },
   },
+
   header: {
     logo: '/icon.svg',
     title: 'Analog Demo',

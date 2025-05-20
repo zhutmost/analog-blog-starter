@@ -26,7 +26,7 @@ export default function AuthorLayout({ children, author }: AuthorLayoutProps) {
         <PageHeader>
           <PageHeaderHeading>About</PageHeaderHeading>
           <PageHeaderDescription>
-            <Twemojify>{siteConfig.pageGreetings.about}</Twemojify>
+            <Twemojify>{siteConfig.pages.greetings.about}</Twemojify>
           </PageHeaderDescription>
         </PageHeader>
         <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">

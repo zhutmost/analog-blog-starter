@@ -4,7 +4,8 @@ import { DeepPartial } from '@/lib/utils'
 const userConfig: DeepPartial<SiteConfig> = {
   siteUrl: 'https://analog-demo.zhutmost.com',
   siteTitle: 'Analog Demo',
-  description: 'Analog: Another Blog Template with Next.js',
+  description:
+    'Explore Analog: An open-source blog template built with Next.js by zhutmost. Perfect for technical contents, research teams, and academic blogs. Modern, SEO-optimized, and fully customizable.',
   locale: 'en-US',
   author: 'John Doe',
   homepage: {

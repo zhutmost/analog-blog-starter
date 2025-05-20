@@ -75,7 +75,7 @@ export default async function Page(props: { params: Promise<{ tag: string; page:
       <PageHeader>
         <PageHeaderHeading>Tag - {tagTitle}</PageHeaderHeading>
         <PageHeaderDescription>
-          <Twemojify>{siteConfig.pageGreetings.archive}</Twemojify>
+          <Twemojify>{siteConfig.pages.greetings.archive}</Twemojify>
         </PageHeaderDescription>
       </PageHeader>
       <div>
