@@ -24,7 +24,7 @@ export function countPostCategories(
   const categoryCounter: CategoryCounter = {}
   posts.forEach((post) => {
     if (post.category && (!isProduction || !post.draft)) {
-      const category = siteConfig.multiCategories ? post.category : 'Uncategorized'
+      const category = siteConfig.pages.category ? post.category : 'Uncategorized'
       categoryCounter[category] = (categoryCounter[category] || 0) + 1
     }
   })

@@ -34,7 +34,7 @@ export default function PostCard({ post }: PostCardProps) {
       )}
       <dl className="flex flex-row justify-between xl:flex-col">
         <dt className="sr-only">Category</dt>
-        {siteConfig.multiCategories && (
+        {siteConfig.pages.category && (
           <dd className="text-base font-semibold leading-6 text-foreground hover:text-foreground/80">
             <Twemojify>
               <NextLink href={`/category/${slugify(category)}`}>{category}</NextLink>
