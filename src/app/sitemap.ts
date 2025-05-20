@@ -39,17 +39,28 @@ export default function sitemap(): Sitemap {
     changeFrequency: 'monthly',
   }))
 
-  const pagesRoutes: Sitemap = [
-    'news',
-    'tags',
-    ...(siteConfig.teamPage ? ['team'] : []),
-    ...allPages.map((p) => p.slug),
-  ].map((route) => ({
-    url: new URL(route, siteConfig.siteUrl).toString(),
-    lastModified: new Date().toISOString(),
-    priority: 0.5,
+  const presetPagesRoutes: Sitemap = ['news', 'tags', ...(siteConfig.teamPage ? ['team'] : [])].map(
+    (route) => ({
+      url: new URL(route, siteConfig.siteUrl).toString(),
+      lastModified: new Date().toISOString(),
+      priority: 0.5,
+      changeFrequency: 'monthly',
+    })
+  )
+
+  const userPagesRoutes: Sitemap = allPages.map((page) => ({
+    url: new URL(page.slug, siteConfig.siteUrl).toString(),
+    lastModified: page.dateUpdate.toISOString(),
+    priority: 0.7,
     changeFrequency: 'monthly',
   }))
 
-  return [homeRoute, aboutRoute, ...postRoutes, ...authorsRoutes, ...pagesRoutes]
+  return [
+    homeRoute,
+    aboutRoute,
+    ...postRoutes,
+    ...authorsRoutes,
+    ...presetPagesRoutes,
+    ...userPagesRoutes,
+  ]
 }
