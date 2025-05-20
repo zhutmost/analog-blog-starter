@@ -8,7 +8,6 @@ const userConfig: DeepPartial<SiteConfig> = {
     "This is Haozhe Zhu (@zhutmost)'s personal blog. I write about my research, thoughts, and life.",
   locale: 'en-US',
   author: 'Haozhe Zhu',
-  teamPage: false,
   homepage: {
     sections: ['latestNews', 'recentPosts'],
     popularTags: [],
