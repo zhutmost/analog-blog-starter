@@ -1,11 +1,12 @@
 'use client'
 
 import * as React from 'react'
-import { IconHome, IconNews, IconUser } from '@tabler/icons-react'
+import { IconHome, IconInfoCircle, IconNews, IconUser } from '@tabler/icons-react'
 import { Action, KBarProvider } from 'kbar'
 import { useRouter } from 'next/navigation'
 
 import KBarModal from '@/components/search/search-modal'
+import { allPages } from '@/content-collections'
 import timelineNews from '@/data/timeline-news'
 import allPostsSorted from '@/lib/post-sort'
 import siteConfig from '@/lib/site-config'
@@ -71,12 +72,30 @@ export default function SearchProvider({ children }: { children: React.ReactNode
       day: 'numeric',
     }),
     perform: () => {
-      router.push(`posts/${post.slug}`)
+      router.push(`post/${post.slug}`)
     },
     priority: 10,
   }))
+
+  const userPagesActions = allPages.map((page) => ({
+    id: `posts/${page.slug}`,
+    name: page.title,
+    keywords: page.description ?? '',
+    subtitle: page.dateUpdate.toLocaleDateString(siteConfig.locale, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }),
+    icon: <IconInfoCircle />,
+    section: 'Pages',
+    perform: () => {
+      router.push(`/${page.slug}`)
+    },
+    priority: 5,
+  }))
+
   return (
-    <KBarProvider actions={[...pageActions, ...newsAction, ...postActions]}>
+    <KBarProvider actions={[...pageActions, ...newsAction, ...postActions, ...userPagesActions]}>
       <KBarModal actions={[]} isLoading={false} />
       {children}
     </KBarProvider>
