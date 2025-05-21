@@ -11,11 +11,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@radix-ui/react-aspect-ratio": "^1.1.6",
-    "@radix-ui/react-avatar": "^1.1.9",
-    "@radix-ui/react-dialog": "^1.1.13",
-    "@radix-ui/react-slot": "^1.2.2",
-    "@radix-ui/react-tooltip": "^1.2.6",
+    "@radix-ui/react-aspect-ratio": "^1.1.7",
+    "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tooltip": "^1.2.7",
     "next": "^15.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
@@ -32,7 +32,7 @@
     "@tailwindcss/postcss": "^4.1.7",
     "@tailwindcss/typography": "^0.5.16",
     "@twemoji/parser": "^16.0.0",
-    "@types/node": "^22.15.19",
+    "@types/node": "^22.15.21",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "@types/react-twemoji": "^0.4.3",
