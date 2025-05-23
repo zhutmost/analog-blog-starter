@@ -54,7 +54,7 @@ function PostSidebar({ content, authors, postNext, postPrev }: Omit<PostLayoutPr
         <dd className="">
           <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
             {authors.map((author) => (
-              <li className="flex items-center space-x-2" key={author.name}>
+              <li className="flex items-center gap-3" key={author.name}>
                 {author.avatar && (
                   <NextLink href={`/about/${author.slug}`}>
                     <SmartImage
@@ -66,7 +66,7 @@ function PostSidebar({ content, authors, postNext, postPrev }: Omit<PostLayoutPr
                     />
                   </NextLink>
                 )}
-                <dl className="whitespace-nowrap indent-3 text-sm font-medium leading-5">
+                <dl className="pl-3 text-sm font-medium leading-5">
                   <NextLink href={`/about/${author.slug}`}>
                     <dt className="sr-only">Name</dt>
                     <dd className="text-foreground">{author.name}</dd>

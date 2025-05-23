@@ -33,7 +33,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "@twemoji/parser": "^16.0.0",
     "@types/node": "^22.15.21",
-    "@types/react": "^19.1.4",
+    "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "@types/react-twemoji": "^0.4.3",
     "class-variance-authority": "^0.7.1",
