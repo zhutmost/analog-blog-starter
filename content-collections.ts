@@ -22,6 +22,7 @@ import rehypeUnwrapImages from 'rehype-unwrap-images'
 import remarkFlexibleToc, { HeadingDepth, HeadingParent } from 'remark-flexible-toc'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import { z } from 'zod'
 
 import { countPostCategories, countPostTags } from '@/lib/content-collections/post-counter'
 import rehypeAssetCopy, { assetSourceRedirect } from '@/lib/content-collections/rehype-asset-copy'
@@ -134,7 +135,7 @@ const Posts = defineCollection({
   name: 'posts',
   directory: path.join(dataDir, 'posts'),
   include: ['**/*.mdx'],
-  schema: (z) => ({
+  schema: z.object({
     title: z.string(),
     authors: z.string().array().default(['default']),
     datePublish: z.coerce.date(),
@@ -174,7 +175,7 @@ const Authors = defineCollection({
   name: 'authors',
   directory: path.join(dataDir, 'authors'),
   include: ['**/*.mdx'],
-  schema: (z) => ({
+  schema: z.object({
     name: z.string(),
     avatar: z.string().optional(),
     bio: z.string().optional(),
@@ -207,7 +208,7 @@ const Pages = defineCollection({
   name: 'pages',
   directory: path.join(dataDir, 'pages'),
   include: ['**/*.mdx'],
-  schema: (z) => ({
+  schema: z.object({
     title: z.string(),
     greeting: z.string().optional(),
     description: z.string().optional(),
