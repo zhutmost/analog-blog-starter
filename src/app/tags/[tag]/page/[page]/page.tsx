@@ -63,7 +63,7 @@ export default async function Page(props: { params: Promise<{ tag: string; page:
     redirect(`/tags/${params.tag}/page/1`)
   }
 
-  const posts = allPostsSorted.slice(
+  const posts = filteredPosts.slice(
     siteConfig.postPerPage * (currPage - 1),
     siteConfig.postPerPage * currPage
   )
