@@ -1,0 +1,187 @@
+---
+title: 在容器中运行 EDA 全家桶
+datePublish: 2025-06-01
+category: ⚙️ Engineering
+tags:
+  - EDA
+  - Container
+  - Podman
+summary: "互联网上关于如何将 Synopsys、Cadence 等 EDA 软件容器化的开源解决方案并不寻常。借实验室新服务器软件部署的机会，我构建了一套以“易用”为核心的 EDA 容器化方案，在尽可能地对普通用户透明无感的同时，将 EDA 全家桶运行在旧版本系统下，同时支持图形界面、用户容器隔离等。"
+banner: banner.jpg
+---
+
+事情的起因是我买了一台 EDA 专用的服务器（学院的计算集群实在是人满为患），需要重新安装相应的软件。这台服务器的处理器是双路 AMD EPYC 9554，处于一些兼容性的原因，管理员建议我选择内核版本较新的 AlmaLinux 9 操作系统。
+
+然而，大部份的 EDA 软件对操作系统的支持还停留在 RHEL 7/8（即 AlmaLinux 7/8）。直接在 AlmaLinux 9 中安装、运行这些 EDA 软件，可能会存在一些 undocumented 的兼容问题。所以，一个可能的选择是，让用户运行一些 AlmaLinux 8 的容器实例，再在其中运行 EDA 软件。
+
+然而，根据我在 [学院 FICS 计算集群](https://github.com/cihlab/fics-cluster-guide) 的管理工作中学到的经验，不能指望服务器的普通用户都是 Linux 专业用户。对于绝大多数普通用户来说，使用 LSF、Slurm 这样的集群调度软件都已经显得过于复杂，更不要说让普通用户启动一个容器来运行软件了。因此，对于新服务器的软件部署，最核心的挑战是尽可能地降低对普通用户的心智负担，尽量使得容器内启动 EDA 软件的过程和容器外没有差异。
+
+因此，一个（相对）完美的解决方案是：__在 AlmaLinux 9 宿主机中启动 AlmaLinux 8 的容器，然后将 EDA 软件运行在这些容器实例里，并尽可能地对普通用户透明无感。__
+
+具体来说，上述挑战可以分解成以下几个具体需求：
+
+- **命令完全兼容**：在原有命令上加上一个 `edarun` 前缀（像 `edarun vcs ...` 这样）即可在容器中运行 VCS 和其他 EDA 软件；
+- **图形界面支持**：对于有 GUI 的软件，`edarun virtuoso` 可以直接启动 GUI 界面；
+- **文件系统映射**：用户的文件夹对容器内的软件可见，且保持内外一致的权限，使得软件能够方便地读写文件；
+- **用户容器隔离**：每个用户都有一个自己的 EDA 运行容器，彼此之间相互隔离，遇到问题也可以快速地重启自己的 EDA 容器。
+
+> [!NOTE]
+> 本文不会涉及如何破解 EDA 软件或使用盗版许可证，本人也不赞成使用盗版软件。请读者从合规渠道获取 EDA 软件和许可证。
+
+相关的代码我在 GitHub 上开源了（[代码仓库链接](https://github.com/zhutmost/eda-in-container)），关于设置和用法等可以查看仓库的 README 说明。本文主要讨论和记录下我在开发过程中的一些想法和踩过的坑。
+
+## 他山之石：前人的方案
+
+在容器中运行 EDA 软件是一个相对小众的需求，虽然称不上复杂，但可以参考的代码也不算太多。
+
+GitHub 上有一个类似的解决方案——[limerainne/Dockerize-EDA](https://github.com/limerainne/Dockerize-EDA)，但都不甚令人满意。它们通常是为了充当持续集成（CI）的一个组件，而不是为了给多用户的服务器提供一个通用的 EDA 运行环境。它们通常试图将 Synopsys DC、VCS 等某几款常用的 EDA 工具分别包装成多个单独的镜像，即一个 Docker 镜像对应一款工具。但实际的 ASIC 流程通常涉及二三十款 EDA 工具，将它们一一打包成容器镜像供用户选择是不切实际的。此外，仅有的几个仓库的代码也缺乏维护，长期没有得到更新。
+
+Synopsys 官方也提供了一个 EDA 容器化的解决方案——[Synopsys Container](https://www.synopsys.com/support/licensing-installation-computeplatforms/compute-platforms/containers.html)。但该方案对 EDA 软件的支持比较有限，即使是 Synopsys 自家的工具尚且没有支持完全。
+
+## 我的实践
+
+总之，上面这些方案离我的设想还存在不小的距离，特别是很难做到“尽可能地对普通用户透明无感”，这也是我为什么要从头开始自己动手的原因。
+
+下图是服务器上 EDA 软件运行环境的整体架构，其中：普通用户每人有一个独立的 EDA Runner 容器实例（名为 `eda-runner-username`），该用户的所有 EDA 软件都在该容器实例中运行，用户可以通过 Shell 命令行或者图形界面与容器内的软件交互；管理员用户针对不同的 EDA 软件厂商运行了多个 LIC Runner 容器实例（名为 `lic-runner-vendor`），它们通过指定的端口号提供许可证服务。
+
+![Multiple users run EDA tools in containers](overview.png "多用户使用容器运行 EDA 软件")
+
+### EDA Runner 容器镜像
+
+在事情的最开始，我们需要首先构建一个运行 EDA 的 Docker 镜像文件 EDA Runner。这个部分相对来说和已有的一些实践差别不是太大，主要是安装 EDA 软件所需的一些依赖包。它的代码大致如下（为了简洁我省略了一部分，详见代码仓库中的 `edarunner.dockerfile` 文件）：
+
+```dockerfile
+FROM almalinux:8
+
+RUN yum update -y
+RUN yum install -y epel-release
+RUN yum config-manager --set-enabled powertools
+
+# Install basic tools
+RUN yum install -y zsh git java-21-openjdk-devel firefox
+RUN yum groupinstall -y "Development Tools"
+RUN yum install -y redhat-lsb-core tcsh ksh xterm gcc-c++ gdb glibc-devel net-tools
+
+# Install additional dependencies for EDA tools
+RUN yum install -y texinfo ncurses-devel rsync glib2-devel mesa-libGL ...
+
+RUN yum clean all
+
+# Fix Java sun.awt.FontConfiguration.getVersion error
+RUN fc-cache --force
+
+# Remove the /.dockerenv file (if exsiting) to avoid some EDA tools detecting the container environment
+RUN rm -f /.dockerenv
+
+ENV JAVA_HOME=/usr/lib/jvm/java-openjdk
+```
+
+和本文开头说的一样，我们的镜像是基于 AlmaLinux 8 构建的，这是目前 EDA 软件支持比较主流的发行版。除了 Git 等一些常见的工具软件和依赖，它还安装了 EDA 软件运行所需的的一箩筐依赖库。关于这个部分，EDA 厂商们也缺乏具体的文档指出软件到底有哪些依赖，所以基本上都是我通过实验获得的。
+这里有几个值得注意的点：
+- 我最后删除了 `/.dockerenv` 这个文件，主要是我发现一部分软件会检查自己是否在 Docker 环境下，进而索要更多的 License 项目；
+- 在镜像内安装并设置了一个较新的 JDK 环境（以及安装了 Git 和 Zsh 等），主要是为了保持容器内外一致的开发环境体验；
+- 运行 `fc-cache --force` 是因为 Docker 环境内的原生 JDK 有时会遇到 `java.lang.NullPointerException` 报错。具体原因大概如
+[此文](https://blog.csdn.net/u010454030/article/details/140868921)
+所述，是它缺失了一些内置字体资源。
+
+实践上，运行许可证软件 `lmgrd` 的容器（即图中的 LIC Runner）和 EDA Runner 可以用一样的镜像，因此也就不需要额外单独准备了。
+
+### 容器引擎的选择：Why Podman over Docker？
+
+其次，我们需要一个容器引擎来管理、运行上述镜像，[Docker](https://www.docker.com) 是其中最为常见的选择。但经过实际实验和比较，我最终选择了 Podman。
+
+Podman 是一个开源的容器软件，并不像 Docker 那样知名。关于它和 Docker 孰优孰劣的争论由来已久，我选择 Podman 的原因主要包括以下两点：
+
+- Podman 是无根（rootless）的，每个用户的 Podman 环境是完全隔离的；而 Docker 存在一个 root 权限运行的守护进程，将普通用户加入 Docker 用户组可能会带来潜在的安全风险和管理上的麻烦。
+- Podman 的使用方法和 Docker 基本一致，也可以直接解析 Dockerfile 语法的镜像文件。网上的 Docker 经验可以稍作修改便迁移到 Podman 上。
+- Podman 是开源的，以及已经预装在 AlmaLinux 9 中了。
+
+当然，最重要的是，我之前个人用过 Podman，比较熟悉（哈哈哈）。
+
+> [!NOTE]
+> 此外，有一个很奇怪的现象是，Cadence Virtuoso 在 Docker 容器中运行时会需要额外的 License，在 Podman 或者宿主机上运行时就不需要。我没有研究出它的检测机制是怎样运转的，因此具体为什么就不得而知了。
+
+### `edarun` 命令的底层逻辑和代码实现
+
+在代码仓库的 `bin` 文件夹中，我提供了三个 Zsh 脚本：
+- `edarun`：启动 `eda-runner-username` 容器实例，并在其中运行 EDA 软件；
+- `edakill`：终止并删除用户当前的 `eda-runner-username` 容器实例（当然也包括其中正在运行的 EDA 软件进程）；
+- `edaupdate`：先运行 `edakill`，而后重新编译 `edarunner.dockerfile` 镜像文件。
+
+具体它们三者的功能，可以直接参考代码仓库的 README 说明，这里就不赘述了。其中 `edakill` 和 `edaupdate` 的功能比较简单，有效代码也就三两行，因此这里主要讨论 `edarun` 的实现。`edarun` 的代码在 [这里](https://github.com/zhutmost/eda-in-container/blob/main/bin/edarun)，源代码太长了我就不贴过来了。
+
+![The flowchart of edarun command](edarun.png "edarun 命令的执行流程")
+
+`edarun` 脚本的执行流程如下图所示。该脚本的目标是将 `edarun [args]` 命令中的参数部分作为命令在名为 `eda-runner-username` 的容器实例中执行（`podman exec`），为此它首先检查该容器实例是否存在，如不存在则先基于 `edarunner` 容器镜像创建（`podman create`）一个名为 `eda-runner-username` 的实例并运行在后台。如果用户此前还没有构建过 `edarunner` 这一镜像，脚本会在创建实例前先完成镜像的构建（`podman build`）。
+
+之所以要设计地如此迂回，而不是让用户自行构建容器镜像并创建对应的实例，是因为我不希望普通用户需要学习 `podman` 的使用（甚至不需要知道容器的存在）。如此一来，无论当前用户的 `eda-runner-username` 实例是否已经运行，用户提交的 EDA 软件命令都能够在实例中准确地得到执行。此外，这么设计的还有一个目的是，用户即使多次运行 `edarun ...` 命令，也不会启动多个容器实例，即这多条命令会在同一个容器实例中运行，这有利于后续管理（软件搞崩了的话大不了直接 `edakill`）。
+
+为了让用户使用更加丝滑，脚本还做了以下设置：
+
+#### GUI 支持
+
+绝大多数 EDA 软件都具有图形界面，因此我们需要容器能够支持 X11 GUI 服务，因此，在创建实例时需要加上对应的参数：
+```shell
+podman create -it \
+    -e DISPLAY \
+    -e "TERM=xterm-256color" \
+    -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+    ...
+
+podman exec -it \
+    -e DISPLAY \
+    ...
+```
+
+#### 容器内外一致的用户权限
+
+以下设置可以以宿主机当前用户的身份在容器内执行命令：
+
+```shell
+podman create -it \
+    --userns=keep-id \
+    --group-add keep-groups \
+    ...
+
+podman exec -it \
+    --user $(id -u):$(id -g) \
+    ...
+```
+
+#### 在当前目录运行 EDA 软件
+
+进入容器时，Podman 默认会将当前工作目录切换到容器的根目录 `/`，但我们更希望 `edarun ...` 的命令能够在宿主机的当前目录执行。因此，在 `podman exec` 执行之前，脚本会检查当前目录在容器中是否存在，如果是的话，将默认工作目录切换到该目录：
+
+```shell
+if podman exec "$CONTAINER_NAME" [ -d "$(pwd)" ]; then
+    WORKDIR="$(pwd)"
+else
+    WORKDIR="${HOME}"
+fi
+
+podman exec -it \
+    -w ${WORKDIR} \
+    ...
+```
+
+#### 容器保持和宿主机相同的时区
+
+以下设置是为了使得各个 EDA 工具内看到的时间和系统时间保持一致，以免产生不必要的误解。
+
+```shell
+podman create -it \
+    --tz $(timedatectl show --property=Timezone --value) \
+    ...
+```
+
+### License 管理服务
+
+关于 License 管理服务 `lmgrd` 的容器化部署，其实反而相对简单。代码仓库的 README 里也已经有了比较清晰的用法说明。
+
+由于容器的网络 MAC 地址是可以自定义设置的，这可以使得 License 文件可以不再绑定到某一台具体的服务器上。这一点的好处是显而易见的——比如该服务器坏了以后不需要联系 EDA 厂商重新生成 License，特别是 EDA 厂商可能断供的情况下。
+
+## 关于本文
+
+我本来是不打算写作本文（以及开源相关的代码）的，毕竟部分聪明的读者已经发现这套技术栈有用来盗版的风险，作为一个正版用户我无意于此。但近期刚好有朋友和我讨论了在容器中运行 EDA 软件的可行性，让我觉得这个事情技术上还是有一些有意思的点的，值得分享给有需要的朋友的。
+
+以及，Synopsys（以及其他 EDA 厂商）出于某些政治因素把我尚在有效期内的 SolvNet Plus 账号停了（实在令人恼火🔥）。
