@@ -114,35 +114,6 @@ Rehype-highlight and [highlighting.js](https://highlightjs.readthedocs.io/en/lat
 
 ### Supported Programming Languages
 
-Lowlight supports a huge number of languages, however by default it only enables a subset. You can find a full list of supported languages and enabled ones on [its README](https://github.com/wooorm/lowlight#data).
-
-To enable one of these languages, you can import the corresponding syntax support in `/content-collections.ts` and add it to the `rephye-highlight` plugin configuration. Here is an example of enabling the `scala` language:
-
-```typescript
-import scala from 'highlight.js/lib/languages/scala'
-import { common as commonLanguages } from 'lowlight'
-
-const mdx = await compileMdx(content, {
-  ...
-  rehypePlugins: [
-    [rehypeHighlight, { detect: true, languages: { ...commonLanguages, scala } }],
-    ...
-  ],
-})
-```
-
-You can also enable all supported programming languages directly, but it may cause performance loss on the visitor side.
-
-```typescript
-import { all as allLanguages } from 'lowlight'
-
-const mdx = await compileMdx(content, {
-  ...
-  rehypePlugins: [
-    [rehypeHighlight, { detect: true, languages: allLanguages }],
-    ...
-  ],
-})
-```
+Lowlight supports a huge number of languages, and you can find a full list on [its README](https://github.com/wooorm/lowlight#data).
 
 If you need to add a new programming language syntax, please refer to the [related lightnight documentation](https://github.com/wooorm/lowlight#lowlightregistergrammars).

@@ -4,9 +4,7 @@ import * as path from 'path'
 import { defineCollection, defineConfig, type Context, type Meta } from '@content-collections/core'
 import { compileMDX } from '@content-collections/mdx'
 import slugify from '@sindresorhus/slugify'
-import scala from 'highlight.js/lib/languages/scala'
-import verilog from 'highlight.js/lib/languages/verilog'
-import { common as commonLanguages } from 'lowlight'
+import { all as allLanguages } from 'lowlight'
 import readingTimeEstimate from 'reading-time'
 import {
   rehypeGithubAlerts,
@@ -98,7 +96,7 @@ async function commonTransform(
         rehypePlugins: [
           [rehypeGithubAlerts, rehypeGithubAlertsOptions],
           rehypeKatex,
-          [rehypeHighlight, { detect: true, languages: { ...commonLanguages, verilog, scala } }],
+          [rehypeHighlight, { detect: true, languages: allLanguages }],
           [rehypeHighlightLines, { showLineNumbers: true }],
           rehypeSlug,
           [rehypeAssetCopy, { assetPath }],

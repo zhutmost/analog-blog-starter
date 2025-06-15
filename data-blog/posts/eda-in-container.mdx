@@ -121,7 +121,7 @@ Podman 是一个开源的容器软件，并不像 Docker 那样知名。关于�
 #### GUI 支持
 
 绝大多数 EDA 软件都具有图形界面，因此我们需要容器能够支持 X11 GUI 服务，因此，在创建实例时需要加上对应的参数：
-```shell
+```zsh
 podman create -it \
     -e DISPLAY \
     -e "TERM=xterm-256color" \
@@ -137,7 +137,7 @@ podman exec -it \
 
 以下设置可以以宿主机当前用户的身份在容器内执行命令：
 
-```shell
+```zsh
 podman create -it \
     --userns=keep-id \
     --group-add keep-groups \
@@ -152,7 +152,7 @@ podman exec -it \
 
 进入容器时，Podman 默认会将当前工作目录切换到容器的根目录 `/`，但我们更希望 `edarun ...` 的命令能够在宿主机的当前目录执行。因此，在 `podman exec` 执行之前，脚本会检查当前目录在容器中是否存在，如果是的话，将默认工作目录切换到该目录：
 
-```shell
+```zsh
 if podman exec "$CONTAINER_NAME" [ -d "$(pwd)" ]; then
     WORKDIR="$(pwd)"
 else
@@ -168,7 +168,7 @@ podman exec -it \
 
 以下设置是为了使得各个 EDA 工具内看到的时间和系统时间保持一致，以免产生不必要的误解。
 
-```shell
+```zsh
 podman create -it \
     --tz $(timedatectl show --property=Timezone --value) \
     ...
@@ -182,6 +182,6 @@ podman create -it \
 
 ## 关于本文
 
-我本来是不打算写作本文（以及开源相关的代码）的，毕竟部分聪明的读者已经发现这套技术栈有用来盗版的风险，作为一个正版用户我无意于此。但近期刚好有朋友和我讨论了在容器中运行 EDA 软件的可行性，让我觉得这个事情技术上还是有一些有意思的点的，值得分享给有需要的朋友的。
+我本来是不打算写作本文（以及开源相关的代码）的，毕竟部分聪明的读者已经发现这套技术栈有用来盗版的风险，作为一个正版用户我无意于此。但近期刚好有朋友和我讨论了在容器中运行 EDA 软件的可行性，让我觉得这个事情技术上还是很有意思的，值得一记。
 
 以及，Synopsys（以及其他 EDA 厂商）出于某些政治因素把我尚在有效期内的 SolvNet Plus 账号停了（实在令人恼火🔥）。
