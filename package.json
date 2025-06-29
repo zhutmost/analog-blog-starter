@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/tsconfig-generate.js && next dev --turbopack",
-    "build": "node scripts/tsconfig-generate.js && next build",
+    "build": "node scripts/tsconfig-generate.js && next build --turbopack",
     "start": "next start",
     "lint": "next lint"
   },
