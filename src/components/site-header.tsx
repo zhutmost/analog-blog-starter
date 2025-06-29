@@ -11,7 +11,7 @@ import siteConfig from '@/lib/site-config'
 import { cn } from '@/lib/utils'
 
 export default function SiteHeader() {
-  const isBlurred = false
+  const isBlurred = true
   const menuLength: number = Object.keys(siteConfig.header.menu).length
 
   return (
