@@ -7,7 +7,7 @@ import { PageHeader, PageHeaderDescription } from '@/components/page-header'
 import PostCard from '@/components/post-card'
 import Timeline from '@/components/timeline'
 import Twemojify from '@/components/twemoji'
-import timelineNews from '@/data/timeline-news'
+import timelineNews from '@/data/news/timeline-news'
 import allPostsSorted from '@/lib/post-sort'
 import siteConfig from '@/lib/site-config'
 
@@ -80,7 +80,11 @@ export function HomepageSectionLatestNews() {
   if (recentNews.length === 0) return
 
   return (
-    <HomepageSection href="/news" title="Latest News" description={siteConfig.pages.greetings.news}>
+    <HomepageSection
+      href="/news"
+      title="Latest News"
+      description={siteConfig.pages.greetings.otherDefault}
+    >
       <Timeline timelineNews={recentNews} findMore />
     </HomepageSection>
   )

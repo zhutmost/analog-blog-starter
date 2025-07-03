@@ -7,6 +7,7 @@ import MdxLink from '@/components/mdx/mdx-link'
 import MdxTable from '@/components/mdx/mdx-table'
 import PreCodeCopy from '@/components/mdx/pre-code-copy'
 import Image from '@/components/smart-image'
+import Timeline from '@/components/timeline'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 const components: MDXComponents = {
@@ -22,6 +23,7 @@ const components: MDXComponents = {
   pre: PreCodeCopy,
   AspectRatio,
   Image,
+  Timeline,
 }
 
 export default components

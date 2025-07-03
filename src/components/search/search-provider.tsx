@@ -1,13 +1,12 @@
 'use client'
 
 import * as React from 'react'
-import { IconHome, IconInfoCircle, IconNews, IconUser } from '@tabler/icons-react'
+import { IconHome, IconInfoCircle, IconUser } from '@tabler/icons-react'
 import { Action, KBarProvider } from 'kbar'
 import { useRouter } from 'next/navigation'
 
 import KBarModal from '@/components/search/search-modal'
 import { allPages } from '@/content-collections'
-import timelineNews from '@/data/timeline-news'
 import allPostsSorted from '@/lib/post-sort'
 import siteConfig from '@/lib/site-config'
 
@@ -43,24 +42,6 @@ export default function SearchProvider({ children }: { children: React.ReactNode
     },
   ]
 
-  const newsAction: Action[] =
-    timelineNews.length > 0
-      ? [
-          {
-            id: 'news',
-            name: 'News',
-            subtitle: 'Latest news and updates',
-            icon: <IconNews />,
-            section: 'Pages',
-            shortcut: ['n'],
-            perform: () => {
-              router.push('/news')
-            },
-            priority: 5,
-          },
-        ]
-      : []
-
   const postActions = allPostsSorted.map((post) => ({
     id: `posts/${post.slug}`,
     name: post.title,
@@ -95,7 +76,7 @@ export default function SearchProvider({ children }: { children: React.ReactNode
   }))
 
   return (
-    <KBarProvider actions={[...pageActions, ...newsAction, ...postActions, ...userPagesActions]}>
+    <KBarProvider actions={[...pageActions, ...postActions, ...userPagesActions]}>
       <KBarModal actions={[]} isLoading={false} />
       {children}
     </KBarProvider>

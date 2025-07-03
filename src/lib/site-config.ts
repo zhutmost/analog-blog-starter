@@ -89,8 +89,6 @@ export interface SiteConfig {
       about: string
       // Greetings for 'All Posts' (/archive & /category/... & /tags/...) pages.
       archive: string
-      // Greetings for 'News'(/news) pages
-      news: string
       // Greetings for the 'Popular Tags' section on the homepage.
       tags: string
       // Greetings for 'Our Team'(/team) page.
@@ -168,7 +166,6 @@ export const defaultSiteConfig: SiteConfig = {
     greetings: {
       about: 'Hello, Bonjour, こんにちは, 你好! Glad to see you!',
       archive: 'My digital garden, where I share my thoughts and ideas.',
-      news: 'Stay up-to-date with the latest happenings.',
       tags: 'Popular tags feature the most widely favored topics.',
       team: 'Meet the team behind the scenes.',
       otherDefault: 'Hello, Bonjour, こんにちは, 你好! Glad to see you!',
