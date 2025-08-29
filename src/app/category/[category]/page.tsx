@@ -1,12 +1,16 @@
-import slugify from '@sindresorhus/slugify'
-import { notFound, redirect } from 'next/navigation'
+import { StackSeparator, VStack } from '@chakra-ui/react'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import slugify from 'slug'
 
-import categoryData from '@/data/category-data.json'
-import { CategoryCounter } from '@/lib/content-collections/post-counter'
+import PageHeader from '@/components/page-header'
+import { PostCardList } from '@/components/post/post-card'
+import { categoryCounter } from '@/lib/coco'
+import generatePageMetadata from '@/lib/page-metadata'
+import siteConfig from '@/lib/site-config'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<{ category: string }[]> {
-  const categoryCounter = categoryData as CategoryCounter
   return Object.keys(categoryCounter).map((category) => {
     return {
       category: encodeURI(slugify(category)),
@@ -14,14 +18,45 @@ export async function generateStaticParams(): Promise<{ category: string }[]> {
   })
 }
 
-export default async function Page(props: { params: Promise<{ category: string }> }) {
-  const params = await props.params
-  const categoryCounter = categoryData as CategoryCounter
-  const category = Object.keys(categoryCounter).find(
-    (t) => slugify(t) === decodeURI(params.category)
-  )
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>
+}): Promise<Metadata | undefined> {
+  const paramCategory = (await params).category
 
+  const category = Object.keys(categoryCounter).find((t) => slugify(t) === decodeURI(paramCategory))
+  if (!category) return
+
+  return generatePageMetadata({
+    title: `Category - ${category}`,
+    description: `"${category}" category posts on ${siteConfig.siteTitle}`,
+  })
+}
+
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ category: string }>
+  searchParams: Promise<{ page?: string }>
+}) {
+  const paramPage = parseInt((await searchParams).page ?? '1', 10)
+  const paramCategory = (await params).category
+
+  const category = Object.keys(categoryCounter).find((t) => slugify(t) === decodeURI(paramCategory))
   if (!category) return notFound()
 
-  redirect(`/category/${params.category}/page/1`)
+  const filteredPosts = categoryCounter[category].posts
+
+  return (
+    <VStack as="article" separator={<StackSeparator />} width="full">
+      <PageHeader.Root>
+        <PageHeader.Title>Category - {category}</PageHeader.Title>
+        <PageHeader.Description>{siteConfig.pages.greetings.archive}</PageHeader.Description>
+      </PageHeader.Root>
+
+      <PostCardList currentPage={paramPage} allPosts={filteredPosts} />
+    </VStack>
+  )
 }

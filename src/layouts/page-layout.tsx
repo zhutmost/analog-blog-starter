@@ -1,31 +1,26 @@
-import * as React from 'react'
+import type * as React from 'react'
+import { Box, StackSeparator, VStack } from '@chakra-ui/react'
 
-import BackToTop from '@/components/back-to-top'
-import { PageHeader, PageHeaderDescription, PageHeaderHeading } from '@/components/page-header'
-import Twemojify from '@/components/twemoji'
-import type { Page } from '@/content-collections'
+import PageHeader from '@/components/page-header'
+import type { Page as PageType } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
 export interface PageLayoutProps {
   children: React.ReactNode
-  content: Page
+  content: PageType
 }
 
 export default function PageLayout({ children, content }: PageLayoutProps) {
   return (
-    <>
-      <BackToTop />
-      <div className="divide-y divide-border">
-        <PageHeader>
-          <PageHeaderHeading>{content.title}</PageHeaderHeading>
-          <PageHeaderDescription>
-            <Twemojify>{content.greeting ?? siteConfig.pages.greetings.otherDefault}</Twemojify>
-          </PageHeaderDescription>
-        </PageHeader>
-        <div className="prose prose-slate max-w-none pt-10 pb-8 dark:prose-invert prose-code:font-mono prose-pre:p-0">
-          <Twemojify className="not-prose">{children}</Twemojify>
-        </div>
-      </div>
-    </>
+    <VStack separator={<StackSeparator />} width="full">
+      <PageHeader.Root>
+        <PageHeader.Title>{content.title}</PageHeader.Title>
+        <PageHeader.Description>
+          {content.greeting ?? siteConfig.pages.greetings.otherDefault}
+        </PageHeader.Description>
+      </PageHeader.Root>
+
+      <Box>{children}</Box>
+    </VStack>
   )
 }

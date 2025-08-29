@@ -1,5 +1,6 @@
-import NextLink from 'next/link'
+import { Box, Flex, Text } from '@chakra-ui/react'
 
+import { Link } from '@/components/smart-link'
 import SocialIcon from '@/components/social-icon'
 import siteConfig from '@/lib/site-config'
 
@@ -7,51 +8,59 @@ function SiteFooter() {
   const thisYear = new Date().getFullYear()
 
   return (
-    <footer className="flex h-auto w-full items-center justify-center bg-background px-6 xl:px-0">
-      <div className="relative flex w-full max-w-5xl flex-col flex-nowrap items-center justify-between gap-3 py-5 md:flex-row">
-        <div className="text-center text-sm text-muted-foreground md:mb-0 md:text-left">
-          <p>
-            Copyright &copy; {thisYear}{' '}
-            <NextLink href="/about" className="underline-offset-2 hover:underline">
-              {siteConfig.author}
-            </NextLink>
-          </p>
-          <p>
-            {`Powered by `}
-            <a
-              href="https://nextjs.org"
-              className="underline-offset-2 hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {'NextJS'}
-            </a>
-            {` & `}
-            <a
-              href="https://github.com/zhutmost/analog-blog-starter"
-              className="underline-offset-2 hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {'Analog-Blog-Theme'}
-            </a>
-          </p>
-          <p>
-            {siteConfig.footer.beian && (
-              <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">
-                {siteConfig.footer.beian}
-              </a>
-            )}
-          </p>
-        </div>
-        <div className="order-first flex items-center gap-1 md:order-last">
+    <Flex as="footer" width="full" marginTop="auto" paddingX={6} justifyContent="center">
+      <Flex
+        maxWidth="5xl"
+        width="full"
+        direction={{ base: 'column', md: 'row' }}
+        align={{ base: 'center', md: 'flex-start' }}
+        justify="space-between"
+        paddingY={5}
+        gap={3}
+      >
+        {/* Social icons (at top when mobile) */}
+        <Flex order={{ base: 1, md: 2 }} gap={1} justifyContent="center">
           {siteConfig.footer.icons &&
             Object.entries(siteConfig.footer.icons).map(([key, item]) => (
               <SocialIcon key={key} name={key} icon={item.icon} href={item.href} />
             ))}
-        </div>
-      </div>
-    </footer>
+        </Flex>
+
+        {/* License info (at bottom when mobile) */}
+        <Box
+          textAlign={{ base: 'center', md: 'left' }}
+          order={{ base: 2, md: 1 }}
+          color="fg.muted"
+          fontSize="sm"
+        >
+          <Text>
+            Copyright &copy; {thisYear}{' '}
+            <Link href="/about" variant="plain" color="fg.muted">
+              {siteConfig.author}
+            </Link>
+          </Text>
+
+          <Text>
+            {`Powered by `}
+            <Link
+              href="https://github.com/zhutmost/analog-blog-starter"
+              variant="plain"
+              color="fg.muted"
+            >
+              Analog Blog Starter
+            </Link>
+          </Text>
+
+          {siteConfig.footer.beian && (
+            <Text>
+              <Link href="https://beian.miit.gov.cn" variant="plain" color="fg.muted">
+                {siteConfig.footer.beian}
+              </Link>
+            </Text>
+          )}
+        </Box>
+      </Flex>
+    </Flex>
   )
 }
 

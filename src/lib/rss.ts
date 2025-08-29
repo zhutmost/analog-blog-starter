@@ -1,7 +1,6 @@
-import { Feed, FeedOptions } from 'feed'
+import { Feed, type FeedOptions } from 'feed'
 
-import { Post } from '@/content-collections'
-import allPostsSorted from '@/lib/post-sort'
+import { allPosts, type Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
 export default function generateRssFeed(): Feed {
@@ -25,7 +24,7 @@ export default function generateRssFeed(): Feed {
   }
 
   const feed = new Feed(feedOptions)
-  allPostsSorted.forEach((post: Post) => {
+  allPosts.forEach((post: Post) => {
     feed.addItem({
       title: post.title,
       id: `/post/${post.slug}`,
@@ -34,7 +33,7 @@ export default function generateRssFeed(): Feed {
       description: post.summary,
       content: post.content,
       author: post.authors.map((author) => ({
-        name: author,
+        name: author.name,
       })),
       date: post.datePublish,
     })

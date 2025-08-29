@@ -37,16 +37,16 @@ Analog includes plentiful search, comment, sharing and other plugins out of the 
   Tags · Category · Team · About · News
 - **Style-rich Writing**
 
-  MDX (Markdown + JSX) · Katex (math support) · highlighting.js (code highlighting) · License
+  MDX (Markdown + JSX) · Katex (math support) · Shiki (code highlighting) · License
 - [**Comment System**](https://analog-demo.zhutmost.com/post/doc/comment)
 
-  Giscus · Utterances · Disqus
+  Giscus
 - **Built-in Search**
 
   KBar (support Cmd+K shortcuts, including pages & posts)
 - [**Analytics**](https://analog-demo.zhutmost.com/post/doc/analytics)
 
-  Umami · Posthog · Google Analytics · Plausible · Simple Analytics
+  Umami · Google Analytics
 - **Other**
 
   RSS · Sitemap · SEO (OpenGraph + Twitter Card)

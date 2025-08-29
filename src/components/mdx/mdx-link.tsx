@@ -1,28 +1,34 @@
-import * as React from 'react'
+import type * as React from 'react'
+import { Icon, type LinkProps } from '@chakra-ui/react'
 import { IconExternalLink } from '@tabler/icons-react'
 
-import SmartLink from '@/components/smart-link'
-import { cn } from '@/lib/utils'
+import { isUrlExternal, Link } from '@/components/smart-link'
 
 export default function MdxLink({
   href,
-  className,
   children,
   ...rest
-}: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
-  const isExternal = href && !(href.startsWith('/') || href.startsWith('#'))
+}: LinkProps & React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  if (!href) {
+    console.warn("MdxLink component received an empty 'href' prop.")
+  }
 
   return (
-    <SmartLink
-      className={cn(
-        'text-primary no-underline hover:text-primary/80 hover:underline hover:underline-offset-2',
-        className
-      )}
+    <Link
       href={href}
+      variant="underline"
+      color="brand"
+      overflowWrap="break-word"
+      display="inline"
+      css={{ '& strong': { color: 'inherit' } }}
       {...rest}
     >
       {children}
-      {isExternal && <IconExternalLink className="ml-1 inline size-[1em] shrink-0" />}
-    </SmartLink>
+      {href && isUrlExternal(href) && (
+        <Icon size="sm" ml="1">
+          <IconExternalLink />
+        </Icon>
+      )}
+    </Link>
   )
 }

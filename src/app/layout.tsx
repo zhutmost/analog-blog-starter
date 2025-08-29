@@ -1,17 +1,16 @@
-import '@/styles/globals.css'
-import '@/styles/github-alert.css'
-
-import * as React from 'react'
+import type * as React from 'react'
+import { Flex, VStack } from '@chakra-ui/react'
 import type { Metadata } from 'next'
-import { Analytics } from 'pliny/analytics/index.js'
 
-import SearchProvider from '@/components/search/search-provider'
+import Provider from '@/app/provider'
+import Analytics from '@/components/analytics'
+import BackToTop from '@/components/back-to-top'
 import SiteFooter from '@/components/site-footer'
 import SiteHeader from '@/components/site-header'
-import { ThemeProvider } from '@/components/theme-provider'
-import customFontFamily from '@/lib/fonts'
+import customFontFamily from '@/lib/font'
 import siteConfig from '@/lib/site-config'
-import { cn } from '@/lib/utils'
+
+import '@/styles/twemoji.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -23,12 +22,12 @@ export const metadata: Metadata = {
   authors: { name: siteConfig.author },
   keywords: siteConfig.keywords,
   openGraph: {
-    title: siteConfig.seo.openGraph!.title,
-    description: siteConfig.seo.openGraph!.description,
+    title: siteConfig.seo.openGraph?.title,
+    description: siteConfig.seo.openGraph?.description,
     url: new URL(siteConfig.siteUrl),
-    siteName: siteConfig.seo.openGraph!.siteName,
-    images: siteConfig.seo.openGraph!.images,
-    locale: siteConfig.seo.openGraph!.locale,
+    siteName: siteConfig.seo.openGraph?.siteName,
+    images: siteConfig.seo.openGraph?.images,
+    locale: siteConfig.seo.openGraph?.locale,
     type: 'website',
   },
   alternates: {
@@ -49,40 +48,41 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: siteConfig.seo.twitter!.title,
-    description: siteConfig.seo.twitter!.description,
+    title: siteConfig.seo.twitter?.title,
+    description: siteConfig.seo.twitter?.description,
     card: 'summary_large_image',
-    images: siteConfig.seo.twitter!.images,
+    images: siteConfig.seo.twitter?.images,
   },
 }
 
-interface RootLayoutProps {
-  children: React.ReactNode
-}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const customFontVariables: string[] = Object.values(customFontFamily)
     .flat()
     .map((font) => font.variable)
 
   return (
     <html lang={siteConfig.locale} suppressHydrationWarning>
-      <body
-        className={cn(
-          'min-h-screen bg-background font-sans text-foreground antialiased',
-          customFontVariables
-        )}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Analytics analyticsConfig={siteConfig.analytics} />
-          <SearchProvider>
-            <div className="flex min-h-screen flex-col items-center">
-              <SiteHeader />
-              <main className="w-full max-w-5xl flex-1 px-6 xl:px-0">{children}</main>
-              <SiteFooter />
-            </div>
-          </SearchProvider>
-        </ThemeProvider>
+      <Analytics analyticsConfig={siteConfig.analytics} />
+      <body className={`${customFontVariables.join(' ')} antialiased`}>
+        <Provider>
+          <VStack minHeight="dvh" backgroundColor="bg">
+            <SiteHeader />
+            <Flex
+              as="main"
+              flexGrow={1}
+              width="full"
+              maxWidth="5xl"
+              justify="center"
+              color="fg.muted"
+              paddingX={{ base: 6, lg: 0 }}
+              paddingBottom={10}
+            >
+              {children}
+            </Flex>
+            <SiteFooter />
+          </VStack>
+          <BackToTop />
+        </Provider>
       </body>
     </html>
   )

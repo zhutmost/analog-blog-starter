@@ -1,41 +1,42 @@
-import * as React from 'react'
+import type * as React from 'react'
+import { Heading, type StackProps, Text, VStack } from '@chakra-ui/react'
 
-import Twemojify from '@/components/twemoji'
-import { cn } from '@/lib/utils'
+import Twemojify from '@/components/twemojify'
 
-function PageHeader({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function PageHeaderRoot(props: StackProps) {
   return (
-    <section
-      className={cn(
-        'mx-auto flex flex-col items-start gap-2 px-4 py-8 md:py-12 md:pb-8 lg:py-12 lg:pb-10',
-        className
-      )}
-      {...props}
-    >
-      <Twemojify>{children}</Twemojify>
-    </section>
-  )
-}
-
-function PageHeaderHeading({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return (
-    <h1
-      className={cn(
-        'text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1]',
-        className
-      )}
+    <VStack
+      w="full"
+      alignSelf="start"
+      alignItems="start"
+      paddingX={4}
+      paddingTop={{ base: 8, md: 12 }}
+      paddingBottom={{ base: 6, md: 10 }}
       {...props}
     />
   )
 }
 
-function PageHeaderDescription({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLParagraphElement>) {
+function PageHeaderTitle({ children }: { children: React.ReactNode }) {
   return (
-    <p className={cn('text-lg font-light leading-7 text-muted-foreground', className)} {...props} />
+    <Heading as="h1" color="fg" size="5xl" fontWeight="bold" letterSpacing="tight">
+      <Twemojify>{children}</Twemojify>
+    </Heading>
   )
 }
 
-export { PageHeader, PageHeaderDescription, PageHeaderHeading }
+function PageHeaderDescription({ children }: { children: React.ReactNode }) {
+  return (
+    <Text fontSize="lg" color="fg.muted" fontWeight="light">
+      <Twemojify>{children}</Twemojify>
+    </Text>
+  )
+}
+
+const PageHeader = {
+  Root: PageHeaderRoot,
+  Title: PageHeaderTitle,
+  Description: PageHeaderDescription,
+}
+
+export default PageHeader

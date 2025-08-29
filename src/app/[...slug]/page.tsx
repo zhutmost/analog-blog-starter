@@ -1,11 +1,11 @@
 import { MDXContent } from '@content-collections/mdx/react'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import mdxComponents from '@/components/mdx/mdx-components'
-import { allPages, Page as PageType } from '@/content-collections'
 import PageLayout from '@/layouts/page-layout'
-import { generatePageMetadata } from '@/lib/page-metadata'
+import { allPages, type Page as PageType } from '@/lib/coco'
+import generatePageMetadata from '@/lib/page-metadata'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
@@ -23,7 +23,8 @@ export async function generateMetadata(props: {
 
   return generatePageMetadata({
     title: page.title,
-    description: page.description,
+    description: page.head?.description,
+    locale: page.head?.locale,
   })
 }
 

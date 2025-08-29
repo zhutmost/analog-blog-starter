@@ -1,0 +1,53 @@
+[class*="twemoji-"] {
+  margin-top: 0;
+  margin-bottom: 0;
+  display: inline-block;
+}
+
+.twemoji-default {
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  height: 1em;
+  width: 1em;
+  vertical-align: -0.1em;
+}
+
+.twemoji-lg {
+  margin-left: 0.133em;
+  margin-right: 0.0665em;
+  height: 1.33em;
+  width: 1.33em;
+  vertical-align: -0.133em;
+}
+
+.twemoji-2x {
+  margin-left: 0.2em;
+  margin-right: 0.1em;
+  height: 2em;
+  width: 2em;
+  vertical-align: -0.2em;
+}
+
+.twemoji-3x {
+  margin-left: 0.3em;
+  margin-right: 0.15em;
+  height: 3em;
+  width: 3em;
+  vertical-align: -0.3em;
+}
+
+.twemoji-4x {
+  margin-left: 0.4em;
+  margin-right: 0.2em;
+  height: 4em;
+  width: 4em;
+  vertical-align: -0.4em;
+}
+
+.twemoji-5x {
+  margin-left: 0.5em;
+  margin-right: 0.25em;
+  height: 5em;
+  width: 5em;
+  vertical-align: -0.5em;
+}

@@ -12,16 +12,13 @@
 # ==============================================================================
 # Generated Files
 
-tsconfig.json
+/tsconfig.json
 
 /public/*
 !/public/favicons/
 !/public/avatar-default.jpg
 !/public/banner-*.png
 !/public/images/posts/
-
-tag-data.json
-category-data.json
 
 # ==============================================================================
 # Language & Build Tool - Content Collections

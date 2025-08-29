@@ -1,0 +1,67 @@
+---
+title: Analog User Guide - Web Analytics System
+datePublish: 2024-10-29
+summary: 'Analog support multiple analytics systems, including Umami, and Google Analytics.'
+category: 🌈 Docs
+banner: banner.jpg
+tags:
+  - analog
+  - analytics
+---
+
+Analog support website analytics systems, including [Umami](https://umami.is) and Google Analytics. With them, you can easily track your blog's performance and user behavior.
+
+Now, let's demonstrate how to set up an analytics system using Umami as an example.
+
+## Umami
+
+1. Log in [Umami](https://umami.is). Click the "Add website" button on the "Websites" page, and fill the form with your blog's information such as name and homepage URL. Click "Save" to complete site creation.
+  ![Umami Add Website](umami-add-website.png "Add website information on Umami")
+2. On the next page, find the "Website ID" (a very long string), and set it as the value of `analytics -> umamiAnalytics -> umamiWebsiteId` in the  user configuration file `/data/site-config.ts`.
+  ![Umami Website ID](umami-website-id.png "Find the Website ID on Umami")
+
+If you have completed the above steps, your configuration file should look like this:
+
+```typescript
+analytics: {
+  umamiAnalytics: {
+    umamiWebsiteId: '4ae5ABCD-EFGH-IJKL-MNOP-QRSTUVWb927e',
+  },
+},
+```
+
+Now, Umami will track your blog's traffic. You can view the statistics on the Umami dashboard.
+
+### Add a Icon to the Footer
+
+To make it easier for visitors to access the analytics, you can add an icon link to the footer.
+
+Umami provides a "shard link" on the "Websites" page. You may need to enable it first.
+
+![Umami Share Link](umami-share-link.png "Find the Share Link on Umami")
+
+You can add the above URL with a Tabler icon in the user configuration file `/data/site-config.ts`, like this:
+
+```typescript
+footer: {
+  icons: {
+    ...,
+    Analytics: {
+      icon: 'IconChartDots',
+      href: 'https://cloud.umami.is/share/unndABCDEFGHIJys/your-site.com',
+    },
+  },
+},
+```
+
+Then, you can see the analytics icon in the footer of your blog (like this demo site).
+
+## Google Analytics
+
+Google Analytics in Analog is powered by `@next/third-parties`. It is a out-of-the-box solution for integrating Google Analytics. Read the [Next.js documentation](https://nextjs.org/docs/app/guides/third-party-libraries#google-analytics) for more details.
+
+
+## See Also
+
+It is easy to integrate other analytics systems into Analog. You can refer the source code of [timlrx/pliny/analytics](https://github.com/timlrx/pliny/blob/main/packages/pliny/src/analytics/index.tsx), which includes lots of analytics systems such as [Plausible](https://plausible.io/), [PostHog](https://posthog.com/web-analytics), and more.
+The analytics systems in Analog are implemented in a similar way, so it should not be difficult to add support for them.

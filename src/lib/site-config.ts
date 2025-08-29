@@ -1,30 +1,13 @@
 import { deepmerge } from 'deepmerge-ts'
-import {
-  GoogleAnalyticsProps,
-  PlausibleProps,
-  PosthogProps,
-  SimpleAnalyticsProps,
-  UmamiProps,
-} from 'pliny/analytics/index.js'
-import { DisqusProps, UtterancesProps } from 'pliny/comments/index.js'
 
-import { GiscusProps } from '@/components/comment/giscus-comments'
-import { homepageSectionMap } from '@/components/homepage/homepage-section'
+import type { AnalyticsConfig } from '@/components/analytics'
+import type { HomepageSectionProps } from '@/components/homepage/sections/home-section'
+import type { GiscusCommentProps } from '@/components/post/comment/giscus-comment'
+import type { CreativeCommonsLicenseChoices } from '@/components/post/post-license'
 import userConfig from '@/data/site-config'
 
-export type CommentProviders = 'giscus' | 'utterances' | 'disqus'
-
-export type CreativeCommonsLicense =
-  | 'cc-by-nc-sa'
-  | 'cc-by-nc-nd'
-  | 'cc-by-nc'
-  | 'cc-by-nd'
-  | 'cc-by-sa'
-  | 'cc-by'
-  | 'cc0'
-
 export interface SiteConfig {
-  // The URL of your site, without trailing slash.
+  // The URL of your site, without a trailing slash.
   // Note that it should include the protocol (https://) and the subdirectory if applicable.
   // For example, 'https://example.com' or 'https://example.com/blog'.
   siteUrl: string
@@ -44,20 +27,15 @@ export interface SiteConfig {
   keywords: string[]
 
   // The number of posts per page in the pagination. (Default: 10)
-  postPerPage: number
+  pagination: number
 
-  // The settings for the homepage.
   homepage: {
-    // The sections displayed on the homepage. You can customize your homepage by changing the order or adding/removing sections.
-    // The available sections are 'popularTags', 'recentPosts', and 'latestNews'.
-    sections: (keyof typeof homepageSectionMap)[]
-    // Popular tags displayed on the homepage. If blank, tags with the most posts will be used.
-    popularTags: { tag: string; icon?: string; title?: string }[]
+    greetings?: string[]
     // GitHub username for the GitHub calendar on the homepage. (Example: 'zhutmost')
-    // Leave it blank to disable the GitHub calendar.
-    githubCalendar: string | null
-    // The number of latest news displayed on the homepage. (Default: 5)
-    latestNewsNum: number
+    // Leave it blank to disable the GitHub calendar. (Default: null)
+    githubCalendar?: string
+    // Sections displayed on the homepage. You can refer to /data/demo/site-config.ts as an example.
+    sections?: HomepageSectionProps<unknown>[]
   }
 
   header: {
@@ -65,24 +43,20 @@ export interface SiteConfig {
     logo?: string
     // The site title displayed on the navigation bar.
     title?: string
-    // Whether to show the theme switching button on the navigation bar.
-    themeSwitch: boolean
-    // Navigation menu items. (Example: { Home: '/', Posts: '/archive' })
-    menu: Record<string, string>
+    // Navigation menu items. (Example: [{ name: Home, href: '/' }, ... ])
+    menu: { name: string; href: string }[]
   }
 
   footer: {
     // Social icons displayed at the footer.
     icons?: Record<string, { icon: string; href: string }>
-    // The Beian number of your site (which is needed for websites deployed in China).
+    // The Bei-An number of your site (which is needed for websites deployed in China).
     beian?: string
   }
 
   pages: {
     // Whether to have a team page. (Default: true)
     team: boolean
-    // Whether to use multiple categories to classify posts. (Default: true)
-    category: boolean
     // Set the greetings (displayed under the page header) for different pages.
     greetings: {
       // Greetings for 'Authors' (/about/[...]) pages.
@@ -98,26 +72,16 @@ export interface SiteConfig {
     }
   }
 
-  // Comment support (provided by Pliny)
-  // See https://github.com/timlrx/pliny for more details.
+  // Comment support
   comment: {
-    // The comment provider you want to use. (Options: 'giscus', 'utterances', 'disqus')
+    // The comment provider you want to use. (Options: currently only 'giscus' supported)
     // Keep it null to disable comment support.
-    provider: CommentProviders | null
-    giscusConfig?: GiscusProps
-    utterancesConfig?: UtterancesProps
-    disqusConfig?: DisqusProps
+    provider: 'giscus' | null
+    giscusConfig?: GiscusCommentProps
   }
 
-  // Analytics support (provided by Pliny)
-  // See https://github.com/timlrx/pliny for more details.
-  analytics: {
-    umamiAnalytics?: UmamiProps
-    posthogAnalytics?: PosthogProps
-    googleAnalytics?: GoogleAnalyticsProps
-    plausibleAnalytics?: PlausibleProps
-    simpleAnalytics?: SimpleAnalyticsProps
-  }
+  // Analytics support
+  analytics: AnalyticsConfig
 
   // SEO settings (OpenGraph & Twitter card)
   seo: {
@@ -141,7 +105,7 @@ export interface SiteConfig {
 
   // The Creative Commons (CC) license of your posts. Leave it null to disable the license display.
   // Visit https://creativecommons.org/share-your-work/cclicenses to find the license you want.
-  license: CreativeCommonsLicense | null
+  license: CreativeCommonsLicenseChoices | null
 }
 
 // Default site config. You can override it in the user config (/data/site-config.ts).
@@ -152,17 +116,15 @@ export const defaultSiteConfig: SiteConfig = {
   description: 'This is an example site',
   locale: 'en-US',
   author: 'John Doe',
-  postPerPage: 10,
+  pagination: 10,
   keywords: [],
   homepage: {
+    greetings: [],
+    githubCalendar: undefined,
     sections: [],
-    popularTags: [],
-    githubCalendar: null,
-    latestNewsNum: 5,
   },
   pages: {
     team: true,
-    category: true,
     greetings: {
       about: 'Hello, Bonjour, こんにちは, 你好! Glad to see you!',
       archive: 'My digital garden, where I share my thoughts and ideas.',
@@ -171,15 +133,10 @@ export const defaultSiteConfig: SiteConfig = {
       otherDefault: 'Hello, Bonjour, こんにちは, 你好! Glad to see you!',
     },
   },
-
   header: {
     logo: '/icon.svg',
     title: 'Analog Demo',
-    themeSwitch: true,
-    menu: {
-      Home: '/',
-      Blog: '/archive',
-    },
+    menu: [],
   },
   footer: {
     beian: undefined,
@@ -198,14 +155,9 @@ export const defaultSiteConfig: SiteConfig = {
 
 const siteConfig: SiteConfig = (() => {
   // Merge default config with user config
-  const c = deepmerge(defaultSiteConfig, userConfig) as SiteConfig
+  const c: SiteConfig = deepmerge(defaultSiteConfig, userConfig) as SiteConfig
 
   c.siteUrl = new URL(c.siteUrl).toString()
-
-  // Set default values for homepage sections
-  c.homepage.sections = c.homepage.sections.length
-    ? c.homepage.sections
-    : ['latestNews', 'popularTags', 'recentPosts']
 
   // Set default values for Open Graph and Twitter SEO
   c.seo.openGraph = {

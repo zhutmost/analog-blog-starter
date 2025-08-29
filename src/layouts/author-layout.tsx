@@ -1,13 +1,24 @@
-import React from 'react'
-import * as path from 'path'
+import * as path from 'node:path'
+import type * as React from 'react'
+import {
+  Avatar,
+  Box,
+  Flex,
+  GridItem,
+  Heading,
+  Icon,
+  SimpleGrid,
+  StackSeparator,
+  Text,
+  VisuallyHidden,
+  VStack,
+  Wrap,
+} from '@chakra-ui/react'
 import { IconMapPinFilled } from '@tabler/icons-react'
 
-import BackToTop from '@/components/back-to-top'
-import { PageHeader, PageHeaderDescription, PageHeaderHeading } from '@/components/page-header'
+import PageHeader from '@/components/page-header'
 import SocialIcon from '@/components/social-icon'
-import Twemojify from '@/components/twemoji'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Author } from '@/content-collections'
+import type { Author } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
 export interface AuthorLayoutProps {
@@ -15,46 +26,68 @@ export interface AuthorLayoutProps {
   author: Author
 }
 
-export default function AuthorLayout({ children, author }: AuthorLayoutProps) {
+function AuthorSidebar({ author }: { author: Author }) {
   const { name, avatar, bio, affiliation, icons } = author
   const avatarSrc: string = path.join(siteConfig.siteRoot ?? '', avatar ?? '/avatar-default.jpg')
 
   return (
-    <>
-      <BackToTop />
-      <div className="divide-y divide-border">
-        <PageHeader>
-          <PageHeaderHeading>About</PageHeaderHeading>
-          <PageHeaderDescription>
-            <Twemojify>{siteConfig.pages.greetings.about}</Twemojify>
-          </PageHeaderDescription>
-        </PageHeader>
-        <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
-          <div className="flex flex-col items-center space-x-2 pt-8">
-            <Avatar className="size-48">
-              <AvatarImage className="object-cover" src={avatarSrc} />
-              <AvatarFallback>{name}</AvatarFallback>
-            </Avatar>
-            <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 tracking-tight">{name}</h3>
-            <div className="text-muted-foreground">{bio}</div>
-            <div className="flex items-center gap-1.5 pt-1 text-muted-foreground">
-              <IconMapPinFilled className="size-5" />
+    <VStack paddingTop={10} gapY={5}>
+      <Avatar.Root width="48" height="48">
+        <Avatar.Fallback name={name} />
+        <Avatar.Image objectFit="cover" src={avatarSrc} />
+      </Avatar.Root>
+      <Heading as="h3" size="2xl" fontWeight="bold" letterSpacing="tight" color="fg">
+        {name}
+      </Heading>
+      <VStack>
+        {bio && (
+          <Box>
+            <VisuallyHidden>Short bio</VisuallyHidden>
+            <Text color="fg.muted" letterSpacing="tight" lineHeight="shorter">
+              {bio}
+            </Text>
+          </Box>
+        )}
+
+        {affiliation && (
+          <Box>
+            <VisuallyHidden>Affiliation</VisuallyHidden>
+            <Flex color="fg.muted" letterSpacing="tight" lineHeight="shorter" alignItems="center">
+              <Icon size="md" marginRight={1}>
+                <IconMapPinFilled />
+              </Icon>
               {affiliation}
-            </div>
-            <div className="flex space-x-3 pt-6">
-              {icons &&
-                Object.entries(icons).map(([key, item]) => (
-                  <SocialIcon key={key} name={key} icon={item.icon} href={item.href} />
-                ))}
-            </div>
-          </div>
-          <div className="pb-8 pt-8 xl:col-span-2">
-            <div className="prose prose-slate max-w-none dark:prose-invert prose-code:font-mono prose-pre:p-0">
-              <Twemojify className="not-prose">{children}</Twemojify>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+            </Flex>
+          </Box>
+        )}
+      </VStack>
+      <Wrap>
+        {icons &&
+          Object.entries(icons).map(([key, item]) => (
+            <SocialIcon key={key} name={key} icon={item.icon} href={item.href} />
+          ))}
+      </Wrap>
+    </VStack>
   )
 }
+
+function AuthorLayout({ children, author }: AuthorLayoutProps) {
+  const title: string = author.slug === 'default' ? 'About' : `About - ${author.name}`
+
+  return (
+    <VStack separator={<StackSeparator />} width="full">
+      <PageHeader.Root>
+        <PageHeader.Title>{title}</PageHeader.Title>
+        <PageHeader.Description>{siteConfig.pages.greetings.about}</PageHeader.Description>
+      </PageHeader.Root>
+      <SimpleGrid columns={{ base: 1, lg: 3 }} gap={4}>
+        <GridItem colSpan={{ base: 1, lg: 1 }}>
+          <AuthorSidebar author={author} />
+        </GridItem>
+        <GridItem colSpan={{ base: 1, lg: 2 }}>{children}</GridItem>
+      </SimpleGrid>
+    </VStack>
+  )
+}
+
+export default AuthorLayout

@@ -1,201 +1,222 @@
-import * as React from 'react'
+import type * as React from 'react'
+import {
+  Avatar,
+  Box,
+  GridItem,
+  Heading,
+  HStack,
+  LinkBox,
+  LinkOverlay,
+  Separator,
+  SimpleGrid,
+  StackSeparator,
+  Text,
+  VisuallyHidden,
+  VStack,
+  Wrap,
+} from '@chakra-ui/react'
 import NextLink from 'next/link'
 
-import BackToTop from '@/components/back-to-top'
-import Comments from '@/components/comments'
-import PostLicense from '@/components/post-license'
-import PostToc from '@/components/post-toc'
+import PostComment from '@/components/post/comment/post-comment'
+import PostLicense from '@/components/post/post-license'
+import PostTag from '@/components/post/post-tag'
+import PostToc from '@/components/post/post-toc'
 import SmartImage from '@/components/smart-image'
-import Tag from '@/components/tag'
-import Twemojify from '@/components/twemoji'
-import type { Author, Post } from '@/content-collections'
+import { Link } from '@/components/smart-link'
+import type { Author, Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
-import { cn } from '@/lib/utils'
 
 export interface PostLayoutProps {
   children: React.ReactNode
   content: Post
-  authors: Author[]
   postNext?: Post
   postPrev?: Post
 }
 
-function PostSidebarItem({
-  label = undefined,
-  children,
-  className,
-  ...rest
-}: {
-  label?: string
-} & React.HTMLAttributes<HTMLDivElement>) {
+function PostSidebarItem({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className={cn('py-4 xl:py-8', className)} {...rest}>
-      {label && (
-        <h2 className="text-xs font-medium uppercase leading-5 tracking-wide text-muted-foreground">
-          {label}
-        </h2>
-      )}
-      <div className="text-sm font-medium">{children}</div>
-    </div>
+    <VStack alignItems="start">
+      <Text
+        fontSize="xs"
+        fontWeight="medium"
+        lineHeight="short"
+        letterSpacing="wide"
+        color="fg.muted"
+        textTransform="uppercase"
+      >
+        {label}
+      </Text>
+      {children}
+    </VStack>
   )
 }
 
-function PostSidebar({ content, authors, postNext, postPrev }: Omit<PostLayoutProps, 'children'>) {
-  const { tags, toc } = content
+function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'children'>) {
+  const { authors, tags, toc } = content
 
   // Because the 1st item is the post title, we filter out the 1st item. So it will display 2nd and 3rd level headings.
   const filteredToc = toc.filter((item) => item.depth <= 3)
 
   return (
-    <div className="flex flex-col justify-start divide-border xl:divide-y">
-      {/* Author */}
-      <dl className="pb-10 pt-6 xl:pt-11">
-        <dt className="sr-only">Authors</dt>
-        <dd className="">
-          <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
-            {authors.map((author) => (
-              <li className="flex items-center gap-3" key={author.name}>
-                {author.avatar && (
+    <VStack
+      separator={<StackSeparator display={{ base: 'none', lg: 'block' }} />}
+      gapY={{ base: 4, lg: 6 }}
+      paddingTop={10}
+      width="full"
+      height="full"
+      alignItems="start"
+    >
+      <Wrap
+        paddingY={2}
+        gapY={6}
+        gapX={10}
+        width="full"
+        justifyContent={{ base: 'center', lg: 'start' }}
+      >
+        <VisuallyHidden>Authors</VisuallyHidden>
+        {authors.map((author: Author) => (
+          <LinkBox key={author.slug}>
+            <HStack gapX={4}>
+              <Avatar.Root>
+                <Avatar.Fallback name={author.name} />
+                <Avatar.Image objectFit="cover" src={author.avatar} />
+              </Avatar.Root>
+              <VStack alignItems="start" gapY={0}>
+                <LinkOverlay asChild>
                   <NextLink href={`/about/${author.slug}`}>
-                    <SmartImage
-                      src={author.avatar}
-                      width={38}
-                      height={38}
-                      alt="avatar"
-                      className="h-10 w-10 rounded-full"
-                    />
+                    <VisuallyHidden>Name</VisuallyHidden>
+                    <Text color="fg" fontSize="md" fontWeight="bold" letterSpacing="tight">
+                      {author.name}
+                    </Text>
                   </NextLink>
+                </LinkOverlay>
+                {author.bio && (
+                  <div>
+                    <VisuallyHidden>Short bio</VisuallyHidden>
+                    <Text fontSize="sm" color="fg.muted" letterSpacing="tight" lineHeight="shorter">
+                      {author.bio}
+                    </Text>
+                  </div>
                 )}
-                <dl className="pl-3 text-sm font-medium leading-5">
-                  <NextLink href={`/about/${author.slug}`}>
-                    <dt className="sr-only">Name</dt>
-                    <dd className="text-foreground">{author.name}</dd>
-                  </NextLink>
-                  {author.bio && (
-                    <div>
-                      <dt className="sr-only">Bio</dt>
-                      <dd className="text-sm text-muted-foreground">{author.bio}</dd>
-                    </div>
-                  )}
-                </dl>
-              </li>
-            ))}
-          </ul>
-        </dd>
-      </dl>
+              </VStack>
+            </HStack>
+          </LinkBox>
+        ))}
+      </Wrap>
 
-      {/* Tags */}
       {tags.length && (
-        <PostSidebarItem label="Tags">
-          <div className="flex flex-wrap">
+        <PostSidebarItem label={'Tags'}>
+          <Wrap>
             {tags.map((tag) => (
-              <Tag key={tag} text={tag} />
+              <PostTag key={tag} text={tag} />
             ))}
-          </div>
+          </Wrap>
         </PostSidebarItem>
       )}
 
-      {/* Next, Prev */}
       {(postNext ?? postPrev) && (
-        <div className="flex flex-wrap justify-between gap-8 py-4 xl:py-8">
+        <Wrap justifyContent="space-between" width="full" gap={{ base: 4, lg: 8 }}>
           {postPrev && (
-            <PostSidebarItem label="Previous Article" className="py-0 xl:py-0">
-              <div className="text-primary hover:text-primary/80">
-                <NextLink href={`/post/${postPrev.slug}`}>{postPrev.title}</NextLink>
-              </div>
+            <PostSidebarItem label="Previous Article">
+              <Link
+                href={`/post/${postPrev.slug}`}
+                fontSize="sm"
+                fontWeight="medium"
+                color="brand"
+                _hover={{ color: 'brand/80' }}
+              >
+                {postPrev.title}
+              </Link>
             </PostSidebarItem>
           )}
           {postNext && (
-            <PostSidebarItem label="Next Article" className="py-0 xl:py-0">
-              <div className="text-primary hover:text-primary/80">
-                <NextLink href={`/post/${postNext.slug}`}>{postNext.title}</NextLink>
-              </div>
+            <PostSidebarItem label="Next Article">
+              <Link
+                href={`/post/${postNext.slug}`}
+                fontSize="sm"
+                fontWeight="medium"
+                color="brand"
+                _hover={{ color: 'brand/80' }}
+              >
+                {postNext.title}
+              </Link>
             </PostSidebarItem>
           )}
-        </div>
+        </Wrap>
       )}
 
-      {/* TOC */}
       {filteredToc.length > 0 && (
-        <div className="container h-full">
-          <PostSidebarItem
-            label="Table of Contents"
-            className="sticky inset-x-0 top-14 hidden space-y-4 xl:block"
-          >
-            <PostToc toc={toc} />
-          </PostSidebarItem>
-        </div>
+        <Box height="full" display={{ base: 'none', lg: 'block' }} padding={0}>
+          <Box position="sticky" top={20} insetX={0}>
+            <PostSidebarItem label="Table of Contents">
+              <PostToc toc={toc} />
+            </PostSidebarItem>
+          </Box>
+        </Box>
       )}
-    </div>
+    </VStack>
   )
 }
 
-export default function PostLayout({
-  content,
-  authors,
-  postNext,
-  postPrev,
-  children,
-}: PostLayoutProps) {
-  const { title, datePublish, slug, banner } = content
+function PostHeader({ content }: { content: Post }) {
+  const { title, banner, datePublish, dateUpdate } = content
+
+  function formatDate(date: Date): string {
+    return date.toLocaleDateString(content.head?.locale ?? siteConfig.locale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })
+  }
+
   return (
-    <>
-      <BackToTop />
-      <article>
-        <div className="xl:divide-y xl:divide-border">
-          <header className="pb-6 pt-6">
-            {banner && (
-              <div className="w-full pb-10">
-                <div className="relative aspect-5/2 w-full">
-                  <SmartImage src={banner} alt={title} fill className="object-cover" />
-                </div>
-              </div>
-            )}
-            <div className="space-y-1 text-center">
-              <dl className="space-y-10">
-                <div>
-                  <dt className="sr-only">Published on</dt>
-                  <dd className="text-base font-medium leading-6 text-muted-foreground">
-                    <time dateTime={datePublish.toDateString()}>
-                      {new Date(datePublish).toLocaleDateString(siteConfig.locale, {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </time>
-                  </dd>
-                </div>
-              </dl>
-              <h1 className="md:leading-14 text-3xl font-extrabold leading-9 tracking-tight text-foreground sm:text-4xl sm:leading-10 md:text-5xl">
-                {title}
-              </h1>
-            </div>
-          </header>
+    <VStack as="header" paddingY="6" width="full">
+      {banner && (
+        <Box position="relative" aspectRatio={5 / 2} width="full" marginBottom={10}>
+          <SmartImage src={banner} alt={title} />
+        </Box>
+      )}
+      <HStack>
+        <Text color="fg.muted">
+          Published on <time dateTime={datePublish.toISOString()}>{formatDate(datePublish)}</time>
+        </Text>
+        {formatDate(datePublish) !== formatDate(dateUpdate) && (
+          <>
+            <Text color="fg.muted"> · </Text>
+            <Text color="fg.muted">
+              Updated on <time dateTime={dateUpdate.toISOString()}>{formatDate(dateUpdate)}</time>
+            </Text>
+          </>
+        )}
+      </HStack>
+      <Heading as="h1" size="5xl" fontWeight="extrabold" letterSpacing="tight" color="fg">
+        {title}
+      </Heading>
+    </VStack>
+  )
+}
 
-          <div className="divide-y divide-border pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0">
-            <PostSidebar
-              content={content}
-              authors={authors}
-              postNext={postNext}
-              postPrev={postPrev}
-            />
+export default function PostLayout({ content, postNext, postPrev, children }: PostLayoutProps) {
+  return (
+    <VStack as="article" width="full">
+      <PostHeader content={content} />
+      <Separator display={{ base: 'none', lg: 'block' }} orientation="horizontal" width="full" />
 
-            <div className="gap-16 pb-8 pt-10 xl:col-span-3 xl:pb-0">
-              <div className="prose prose-slate max-w-none pb-8 dark:prose-invert prose-code:font-mono prose-pre:p-0">
-                <Twemojify className="not-prose">{children}</Twemojify>
-              </div>
-
-              {siteConfig.license && <PostLicense post={content} authors={authors} />}
-
-              {siteConfig.comment.provider && (
-                <div className="pt-10" id="comment">
-                  <Comments slug={slug} />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </article>
-    </>
+      <SimpleGrid columns={{ base: 1, lg: 4 }} gap={4} width="full">
+        <GridItem colSpan={1}>
+          <PostSidebar content={content} postNext={postNext} postPrev={postPrev} />
+        </GridItem>
+        <GridItem colSpan={{ base: 1, lg: 3 }} spaceY={12}>
+          <Box>
+            <Separator display={{ base: 'block', lg: 'none' }} orientation="horizontal" />
+            {children}
+          </Box>
+          <PostLicense post={content} />
+          <Box id="comments">
+            <PostComment />
+          </Box>
+        </GridItem>
+      </SimpleGrid>
+    </VStack>
   )
 }

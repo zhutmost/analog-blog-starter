@@ -1,0 +1,338 @@
+---
+title: Analog User Guide - Configuring It
+datePublish: 2024-11-03
+summary: 'This article details the general configurations of Analog. It also explains what configuration files are used and how Analog generate and validate these configurations.'
+category: 🌈 Docs
+banner: banner.jpg
+tags:
+  - analog
+  - mdx
+---
+
+Analog's default configuration file is `/data/site-config.ts`. This file contains all the configurations for your blog, including the site's metadata, navigation, analytics, comment system, and more.
+
+## Configuration File
+
+The user configuration file `/data/site-config.ts` is written in TypeScript. It will be merged with the default configuration file `/src/lib/site-config.ts` to generate the final configuration object.
+
+In this article, I will explain the fields in your user configuration file and how to set them up. Also, you can refer to the default configuration file.
+
+### Metadata of Your Blog
+
+The metadata of the site will be used in the meta tags of the website and may be captured by search engine robots, etc.
+
+#### Site URL - `siteUrl`
+
+```yaml
+siteUrl: 'https://example.com',
+```
+
+The `siteUrl` field is the URL of your website. It must start with `https://` or `http://`. If your site is hosted on a subdirectory, you should add the subdirectory path to the URL, such as `https://example.com/blog`.
+
+#### Site Root - `siteRoot`
+
+```yaml
+siteRoot: '/',
+```
+
+The `siteRoot` field is the root path of your website. If your site is hosted on a subdirectory, you should add the subdirectory path to the URL, such as `/blog`. This field is used to generate the correct path for assets, so you may find broken post banners or avatars if it is not set correctly.
+
+By default, it is set to the environment variable `BASE_PATH` in the build process.
+When deploying to GitHub Pages, the `BASE_PATH` is set to the repository name by the built-in Action.
+
+#### Site Title - `siteTitle`
+
+```yaml
+siteTitle: 'John Doe Blog',
+```
+
+The `siteTitle` field is the title of your website.
+
+#### Site Description - `description`
+
+```yaml
+description: 'A blog about technology, programming, and life.',
+```
+
+The `description` field is a brief description of your website.
+
+#### Site Locale - `locale`
+
+```yaml
+locale: 'en-US',
+```
+
+The `locale` field is the locale of your website. It is used to set the language of your website. The format is `language-COUNTRY`, such as `en-US` or `zh-CN`.
+
+#### Author Name - `author`
+
+```yaml
+author: 'John Doe',
+```
+
+The `author` field is the name of the author of the website. It will also be displayed in your homepage greetings.
+
+#### Keywords - `keywords`
+
+```yaml
+keywords: ['technology', 'programming', 'life'],
+```
+
+The `keywords` field is an array of keywords used for SEO and social media. It is unnecessary for most modern sites, I recommend leaving it blank.
+
+#### Posts Per Page - `postPerPage`
+
+```yaml
+postPerPage: 10,
+```
+
+The `postPerPage` field is the number of posts displayed per page on the homepage and archive pages. The default value is `10`.
+
+### Pages
+
+#### Multi-Category Support - `pages.category`
+
+```yaml
+pages: {
+  ...
+  category: true,
+}
+```
+
+The `pages.category` field is a boolean value that determines whether to use multiple categories to classify posts. The default value is `true`.
+
+If `false`, all posts will be classified under a single category named `Uncategorized`.
+
+#### Team Page Support - `pages.team`
+
+```yaml
+pages: {
+  ...
+  team: true,
+}
+```
+
+The `pages.team` field is a boolean value that determines whether to have a team page at `/team`. The default value is `true`.
+
+If `true`, all authors will be classified according to their folder path and displayed on the team page. You can refer to [the team page of this demo site](/team) for reference.
+
+#### Page Greetings - `pages.greetings`
+
+```yaml
+pages: {
+  ...
+  greetings: {
+    about: 'Hello, Bonjour, こんにちは, 你好! Glad to see you!',
+    archive: 'My digital garden, where I share my thoughts and ideas.',
+    tags: 'Popular tags feature the most widely favored topics.',
+    team: 'Meet the team behind the scenes.',
+    otherDefault: 'Hello, Bonjour, こんにちは, 你好! Glad to see you!',
+  }
+}
+```
+
+The `pages.greetings` fields is an object that contains greetings for different pages. You can customize the greetings for the `about`, `archive`, `tags`, and `team` pages.
+
+The `pages.greetings.otherDefault` field is the default greeting for other user pages. To override it, you have to set the `greeting` field in the front-matter of the MDX files.
+
+### Homepage
+
+#### sections - `homepage.sections`
+
+```yaml
+sections: ['latestNews', 'popularTags', 'recentPosts'],
+```
+
+The `sections` field is an array of sections displayed on the homepage. The default value is `['latestNews', 'popularTags', 'recentPosts']`.
+
+#### Popular Tags - `homepage.popularTags`
+
+```yaml
+popularTags: [
+    { tag: 'markdown', icon: 'IconMarkdown', title: 'Markdown' },
+    { tag: 'mac', icon: 'IconCommand', title: 'MacOS' },
+    { tag: 'shopping', icon: 'IconTag', title: 'Shopping' },
+    { tag: 'writing', icon: 'IconNote', title: 'Writing' },
+    { tag: 'windows', icon: 'IconBrandWindows', title: 'Windows' },
+]
+```
+
+The `popularTags` field is an array of popular tags displayed on the homepage. If blank, the 5 tags with the most posts will be used.
+
+For each popular tag, a button will be generated with `icon` and `title` displayed. The button will link to the tag archive page `/tags/[tag]`. The `icon` fields should be the React names of [Tabler Icons](https://tabler.io/icons).
+
+#### Latest News Number - `homepage.latestNewsNum`
+
+```yaml
+latestNewsNum: 5,
+```
+
+The `latestNewsNum` field is the number of latest news displayed on the homepage. The default value is `5`.
+
+#### GitHub Calendar - `homepage.githubCalendar`
+
+```yaml
+githubCalendar: 'your-github-username',
+```
+
+The `githubCalendar` field determines whether to display a GitHub contribution wall on the homepage. Keep it blank to disable the GitHub calendar.
+
+### Site Header
+
+#### Header Logo - `header.logo`
+
+```yaml
+header: {
+  ...
+  logo: '/images/logo.svg',
+}
+```
+
+The `header.logo` field is the path to the logo image displayed in the header. It should be a absolute path from the root of the website (i.e., the `public` folder).
+
+#### Header Title - `header.title`
+
+```yaml
+header: {
+  ...
+  title: 'John Doe Blog',
+}
+```
+
+The `header.title` field is the title displayed in the header.
+At least one of the `header.logo` or `header.title` fields must be filled.
+
+#### Header Navigation Menu - `header.menu`
+
+```ts
+header: {
+  ...
+  menu: [
+    { name: 'Home', href: '/' },
+    { name: 'Blog', href: '/archive' },
+    { name: 'About', href: '/about' },
+    // { name: 'Life', href: '/category/life' },
+    // { name: 'Tags', href: '/tags' },
+    { name: 'News', href: '/news' },
+    { name: 'Team', href: '/team' },
+  ],
+}
+```
+
+The `header.menu` field is an array of objects that define the navigation menu items in the header.
+
+Have a look at the header of this demo site for reference.
+
+### Site Footer
+
+#### Footer Social Icons - `footer.icons`
+
+```yaml
+footer: {
+  ...
+  icons: {
+    Facebook: { icon: 'IconBrandFacebook', href: 'https://facebook.com' },
+    X: { icon: 'IconBrandX', href: 'https://x.com' },
+    RSS: { icon: 'IconRss', href: '/rss.xml' },
+    Analytics: {
+      icon: 'IconChartDots',
+      href: 'https://cloud.umami.is/share/unndQ4BKaNaABCDs/my-blog.com',
+    },
+  },
+}
+```
+
+The `footer.icons` field contains social icons displayed in the footer. For each icon, the key is the name of the icon, the `icon` field is the React name of [Tabler Icons](https://tabler.io/icons), and the `href` field is the link to the social media or other pages.
+
+Have a look at the footer of this demo site for reference.
+
+#### Bei-An Number - `footer.beian`
+
+```yaml
+footer: {
+  ...
+  beian: '粤ICP备xxxxxx号',
+}
+```
+
+The `footer.beian` field is the Bei-An number of your website. It is only necessary for websites hosted in mainland China.
+
+### Post License
+
+```yaml
+license: 'cc-by-nc-sa',
+```
+
+The `license` field is the default license of the posts. You can choose from the following 7 Creative Commons licenses:
+
+- `cc-by-nc-sa`: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+- `cc-by-nc-nd`: [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+- `cc-by-nc`: [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+- `cc-by-sa`: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+- `cc-by-nd`: [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/)
+- `cc-by`: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- `cc0`: [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
+
+You can visit the [Creative Commons website](https://creativecommons.org/share-your-work/cclicenses) to find the license you want.
+
+It will display the license information at the bottom of each post. Leave it blank to disable the license display.
+
+### SEO
+
+#### Default Social Banner - `seo.socialBanner`
+
+```yaml
+seo: {
+  socialBanner: '/images/logo.svg',
+}
+```
+
+The `seo.socialBanner` field is the path to the default social banner image of the website. It should be a absolute path from the `public` folder.
+
+This banner will be used when sharing the website on social media platforms, such as Twitter and Facebook.
+
+#### Open Graph & Twitter Card
+
+```yaml
+seo: {
+  openGraph: {
+    siteName: 'My Blog',
+  },
+  twitter: {
+    images: '/images/logo_twitter.svg',
+  },
+}
+```
+
+Analog will automatically generate Open Graph and Twitter Card meta tags for each post. You can customize these values in the configuration file to override them.
+
+In most cases, you don't need to set these fields.
+
+### Web Analytics System
+
+Visit the [Analytics](/post/doc/analytics) documentation for more information.
+
+### Comment System
+
+Visit the [Comment System](/post/doc/comment) documentation for more information.
+
+## MDX Front-matter
+
+You can also specify the configuration for each post in the front-matter of the MDX file.
+
+Front-matter is a block of YAML or JSON at the beginning of the MDX file that specifies the metadata of the post. Here is an example of the front-matter:
+
+```yaml
+---
+title: Analog User Guide - Configuring It
+datePublish: 2024-11-03
+summary: 'This article describes ....'
+category: 🌈 Docs
+banner: banner.jpg
+tags:
+  - analog
+---
+Write your post content here.
+```
+
+See [Writing](/post/doc/writing) for more information about the front-matter.

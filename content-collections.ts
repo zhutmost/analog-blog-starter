@@ -1,84 +1,39 @@
-import child_process from 'child_process'
-import { writeFileSync } from 'fs'
-import * as path from 'path'
-import { defineCollection, defineConfig, type Context, type Meta } from '@content-collections/core'
+import * as console from 'node:console'
+import * as path from 'node:path'
+import { type Context, defineCollection, defineConfig, type Meta } from '@content-collections/core'
 import { compileMDX } from '@content-collections/mdx'
-import slugify from '@sindresorhus/slugify'
-import { all as allLanguages } from 'lowlight'
 import readingTimeEstimate from 'reading-time'
-import {
-  rehypeGithubAlerts,
-  type IOptions as rehypeGithubAlertsOptionsType,
-} from 'rehype-github-alerts'
-import rehypeHighlight from 'rehype-highlight'
-import rehypeHighlightLines from 'rehype-highlight-code-lines'
+import { rehypeGithubAlerts } from 'rehype-github-alerts'
 import rehypeKatex from 'rehype-katex'
+import rehypeMdxCodeProps from 'rehype-mdx-code-props'
+import rehypePreLanguage from 'rehype-pre-language'
 import rehypePresetMinify from 'rehype-preset-minify'
 import rehypeProbeImageSize from 'rehype-probe-image-size'
 import rehypeSlug from 'rehype-slug'
 import rehypeUnwrapImages from 'rehype-unwrap-images'
-import remarkFlexibleToc, { HeadingDepth, HeadingParent } from 'remark-flexible-toc'
+import remarkFlexibleToc, { type TocItem } from 'remark-flexible-toc'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import slugify from 'slug'
 import { z } from 'zod'
 
-import { countPostCategories, countPostTags } from '@/lib/content-collections/post-counter'
-import rehypeAssetCopy, { assetSourceRedirect } from '@/lib/content-collections/rehype-asset-copy'
+import rehypeAssetCopy, { assetSourceRedirect } from '@/coco/rehype-asset-copy'
+import { rehypeGithubAlertsOptions } from '@/coco/rehype-gfm-alert'
+import { assertSlugUnique, getDataUpdate } from '@/coco/utils'
 
-const dataDir: string = process.env.USER_DATA_DIR ?? 'data-demo'
-
-interface BaseDoc {
-  _meta: Meta
-  content: string
-}
-
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-type TocItem = {
-  value: string
-  href: string
-  depth: HeadingDepth
-  numbering: number[]
-  parent: HeadingParent
-}
-
-const rehypeGithubAlertsOptions: rehypeGithubAlertsOptionsType = {
-  alerts: [
-    {
-      keyword: 'NOTE',
-      icon: '<svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-info-circle"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 9h.01" /><path d="M11 12h1v4h1" /></svg>',
-      title: 'Note',
-    },
-    {
-      keyword: 'IMPORTANT',
-      icon: '<svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-octagon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12.802 2.165l5.575 2.389c.48 .206 .863 .589 1.07 1.07l2.388 5.574c.22 .512 .22 1.092 0 1.604l-2.389 5.575c-.206 .48 -.589 .863 -1.07 1.07l-5.574 2.388c-.512 .22 -1.092 .22 -1.604 0l-5.575 -2.389a2.036 2.036 0 0 1 -1.07 -1.07l-2.388 -5.574a2.036 2.036 0 0 1 0 -1.604l2.389 -5.575c.206 -.48 .589 -.863 1.07 -1.07l5.574 -2.388a2.036 2.036 0 0 1 1.604 0z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>',
-      title: 'Important',
-    },
-    {
-      keyword: 'WARNING',
-      icon: '<svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /><path d="M12 16h.01" /></svg>',
-      title: 'Warning',
-    },
-    {
-      keyword: 'TIP',
-      icon: '<svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bulb"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" /><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" /><path d="M9.7 17l4.6 0" /></svg>',
-      title: 'Tip',
-    },
-    {
-      keyword: 'CAUTION',
-      icon: '<svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-biohazard"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M11.939 14c0 .173 .048 .351 .056 .533l0 .217a4.75 4.75 0 0 1 -4.533 4.745l-.217 0m-4.75 -4.75a4.75 4.75 0 0 1 7.737 -3.693m6.513 8.443a4.75 4.75 0 0 1 -4.69 -5.503l-.06 0m1.764 -2.944a4.75 4.75 0 0 1 7.731 3.477l0 .217m-11.195 -3.813a4.75 4.75 0 0 1 -1.828 -7.624l.164 -.172m6.718 0a4.75 4.75 0 0 1 -1.665 7.798" /></svg>',
-      title: 'Caution',
-    },
-  ],
-}
+const USER_DATA_DIR: string = process.env.USER_DATA_DIR ?? 'data/demo'
 
 async function commonTransform(
-  document: BaseDoc,
+  document: {
+    _meta: Meta
+    content: string
+  },
   context: Context
 ): Promise<{
   mdx: string
   slug: string
   dateUpdate: Date
-  toc: TocItem[]
+  toc: Omit<TocItem, 'data'>[]
 }> {
   const { mdx, toc } = await context.cache(document, async () => {
     const toc: TocItem[] = []
@@ -87,7 +42,6 @@ async function commonTransform(
 
     const mdx: string = await compileMDX(
       {
-        ...context,
         cache: async (input, fn) => fn(input), // avoid nested caching
       },
       document,
@@ -96,8 +50,8 @@ async function commonTransform(
         rehypePlugins: [
           [rehypeGithubAlerts, rehypeGithubAlertsOptions],
           rehypeKatex,
-          [rehypeHighlight, { detect: true, languages: allLanguages }],
-          [rehypeHighlightLines, { showLineNumbers: true }],
+          rehypeMdxCodeProps,
+          [rehypePreLanguage, 'language'],
           rehypeSlug,
           [rehypeAssetCopy, { assetPath }],
           rehypeUnwrapImages,
@@ -110,28 +64,78 @@ async function commonTransform(
     return { mdx, toc }
   })
 
-  // Slugged path without special chars
   const slug: string = document._meta.path
     .split('/')
-    .map((part) => slugify(part)) // remove special chars
+    .map((part) => slugify(part))
     .join('/')
 
-  let dataUpdateStdout: string
-  try {
-    dataUpdateStdout = child_process
-      .execSync(`git log -1 --format=%cd --date=short-local -- ${document._meta.filePath}`)
-      .toString()
-  } catch (error) {
-    dataUpdateStdout = '' // Maybe this repo is not git-initialized
-  }
-  const dateUpdate: Date = dataUpdateStdout ? new Date(dataUpdateStdout) : new Date()
+  const dateUpdate = getDataUpdate(document._meta.filePath)
 
-  return { mdx, slug, toc, dateUpdate }
+  return { mdx, toc, slug, dateUpdate }
 }
 
-const Posts = defineCollection({
+function printCollectionInfo(
+  collectionName: string,
+  docs: { slug: string; dateUpdate: Date }[]
+): void {
+  console.log(
+    `Collection [${collectionName}] processed, including ${docs.length.toString()} documents. ` +
+      `Latest 3 documents in [${collectionName}]:`
+  )
+  docs
+    .toSorted((a) => a.dateUpdate.getTime())
+    .slice(-3)
+    .forEach((doc) => {
+      console.log(` - ${doc.slug} - Last updated: ${doc.dateUpdate.toLocaleString()}`)
+    })
+}
+
+const authors = defineCollection({
+  name: 'authors',
+  directory: path.join(USER_DATA_DIR, 'authors'),
+  include: ['**/*.mdx'],
+  schema: z.object({
+    name: z.string(),
+    avatar: z.string().optional(),
+    bio: z.string().optional(),
+    affiliation: z.string().optional(),
+    icons: z
+      .record(
+        z.string(),
+        z.object({
+          icon: z.string(),
+          href: z.string(),
+        })
+      )
+      .optional(),
+    head: z
+      .object({
+        description: z.string().optional(),
+        locale: z.string().default('en-US'),
+      })
+      .optional(),
+  }),
+  transform: async (document, context) => {
+    const avatar: string | undefined = assetSourceRedirect(
+      document.avatar,
+      path.join(context.collection.directory, document._meta.path)
+    )
+
+    return {
+      ...document,
+      ...(await commonTransform(document, context)),
+      avatar,
+    }
+  },
+  onSuccess: (docs) => {
+    assertSlugUnique(docs, 'authors')
+    printCollectionInfo('authors', docs)
+  },
+})
+
+const posts = defineCollection({
   name: 'posts',
-  directory: path.join(dataDir, 'posts'),
+  directory: path.join(USER_DATA_DIR, 'posts'),
   include: ['**/*.mdx'],
   schema: z.object({
     title: z.string(),
@@ -142,8 +146,13 @@ const Posts = defineCollection({
     tags: z.string().array().default([]),
     banner: z.string().optional(),
     draft: z.boolean().default(false),
-    locale: z.string().optional(),
     license: z.string().optional(),
+    head: z
+      .object({
+        description: z.string().optional(),
+        locale: z.string().default('en-US'),
+      })
+      .optional(),
   }),
   transform: async (document, context) => {
     const readingTime: number = readingTimeEstimate(document.content).minutes
@@ -161,56 +170,24 @@ const Posts = defineCollection({
     }
   },
   onSuccess: (docs) => {
-    const tagCounter = countPostTags(docs)
-    writeFileSync(path.join(dataDir, 'tag-data.json'), JSON.stringify(tagCounter))
-    const categoryCounter = countPostCategories(docs)
-    writeFileSync(path.join(dataDir, 'category-data.json'), JSON.stringify(categoryCounter))
-    console.log('... Tag & Category count generated')
+    assertSlugUnique(docs, 'posts')
+    printCollectionInfo('posts', docs)
   },
 })
 
-const Authors = defineCollection({
-  name: 'authors',
-  directory: path.join(dataDir, 'authors'),
-  include: ['**/*.mdx'],
-  schema: z.object({
-    name: z.string(),
-    avatar: z.string().optional(),
-    bio: z.string().optional(),
-    affiliation: z.string().optional(),
-    icons: z
-      .record(
-        z.string(),
-        z.object({
-          icon: z.string(),
-          href: z.string(),
-        })
-      )
-      .optional(),
-  }),
-  transform: async (document, context) => {
-    const avatar: string | undefined = assetSourceRedirect(
-      document.avatar,
-      path.join(context.collection.directory, document._meta.path)
-    )
-
-    return {
-      ...document,
-      ...(await commonTransform(document, context)),
-      avatar,
-    }
-  },
-})
-
-const Pages = defineCollection({
+const pages = defineCollection({
   name: 'pages',
-  directory: path.join(dataDir, 'pages'),
+  directory: path.join(USER_DATA_DIR, 'pages'),
   include: ['**/*.mdx'],
   schema: z.object({
     title: z.string(),
     greeting: z.string().optional(),
-    description: z.string().optional(),
-    locale: z.string().default('en-US'),
+    head: z
+      .object({
+        description: z.string().optional(),
+        locale: z.string().default('en-US'),
+      })
+      .optional(),
   }),
   transform: async (document, context) => {
     return {
@@ -218,8 +195,12 @@ const Pages = defineCollection({
       ...(await commonTransform(document, context)),
     }
   },
+  onSuccess: (docs) => {
+    assertSlugUnique(docs, 'pages')
+    printCollectionInfo('pages', docs)
+  },
 })
 
 export default defineConfig({
-  collections: [Posts, Authors, Pages],
+  collections: [posts, authors, pages],
 })

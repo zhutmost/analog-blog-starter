@@ -1,0 +1,70 @@
+---
+title: Analog User Guide - Comment System
+datePublish: 2024-10-24
+summary: 'Analog support Giscus comment system, allowing visitors writing comments below your posts.'
+category: 🌈 Docs
+banner: banner.jpg
+tags:
+  - analog
+  - comment
+---
+
+Analog supports [Giscus](https://giscus.app) comment system, which is built on top of GitHub Discussions.
+Now, let's demonstrate how to set it up.
+
+## Setting Up Giscus
+
+Giscus is a free and open-source project.
+
+### Create a Giscus Instance
+
+First, go to [Giscus](https://giscus.app) and set it up per the instructions.
+
+Note that, please make sure that:
+1. The target repository is [public](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/setting-repository-visibility#making-a-repository-public), otherwise visitors will not be able to view the discussion. The target repository can be the same as your blog's repository, or a separate one.
+2. The [Giscus](https://github.com/apps/giscus) app is installed, otherwise visitors will not be able to comment and react.
+3. The Discussions feature is turned on by [enabling it for your repository](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/enabling-or-disabling-github-discussions-for-a-repository).
+
+If everything is set up correctly, it will generate a script code snippet for you, like this:
+
+```html
+<script src="https://giscus.app/client.js"
+        data-repo="repo-owner/repo-name"
+        data-repo-id="X_xxxxxxxxxx"
+        data-category="Announcements"
+        data-category-id="XXX_xxxxxxxxxxxxxxxx"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+```
+
+### Configure Giscus in Analog
+
+Next, fill in the corresponding `comment` fields in the user configuration file `/data/site-config.ts`:
+
+```typescript
+comment: {
+  provider: 'giscus',
+  giscusConfig: {
+    repo: 'repo-owner/repo-name',
+    repoId: 'X_xxxxxxxxxx',
+    category: 'Announcements',
+    categoryId: 'XXX_xxxxxxxxxxxxxxxx',
+    ...
+  },
+}
+```
+
+Now, you can see the Giscus comment widget at the bottom of your posts (just like this post).
+
+## Setting Up Other Comment Systems
+
+You can find other comment system components, such as Disqus and Utterances, from [timlrx/pliny/comments](https://github.com/timlrx/pliny/tree/main/packages/pliny/src/comments).
+Just replace the component in the post layout file `/src/layouts/post-layout.tsx` with them.

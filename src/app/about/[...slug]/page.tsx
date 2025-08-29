@@ -1,12 +1,11 @@
 import { MDXContent } from '@content-collections/mdx/react'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import mdxComponents from '@/components/mdx/mdx-components'
-import { Author } from '@/content-collections'
 import AuthorLayout from '@/layouts/author-layout'
-import { allAuthorsNonDefault } from '@/lib/author-sort'
-import { generatePageMetadata } from '@/lib/page-metadata'
+import { type Author, allAuthorsNonDefault } from '@/lib/coco'
+import generatePageMetadata from '@/lib/page-metadata'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
@@ -26,6 +25,8 @@ export async function generateMetadata(props: {
 
   return generatePageMetadata({
     title: `About - ${author.name}`,
+    description: author.head?.description,
+    locale: author.head?.locale,
   })
 }
 

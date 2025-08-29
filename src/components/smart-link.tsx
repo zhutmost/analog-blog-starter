@@ -1,30 +1,37 @@
-import * as React from 'react'
+import type * as React from 'react'
+import { Link as ChakraLink, type LinkProps } from '@chakra-ui/react'
 import NextLink from 'next/link'
 
-import { cn } from '@/lib/utils'
+export function isUrlExternal(url: string): boolean {
+  return !url.startsWith('/') && !url.startsWith('#')
+}
 
+// Unstyled link component that handles internal and external links.
+// It uses Next.js Link for internal links and a regular anchor tag for external links.
 export default function SmartLink({
   href,
-  className,
   ...rest
 }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
-  // internal page
   if (href?.startsWith('/')) {
-    return <NextLink className={cn('break-words', className)} href={href} {...rest} />
+    // internal page
+    return <NextLink href={href} {...rest} />
+  } else if (href?.startsWith('#')) {
+    // internal anchor link
+    return <a href={href} {...rest} />
+  } else {
+    // external link
+    return <a target="_blank" rel="noopener noreferrer" href={href} {...rest} />
   }
+}
 
-  // internal anchor link
-  if (href?.startsWith('#')) {
-    return <a className={cn('break-words', className)} href={href} {...rest} />
-  }
-
+export function Link({
+  href,
+  children,
+  ...rest
+}: LinkProps & React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return (
-    <a
-      className={cn('break-words', className)}
-      target="_blank"
-      rel="noopener noreferrer"
-      href={href}
-      {...rest}
-    />
+    <ChakraLink asChild {...rest}>
+      <SmartLink href={href}>{children}</SmartLink>
+    </ChakraLink>
   )
 }

@@ -1,68 +1,141 @@
 'use client'
 
+import * as React from 'react'
+import {
+  Box,
+  Button,
+  Collapsible,
+  Flex,
+  Heading,
+  HStack,
+  IconButton,
+  useDisclosure,
+  VStack,
+} from '@chakra-ui/react'
+import { IconMenu2, IconX } from '@tabler/icons-react'
+import Image from 'next/image'
 import NextLink from 'next/link'
 
-import MobileNav from '@/components/mobile-nav'
-import SearchButton from '@/components/search/search-button'
-import SmartImage from '@/components/smart-image'
-import ThemeSwitch from '@/components/theme-switch'
-import { buttonVariants } from '@/components/ui/button'
+import SearchMenu from '@/components/search/search-menu'
+import SmartLink from '@/components/smart-link'
+import { ColorModeButton } from '@/components/ui/color-mode'
 import siteConfig from '@/lib/site-config'
-import { cn } from '@/lib/utils'
 
-export default function SiteHeader() {
-  const isBlurred = true
-  const menuLength: number = Object.keys(siteConfig.header.menu).length
+function SiteHeader() {
+  const [isScrolled, setIsScrolled] = React.useState(false)
+  const { open, onToggle, onClose } = useDisclosure()
+  const headerRef = React.useRef<HTMLDivElement>(null)
+
+  // Shadow effect on scroll
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+      // Close the menu if the user scrolls while it's open
+      if (open) onClose()
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [open, onClose])
+
+  // Click outside to close the menu
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        onClose()
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [onClose])
 
   return (
-    <header
-      className={cn(
-        'z-50 flex h-auto w-full items-center justify-center sticky inset-x-0 top-0',
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        isBlurred
-          ? 'bg-background/70 backdrop-blur-lg backdrop-saturate-150'
-          : 'bg-background border-b-2 border-border/20'
-      )}
-    >
-      <nav className="relative flex h-14 w-full max-w-5xl flex-row flex-nowrap items-center justify-between gap-4 px-3">
-        <NextLink href="/" className="flex items-center gap-4">
-          {siteConfig.header.logo && (
-            <SmartImage
-              src={siteConfig.header.logo}
-              alt={siteConfig.siteTitle}
-              width={30}
-              height={30}
-            />
-          )}
-          {siteConfig.header.title && (
-            <div className="text-xl font-bold">{siteConfig.header.title}</div>
-          )}
-        </NextLink>
-        <ul className="flex h-full grow basis-0 flex-row flex-nowrap items-center justify-end gap-1">
-          {Object.entries(siteConfig.header.menu).map(([label, href]) => (
-            <li
-              key={label}
-              className={cn(
-                'box-border hidden list-none whitespace-nowrap font-medium',
-                menuLength > 4 ? 'md:block' : 'sm:block'
+    <Box as="header" position="sticky" top={0} width="full" zIndex="sticky" ref={headerRef}>
+      <Box
+        height="56px"
+        backgroundColor="bg"
+        boxShadow={isScrolled ? 'md' : 'none'}
+        borderBottom="sm"
+        borderColor="border"
+        transition="all 0.3s ease"
+      >
+        <Flex
+          maxW="5xl"
+          w="full"
+          h="full"
+          mx="auto"
+          px={{ base: 4, md: 6 }}
+          align="center"
+          justify="space-between"
+        >
+          <NextLink href="/">
+            <HStack spaceX={3}>
+              {siteConfig.header.logo && (
+                <Image
+                  src={siteConfig.header.logo}
+                  alt={siteConfig.siteTitle}
+                  width={30}
+                  height={30}
+                />
               )}
+              {siteConfig.header.title && (
+                <Heading as="div" size="xl" fontWeight="bold">
+                  {siteConfig.header.title}
+                </Heading>
+              )}
+            </HStack>
+          </NextLink>
+
+          <HStack>
+            {/* Desktop Navigation Links */}
+            {siteConfig.header.menu.map((link) => (
+              <Button
+                key={link.name}
+                asChild
+                display={{ base: 'none', md: 'flex' }}
+                variant="ghost"
+                size="sm"
+              >
+                <SmartLink href={link.href}>{link.name}</SmartLink>
+              </Button>
+            ))}
+
+            <SearchMenu />
+
+            <ColorModeButton />
+
+            {/* Hamburger button for mobile navigation menu */}
+            <IconButton
+              display={{ base: 'flex', md: 'none' }}
+              aria-label="Navigation menu"
+              onClick={onToggle}
+              variant="ghost"
             >
-              <NextLink className={buttonVariants({ variant: 'ghost' })} href={href}>
-                {label}
-              </NextLink>
-            </li>
-          ))}
-          <li>
-            <SearchButton />
-          </li>
-          <li>
-            <ThemeSwitch />
-          </li>
-          <li className={menuLength > 4 ? 'md:hidden' : 'sm:hidden'}>
-            <MobileNav />
-          </li>
-        </ul>
-      </nav>
-    </header>
+              {open ? <IconX /> : <IconMenu2 />}
+            </IconButton>
+          </HStack>
+        </Flex>
+      </Box>
+
+      {/* Mobile collapsible menu */}
+      <Collapsible.Root open={open}>
+        <Collapsible.Content boxShadow="md" borderBottomRadius="lg">
+          <Box backgroundColor={'bg'} py={3} px={4}>
+            <VStack spaceY={3}>
+              {siteConfig.header.menu.map((link) => (
+                <Button key={link.name} asChild variant="ghost" width="full" onClick={onClose}>
+                  <SmartLink href={link.href}>{link.name}</SmartLink>
+                </Button>
+              ))}
+            </VStack>
+          </Box>
+        </Collapsible.Content>
+      </Collapsible.Root>
+    </Box>
   )
 }
+
+export default SiteHeader

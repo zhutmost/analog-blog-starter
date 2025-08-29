@@ -1,34 +1,33 @@
-import '@/styles/highlight.css'
-import 'katex/dist/katex.css'
-
 import { MDXContent } from '@content-collections/mdx/react'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import mdxComponents from '@/components/mdx/mdx-components'
-import { allPosts, type Author, type Post } from '@/content-collections'
 import PostLayout from '@/layouts/post-layout'
-import authorsFind from '@/lib/authors-find'
-import allPostsSorted from '@/lib/post-sort'
+import { allPosts, type Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
+
+import 'katex/dist/katex.css'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
   return allPosts.map((post) => ({ slug: post.slug.split('/') }))
 }
 
-export async function generateMetadata(props: {
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ slug: string[] }>
 }): Promise<Metadata | undefined> {
-  const params = await props.params
-  const postCurr: Post | undefined = allPostsSorted.find(
-    (post: Post) => post.slug === params.slug.join('/')
+  const paramSlug = (await params).slug
+
+  const postCurr: Post | undefined = allPosts.find(
+    (post: Post) => post.slug === paramSlug.join('/')
   )
   if (!postCurr) {
     return
   }
 
-  const authorsCurr: Author[] = authorsFind(postCurr.authors)
   const datePublish: string = postCurr.datePublish.toISOString()
   const dateUpdate: string = postCurr.dateUpdate.toISOString()
   const seoImage: string = postCurr.banner ?? siteConfig.seo.socialBanner
@@ -43,13 +42,13 @@ export async function generateMetadata(props: {
       title: postCurr.title,
       description: postCurr.summary,
       siteName: siteConfig.siteTitle,
-      locale: postCurr.locale ?? siteConfig.seo.openGraph?.locale,
+      locale: postCurr.head?.locale ?? siteConfig.seo.openGraph?.locale,
       type: 'article',
       publishedTime: datePublish,
       modifiedTime: dateUpdate,
       url: './',
       images: ogImage,
-      authors: authorsCurr.map((a) => a.name),
+      authors: postCurr.authors.map((a) => a.name),
     },
     twitter: {
       card: 'summary_large_image',
@@ -62,15 +61,14 @@ export async function generateMetadata(props: {
 
 export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
-  const postIndex = allPostsSorted.findIndex((post: Post) => post.slug === params.slug.join('/'))
+  const postIndex = allPosts.findIndex((post: Post) => post.slug === params.slug.join('/'))
   if (postIndex === -1) {
     return notFound()
   }
 
-  const postCurr: Post = allPostsSorted[postIndex]
-  const postPrev: Post = allPostsSorted[postIndex + 1]
-  const postNext: Post = allPostsSorted[postIndex - 1]
-  const authorsCurr: Author[] = authorsFind(postCurr.authors)
+  const postCurr: Post = allPosts[postIndex]
+  const postPrev: Post = allPosts[postIndex + 1]
+  const postNext: Post = allPosts[postIndex - 1]
 
   // const jsonLd = post.structuredData
   // jsonLd['author'] = authorsCurr.map((author) => {
@@ -85,7 +83,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   //     {/*/>*/}
 
   return (
-    <PostLayout content={postCurr} authors={authorsCurr} postNext={postNext} postPrev={postPrev}>
+    <PostLayout content={postCurr} postNext={postNext} postPrev={postPrev}>
       <MDXContent code={postCurr.mdx} components={mdxComponents} />
     </PostLayout>
   )

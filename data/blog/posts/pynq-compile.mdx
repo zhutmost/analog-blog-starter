@@ -1,0 +1,365 @@
+---
+title: EdgeBoard 的 PYNQ 移植
+datePublish: 2021-08-12
+summary: 'PYNQ 是我很喜欢的一个 FPGA 开源工具。它将 Zynq 上的各种硬件资源用 Python 封装了起来，允许用户通过 Jupytor Notebook 远程调试 FPGA。将 PYNQ 移植到 Baidu EdgeBoard 上是我去年在 COVID 疫情期间开的坑，但中间遇到的小问题有点多，便一直没有完全填上。我最近抽出了些时间重新拾起了这个事情，就顺便把整个过程和遇到的问题都记录下来，以飨后来者。相关源代码已开源至我的 Github，预编译 PYNQ 镜像文件我也已上传至阿里云盘。因为设备有限，我没有为这个镜像进行所有外设的上板测试。如果你发现了任何问题，欢迎和我联系。'
+category: ⚙️ Engineering
+tags:
+  - FPGA
+  - PYNQ
+banner: pynq-compile.jpg
+---
+
+PYNQ 是我很喜欢的一个 FPGA 开源工具。它将 Zynq 上的各种硬件资源用 Python 封装了起来，允许用户通过 Jupytor Notebook 远程调试 FPGA。将 PYNQ 移植到 Baidu EdgeBoard 上是我去年在 COVID 疫情期间开的坑（具体请参看[我的 GitHub](https://github.com/zhutmost/edgeboard)），但中间遇到的小问题有点多，便一直没有完全填上。我最近抽出了些时间重新拾起了这个事情，就顺便把整个过程和遇到的问题都记录下来，以飨后来者。
+
+相关源代码已开源至 [Github](https://github.com/zhutmost/edgeboard)，预编译 PYNQ 镜像文件我也已上传至[阿里云盘](https://www.aliyundrive.com/s/6biJpMiKrpD)。因为设备有限，我没有为这个镜像进行所有外设的上板测试。如果你发现了任何问题，欢迎和我联系。
+
+PYNQ官方提供了 [SD 卡镜像编译的文档](https://pynq.readthedocs.io/en/latest/pynq_sd_card.html)，因此一些比较明确的步骤我可能不会详述，请搭配官方文档阅读。
+
+为了避免混淆，这里先澄清一下很多朋友的一个小误解：本文中的 PYNQ 指的是 PYNQ 框架（本质上是一个 Ubuntu），而非那两个粉色的开发板（PYNQ-Z1 和 PYNQ-Z2）。PYNQ 可以部署在 PYNQ-Z1 和 PYNQ-Z2 上，也可以部署在其他 Zynq 系列的 FPGA 上。
+
+## 开始之前
+
+Xilinx 提供了 PYNQ-Z1、PYNQ-Z2、ZCU104 等开发板的镜像，可以直接从 PYNQ 网站上下载到，具体列表可以在 [PYNQ 的下载页面](http://pynq.io/board.html)找到（也包括 Ultra96 等第三方开发板）。如果我们想要在此外的开发板（比如本文中的 EdgeBoard Lite）上使用 PYNQ，就需要自己编译PYNQ镜像。
+
+本文的编译目标是 PYNQ v2.7。本文写作时（2021 年 8 月）PYNQ2.7 的开发已经完成，但是还没有合入主线分支，文档也没有更新（但差别不大，反正各种奇奇怪怪的 bug 本来也不会写在文档里）。每次大版本（即 2.X）更新后，随着时间推移，依赖软件包之间会出现五花八门的兼容性问题，这些问题很可能要到下一次 PYNQ 大版本更新才会一次性修复。这个问题主要得归咎于 Xilinx 官方，PYNQ 的编译中依赖的很多软件都不指定特定版本。因此，如果你看到本文时已是很久之后，文章中遇到的问题和你遇到的可能不尽相同。
+
+硬件上，除了 Edgeboard 本身，我准备了一台半淘汰的笔记本搭建编译环境。这个不是很重要（虚拟机也不是不可以），唯一需要确认的是剩余磁盘空间要够大（大约 200GB）。
+
+PYNQ v2.7 需要 Vivado/Vitis/PetaLinux 的版本为 2020.2。我的操作系统是 Ubuntu 18.04.5 LTS。Vivado/Vitis 2020.2 最高支持 Ubuntu 18.04.4，安装时需要修改 `/etc/os-release` 骗过安装程序。这里操作系统的版本建议请严格按照 Xilinx 的安装指南，我不建议你和我一样操作。
+
+编译过程中需要从互联网上下载大量依赖组件，请确保你能够自由访问互联网。
+
+## 理想的编译过程
+
+### 设置 PYNQ 环境
+
+首先将 PYNQ 的 GitHub Repo 复制到本地，并切换到 `image_v2.7` 分支。
+```shell
+git clone https://github.com/Xilinx/PYNQ.git pynq
+cd pynq
+git checkout image_v2.7
+```
+
+我们接下来的主要工作都在 `sdbuild` 目录下进行。先运行 `scripts/setup_host.sh`，它会用 apt 安装各种需要的包，以及下载 QEMU 和 CrossTool-NG。
+```shell
+source ./scripts/setup_host.sh
+```
+这个脚本运行需要很久的时间（主要是因为下载 QEMU 和 CrossTool-NG 的安装包），但好在只需要运行一次。
+
+后续编译过程还会依赖 Ninja，然而该脚本中没有安装，因此我们手动安装下。
+```shell
+sudo apt install ninja-build
+```
+
+到这里，Xilinx 全家桶需要的各种依赖包也安装完成了，接下来就可以安装 Xilinx 全家桶了。
+
+### 安装 Xilinx 全家桶
+
+我们需要安装 Vivado、Vitis、PetaLinux 三个软件。按照 PYNQ v2.7 的版本要求，三者的版本都必须是 2020.2。这里需要注意的是，不要使用管理员权限安装。
+
+Vivado 和 Vitis 是通过同一个安装程序安装的，安装时命令行运行 `./xsetup`，勾选需要的组件即可。
+
+PetaLinux 安装的命令如下：
+```shell
+petalinux-v2020.2-final-installer.run --dir <xilinx_install_dir>/petalinux/2020.2 --platform "aarch64 arm"
+```
+具体安装选项可以参考 [UG1144](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide)。这里存在一个坑，PetaLinux 的安装程序允许用户任意指定安装位置，但是 PYNQ 之前的版本默认却要求它的路径必须是`.../2020.2/`的形式（v2.7 有无修复不确定，我没有去测试）。
+
+安装完成后，我们需要将下面几行代码加入 `.bashrc`（也可以每次打开命令行手动执行）。这样一来，就可以在命令行中运行这些软件了。
+```shell
+# .bashrc
+source <xilinx_install_dir>/petalinux/2020.2/settings.sh
+source <xilinx_install_dir>/Vivado/2020.2/settings64.sh
+source <xilinx_install_dir>/Vitis/2020.2/settings64.sh
+```
+
+### 添加自定义开发板
+
+PYNQ在 `boards` 文件夹下预置了 `Pynq-Z1`、`Pynq-Z2`、`ZCU104` 三个与对应开发板同名的文件夹。它们的内部结构大同小异，主要分成以下五个部分：
+
+1. `notebooks`；
+2. `petalinux_bsp`；
+3. `packages`；
+4. `base`、`logictools` 等 `Overlay` 文件夹；
+5. `<board_name>.spec`。
+
+下面简单介绍下这些文件和文件夹的功能，具体的细节（如果你需要定制一些复杂的东西）还请自行阅读PYNQ的编译脚本源代码。
+
+`notebooks` 文件夹会原样复制到最终的用户目录下，每次大家打开 Jupyter Notebook 后看到的就是它。这个文件夹里的内容不是很重要，一般都是放些教程。
+
+`petalinux_bsp` 文件夹用于 PetaLinux 生成 BSP，它只在 `sdbuild/scripts/create_bsp.sh` 脚本中用到。该文件夹里边包括两个文件夹 `meta-user`、`hardware_project`。其中，`meta-user` 文件夹会被复制到PetaLinux项目文件夹下的 `project-spec/meta-user`，里面放设备树文件、各种用户配置等（如果你对 PetaLinux 项目的目录结构不了解的话可以参考 [UG1144](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide)）。`hardware_project` 里需要放 `.xsa` 硬件描述文件（该文件由 Vivado 导出），或者也可以放一些脚本（至少包括一个 Makefile）供 PetaLinux 实时地生成 `.xsa` 文件。如果用户在 `<board_name>.spec` 中指定了 BSP，那么 `hardware_project` 不会被用到。这里一个文档中一个没有注明的是，`meta-user` 总是会起作用，即使你指定了 BSP，它也会覆盖掉里边的 `meta-user` 并重新打包。
+
+`packages` 文件夹的结构和 `sdbuild/packages` 的结构类似，这两个目录下的每个文件夹对应一个个的组件，在编译过程中会被安装到 RootFS 中。安装过程主要是在 `sdbuild/scripts/install_packages.sh` 中进行。如果你需要增加组件，建议阅读此脚本和 `sdbuild/packages/README.md` 了解更多细节。
+
+其他文件夹中如果存在 Makefile 文件，就会被认为是 `Overlay` 文件夹。在编译 `pynq` 本身时，`<pynq_repo_dir>/build.sh` 脚本会试图进入这些文件夹，并挨个检查是否存在 `.bit`、`.hwh`、`.xsa` 等文件。这些文件夹不是必须的，主要是为用户提供一些针对该开发板的预置 `Overlay`。
+
+`<board_name>.spec` 文件描述了针对该开发板的各种配置和文件路径。它的格式如下所示：
+```makefile
+// board_name.spec
+ARCH_<board_name> := aarch64 # Zynq的CPU架构，可以是aarch64或arm
+BSP_<board_name> := ... # 开发板的BSP文件（如果有的话）
+BITSTREAM_<board_name> := ... # 默认的比特流文件
+FPGA_MANAGER_<board_name> := 1
+
+STAGE4_PACKAGES_<board_name> := pynq ethernet ...
+```
+注意这里的 `board_name` 要和文件夹的名字一致。
+
+接下来我们可以依样画葫芦为自己的开发板配置这些文件了。
+我在 [edgeboard 的仓库](https://github.com/zhutmost/edgeboard/tree/master/pynq)中放置了针对 EdgeBoard Lite 的配置文件，如果需要的话你也可以参考。
+
+### 一把梭编译，赌人品
+
+按照官方的流程，理论上我们可以开始进行漫长的编译了。不过我强烈建议你先阅读下后续的几个章节再开始编译（可以避免很多无谓的时间浪费）。
+
+在 `sdbuild` 下运行：
+
+```shell
+make BOARDDIR=<edgeboard_repo_dir>/edgeboard/pynq BOARDS=edgeboard-fz3a
+```
+
+运气不错的话，我们能够在几个小时后获得最终的 SD 卡镜像 `edgeboard-fz3a-2.7.0.img`，然后就可以将其烧写到 SD 卡上了。
+
+```shell
+sudo dd if=<pynq_repo_dir>/sdbuild/output/edgeboard-fz3a-2.7.0.img bs=1M of=/dev/mmcblk0 && sync
+```
+
+注意这里你的SD卡设备名可能不是 `/dev/mmcblk0`，请务必再三确认，以免写入其他磁盘丢失数据。
+
+## 各种常见和不常见的 Bug
+
+实践中，上一步十之八九会遇到各种奇奇怪怪的问题，然后报错退出。这里我没法给出一个万能方法，只能说“具体情况，具体分析”。记得多翻日志，多问谷歌。
+
+我把各种我遇到的问题罗列于此，并提供了我的原因分析和解决方法。
+
+### NodeJS 安装时报错 `base_files is not configured`
+
+在运行到 `sdbuild/packages/jupyter/qemu.sh` 时，它会用 apt 安装 NodeJS（这是运行 Jupyter Notebook 必要的）。此时，apt 安装无法完成，并出现以下报错：
+```shell
+Setting up base-files (11ubuntu5) ...
+/bin/rmdir: failed to remove '/var/run': Directory not empty
+dpkg: error processing package base-files (--configure):
+ installed base-files package post-installation script subprocess returned error exit status 1
+dpkg: dependency problems prevent configuration of bash:
+ bash depends on base-files (>= 2.1.12); however:
+  Package base-files is not configured yet.
+
+dpkg: error processing package bash (--configure):
+ dependency problems - leaving unconfigured
+Errors were encountered while processing:
+ base-files
+ bash
+No apport report written because the error message indicates its a followup error from a previous failure.
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+```
+
+它提示 NodeJS 在安装时需要访问一个名为 `base-files` 的组件，但是该组件在此时还没有完成 “configure”。我们沿着这个信息往上追溯的话，会一直找到 RootFS 的初始化，此时该组件应当完成安装。
+
+PYNQ 采用 Multistrap 作为 RootFS 的初始化工具，它利用 apt 下载所需要的包并进行安装。`base-files` 正是其中一个此时应当被安装的包，完整的包列表可以见 `ubuntu/focal/aarch64/multistrap.config`。观察安装日志，可以最终定位到真正的错误原因：`base-files`的安装会用到 `chmod`，这要求另一个名为 `base-passwd` 的包必须比它先完成 “configure”，否则 `base-files` 的安装就会失败。简而言之，就是 `base-files` 依赖 `base-passwd`。
+
+那么问题来了，为什么 RootFS 初始化时部分包安装失败后不会报错呢？原因在 `sdbuild/scripts/create_rootfs.sh` 脚本中如下的两行代码抑制了 `postinst1.sh` 和 `postinst2.sh` 两个脚本的报错：
+```shell
+# create_rootfs.sh
+$dry_run sudo -E chroot $target bash postinst1.sh
+... # other stuff
+$dry_run sudo -E chroot $target bash postinst2.sh
+```
+因此此处即使发生安装失败，程序也会继续执行下去。
+
+更为本质的一个问题是为什么 dpkg 无法检测到上述两个软件包之间的依赖关系。这已经超出了 PYNQ 的范畴，根据 Debian 社区的意思大体上可以这么理解：`base-files` 和 `base-passwd` 都是属于Essential的包，理论上它们都是必装的，因此就没有设置依赖关系。如果我们为这些必装的组件之间相互设置依赖关系的话，会陷入循环依赖的地狱。那么在安装时它们之间发生依赖冲突怎么办呢？这个问题至少在 2011 年就[有人提出过](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612426)，社区的结论是这个问题并不常见（多数时候 `base-passwd` 总比 `base-files` 先完成 “configure”），所以不妨依靠玄学。他们认为这个问题在新的 Multistrap 版本上不会出现，然而并不。
+
+这里我的解决方法是手工指定 `dpkg --configure` 的顺序，将 `sdbuild/scripts/create_rootfs.sh` 的 `postinst1.sh` 部分中原先的 `dpkg --configure -a` 修改成：
+```shell
+# create_rootfs.sh
+# 先完成base-passwd的configure
+dpkg --configure gcc-10-base libcrypt1 libc6 libgcc-s1 libdebconfclient0 base-passwd
+# 再完成其他组件的configure
+dpkg --configure -a
+```
+
+### `python2.7-minimal`安装失败
+
+与上个问题类似，有时会出现 `python2.7-minimal` 这个包的 `configure` 失败。这个问题本身不是很严重，因为 `postinst1.sh` 和 `postinst2.sh` 两个脚本会各执行一遍 `dpkg --configure -a`，因此第一遍中极少量没成功安装的包会在第二遍中完成安装（比如 `cups-pk-helper` 这个包经常如此）。然而，因为有大量包依赖于 `python2.7-minimal`，一旦它安装失败后，一连串的包会一同安装失败，然后安装程序就崩了。
+
+这里可以从报错信息中观察到，安装失败的原因是它的 `postinst` 脚本中用到了 `awk`，然而此时 `awk` 这个命令还未安装。解决方法也和上个问题类似，即手工指定 `dpkg --configure` 的顺序，确保提供 `awk` 命令的包比 `python2.7-minimal` 先完成 `configure`。有很多包都提供了 `awk` 命令，我这里选择了 `mawk`。
+
+```shell
+# create_rootfs.sh
+dpkg --configure <... 其他需要提前`configure`的包> mawk
+dpkg --configure -a
+```
+
+### 无法从SD卡启动，找不到RootFS
+
+这个问题深究起来非常复杂，现象是烧写完 SD 卡上板卡后，无法完成开机，屏幕/串口会显示内核错误。其中括号里的数字我这边是 `179,2` 和 `179,10` 两种情形之一（我没有彻底弄清楚这俩数字的含义）。
+```
+Kernel Panic - not syncing: VFS: Unable to mount root fs on unknown-block(179,10)
+```
+关于 SD 卡的一系列 bug 都会引起这个报错。首先请确保 SD 卡烧写成功，烧写完成后可以在 Ubuntu 中挂载并尝试打开检查一下，如果不能正常打开的话重新烧写下。然后请参考以下几点依次排查。因为该报错的原因很多，我这里可能列举不全，见谅。
+
+#### 使用 `dd` 烧写时块尺寸不合适
+
+RootFS 分区的文件系统是 Ext4，它在开机时会检查分区尺寸，因此如果在 `dd` 时使用过大的块尺寸（block size，也就是 `bs=...` 参数），就会无法通过分区尺寸的检查。
+
+比如用 4M 的块尺寸烧写镜像的话（即 `sudo dd bs=4M if=... of=...`），开机就会保错。在我这使用 1M 的块尺寸是正常的，具体命令可以看前文。
+
+#### SD卡的写保护
+
+这个问题似乎是来自于很多人使用了淘宝购买 EdgeBoard FZ3A 开发板时店家提供的所谓 “Vivado 参考设计”。这个参考设计中关于 SD 卡的配置存在错误，它打开了 SD 卡槽的写保护引脚。但是据 [WhyCan Forum 社区的文章](https://whycan.com/t_3467.html)指出，EdgeBoard 的 PCB 设计中去掉了这一引脚。因此，我们稳妥起见，可以在设备树中禁用掉写保护功能。
+
+如前文所述，PYNQ 为我们提供了一个修改设备树的接口，就是 `boards/<board_name>/petalinux_bsp` 文件夹。我们先在相应目录下创建一个设备树文件：
+```shell
+mkdir -p <pynq_repo_dir>/boards/<board_name>/petalinux_bsp/meta-user/recipes-bsp/device-tree/files
+cd <pynq_repo_dir>/boards/<board_name>/petalinux_bsp/meta-user/recipes-bsp/device-tree/files
+touch system-user.dtsi
+```
+
+然后对 sdhci1 节点（对应于 PS_SD1，即我们的 SD 卡槽）进行修改。完成以后，你的 `system-user.dtsi` 文件应该长这个样子：
+```
+# system-user.dtsi
+/include/ "system-conf.dtsi"
+/ { /*根节点，这里保持不变*/
+};
+
+&sdhci1 {
+  status = "okay";
+  max-frequency = <50000000>;
+  no-1-8-v; /*我其实不太理解这行的作用，但反正一出兼容性问题，大家就会写这个*/
+  disable-wp; /*关掉写保护功能*/
+}
+```
+
+理论上如果使用我自己做的 Board Files 里的 Zynq Preset，是不会遇到这个问题的（不过我没试，重新编译太费时了）。
+
+#### Boot 参数中设置了错误的 `root` 分区位置
+
+PYNQ 默认总是从 `/dev/mmcblk0`（这个路径是 PYNQ 上的，不是你的宿主 Ubuntu 上的）启动系统，即它如果它有多个 SD 外设的话，SD 卡要连在 `PS_SD0`上。不幸的是，EdgeBoard 还真的有两个 SD 设备，一个是我们的 TF 卡槽，另一个是一颗 eMMC Flash 芯片。默认情形下，PYNQ 总是会尝试从后者启动，而我们的系统实际存放在SD卡上。
+
+PetaLinux 的 Boot 参数是通过设备树中的 `/chosen/bootargs` 条目进行配置的。默认情况下，最后镜像使用的设备树中该条目会是这样的（每个字段的先后顺序不重要）：
+```
+# system-user.dtsi
+bootargs = "root=/dev/mmcblk0p2 rw earlyprintk rootfstype=ext4 rootwait devtmpfs.mount=1 uio_pdrv_genirq.of_id=\"generic-uio\" clk_ignore_unused";
+```
+但我们希望其中的字段 `root=/dev/mmcblk0p2` 变成 `root=/dev/mmcblk1p2`。直觉上，首先想到的是很上文一样修改 `system-user.dtsi` 文件，从而影响最终生成的设备树。实验会告诉你完全不起作用，最后输出也就是实际使用的设备树里还是上面这行默认值。这里大家就会遇到 PYNQ 这个编译流程设计的很糟糕的一点：`system-user.dtsi` 这个文件中的只有一部分会起作用，至于想弄清哪部分，要么做实验，要么看懂编译源代码。比如上面对 `&sdhci1` 节点的修改就能生效，对 `/chosen/bootargs` 对修改就不起作用。
+
+生成设备树是制作 BSP 文件的中一部分，接下来我们来弄清楚 PYNQ 是如何生成最终的BSP文件的。我们先考虑用户没有提供预编译的 BSP 文件的情形，此时 PYNQ 内部会依次做这些事：
+1. 建立一个空的 PetaLinux 项目
+2. 拷贝用户的 `petalinux_bsp/meta-user` 到该项目下；
+3. 读入硬件配置即 `petalinux_bsp/hardware_project` 中的 XSA 文件，生成 Config 文件；
+4. 构建并打包成 BSP 文件；
+5. 利用上一步获得的 BSP 文件建立一个新的 PetaLinux 项目；
+6. 直接在脚本中修改 Config 文件，加入一些配置；
+7. 重新运行 `petalinux-config` 生成新的 Config 文件；
+8. 开始各种 build，最终生成我们需要的 BOOT.bin。
+
+其中步骤1、2、3、4在 `sdbuild/scripts/create_bsp.sh` 脚本中进行，步骤 5、6、7、8 在 `sdbuild/Makefile` 中进行。如果用户指定了预编译的 BSP 文件，就把上文中的第1步换成 “利用用户提供的BSP文件建立一个新的PetaLinux项目”。这里最令人困惑的地方是，为什么要进行两次 “create-config-build” 的流程，至少我没有看出它这么做的必要性。这样一通操作之后，用户在 `petalinux_bsp/meta-user` 的子目录下的 `system-user.dtsi` 文件中修改的一些设备树节点（对应上文步骤 2），会在步骤6中被新引入的一些设备树文件冲刷掉。步骤6通过`CONFIG_USER_LAYER_0`这一设置混入了一些新的设备树文件，这些额外的设备树文件位于 `sdbuild/boot/meta-pynq/recipes-bsp/device-tree`。就 Boot 参数而言，这里边的 `pynq_bootargs.dtsi` 文件提供了前述的默认 `/chosen/bootargs`。因此无论我们在 `system-user.dtsi` 文件中如何修改 `/chosen/bootargs`，最终都会被覆盖掉。因此，我们的解决方案很简单，修改下该文件，将其中的 `root=/dev/mmcblk0p2` 变成 `root=/dev/mmcblk1p2`。因为这个文件只有几行，改动也很小，我就不把代码贴出来了。
+
+除了修改 `pynq_bootargs.dtsi`，我们还需要修改 `sdbuild/Makefile`，将下面这行代码中的 `mmcblk0p2` 变成 `mmcblk1p2`。
+```makefile
+	echo 'CONFIG_SUBSYSTEM_SDROOT_DEV="/dev/mmcblk0p2"' >> $$(PL_CONFIG_$1)
+```
+
+我这里提供另一个有趣的思路，`sdhci0` 和 `sdhci1` 在设备树文件中是俩 alias，我们可以在设备树中交换它们的值（`/amba/mmc@ff160000`和`/amba/mmc@ff170000`），不过我没有做过实验。
+
+### UART 串口不工作
+
+EdgeBoard FZ3A 有两个 UART 串口，一个是 BT1120 连接件的一部分，另一个转成了 USB 接口。我们用来连接电脑进行交互的串口，显然希望是后者。和前面 SD 卡的情况相似，PYNQ 默认 PS_UART0 作为输出串口，而我们实际想要的是 PS_UART1。解决这个问题的方法很简单，在上面修改 `CONFIG_SUBSYSTEM_SDROOT_DEV` 的那行后面加上以下几行：
+```makefile
+	echo 'CONFIG_SUBSYSTEM_PMUFW_SERIAL_PSU_UART_1_SELECT=y' >> $$(PL_CONFIG_$1)
+	echo 'CONFIG_SUBSYSTEM_FSBL_SERIAL_PSU_UART_1_SELECT=y' >> $$(PL_CONFIG_$1)
+	echo 'CONFIG_SUBSYSTEM_ATF_SERIAL_PSU_UART_1_SELECT=y' >> $$(PL_CONFIG_$1)
+	echo 'CONFIG_SUBSYSTEM_SERIAL_PSU_UART_1_SELECT=y' >> $$(PL_CONFIG_$1)
+	echo 'CONFIG_SUBSYSTEM_PRIMARY_SD_PSU_SD_1_SELECT=y' >> $$(PL_CONFIG_$1)
+```
+
+### `dash.preinst` 找不到
+
+RootFS 的编译脚本（即 `create_rootfs.sh`）会在前面提到的 `postinst1.sh` 和 `postinst2.sh` 两个脚本执行中提示 `dash.preinst` 执行失败，原因是 `/var/lib/dpkg/info/dash.preinst` 找不到。该错误的原因仅仅是上游已经把 `dash.preinst` 这个脚本删除了（可参考[此文](https://unix.stackexchange.com/questions/558844/no-var-lib-dpkg-info-dash-preinst-in-buster)）。因此这里执行该脚本的三行代码都是多余的，直接删除即可。即使不删除，它们也应当不会引起其他异常（除了在终端里输出一些错误信息）。
+
+### RootFS 分区磁盘容量不足
+
+PYNQ 在编译的最后，会对最终的镜像的 RootFS 分区进行扩容。扩容主要是增加一些用户空间，以及给操作系统本身腾出一些地方放临时文件。扩容操作是在`sdbuild/scripts/resize_umount.sh`脚本中进行（别问我为什么文件名中 unmount 拼写错了，源代码如此）。PYNQ 的开发者很可能是为了尽量使最终镜像小于 8GB，所以只额外扩容了 300MB。
+
+很不幸的是，这 300MB 实在是捉襟见肘，经常开完机就用得七七八八了。极端情况下，可能不足以支撑 Jupyter 成功运行，现象是能够 ssh 访问，但浏览器完全打不开 Jupyter。排查方法是，上电后通过 ssh 进入板上的操作系统，执行 `df`，观察 `/` 分区的磁盘占用情况。
+
+我的 SD 卡是 64GB 的，因此，我直接修改了 `resize_umount.sh` 脚本，将扩容空间从 300MB 改成了 3000MB。你可以根据你的 SD 卡容量自由发挥，当然没必要太大，否则烧写 SD 卡会变得很慢。具体到代码上，在该脚本中找到下面一行代码，把其中的 300 改成任意你想要的数字。
+```makefile
+new_size=$(( $used_size + (300 * 1024) ))
+```
+
+### 各种文件下载失败
+
+多数都是网络环境的问题，可以先阅读下一节。如果还是解决不了的话，请联系公司的IT工程师协助解决。
+
+## Speedup！编译提速
+
+在我的破笔记本上，完整的一次PYNQ流程需要整一个下午，中间还需要多次输入管理员密码。因为我们很难一次成功，所以需要不断地重新进行编译流程，所以我们总希望整个编译能够进行地快一些。接下来我们开始着手加速编译流程。
+
+### 跳过输入管理员密码
+
+PYNQ编译中会频繁使用 `sudo` 命令，需要我们不断地输入密码，否则程序就一直卡在那等待。Ubuntu 默认两次 `sudo` 的时间间隔超过15分钟左右就要重新输入密码，我们可以把这个时间延长一些（比如这里我延长到了 2 小时）。
+
+首先在 `/etc/sudoers` 中找到如下一行。
+```
+Defaults    env_reset
+```
+将它改成：
+```
+Defaults    env_reset,timestamp_timeout=120
+```
+
+### 为 Multistrap 更换下载源
+
+Multistrap 利用 apt 下载各种需要的包来构建 RootFS。默认情况下，apt 会从官方 ports 源（`http://ports.ubuntu.com/ubuntu-ports`）下载文件，时间很长且经常失败。换源的方法非常方便，直接在编译开始前声明 `PYNQ_UBUNTU_REPO` 环境变量即可。例如换成清华源：
+```shell
+export PYNQ_UBUNTU_REPO=http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports
+```
+
+注意这里必须是 `http` 而不是 `https`。
+
+### 为CrossTool-NG建立本地缓存
+
+CrossTool-NG 每次运行时会从云端下载很多包（主要是各种源代码）。根据其文档的指示，我们可以建立一个本地的缓存文件夹。当需要下载的包本地已经缓存时，它就会跳过下载，从而节省时间。CrossTool-NG 的配置文件在 `sdbuild/packages/gcc-mb/samples/<compile_targets>/crosstool.config`，在其最后加上两行：
+
+```
+// crosstool.config
+CT_SAVE_TARBALLS=y
+CT_LOCAL_TARBALLS_DIR=<somewhere_to_put_downloaded_files>
+```
+注意请在运行前保证该路径是个文件夹，且具有读写权限。
+
+### 为PetaLinux建立本地SSTATE缓存
+
+首先去 [Xilinx 官网](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools/archive.html)下载 sstate-cache 文件。注意版本要和 PetaLinux 保持一致（本文中我们用的是 2020.2）。
+
+因为 EdgeBoard FZ3A 板载的 Zynq 芯片是 ARM64 架构，因此为了节约空间，就只下载 “aarch64 sstate-cache” 和 “downloads” 两个包（加起来也超过 60GB 了）。然后我们将它们解压缩，并把路径添加到 `petalinux_bsp/meta-user/conf/petalinuxbsp.conf`：
+```
+// petalinuxbsp.conf
+DL_DIR = "<sstate_extract_dir>/2020.2/downloads"
+SSTATE_DIR = "<sstate_extract_dir>/2020.2/sstate-cache/aarch64"
+```
+
+### 删除 `boards` 目录下 Pynq-Z2 以外的开发板
+
+因为我们的编译目标是 EdgeBoard FZ3A，所以 `boards` 目录下的 `Pynq-Z1`、`Pynq-Z2`、`ZCU104` 三个目录对我们来说就是多余的。然而PYNQ在编译过程中会遍历 `boards` 目录下的各个开发板并试图生成比特流文件。其中 `Pynq-Z2` 的输出会在 `pynq` 自身编译时用到，另外两个开发板的相关文件的编译纯属是浪费时间（关键是这步还特别费时），我怀疑这是个编译流程上的 bug。因此，我们可以将 `Pynq-Z1`、`ZCU104` 两个文件夹删除。
+```shell
+cd <pynq_repo_dir>
+rm -rf boards/Pynq-Z1 boards/ZCU104
+```
+完成之后，务必要提交到本地的Git版本历史中，否则不起作用（这是因为作者用 `git clone` 代替了 `cp`）。
+
+### 跳过`boards/Pynq-Z2`中各个`Overlay`生成比特流
+
+`pynq` 作为一个 Python 的包，在编译过程中是要和其他 packages 一起安装到镜像中的。进行这一步时，它会将 `Pynq` 的本地 repo 先复制到 `sdbuild/build/PYNQ` 中，然后再运行其中的 `build.sh`。观察这个脚本，我们可以看到PYNQ在编译 `Pynq-Z2/logictools` 和 `Pynq-Z2/base`两个`Overlay` 文件夹时，会先检查其中是否已存在同名的 `.bit`、`.hwh`、`.xsa` 文件，存在的话就跳过生成比特流的过程（即综合、布局布线等）。因此，我们可以先按照正常流程 `make BOARDDIR=... BOARDS=...`，然后把生成的相关文件拷贝到原始的 `boards/Pynq-Z2` 目录中的对应文件夹下：
+```sh
+# 复制.xsa文件，.bit/.hwh文件类似处理
+cp <pynq_repo_dir>/sdbuild/build/PYNQ/boards/Pynq-Z2/logictools/logictools.xsa <pynq_repo_dir>/boards/Pynq-Z2/logictools/
+cp <pynq_repo_dir>/sdbuild/build/PYNQ/boards/Pynq-Z2/base/base.xsa <pynq_repo_dir>/boards/Pynq-Z2/base/
+```
+注意这里的路径，是从 `sdbuild/build` 中的 `PYNQ` 复制到原始的 `PYNQ`。和前面一样，要提交到 Git 版本历史中才会生效。
+
+另外，经过实验证明，这里 `.xsa` 和 `.bit` 文件需要是同一次编译中产生，否则会发生一些奇怪且难以定位的错误。
+
+## 后记
+
+搭建这个个人博客也有几年了，本想闲暇时写些技术文章，但没能持之以恒地保持输出。中间也曾断断续续写过一些论文阅读笔记，但都没有坚持下来。一方面是因为总担心自己粗浅的专业认识贻笑大方，另一方面是实验室的项目也确实不太合适作为写作素材，便一直没有动笔。EdgeBoard 的事情我在去年 COVID 疫情期间动工后就一直搁置了，结果发现最近有不少人关心这个事情，就花了些时间算是给它画了个句号。我也以此为契机，提起了笔记录下整个过程。希望能够对大家有所帮助。
