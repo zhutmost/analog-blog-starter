@@ -10,10 +10,10 @@
     "start": "next start"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.25.0",
+    "@chakra-ui/react": "^3.26.0",
     "@emotion/react": "^11.14.0",
-    "@next/third-parties": "15.5.0",
-    "next": "15.5.0",
+    "@next/third-parties": "15.5.2",
+    "next": "15.5.2",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   },
@@ -26,8 +26,8 @@
     "@tabler/icons-react": "^3.34.1",
     "@twemoji/parser": "^16.0.0",
     "@types/node": "^24.3.0",
-    "@types/react": "19.1.11",
-    "@types/react-dom": "19.1.7",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9",
     "@types/react-twemoji": "^0.4.3",
     "@types/slug": "^5.0.9",
     "deepmerge-ts": "^7.1.5",
@@ -48,8 +48,8 @@
     "remark-flexible-toc": "^1.2.0",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
-    "shiki": "^3.11.0",
-    "shiki-codegen": "^3.11.0",
+    "shiki": "^3.12.0",
+    "shiki-codegen": "^3.12.0",
     "slug": "^11.0.0",
     "typescript": "^5.9.2",
     "unist-util-visit": "^5.0.0"

@@ -33,7 +33,7 @@ const shikiAdapter = createShikiAdapter({
   theme: {
     light: 'github-light',
     dark: 'github-dark',
-  }
+  },
 })
 
 export default function ShikiProvider({ children }: React.PropsWithChildren) {

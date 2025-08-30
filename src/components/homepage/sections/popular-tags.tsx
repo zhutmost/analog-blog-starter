@@ -1,8 +1,8 @@
+import type * as React from 'react'
 import { Button, Wrap } from '@chakra-ui/react'
 import { icons } from '@tabler/icons-react'
 import slugify from 'slug'
 
-import type { HomepageSectionContent } from '@/components/homepage/sections/home-section'
 import SmartLink from '@/components/smart-link'
 import { tagCounter } from '@/lib/coco'
 
@@ -14,8 +14,8 @@ export interface HomepageSectionPopularTagsProps {
   }[]
 }
 
-const HomepageSectionPopularTags: HomepageSectionContent<HomepageSectionPopularTagsProps> = ({
-  tags,
+const HomepageSectionPopularTags: React.FC<HomepageSectionPopularTagsProps> = ({
+  tags = [],
 }: HomepageSectionPopularTagsProps) => {
   const popularTags: { tag: string; icon?: string; title?: string }[] = tags?.length
     ? tags

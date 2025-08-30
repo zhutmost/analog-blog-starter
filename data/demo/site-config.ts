@@ -1,7 +1,7 @@
 import HomepageSectionContents from '@/components/homepage/sections'
 import timelineNews from '@/data/news/timeline-news'
-import { SiteConfig } from '@/lib/site-config'
-import { DeepPartial } from '@/lib/utils'
+import type { SiteConfig } from '@/lib/site-config'
+import type { DeepPartial } from '@/lib/utils'
 
 const userConfig: DeepPartial<SiteConfig> = {
   siteUrl: 'https://analog-demo.zhutmost.com',

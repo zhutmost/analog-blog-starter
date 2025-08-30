@@ -5,13 +5,11 @@ import NextLink from 'next/link'
 
 import Twemojify from '@/components/twemojify'
 
-export type HomepageSectionContent<T> = React.FC<{ props?: T }>
-
 export interface HomepageSectionProps<T> {
   href: string
   title: string
   description?: string
-  content: HomepageSectionContent<T>
+  content: React.FC<T>
   contentProps?: T
 }
 
@@ -55,7 +53,8 @@ export function HomepageSection<T>({
           <Twemojify>{description}</Twemojify>
         </Text>
       </VStack>
-      <Content {...contentProps} />
+      {/** biome-ignore lint/suspicious/noExplicitAny: Unsafe contentProps extraction */}
+      <Content {...(contentProps as any)} />
     </VStack>
   )
 }

@@ -1,4 +1,4 @@
-import { type TimelineNewsList } from '@/components/timeline'
+import type { TimelineNewsList } from '@/components/timeline'
 
 const timelineNews2024: TimelineNewsList = [
   {
