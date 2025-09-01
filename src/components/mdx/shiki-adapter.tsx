@@ -11,6 +11,7 @@ const shikiAdapter = createShikiAdapter({
       langs: [
         import('@shikijs/langs/c'),
         import('@shikijs/langs/cpp'),
+        import('@shikijs/langs/dockerfile'),
         import('@shikijs/langs/java'),
         import('@shikijs/langs/javascript'),
         import('@shikijs/langs/json'),
