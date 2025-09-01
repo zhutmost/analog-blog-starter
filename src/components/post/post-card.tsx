@@ -7,6 +7,8 @@ import {
   GridItem,
   Heading,
   Icon,
+  LinkBox,
+  LinkOverlay,
   SimpleGrid,
   Stack,
   Text,
@@ -37,11 +39,14 @@ export default function PostCard({ post }: { post: Post }) {
   return (
     <VStack width="full">
       {banner && (
-        <AspectRatio ratio={5 / 2} width="full">
-          <SmartLink href={`/category/${slugify(category)}`}>
+        <LinkBox w="full">
+          <AspectRatio ratio={5 / 2} bg="bg.muted" width="full">
             <SmartImage src={banner} alt={`Cover image of post: ${title}`} borderRadius="md" />
-          </SmartLink>
-        </AspectRatio>
+          </AspectRatio>
+          <LinkOverlay asChild>
+            <SmartLink href={`/post/${slug}`} />
+          </LinkOverlay>
+        </LinkBox>
       )}
 
       <SimpleGrid columns={{ base: 1, lg: 4 }} width="full" py={2}>

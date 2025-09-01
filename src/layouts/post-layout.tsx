@@ -1,5 +1,6 @@
 import type * as React from 'react'
 import {
+  AspectRatio,
   Avatar,
   Box,
   GridItem,
@@ -172,9 +173,9 @@ function PostHeader({ content }: { content: Post }) {
   return (
     <VStack as="header" paddingY="6" width="full">
       {banner && (
-        <Box position="relative" aspectRatio={5 / 2} width="full" marginBottom={10}>
+        <AspectRatio ratio={5 / 2} width="full" marginBottom={10}>
           <SmartImage src={banner} alt={title} />
-        </Box>
+        </AspectRatio>
       )}
       <HStack>
         <Text color="fg.muted">
