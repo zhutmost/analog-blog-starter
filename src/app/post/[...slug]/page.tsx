@@ -20,10 +20,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string[] }>
 }): Promise<Metadata | undefined> {
   const paramSlug = (await params).slug
-
-  const postCurr: Post | undefined = allPosts.find(
-    (post: Post) => post.slug === paramSlug.join('/')
-  )
+  const postCurr = allPosts.find((post: Post) => post.slug === paramSlug.join('/'))
   if (!postCurr) {
     return
   }
@@ -61,6 +58,7 @@ export async function generateMetadata({
 
 export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
+
   const postIndex = allPosts.findIndex((post: Post) => post.slug === params.slug.join('/'))
   if (postIndex === -1) {
     return notFound()

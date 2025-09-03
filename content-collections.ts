@@ -139,7 +139,19 @@ const posts = defineCollection({
   include: ['**/*.mdx'],
   schema: z.object({
     title: z.string(),
-    authors: z.string().array().default(['default']),
+    authors: z
+      .array(
+        z.union([
+          z.string(),
+          z.object({
+            name: z.string(),
+            href: z.string().optional(),
+            avatar: z.string().optional(),
+            bio: z.string().optional(),
+          }),
+        ])
+      )
+      .default(['default']),
     datePublish: z.coerce.date(),
     summary: z.string(),
     category: z.string().default('Uncategorized'),
@@ -161,11 +173,22 @@ const posts = defineCollection({
       document.banner,
       path.join(context.collection.directory, document._meta.path)
     )
+    const authors = document.authors.map((author) => {
+      if (typeof author === 'string') {
+        return { name: author, href: undefined, avatar: undefined, bio: undefined }
+      }
+      const avatar = assetSourceRedirect(
+        author.avatar,
+        path.join(context.collection.directory, document._meta.path)
+      )
+      return { ...author, avatar }
+    })
 
     return {
       ...document,
       ...(await commonTransform(document, context)),
       readingTime,
+      authors,
       banner,
     }
   },

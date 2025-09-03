@@ -16,15 +16,14 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
 
 import PostComment from '@/components/post/comment/post-comment'
 import PostLicense from '@/components/post/post-license'
 import PostTag from '@/components/post/post-tag'
 import PostToc from '@/components/post/post-toc'
 import SmartImage from '@/components/smart-image'
-import { Link } from '@/components/smart-link'
-import type { Author, Post } from '@/lib/coco'
+import SmartLink, { Link } from '@/components/smart-link'
+import type { Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
 export interface PostLayoutProps {
@@ -75,27 +74,27 @@ function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'chi
         justifyContent={{ base: 'center', lg: 'start' }}
       >
         <VisuallyHidden>Authors</VisuallyHidden>
-        {authors.map((author: Author) => (
-          <LinkBox key={author.slug}>
+        {authors.map(({ name, href, bio, avatar }) => (
+          <LinkBox key={name}>
             <HStack gapX={4}>
               <Avatar.Root>
-                <Avatar.Fallback name={author.name} />
-                <Avatar.Image objectFit="cover" src={author.avatar} />
+                <Avatar.Fallback name={name} />
+                <Avatar.Image objectFit="cover" src={avatar} />
               </Avatar.Root>
               <VStack alignItems="start" gapY={0}>
                 <LinkOverlay asChild>
-                  <NextLink href={`/about/${author.slug}`}>
+                  <SmartLink href={href}>
                     <VisuallyHidden>Name</VisuallyHidden>
                     <Text color="fg" fontSize="md" fontWeight="bold" letterSpacing="tight">
-                      {author.name}
+                      {name}
                     </Text>
-                  </NextLink>
+                  </SmartLink>
                 </LinkOverlay>
-                {author.bio && (
+                {bio && (
                   <div>
                     <VisuallyHidden>Short bio</VisuallyHidden>
                     <Text fontSize="sm" color="fg.muted" letterSpacing="tight" lineHeight="shorter">
-                      {author.bio}
+                      {bio}
                     </Text>
                   </div>
                 )}

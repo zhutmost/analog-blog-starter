@@ -1,10 +1,15 @@
 import { allPosts, type Post as CocoPost } from '@/coco-generated'
-import { type Author, allAuthors, authorDefault } from '@/lib/coco/all-authors'
+import { type Author, allAuthors } from '@/lib/coco/all-authors'
 
 const isProduction: boolean = process.env.NODE_ENV === 'production'
 
 export type Post = Omit<CocoPost, 'authors'> & {
-  authors: Author[]
+  authors: {
+    name: string
+    href?: string
+    avatar?: string
+    bio?: string
+  }[]
 }
 
 export function sortPosts(
@@ -26,22 +31,28 @@ export function sortPosts(
   return order === 'asc' ? postsDesc.reverse() : postsDesc
 }
 
-function authorsFind(authors: string[]): Author[] {
-  function findAuthor(author: string): Author {
-    return (
-      allAuthors.find((a: Author) => author === a.slug) ??
-      allAuthors.find((a: Author) => author === a._meta.path) ??
-      allAuthors.find((a: Author) => author === a.name) ??
-      authorDefault
-    )
-  }
-  const authorsFound = authors.map((author: string) => findAuthor(author))
-  return authorsFound.length > 0 ? authorsFound : [authorDefault]
-}
-
-export const allPostsSorted: Post[] = sortPosts(
+const allPostsSorted: Post[] = sortPosts(
   allPosts.map((post: CocoPost) => {
-    return { ...post, authors: authorsFind(post.authors) }
+    const authors = post.authors.map((author) => {
+      const authorFound =
+        allAuthors.find((a: Author) => author.name === a.slug) ??
+        allAuthors.find((a: Author) => author.name === a._meta.path) ??
+        allAuthors.find((a: Author) => author.name === a.name)
+      if (authorFound)
+        return {
+          name: authorFound.name,
+          href: `/about/$authorFound.slug`,
+          avatar: authorFound.avatar ?? '/avatar-default.jpg',
+          bio: authorFound.bio,
+        }
+      else
+        return {
+          ...author,
+          avatar: author.avatar ?? '/avatar-default.jpg',
+        }
+    })
+    return { ...post, authors }
   })
 )
+
 export { allPostsSorted as allPosts }
