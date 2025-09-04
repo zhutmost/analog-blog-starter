@@ -16,13 +16,15 @@ export default function SmartImage({ src, alt, htmlHeight, htmlWidth, ...rest }:
 
   return (
     <ChakraImage asChild {...rest}>
-      <NextImage
-        src={imgPath}
-        alt={alt ?? ''}
-        height={imgHasSize ? imgHeight : undefined}
-        width={imgHasSize ? imgWidth : undefined}
-        fill={!imgHasSize} // If no width and height are provided, fill the parent container
-      />
+      {imgHasSize ? (
+        <NextImage src={imgPath} alt={alt ?? ''} height={imgHeight} width={imgWidth} />
+      ) : (
+        <NextImage
+          src={imgPath}
+          alt={alt ?? ''}
+          fill // If no width and height are provided, fill the parent container
+        />
+      )}
     </ChakraImage>
   )
 }
