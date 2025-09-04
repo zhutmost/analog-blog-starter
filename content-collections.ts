@@ -69,7 +69,7 @@ async function commonTransform(
     .map((part) => slugify(part))
     .join('/')
 
-  const dateUpdate = getDataUpdate(document._meta.filePath)
+  const dateUpdate = getDataUpdate(path.join(context.collection.directory, document._meta.filePath))
 
   return { mdx, toc, slug, dateUpdate }
 }
