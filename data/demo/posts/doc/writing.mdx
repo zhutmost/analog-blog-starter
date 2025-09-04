@@ -33,18 +33,18 @@ The front matter is a YAML block at the top of your MDX file. It contains metada
 
 The front matter for blog posts includes the following fields:
 
-| Field         | Required (Default Value)        | Description                                   |
-|---------------|---------------------------------|-----------------------------------------------|
-| `title`       | Y                               | The title of the post. It will be displayed as the main heading of the post. |
-| `authors`     | N (`['default']`)               | A list of authors for the post. |
-| `datePublish` | Y                               | The date when the post was published. It should be in the format `YYYY-MM-DD`. |
-| `summary`     | Y                               | A short summary displayed on the post list page. It is also used for SEO. |
-| `category`    | N (`'Uncategorized'`)           | The category of the post. |
-| `tags`        | N (`[]`)                        | A list of tags for the post. |
-| `banner`      | N (null)                        | The file name of the banner image. It should be in the local asset directory. |
-| `draft`       | N (`false`)                     | Whether the post is a draft or not. If it is a draft, it will not be built. |
-| `locale`      | N (`'en-US'`)                   | The locale of the post. |
-| `license`     | N (follow `siteConfig`) | The license of the post. It will be displayed at the bottom of the post page. |
+| Field         | Required (Default Value) | Description                                                                    |
+|---------------|--------------------------|--------------------------------------------------------------------------------|
+| `title`       | Y                        | The title of the post. It will be displayed as the main heading of the post.   |
+| `authors`     | N (`['default']`)        | A list of authors for the post.                                                |
+| `datePublish` | Y                        | The date when the post was published. It should be in the format `YYYY-MM-DD`. |
+| `summary`     | Y                        | A short summary displayed on the post list page. It is also used for SEO.      |
+| `category`    | N (`'Uncategorized'`)    | The category of the post.                                                      |
+| `tags`        | N (`[]`)                 | A list of tags for the post.                                                   |
+| `banner`      | N (null)                 | The file name of the banner image. It should be in the local asset directory.  |
+| `draft`       | N (`false`)              | Whether the post is a draft or not. If it is a draft, it will not be built.    |
+| `locale`      | N (`'en-US'`)            | The locale of the post.                                                        |
+| `license`     | N (follow `siteConfig`)  | The license of the post. It will be displayed at the bottom of the post page.  |
 
 Here is an example:
 
@@ -53,6 +53,10 @@ title: "My First Post"
 authors:
   - default
   - Ron Weasley
+  - name: Hermione Granger # Add an external author beyond the Authors collection
+    avatar: hermione.jpg
+    bio: The brightest witch of her age.
+    href: https://hermione.example.com
 datePublish: 2025-05-12
 summary: "This is a summary of my first post."
 category: 🌈 Docs
