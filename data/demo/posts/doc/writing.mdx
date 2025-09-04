@@ -33,18 +33,19 @@ The front matter is a YAML block at the top of your MDX file. It contains metada
 
 The front matter for blog posts includes the following fields:
 
-| Field         | Required (Default Value) | Description                                                                    |
-|---------------|--------------------------|--------------------------------------------------------------------------------|
-| `title`       | Y                        | The title of the post. It will be displayed as the main heading of the post.   |
-| `authors`     | N (`['default']`)        | A list of authors for the post.                                                |
-| `datePublish` | Y                        | The date when the post was published. It should be in the format `YYYY-MM-DD`. |
-| `summary`     | Y                        | A short summary displayed on the post list page. It is also used for SEO.      |
-| `category`    | N (`'Uncategorized'`)    | The category of the post.                                                      |
-| `tags`        | N (`[]`)                 | A list of tags for the post.                                                   |
-| `banner`      | N (null)                 | The file name of the banner image. It should be in the local asset directory.  |
-| `draft`       | N (`false`)              | Whether the post is a draft or not. If it is a draft, it will not be built.    |
-| `locale`      | N (`'en-US'`)            | The locale of the post.                                                        |
-| `license`     | N (follow `siteConfig`)  | The license of the post. It will be displayed at the bottom of the post page.  |
+| Field              | Required (Default Value) | Description                                                                    |
+|--------------------|--------------------------|--------------------------------------------------------------------------------|
+| `title`            | Y                        | The title of the post. It will be displayed as the main heading of the post.   |
+| `authors`          | N (`['default']`)        | A list of authors for the post.                                                |
+| `datePublish`      | Y                        | The date when the post was published. It should be in the format `YYYY-MM-DD`. |
+| `summary`          | Y                        | A short summary displayed on the post list page. It is also used for SEO.      |
+| `category`         | N (`'Uncategorized'`)    | The category of the post.                                                      |
+| `tags`             | N (`[]`)                 | A list of tags for the post.                                                   |
+| `banner`           | N (null)                 | The file name of the banner image. It should be in the local asset directory.  |
+| `draft`            | N (`false`)              | Whether the post is a draft or not. If it is a draft, it will not be built.    |
+| `license`          | N (follow `siteConfig`)  | The license of the post. It will be displayed at the bottom of the post page.  |
+| `meta.locale`      | N (`'en-US'`)            | The locale of the post.                                                        |
+| `meta.description` | N (null)                 | The description of the post for better SEO.                                    |
 
 Here is an example:
 
@@ -60,28 +61,30 @@ authors:
 datePublish: 2025-05-12
 summary: "This is a summary of my first post."
 category: 🌈 Docs
-banner: banner.jpg
 tags:
   - analog
   - mdx
 banner: banner.jpg
 draft: false
-locale: en-US
 license: cc-by-nc-sa
+head:
+  locale: en-US
+  description: "This is my first post on Analog."
 ```
 
 ### Author Pages
 
 The front matter for author pages includes the following fields:
 
-| Field         | Required (Default Value) | Description                                   |
-|---------------|--------------------------|-----------------------------------------------|
-| `name`        | Y                        | The displayed name of the author. |
-| `avatar`      | N (null)                 | The file name of the avatar image. It should be in the local asset directory. |
-| `bio`         | N (null)                 | A short bio of the author, displayed in the sidebar of the author page. |
-| `affiliation` | N (null)                 | The affiliation of the author, displayed in the sidebar of the author page. |
-| `icons`       | N (null)                 | A list of social media icons for the author. |
-
+| Field              | Required (Default Value) | Description                                                                   |
+|--------------------|--------------------------|-------------------------------------------------------------------------------|
+| `name`             | Y                        | The displayed name of the author.                                             |
+| `avatar`           | N (null)                 | The file name of the avatar image. It should be in the local asset directory. |
+| `bio`              | N (null)                 | A short bio of the author, displayed in the sidebar of the author page.       |
+| `affiliation`      | N (null)                 | The affiliation of the author, displayed in the sidebar of the author page.   |
+| `icons`            | N (null)                 | A list of social media icons for the author.                                  |
+| `head.description` | N (null)                 | The description of the author for better SEO.                                 |
+| `head.locale`      | N (`'en-US'`)            | The locale of the page.                                                       |
 Here is an example:
 
 ```yaml
@@ -102,11 +105,12 @@ icons:
 
 The front matter for general pages includes the following fields:
 
-| Field         | Required (Default Value) | Description                                   |
-|---------------|--------------------------|-----------------------------------------------|
-| `title`       | Y                        | The title of the page, displayed as the main heading of the page. |
-| `description` | N (null)                 | A short greeting message displayed near the main heading of the page. |
-| `locale`      | N (`'en-US'`)            | The locale of the page. |
+| Field              | Required (Default Value) | Description                                                           |
+|--------------------|--------------------------|-----------------------------------------------------------------------|
+| `title`            | Y                        | The title of the page, displayed as the main heading of the page.     |
+| `greeting`         | N (null)                 | A short greeting message displayed near the main heading of the page. |
+| `head.description` | N (null)                 | The description of the page for better SEO.                           |
+| `head.locale`      | N (`'en-US'`)            | The locale of the page.                                               |
 
 Here is an example:
 
