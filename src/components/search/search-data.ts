@@ -34,7 +34,7 @@ const about: SearchDataItem = {
   label: 'About',
   value: '/about',
   sublabel: `About me and this site.`,
-  icon: 'IconHome',
+  icon: 'IconUser',
   searchContent: ['contact', 'email', 'authors'],
 }
 
@@ -42,7 +42,7 @@ const home: SearchDataItem = {
   label: 'Home',
   value: '/',
   sublabel: `Go back to the homepage.`,
-  icon: 'IconUser',
+  icon: 'IconHome',
 }
 
 const searchData: SearchDataItem[] = [...posts, ...pages, home, about]
