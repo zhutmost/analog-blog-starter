@@ -55,13 +55,12 @@ If you want to preview your blog locally, you can follow these steps to temporar
 
 #### Install Dependencies
 
-You need to install [Node.js](https://nodejs.org/en) and [Yarn v2](https://yarnpkg.com/getting-started) to run Analog.
+You need to install [Node.js](https://nodejs.org/en) and [Bun](https://bun.com) to run Analog.
 
 On macOS:
 
 ```shell
-brew install node # install node.js >= 20
-corepack enable # enable corepack for yarn 2
+brew install oven-sh/bun/bun
 ```
 
 If you are using Linux or Windows, you can download prebuilt binaries from the [official Node.js website](https://nodejs.org/en/download/prebuilt-binaries).
@@ -81,14 +80,17 @@ cd my_blog
 You can start the development server with the following command.
 
 ```shell
-yarn install # install NPM dependencies
-yarn dev # start the development server
+bun install # install NPM dependencies
+bun run dev # start the development server
 ```
 
 Then you will see console output like this:
 
 ```
-/usr/local/bin/yarn run dev
+$ bun run tsconfig-generate.js && next dev --turbopack
+Generate tsconfig.json with: {
+  DATA_DIR: "data/blog",
+}
 Starting content-collections content-collections.ts
 build started ...
 ... Tag & Category count generated
