@@ -39,14 +39,19 @@ export default function PostCard({ post }: { post: Post }) {
   return (
     <VStack width="full">
       {banner && (
-        <LinkBox w="full">
-          <AspectRatio ratio={5 / 2} bg="bg.muted" width="full">
-            <SmartImage src={banner} alt={`Cover image of post: ${title}`} borderRadius="md" />
-          </AspectRatio>
-          <LinkOverlay asChild>
-            <SmartLink href={`/post/${slug}`} />
-          </LinkOverlay>
-        </LinkBox>
+        <AspectRatio ratio={5 / 2} w="full">
+          <LinkBox w="full">
+            <SmartImage
+              src={banner}
+              alt={`Cover image of post: ${title}`}
+              borderRadius="md"
+              bgColor="bg.muted"
+            />
+            <LinkOverlay asChild>
+              <SmartLink href={`/post/${slug}`} aria-label={`Read more: ${title}`} />
+            </LinkOverlay>
+          </LinkBox>
+        </AspectRatio>
       )}
 
       <SimpleGrid columns={{ base: 1, lg: 4 }} width="full" py={2}>
