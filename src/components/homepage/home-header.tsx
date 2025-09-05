@@ -1,4 +1,4 @@
-import { Heading, Span } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 
 import { Link } from '@/components/smart-link'
 import Twemojify from '@/components/twemojify'
@@ -17,19 +17,19 @@ export default function HomeHeader() {
       color="fg/80"
     >
       Hello! I am&nbsp;
-      <Span
+      <Link
+        href={'/about'}
         bgGradient="to-r"
         gradientFrom="brand"
-        gradientTo="brand/60"
+        gradientTo="blue/80"
         bgClip="text"
         color="transparent"
         display="inline"
         marginRight={6}
+        textDecorationColor="brand/20"
       >
-        <Link href={'/about'} color="brand">
-          {siteConfig.author}
-        </Link>
-      </Span>
+        {siteConfig.author}
+      </Link>
       <Twemojify size={'2x'}>👋</Twemojify>
     </Heading>
   )
