@@ -34,7 +34,7 @@ function AuthorSidebar({ author }: { author: Author }) {
     <VStack paddingTop={10} gapY={5}>
       <Avatar.Root width="48" height="48">
         <Avatar.Fallback name={name} />
-        <Avatar.Image objectFit="cover" src={avatarSrc} />
+        <Avatar.Image objectFit="cover" src={avatarSrc} alt={`Avatar of ${name}`} />
       </Avatar.Root>
       <Heading as="h3" size="2xl" fontWeight="bold" letterSpacing="tight" color="fg">
         {name}

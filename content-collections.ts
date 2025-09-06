@@ -79,14 +79,14 @@ function printCollectionInfo(
   docs: { slug: string; dateUpdate: Date }[]
 ): void {
   console.log(
-    `Collection [${collectionName}] processed, including ${docs.length.toString()} documents. ` +
-      `Latest 3 documents in [${collectionName}]:`
+    `  - [${collectionName}] collected, including ${docs.length.toString()} documents. ` +
+      `Latest documents in [${collectionName}]:`
   )
   docs
     .toSorted((a) => a.dateUpdate.getTime())
     .slice(-3)
     .forEach((doc) => {
-      console.log(` - ${doc.slug} - Last updated: ${doc.dateUpdate.toLocaleString()}`)
+      console.log(`    - ${doc.slug} - Last updated: ${doc.dateUpdate.toLocaleString()}`)
     })
 }
 

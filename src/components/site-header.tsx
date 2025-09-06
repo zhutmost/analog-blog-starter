@@ -76,7 +76,7 @@ function SiteHeader() {
               {siteConfig.header.logo && (
                 <Image
                   src={siteConfig.header.logo}
-                  alt={siteConfig.siteTitle}
+                  alt={`Site logo of ${siteConfig.siteTitle}`}
                   width={30}
                   height={30}
                 />

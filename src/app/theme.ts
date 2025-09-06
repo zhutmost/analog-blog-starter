@@ -56,6 +56,7 @@ const chakraSystem = createSystem(defaultConfig, {
     semanticTokens: {
       colors: {
         brand: {
+          // Actually, only DEFAULT and contrast are used
           DEFAULT: { value: '{colors.teal.solid}' },
           fg: { value: '{colors.teal.fg}' },
           muted: { value: '{colors.teal.muted}' },

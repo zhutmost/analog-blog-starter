@@ -36,11 +36,11 @@ export async function generateMetadata({
     title: postCurr.title,
     description: postCurr.summary,
     openGraph: {
+      type: 'article',
       title: postCurr.title,
       description: postCurr.summary,
       siteName: siteConfig.siteTitle,
       locale: postCurr.head?.locale ?? siteConfig.seo.openGraph?.locale,
-      type: 'article',
       publishedTime: datePublish,
       modifiedTime: dateUpdate,
       url: './',

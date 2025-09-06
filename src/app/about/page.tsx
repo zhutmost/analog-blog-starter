@@ -8,6 +8,8 @@ import generatePageMetadata from '@/lib/page-metadata'
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'About',
+  description: authorDefault.head?.description,
+  locale: authorDefault.head?.locale,
 })
 
 export default function Page() {
