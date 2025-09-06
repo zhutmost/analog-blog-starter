@@ -5,7 +5,7 @@ export function getDataUpdate(filePath: string): Date {
   let dataUpdateStdout: string
   try {
     dataUpdateStdout = child_process
-      .execSync(`git log -1 --format=%cd --date=short-local -- ${filePath}`)
+      .execSync(`git log -1 --format=%cd --date=iso-local -- ${filePath}`)
       .toString()
   } catch (_error) {
     dataUpdateStdout = '' // Maybe this repo is not git-initialized
