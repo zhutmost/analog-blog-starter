@@ -6,6 +6,8 @@ import siteConfig from '@/lib/site-config'
 type Sitemap = MetadataRoute.Sitemap
 type SitemapSingleFile = MetadataRoute.Sitemap[number]
 
+export const dynamic = 'force-static'
+
 export default function sitemap(): Sitemap {
   const homeRoute: SitemapSingleFile = {
     url: new URL(siteConfig.siteUrl).toString(),

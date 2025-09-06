@@ -2,6 +2,8 @@ import type { MetadataRoute } from 'next'
 
 import siteConfig from '@/lib/site-config'
 
+export const dynamic = 'force-static'
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
@@ -9,5 +11,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
     },
     sitemap: new URL('sitemap.xml', siteConfig.siteUrl).toString(),
+    host: siteConfig.siteUrl,
   }
 }
