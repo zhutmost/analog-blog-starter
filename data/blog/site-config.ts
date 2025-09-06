@@ -74,8 +74,8 @@ const userConfig: DeepPartial<SiteConfig> = {
     umamiAnalytics: {
       websiteId: 'd4fee704-edd5-4eee-bc79-5dd8fa412c2b',
     },
-    googleAnalytics: {
-      gaId: 'G-HD0ZXF4S69',
+    googleTagManager: {
+      gtmId: 'G-HD0ZXF4S69',
     },
   },
   seo: {

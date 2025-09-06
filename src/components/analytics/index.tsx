@@ -1,4 +1,9 @@
-import GoogleAnalytics, { type GoogleAnalyticsProps } from './google'
+import {
+  GoogleAnalytics,
+  type GoogleAnalyticsProps,
+  GoogleTagManager,
+  type GoogleTagManagerProps,
+} from './google'
 import UmamiAnalytics, { type UmamiAnalyticsProps } from './umami'
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -6,6 +11,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 export interface AnalyticsConfig {
   umamiAnalytics?: UmamiAnalyticsProps
   googleAnalytics?: GoogleAnalyticsProps
+  googleTagManager?: GoogleTagManagerProps
 }
 
 export interface AnalyticsProps {
@@ -28,6 +34,9 @@ export default function Analytics({ analyticsConfig }: AnalyticsProps) {
       )}
       {isProduction && analyticsConfig.googleAnalytics && (
         <GoogleAnalytics {...analyticsConfig.googleAnalytics} />
+      )}
+      {isProduction && analyticsConfig.googleTagManager && (
+        <GoogleTagManager {...analyticsConfig.googleTagManager} />
       )}
     </>
   )
