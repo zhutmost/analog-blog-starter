@@ -30,6 +30,7 @@ export interface SiteConfig {
   pagination: number
 
   homepage: {
+    // An array of greetings displayed on the homepage.
     greetings?: string[]
     // GitHub username for the GitHub calendar on the homepage. (Example: 'zhutmost')
     // Leave it blank to disable the GitHub calendar. (Default: null)
