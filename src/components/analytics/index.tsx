@@ -42,4 +42,4 @@ export default function Analytics({ analyticsConfig }: AnalyticsProps) {
   )
 }
 
-export type { UmamiAnalyticsProps, GoogleAnalyticsProps }
+export type { UmamiAnalyticsProps, GoogleAnalyticsProps, GoogleTagManagerProps }

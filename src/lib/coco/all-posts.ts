@@ -41,7 +41,7 @@ const allPostsSorted: Post[] = sortPosts(
       if (authorFound)
         return {
           name: authorFound.name,
-          href: `/about/$authorFound.slug`,
+          href: authorFound.slug === 'default' ? '/about' : `/about/${authorFound.slug}`,
           avatar: authorFound.avatar ?? '/avatar-default.jpg',
           bio: authorFound.bio,
         }
