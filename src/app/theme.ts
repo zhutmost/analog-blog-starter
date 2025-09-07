@@ -1,6 +1,7 @@
 import { createSystem, defaultConfig } from '@chakra-ui/react'
 
 // import customFontFamily from '@/lib/font'
+
 const fontsFallback =
   '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 const fontsMonoFallback =
