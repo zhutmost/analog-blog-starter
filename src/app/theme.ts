@@ -67,26 +67,16 @@ const chakraSystem = createSystem(defaultConfig, {
           focusRing: { value: '{colors.teal.focusRing}' },
         },
         fg: {
-          muted: { value: '{colors.gray.500}', _dark: { value: '{colors.gray.400}' } },
+          muted: { value: { base: '{colors.gray.500}', _dark: '{colors.gray.400}' } },
         },
         bg: {
-          muted: { value: '{colors.gray.100}', _dark: { value: '{colors.gray.800}' } },
+          muted: { value: { base: '{colors.gray.100}', _dark: '{colors.gray.800}' } },
         },
-        chart1: {
-          value: { base: '#e76e50', _dark: '#2662d9' },
-        },
-        chart2: {
-          value: { base: '#2a9d90', _dark: '#2eb88a' },
-        },
-        chart3: {
-          value: { base: '#274754', _dark: '#e88c30' },
-        },
-        chart4: {
-          value: { base: '#e8c468', _dark: '#af57db' },
-        },
-        chart5: {
-          value: { base: '#f4a462', _dark: '#e23670' },
-        },
+        chart1: { value: { base: '#e76e50', _dark: '#2662d9' } },
+        chart2: { value: { base: '#2a9d90', _dark: '#2eb88a' } },
+        chart3: { value: { base: '#274754', _dark: '#e88c30' } },
+        chart4: { value: { base: '#e8c468', _dark: '#af57db' } },
+        chart5: { value: { base: '#f4a462', _dark: '#e23670' } },
       },
     },
   },
