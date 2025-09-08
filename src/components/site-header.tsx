@@ -67,7 +67,7 @@ function SiteHeader() {
           w="full"
           h="full"
           mx="auto"
-          px={{ base: 4, md: 6 }}
+          px={{ base: 6, lg: 0 }}
           align="center"
           justify="space-between"
         >

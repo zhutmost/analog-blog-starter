@@ -12,7 +12,7 @@ const userConfig: DeepPartial<SiteConfig> = {
   locale: 'en-US',
   author: 'Haozhe Zhu',
   homepage: {
-    greetings: ['I am a dedicated silicon researcher 🔬 and a tech enthusiast 🎧.'],
+    greetings: ['I am a dedicated integrated circuit researcher 🔬 and a tech enthusiast 💻.'],
     githubCalendar: 'zhutmost',
     sections: [
       {

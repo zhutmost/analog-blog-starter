@@ -8,7 +8,7 @@ function SiteFooter() {
   const thisYear = new Date().getFullYear()
 
   return (
-    <Flex as="footer" width="full" marginTop="auto" paddingX={6} justifyContent="center">
+    <Flex as="footer" width="full" marginTop="auto" justifyContent="center">
       <Flex
         maxWidth="5xl"
         width="full"
