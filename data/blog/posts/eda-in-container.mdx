@@ -50,7 +50,7 @@ Synopsys 官方也提供了一个 EDA 容器化的解决方案——[Synopsys Co
 
 在事情的最开始，我们需要首先构建一个运行 EDA 的 Docker 镜像文件 EDA Runner。这个部分相对来说和已有的一些实践差别不是太大，主要是安装 EDA 软件所需的一些依赖包。它的代码大致如下（为了简洁我省略了一部分，详见代码仓库中的 `edarunner.dockerfile` 文件）：
 
-```dockerfile
+```dockerfile fileName="edarunner.dockerfile"
 FROM almalinux:8
 
 RUN yum update -y

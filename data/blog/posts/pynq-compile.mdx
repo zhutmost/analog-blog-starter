@@ -66,8 +66,7 @@ petalinux-v2020.2-final-installer.run --dir <xilinx_install_dir>/petalinux/2020.
 具体安装选项可以参考 [UG1144](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide)。这里存在一个坑，PetaLinux 的安装程序允许用户任意指定安装位置，但是 PYNQ 之前的版本默认却要求它的路径必须是`.../2020.2/`的形式（v2.7 有无修复不确定，我没有去测试）。
 
 安装完成后，我们需要将下面几行代码加入 `.bashrc`（也可以每次打开命令行手动执行）。这样一来，就可以在命令行中运行这些软件了。
-```shell
-# .bashrc
+```shell fileName=".bashrc"
 source <xilinx_install_dir>/petalinux/2020.2/settings.sh
 source <xilinx_install_dir>/Vivado/2020.2/settings64.sh
 source <xilinx_install_dir>/Vitis/2020.2/settings64.sh
@@ -94,8 +93,7 @@ PYNQ在 `boards` 文件夹下预置了 `Pynq-Z1`、`Pynq-Z2`、`ZCU104` 三个�
 其他文件夹中如果存在 Makefile 文件，就会被认为是 `Overlay` 文件夹。在编译 `pynq` 本身时，`<pynq_repo_dir>/build.sh` 脚本会试图进入这些文件夹，并挨个检查是否存在 `.bit`、`.hwh`、`.xsa` 等文件。这些文件夹不是必须的，主要是为用户提供一些针对该开发板的预置 `Overlay`。
 
 `<board_name>.spec` 文件描述了针对该开发板的各种配置和文件路径。它的格式如下所示：
-```makefile
-// board_name.spec
+```makefile fileName="board_name.spec"
 ARCH_<board_name> := aarch64 # Zynq的CPU架构，可以是aarch64或arm
 BSP_<board_name> := ... # 开发板的BSP文件（如果有的话）
 BITSTREAM_<board_name> := ... # 默认的比特流文件
@@ -158,8 +156,7 @@ E: Sub-process /usr/bin/dpkg returned an error code (1)
 PYNQ 采用 Multistrap 作为 RootFS 的初始化工具，它利用 apt 下载所需要的包并进行安装。`base-files` 正是其中一个此时应当被安装的包，完整的包列表可以见 `ubuntu/focal/aarch64/multistrap.config`。观察安装日志，可以最终定位到真正的错误原因：`base-files`的安装会用到 `chmod`，这要求另一个名为 `base-passwd` 的包必须比它先完成 “configure”，否则 `base-files` 的安装就会失败。简而言之，就是 `base-files` 依赖 `base-passwd`。
 
 那么问题来了，为什么 RootFS 初始化时部分包安装失败后不会报错呢？原因在 `sdbuild/scripts/create_rootfs.sh` 脚本中如下的两行代码抑制了 `postinst1.sh` 和 `postinst2.sh` 两个脚本的报错：
-```shell
-# create_rootfs.sh
+```shell fileName="create_rootfs.sh"
 $dry_run sudo -E chroot $target bash postinst1.sh
 ... # other stuff
 $dry_run sudo -E chroot $target bash postinst2.sh
@@ -169,8 +166,7 @@ $dry_run sudo -E chroot $target bash postinst2.sh
 更为本质的一个问题是为什么 dpkg 无法检测到上述两个软件包之间的依赖关系。这已经超出了 PYNQ 的范畴，根据 Debian 社区的意思大体上可以这么理解：`base-files` 和 `base-passwd` 都是属于Essential的包，理论上它们都是必装的，因此就没有设置依赖关系。如果我们为这些必装的组件之间相互设置依赖关系的话，会陷入循环依赖的地狱。那么在安装时它们之间发生依赖冲突怎么办呢？这个问题至少在 2011 年就[有人提出过](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612426)，社区的结论是这个问题并不常见（多数时候 `base-passwd` 总比 `base-files` 先完成 “configure”），所以不妨依靠玄学。他们认为这个问题在新的 Multistrap 版本上不会出现，然而并不。
 
 这里我的解决方法是手工指定 `dpkg --configure` 的顺序，将 `sdbuild/scripts/create_rootfs.sh` 的 `postinst1.sh` 部分中原先的 `dpkg --configure -a` 修改成：
-```shell
-# create_rootfs.sh
+```shell fileName="create_rootfs.sh"
 # 先完成base-passwd的configure
 dpkg --configure gcc-10-base libcrypt1 libc6 libgcc-s1 libdebconfclient0 base-passwd
 # 再完成其他组件的configure
@@ -183,8 +179,7 @@ dpkg --configure -a
 
 这里可以从报错信息中观察到，安装失败的原因是它的 `postinst` 脚本中用到了 `awk`，然而此时 `awk` 这个命令还未安装。解决方法也和上个问题类似，即手工指定 `dpkg --configure` 的顺序，确保提供 `awk` 命令的包比 `python2.7-minimal` 先完成 `configure`。有很多包都提供了 `awk` 命令，我这里选择了 `mawk`。
 
-```shell
-# create_rootfs.sh
+```shell fileName="create_rootfs.sh"
 dpkg --configure <... 其他需要提前`configure`的包> mawk
 dpkg --configure -a
 ```
@@ -215,8 +210,7 @@ touch system-user.dtsi
 ```
 
 然后对 sdhci1 节点（对应于 PS_SD1，即我们的 SD 卡槽）进行修改。完成以后，你的 `system-user.dtsi` 文件应该长这个样子：
-```
-# system-user.dtsi
+```text fileName="system-user.dtsi"
 /include/ "system-conf.dtsi"
 / { /*根节点，这里保持不变*/
 };
@@ -236,8 +230,7 @@ touch system-user.dtsi
 PYNQ 默认总是从 `/dev/mmcblk0`（这个路径是 PYNQ 上的，不是你的宿主 Ubuntu 上的）启动系统，即它如果它有多个 SD 外设的话，SD 卡要连在 `PS_SD0`上。不幸的是，EdgeBoard 还真的有两个 SD 设备，一个是我们的 TF 卡槽，另一个是一颗 eMMC Flash 芯片。默认情形下，PYNQ 总是会尝试从后者启动，而我们的系统实际存放在SD卡上。
 
 PetaLinux 的 Boot 参数是通过设备树中的 `/chosen/bootargs` 条目进行配置的。默认情况下，最后镜像使用的设备树中该条目会是这样的（每个字段的先后顺序不重要）：
-```
-# system-user.dtsi
+```text fileName="system-user.dtsi"
 bootargs = "root=/dev/mmcblk0p2 rw earlyprintk rootfstype=ext4 rootwait devtmpfs.mount=1 uio_pdrv_genirq.of_id=\"generic-uio\" clk_ignore_unused";
 ```
 但我们希望其中的字段 `root=/dev/mmcblk0p2` 变成 `root=/dev/mmcblk1p2`。直觉上，首先想到的是很上文一样修改 `system-user.dtsi` 文件，从而影响最终生成的设备树。实验会告诉你完全不起作用，最后输出也就是实际使用的设备树里还是上面这行默认值。这里大家就会遇到 PYNQ 这个编译流程设计的很糟糕的一点：`system-user.dtsi` 这个文件中的只有一部分会起作用，至于想弄清哪部分，要么做实验，要么看懂编译源代码。比如上面对 `&sdhci1` 节点的修改就能生效，对 `/chosen/bootargs` 对修改就不起作用。
@@ -255,7 +248,7 @@ bootargs = "root=/dev/mmcblk0p2 rw earlyprintk rootfstype=ext4 rootwait devtmpfs
 其中步骤1、2、3、4在 `sdbuild/scripts/create_bsp.sh` 脚本中进行，步骤 5、6、7、8 在 `sdbuild/Makefile` 中进行。如果用户指定了预编译的 BSP 文件，就把上文中的第1步换成 “利用用户提供的BSP文件建立一个新的PetaLinux项目”。这里最令人困惑的地方是，为什么要进行两次 “create-config-build” 的流程，至少我没有看出它这么做的必要性。这样一通操作之后，用户在 `petalinux_bsp/meta-user` 的子目录下的 `system-user.dtsi` 文件中修改的一些设备树节点（对应上文步骤 2），会在步骤6中被新引入的一些设备树文件冲刷掉。步骤6通过`CONFIG_USER_LAYER_0`这一设置混入了一些新的设备树文件，这些额外的设备树文件位于 `sdbuild/boot/meta-pynq/recipes-bsp/device-tree`。就 Boot 参数而言，这里边的 `pynq_bootargs.dtsi` 文件提供了前述的默认 `/chosen/bootargs`。因此无论我们在 `system-user.dtsi` 文件中如何修改 `/chosen/bootargs`，最终都会被覆盖掉。因此，我们的解决方案很简单，修改下该文件，将其中的 `root=/dev/mmcblk0p2` 变成 `root=/dev/mmcblk1p2`。因为这个文件只有几行，改动也很小，我就不把代码贴出来了。
 
 除了修改 `pynq_bootargs.dtsi`，我们还需要修改 `sdbuild/Makefile`，将下面这行代码中的 `mmcblk0p2` 变成 `mmcblk1p2`。
-```makefile
+```makefile fileName="sdbuild/Makefile"
 	echo 'CONFIG_SUBSYSTEM_SDROOT_DEV="/dev/mmcblk0p2"' >> $$(PL_CONFIG_$1)
 ```
 
@@ -321,8 +314,7 @@ export PYNQ_UBUNTU_REPO=http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports
 
 CrossTool-NG 每次运行时会从云端下载很多包（主要是各种源代码）。根据其文档的指示，我们可以建立一个本地的缓存文件夹。当需要下载的包本地已经缓存时，它就会跳过下载，从而节省时间。CrossTool-NG 的配置文件在 `sdbuild/packages/gcc-mb/samples/<compile_targets>/crosstool.config`，在其最后加上两行：
 
-```
-// crosstool.config
+```text fileName="crosstool.config"
 CT_SAVE_TARBALLS=y
 CT_LOCAL_TARBALLS_DIR=<somewhere_to_put_downloaded_files>
 ```
@@ -333,8 +325,7 @@ CT_LOCAL_TARBALLS_DIR=<somewhere_to_put_downloaded_files>
 首先去 [Xilinx 官网](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools/archive.html)下载 sstate-cache 文件。注意版本要和 PetaLinux 保持一致（本文中我们用的是 2020.2）。
 
 因为 EdgeBoard FZ3A 板载的 Zynq 芯片是 ARM64 架构，因此为了节约空间，就只下载 “aarch64 sstate-cache” 和 “downloads” 两个包（加起来也超过 60GB 了）。然后我们将它们解压缩，并把路径添加到 `petalinux_bsp/meta-user/conf/petalinuxbsp.conf`：
-```
-// petalinuxbsp.conf
+```text fileName="petalinuxbsp.conf"
 DL_DIR = "<sstate_extract_dir>/2020.2/downloads"
 SSTATE_DIR = "<sstate_extract_dir>/2020.2/sstate-cache/aarch64"
 ```

@@ -43,8 +43,7 @@ Hi zhutmost! You've successfully authenticated, but GitHub does not provide shel
 ```
 
 为了让Git也能通过上述端口用 SSH 访问 GitHub，我们为上述 SSH 连接方式设置一个别名。首先找到SSH的配置文件，它的路径一般是 `~/.ssh/config`，如果这个文件不存在的话也可以创建一个。然后，在其中增加以下内容：
-```
-// ssh_config
+```text fileName="ssh_config"
 Host github.com
   HostName ssh.github.com
   User git
