@@ -9,7 +9,7 @@ import siteConfig from '@/lib/site-config'
 
 export default function HomePage() {
   return (
-    <VStack width="full" paddingX={4} alignItems="start">
+    <VStack width="full" alignItems="start">
       <HomeHeader />
 
       {siteConfig.homepage.greetings?.map((item, index) => (
