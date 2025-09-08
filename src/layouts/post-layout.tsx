@@ -176,22 +176,18 @@ function PostHeader({ content }: { content: Post }) {
           <SmartImage src={banner} alt={title} />
         </AspectRatio>
       )}
-      <HStack>
-        <Text color="fg.muted">
-          Published on <time dateTime={datePublish.toISOString()}>{formatDate(datePublish)}</time>
-        </Text>
-        {formatDate(datePublish) !== formatDate(dateUpdate) && (
-          <>
-            <Text color="fg.muted"> · </Text>
-            <Text color="fg.muted">
-              Updated on <time dateTime={dateUpdate.toISOString()}>{formatDate(dateUpdate)}</time>
-            </Text>
-          </>
-        )}
-      </HStack>
       <Heading as="h1" size="5xl" fontWeight="extrabold" letterSpacing="tight" color="fg">
         {title}
       </Heading>
+      <Text color="fg.muted">
+        Published on <time dateTime={datePublish.toISOString()}>{formatDate(datePublish)}</time>
+        {formatDate(datePublish) !== formatDate(dateUpdate) && (
+          <>
+            {' · '}
+            Edited on <time dateTime={dateUpdate.toISOString()}>{formatDate(dateUpdate)}</time>
+          </>
+        )}
+      </Text>
     </VStack>
   )
 }
