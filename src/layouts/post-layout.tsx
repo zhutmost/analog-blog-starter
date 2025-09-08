@@ -172,8 +172,8 @@ function PostHeader({ content }: { content: Post }) {
   return (
     <VStack as="header" paddingY="6" width="full">
       {banner && (
-        <AspectRatio ratio={5 / 2} width="full" marginBottom={10}>
-          <SmartImage src={banner} alt={title} />
+        <AspectRatio ratio={5 / 2} width="full" marginBottom={10} bg="bg.muted">
+          <SmartImage src={banner} alt={`Cover image of post: ${title}`} />
         </AspectRatio>
       )}
       <Heading as="h1" size="5xl" fontWeight="extrabold" letterSpacing="tight" color="fg">
