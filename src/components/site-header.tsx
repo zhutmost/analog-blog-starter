@@ -122,7 +122,13 @@ function SiteHeader() {
 
       {/* Mobile collapsible menu */}
       <Collapsible.Root open={open}>
-        <Collapsible.Content boxShadow="md" borderBottomRadius="lg">
+        <Collapsible.Content
+          boxShadow="md"
+          borderBottomRadius="lg"
+          position="fixed"
+          w="full"
+          zIndex="dropdown"
+        >
           <Box backgroundColor={'bg'} py={3} px={4}>
             <VStack spaceY={3}>
               {siteConfig.header.menu.map((link) => (
