@@ -7,7 +7,6 @@ import { rehypeGithubAlerts } from 'rehype-github-alerts'
 import rehypeKatex from 'rehype-katex'
 import rehypeMdxCodeProps from 'rehype-mdx-code-props'
 import rehypePreLanguage from 'rehype-pre-language'
-import rehypePresetMinify from 'rehype-preset-minify'
 import rehypeProbeImageSize from 'rehype-probe-image-size'
 import rehypeSlug from 'rehype-slug'
 import rehypeUnwrapImages from 'rehype-unwrap-images'
@@ -57,7 +56,6 @@ async function commonTransform(
           rehypeUnwrapImages,
           // @ts-expect-error Types not assignable
           [rehypeProbeImageSize, { staticDir: 'public' }],
-          rehypePresetMinify,
         ],
       }
     )
