@@ -46,7 +46,7 @@ Analog includes plentiful search, comment, sharing and other plugins out of the 
   KBar (support Cmd+K shortcuts, including pages & posts)
 - [**Analytics**](https://analog-demo.zhutmost.com/post/doc/analytics)
 
-  Umami · Google Analytics
+  Umami · Google Analytics · Google Tag Manager
 - **Other**
 
   RSS · Sitemap · SEO (OpenGraph + Twitter Card)
