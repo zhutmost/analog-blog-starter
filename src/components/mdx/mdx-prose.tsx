@@ -1,5 +1,6 @@
 import type * as React from 'react'
-import { Em, Kbd, Table, type TableRootProps } from '@chakra-ui/react'
+import { Box, Em, Kbd, Table, type TableRootProps } from '@chakra-ui/react'
+import { MDXContent } from '@content-collections/mdx/react'
 import type { MDXComponents } from 'mdx/types'
 
 import GfmAlert from '@/components/mdx/gfm-alert'
@@ -43,4 +44,18 @@ const components: MDXComponents = {
   TimelineNews,
 }
 
-export default components
+export default function MdxProse({ code }: { code: string }) {
+  return (
+    <Box
+      w="full"
+      pt={10}
+      css={{
+        '&>*': {
+          _first: { marginTop: '0' },
+        },
+      }}
+    >
+      <MDXContent code={code} components={components} />
+    </Box>
+  )
+}

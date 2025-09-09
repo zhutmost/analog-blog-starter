@@ -1,15 +1,13 @@
-import { MDXContent } from '@content-collections/mdx/react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import mdxComponents from '@/components/mdx/mdx-components'
+import MdxProse from '@/components/mdx/mdx-prose'
 import PostLayout from '@/layouts/post-layout'
 import { allPosts, type Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
 import 'katex/dist/katex.css'
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
   return allPosts.map((post) => ({ slug: post.slug.split('/') }))
 }
@@ -82,7 +80,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
 
   return (
     <PostLayout content={postCurr} postNext={postNext} postPrev={postPrev}>
-      <MDXContent code={postCurr.mdx} components={mdxComponents} />
+      <MdxProse code={postCurr.mdx} />
     </PostLayout>
   )
 }

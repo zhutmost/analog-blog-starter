@@ -1,7 +1,6 @@
-import { MDXContent } from '@content-collections/mdx/react'
 import type { Metadata } from 'next'
 
-import mdxComponents from '@/components/mdx/mdx-components'
+import MdxProse from '@/components/mdx/mdx-prose'
 import AuthorLayout from '@/layouts/author-layout'
 import { authorDefault } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
@@ -15,7 +14,7 @@ export const metadata: Metadata = generatePageMetadata({
 export default function Page() {
   return (
     <AuthorLayout author={authorDefault}>
-      <MDXContent code={authorDefault.mdx} components={mdxComponents} />
+      <MdxProse code={authorDefault.mdx} />
     </AuthorLayout>
   )
 }

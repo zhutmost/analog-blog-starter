@@ -28,7 +28,7 @@
         "feed": "^5.1.0",
         "match-sorter": "^8.1.0",
         "next-themes": "^0.4.6",
-        "react-github-calendar": "^4.5.9",
+        "react-github-calendar": "^4.5.10",
         "react-twemoji": "^0.6.0",
         "reading-time": "^1.5.0",
         "rehype-github-alerts": "^4.1.1",
@@ -871,11 +871,11 @@
 
     "react": ["react@19.1.1", "https://registry.npmmirror.com/react/-/react-19.1.1.tgz", {}, "sha512-w8nqGImo45dmMIfljjMwOGtbmC/mk4CMYhWIicdSflH91J9TyCyczcPFXJzrZ/ZXcgGRFeP6BU0BEJTw6tZdfQ=="],
 
-    "react-activity-calendar": ["react-activity-calendar@2.7.13", "https://registry.npmmirror.com/react-activity-calendar/-/react-activity-calendar-2.7.13.tgz", { "dependencies": { "date-fns": "^4.1.0" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-1ZHVgK8QJxtwG52EmcQrxhUQyN1Bv+819IPTTDAGp7Hme3h9IX2thDZJG+KnVbNQ3cjh8DQdfX4wWsTHIw75ug=="],
+    "react-activity-calendar": ["react-activity-calendar@2.7.14", "https://registry.npmmirror.com/react-activity-calendar/-/react-activity-calendar-2.7.14.tgz", { "dependencies": { "date-fns": "^4.1.0" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-/yzI76ioAWLQ/xnYt1buDlHhQxDFI3EZV5EFoMVZ4VloMZpCk2TXKSOUY7IO+dliQwLRuS9zbY0VL6LYUA1+IA=="],
 
     "react-dom": ["react-dom@19.1.1", "https://registry.npmmirror.com/react-dom/-/react-dom-19.1.1.tgz", { "dependencies": { "scheduler": "^0.26.0" }, "peerDependencies": { "react": "^19.1.1" } }, "sha512-Dlq/5LAZgF0Gaz6yiqZCf6VCcZs1ghAJyrsu84Q/GT0gV+mCxbfmKNoGRKBYMJ8IEdGPqu49YWXD02GCknEDkw=="],
 
-    "react-github-calendar": ["react-github-calendar@4.5.9", "https://registry.npmmirror.com/react-github-calendar/-/react-github-calendar-4.5.9.tgz", { "dependencies": { "react-activity-calendar": "^2.7.13" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-5Ks2vGbR4KieM0vO49hJKy6hLKpFo7kbtOg+Z67qz83VeJy094okTGLt9+k2oryN5PKfjn5sJr0UObXSvNgcNw=="],
+    "react-github-calendar": ["react-github-calendar@4.5.10", "https://registry.npmmirror.com/react-github-calendar/-/react-github-calendar-4.5.10.tgz", { "dependencies": { "react-activity-calendar": "^2.7.14" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-p8MeJuM13rLsIIiJmpdNiiWLQfmoVRlq7lRI2z+aX58kYyibioA7vllDQudUzUmvvpV78HXNgsWKUIuaKTCMuQ=="],
 
     "react-is": ["react-is@16.13.1", "https://registry.npmmirror.com/react-is/-/react-is-16.13.1.tgz", {}, "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="],
 

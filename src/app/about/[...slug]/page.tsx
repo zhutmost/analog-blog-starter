@@ -1,8 +1,7 @@
-import { MDXContent } from '@content-collections/mdx/react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import mdxComponents from '@/components/mdx/mdx-components'
+import MdxProse from '@/components/mdx/mdx-prose'
 import AuthorLayout from '@/layouts/author-layout'
 import { allAuthorsNonDefault } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
@@ -36,7 +35,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
 
   return (
     <AuthorLayout author={author}>
-      <MDXContent code={author.mdx} components={mdxComponents} />
+      <MdxProse code={author.mdx} />
     </AuthorLayout>
   )
 }
