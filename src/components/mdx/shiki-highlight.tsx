@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { ClientOnly, CodeBlock, Float, IconButton } from '@chakra-ui/react'
+import { ClientOnly, CodeBlock, Float, IconButton, Skeleton } from '@chakra-ui/react'
 
 import { useColorMode } from '@/components/ui/color-mode'
 
@@ -52,8 +52,13 @@ export default function CodeHighlightBlock({
   ).props
   const codeContent = codeChildProps.children as string
 
+  // TODO: This is a temporary workaround to calculate the height of code blocks
+  const noOfLines = codeContent.split('\n').length - 1
+
   return (
-    <ClientOnly>
+    <ClientOnly
+      fallback={<Skeleton h={`${noOfLines * 22.75 + 34 + (fileName ? 32 : 0)}px`} py={4} />}
+    >
       {() => (
         <CodeBlock.Root
           code={codeContent}
