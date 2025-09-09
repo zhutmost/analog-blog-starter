@@ -6,7 +6,7 @@ category: 🌈 Docs
 banner: banner.jpg
 tags:
   - analog
-  - tailwindcss
+  - chakra-ui
   - code-highlighting
 ---
 
@@ -30,47 +30,38 @@ Among them, `logo.svg` is also used as the logo on the site header.
 
 You can visit [Favicon Generator](https://realfavicongenerator.net) to generate favicons of different sizes.
 
-## Color Scheme
+## Color Schemes
 
-Analog's style is managed by [TailwindCSS](https://tailwindcss.com/docs), which is configured by `/tailwind.config.ts`.
+Analog's style is managed by [Chakra UI](https://chakra-ui.com), which is configured by `/src/app/theme.ts`.
 
-In this file, you can see that Analog provides two color themes - light and dark - through `const pluginTwColors`.
+In this file, you can add new color tokens (`theme.tokens.colors`) or modify existing ones. Please refer to the [Chakra UI Colors](https://chakra-ui.com/docs/theming/colors) documentation for more built-in colors.
 
-```typescript
-import colors from 'tailwindcss/colors'
-const pluginTwColors = {
-  light: {
-    background: colors.white,
-    foreground: colors.slate['950'],
-    ...
-  },
-  dark: {
-    background: colors.slate['950'],
-    foreground: colors.slate['50'],
-    ...
-  },
-};
-```
-
-Each theme defines several functional colors such as background, foreground, primary, muted, etc. You can freely modify them, and you can copy some ready-made themes on the website [Shadcn/UI Themes](https://ui.shadcn.com/themes).
-
-By default, I use the [Tailwind color system](https://tailwindcss.com/docs/customizing-colors), provided by the imported package `tailwindcss/colors`. You can also change the colors to hexadecimal RGB colors (such as `#123456`). In the following code example, the background and foreground colors are changed to a light blue and a dark blue, respectively.
+In Analog, a `brand` color token is defined to `teal` and used as the primary color of the site. You can modify it to change the overall color tone of the site.
 
 ```typescript
-import colors from 'tailwindcss/colors'
-const pluginTwColors = {
-  light: {
-    background: colors.blue[100],
-    foreground: '#123456',
-    ...
+const chakraSystem = createSystem(defaultConfig, {
+  theme: {
+    ...,
+    semanticTokens: {
+      colors: {
+        brand: {
+          DEFAULT: { value: '{colors.teal.solid}' },
+          fg: { value: '{colors.teal.fg}' },
+          ...,
+        },
+        fg: {
+          muted: { value: { base: '{colors.gray.500}', _dark: '{colors.gray.400}' } },
+        },
+        ...,
+      },
+    },
   },
-  ...
-};
+})
 ```
 
 ## Fonts
 
-Analog provides [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) and [Noto Sans SC](https://fonts.google.com/noto/specimen/Noto+Sans+SC) as the default English and Chinese fonts. The default monospace font is [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono). Their declarations are in the file `/src/lib/fonts.ts`.
+Analog provides [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) and [Noto Sans SC](https://fonts.google.com/noto/specimen/Noto+Sans+SC) as the default English and Chinese fonts. The default monospace font is [Geist Mono](https://fonts.google.com/specimen/JetBrains+Mono). Their declarations are in the file `/src/lib/fonts.ts`.
 
 To change the font, you can modify the exported `customFontFamily` variable. For example, to change the English font to [Inter](https://fonts.google.com/specimen/Inter), you can modify the following code:
 
@@ -78,7 +69,6 @@ To change the font, you can modify the exported `customFontFamily` variable. For
 import { Inter } from 'next/font/google'
 const fontInter = Inter({
   subsets: ['latin'],
-  display: 'swap',
   variable: '--font-inter', // set a CSS variable name
 })
 
@@ -88,32 +78,30 @@ const customFontFamily = {
 }
 ```
 
-Then you should add the CSS variable `--font-inter` to the Tailwind configuration file `/tailwind.config.ts`:
+Then you should add the font name to the Chakra UI configuration file `/src/app/theme.ts`:
 
 ```typescript
-fontFamily: {
-  sans: [
-    'var(--font-inter)',
-    ...defaultTheme.fontFamily.sans,
-  ],
-  ...
-},
+
+
+const chakraSystem = createSystem(defaultConfig, {
+  theme: {
+    tokens: {
+      ...,
+      fonts: {
+        heading: {
+          value: `Inter, ${fontsFallback}`,
+        },
+    },
+    ...,
+  },
+})
 ```
 For some advanced font settings (such as using local fonts instead of Google fonts), you can refer to the [Next.js Font Optimization](https://nextjs.org/docs/app/building-your-application/optimizing/fonts).
 
 ## Code Syntax Highlighting
 
-Analog uses [rehype-highlight](https://github.com/rehypejs/rehype-highlight) to highlight code blocks in MDX-based posts.
-It is based on [lowlight](https://github.com/wooorm/lowlight).
+Analog uses [Shiki](https://shiki.style/) to highlight code blocks in MDX-based posts. The relevant configuration is in the `/src/components/mdx/shiki-adapter.tsx` file.
 
-### Highlighting Theme
+ By default, Shiki with fully bundled languages is used, which may increase the size of the client-side JavaScript bundle. If you want to reduce the bundle size, you can view the [Fine Grained Bundle](https://shiki.style/guide/best-performance#fine-grained-bundle).
 
-The highlighted theme is defined in the `/src/styles/highlight.css` file. Feel free to modify it.
-
-Rehype-highlight and [highlighting.js](https://highlightjs.readthedocs.io/en/latest/index.html) have the same class names, so you can find a highlighting.js theme on the Internet and then paste the corresponding CSS code into the above file. The default theme is atom-dark-pro. You can find it and many other themes [here](https://highlightjs.org/examples).
-
-### Supported Programming Languages
-
-Lowlight supports a huge number of languages, and you can find a full list on [its README](https://github.com/wooorm/lowlight#data).
-
-If you need to add a new programming language syntax, please refer to the [related lightnight documentation](https://github.com/wooorm/lowlight#lowlightregistergrammars).
+[Shiki](https://shiki.style/) also supports many themes. You can find the complete list of its built-in themes on [its official website](https://shiki.style/themes).
