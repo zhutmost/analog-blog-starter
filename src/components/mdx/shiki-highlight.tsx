@@ -73,7 +73,7 @@ export default function CodeHighlightBlock({
             wordWrap,
           }}
           maxLines={maxLines}
-          marginY="1em"
+          my="1em"
         >
           {fileName && (
             <CodeBlock.Header>

@@ -31,8 +31,8 @@ function AuthorSidebar({ author }: { author: Author }) {
   const avatarSrc: string = path.join(siteConfig.siteRoot ?? '', avatar ?? '/avatar-default.jpg')
 
   return (
-    <VStack paddingTop={10} gapY={5}>
-      <Avatar.Root width="48" height="48">
+    <VStack pt={10} gapY={5}>
+      <Avatar.Root w="48" h="48">
         <Avatar.Fallback name={name} />
         <Avatar.Image objectFit="cover" src={avatarSrc} alt={`Avatar of ${name}`} />
       </Avatar.Root>
@@ -53,7 +53,7 @@ function AuthorSidebar({ author }: { author: Author }) {
           <Box>
             <VisuallyHidden>Affiliation</VisuallyHidden>
             <Flex color="fg.muted" letterSpacing="tight" lineHeight="shorter" alignItems="center">
-              <Icon size="md" marginRight={1}>
+              <Icon size="md" mr={1}>
                 <IconMapPinFilled />
               </Icon>
               {affiliation}
@@ -75,7 +75,7 @@ function AuthorLayout({ children, author }: AuthorLayoutProps) {
   const title: string = author.slug === 'default' ? 'About' : `About - ${author.name}`
 
   return (
-    <VStack separator={<StackSeparator />} width="full">
+    <VStack separator={<StackSeparator />} w="full">
       <PageHeader.Root>
         <PageHeader.Title>{title}</PageHeader.Title>
         <PageHeader.Description>{siteConfig.pages.greetings.about}</PageHeader.Description>

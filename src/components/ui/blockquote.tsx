@@ -15,7 +15,7 @@ export const Blockquote = React.forwardRef<HTMLDivElement, BlockquoteProps>(
     return (
       <ChakraBlockquote.Root ref={ref} {...rest}>
         {icon}
-        <ChakraBlockquote.Content cite={citeUrl} width="full">
+        <ChakraBlockquote.Content cite={citeUrl} w="full">
           {children}
         </ChakraBlockquote.Content>
         {cite && (

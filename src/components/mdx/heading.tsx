@@ -32,13 +32,13 @@ export function H2(props: React.HTMLAttributes<HTMLHeadingElement>) {
       fontWeight="bold"
       fontSize="1.5em"
       letterSpacing="-0.02em"
-      marginTop="1.6em"
-      marginBottom="0.8em"
+      mt="1.6em"
+      mb="0.8em"
       lineHeight="1.4em"
       scrollMarginTop="calc(var(--header-height) + 1.5em)"
       css={{
         '& code': { fontSize: '0.9em' },
-        '& + *': { marginTop: '0' },
+        '& + *': { mt: '0' },
         '& a': { font: 'inherit!' },
       }}
       {...props}
@@ -53,13 +53,13 @@ export function H3(props: React.HTMLAttributes<HTMLHeadingElement>) {
       fontWeight="semibold"
       fontSize="1.285em"
       letterSpacing="-0.01em"
-      marginTop="1.5em"
-      marginBottom="0.4em"
+      mt="1.5em"
+      mb="0.4em"
       lineHeight="1.5em"
       scrollMarginTop="calc(var(--header-height) + 1.5em)"
       css={{
         '& code': { fontSize: '0.9em' },
-        '& + *': { marginTop: '0' },
+        '& + *': { mt: '0' },
         '& a': { font: 'inherit!' },
       }}
       {...props}
@@ -72,13 +72,13 @@ export function H4(props: React.HTMLAttributes<HTMLHeadingElement>) {
     <HeadingLinkIcon
       as="h4"
       fontWeight="semibold"
-      marginTop="1.4em"
-      marginBottom="0.5em"
+      mt="1.4em"
+      mb="0.5em"
       letterSpacing="-0.01em"
       lineHeight="1.5em"
       scrollMarginTop="calc(var(--header-height) + 1.5em)"
       css={{
-        '& + *': { marginTop: '0' },
+        '& + *': { mt: '0' },
         '& a': { font: 'inherit!' },
       }}
       {...props}
@@ -93,8 +93,8 @@ export function H1(props: React.HTMLAttributes<HTMLHeadingElement>) {
       fontWeight="bold"
       fontSize="2.15em"
       letterSpacing="-0.02em"
-      marginTop="0"
-      marginBottom="0.8em"
+      mt="0"
+      mb="0.8em"
       lineHeight="1.2em"
       scrollMarginTop="calc(var(--header-height) + 1.5em)"
       {...props}

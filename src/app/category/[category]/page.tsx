@@ -9,7 +9,6 @@ import { categoryCounter } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<{ category: string }[]> {
   return Object.keys(categoryCounter).map((category) => {
     return {
@@ -50,7 +49,7 @@ export default async function Page({
   const filteredPosts = categoryCounter[category].posts
 
   return (
-    <VStack as="article" separator={<StackSeparator />} width="full">
+    <VStack as="article" separator={<StackSeparator />} w="full">
       <PageHeader.Root>
         <PageHeader.Title>Category - {category}</PageHeader.Title>
         <PageHeader.Description>{siteConfig.pages.greetings.archive}</PageHeader.Description>

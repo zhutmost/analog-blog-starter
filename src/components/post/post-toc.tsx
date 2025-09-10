@@ -51,15 +51,15 @@ export default function PostToc({ toc }: PostTocProps) {
   const activeHeadingNumbering = toc.find((item) => item.href.slice(1) === activeHeading)?.numbering
 
   return (
-    <Box as="nav" maxHeight="85svh" overflow="auto" paddingY={2} lineHeight="tall">
+    <Box as="nav" maxH="85svh" overflow="auto" py={2} lineHeight="tall">
       <Box as="ul">
         {toc.map((item) => (
           <Box
             as="li"
             key={item.href}
-            paddingX={2}
-            paddingY={1}
-            backgroundColor={{ base: 'bg', _hover: 'bg.muted' }}
+            px={2}
+            py={1}
+            bgColor={{ base: 'bg', _hover: 'bg.muted' }}
             color={
               activeHeadingNumbering &&
               item.numbering.every((value, index) => value === activeHeadingNumbering[index])
@@ -69,12 +69,10 @@ export default function PostToc({ toc }: PostTocProps) {
             transition="color"
             fontSize={item.depth === 2 ? 'md' : item.depth === 3 ? 'sm' : 'xs'}
             fontWeight={item.depth === 2 ? 'medium' : 'normal'}
-            marginLeft={item.depth > 3 ? 8 : item.depth === 3 ? 5 : 0}
+            ml={item.depth > 3 ? 8 : item.depth === 3 ? 5 : 0}
           >
             <SmartLink href={item.href}>
-              {item.depth === 2 && (
-                <Span paddingRight={2}>{item.numbering.slice(1).join('.')}</Span>
-              )}
+              {item.depth === 2 && <Span pr={2}>{item.numbering.slice(1).join('.')}</Span>}
               {item.value}
             </SmartLink>
           </Box>

@@ -15,7 +15,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   const paramPage = parseInt((await searchParams).page ?? '1', 10)
 
   return (
-    <VStack as="article" separator={<StackSeparator />} width="full">
+    <VStack as="article" separator={<StackSeparator />} w="full">
       <PageHeader.Root>
         <PageHeader.Title>All Posts</PageHeader.Title>
         <PageHeader.Description>{siteConfig.pages.greetings.archive}</PageHeader.Description>

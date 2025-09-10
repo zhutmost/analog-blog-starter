@@ -26,9 +26,9 @@ function AuthorCard({ author }: { author: Author }) {
   const avatarSrc: string = path.join(siteConfig.siteRoot ?? '', avatar ?? '/avatar-default.jpg')
 
   return (
-    <VStack paddingTop={10} gapY={5}>
+    <VStack pt={10} gapY={5}>
       <NextLink href={`/about/${slug}`}>
-        <Avatar.Root width="48" height="48">
+        <Avatar.Root w="48" height="48">
           <Avatar.Fallback name={name} />
           <Avatar.Image objectFit="cover" src={avatarSrc} />
         </Avatar.Root>
@@ -42,7 +42,7 @@ function AuthorCard({ author }: { author: Author }) {
         {bio && <Text>{bio}</Text>}
         {affiliation && (
           <Text>
-            <Icon size="md" marginRight={1}>
+            <Icon size="md" mr={1}>
               <IconMapPinFilled />
             </Icon>
             {affiliation}
@@ -59,7 +59,6 @@ function AuthorCard({ author }: { author: Author }) {
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export async function generateMetadata(): Promise<Metadata | undefined> {
   if (!siteConfig.pages.team || allAuthorsNonDefault.length === 0) {
     return
@@ -84,20 +83,20 @@ export default function Page() {
   }, {})
 
   return (
-    <VStack as="article" separator={<StackSeparator />} width="full">
+    <VStack as="article" separator={<StackSeparator />} w="full">
       <PageHeader.Root>
         <PageHeader.Title>Our Team</PageHeader.Title>
         <PageHeader.Description>{siteConfig.pages.greetings.team}</PageHeader.Description>
       </PageHeader.Root>
-      <VStack paddingTop={6} width="full">
+      <VStack pt={6} w="full">
         {Object.entries(allAuthorsGrouped).map(([group, authors]) => (
-          <VStack key={group} alignItems="start" width="full" paddingBottom={6}>
+          <VStack key={group} alignItems="start" w="full" pb={6}>
             <Heading as="h2" size={{ base: '3xl', lg: '4xl' }} color="fg" fontWeight="bold">
               {group}
             </Heading>
-            <Wrap width="full">
+            <Wrap w="full">
               {sortAuthors(authors).map((author) => (
-                <WrapItem key={author.slug} width={{ base: 'full', md: '50%', lg: '25%' }}>
+                <WrapItem key={author.slug} w={{ base: 'full', md: '50%', lg: '25%' }}>
                   <AuthorCard author={author} />
                 </WrapItem>
               ))}

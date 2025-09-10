@@ -53,10 +53,10 @@ function SiteHeader() {
   }, [onClose])
 
   return (
-    <Box as="header" position="sticky" top={0} width="full" zIndex="sticky" ref={headerRef}>
+    <Box as="header" position="sticky" top={0} w="full" zIndex="sticky" ref={headerRef}>
       <Box
-        height="56px"
-        backgroundColor="bg"
+        h="56px"
+        bgColor="bg"
         boxShadow={isScrolled ? 'md' : 'none'}
         borderBottom="sm"
         borderColor="border"
@@ -67,7 +67,7 @@ function SiteHeader() {
           w="full"
           h="full"
           mx="auto"
-          px={{ base: 6, lg: 0 }}
+          px={{ base: 6, xl: 0 }}
           align="center"
           justify="space-between"
         >
@@ -124,15 +124,15 @@ function SiteHeader() {
       <Collapsible.Root open={open}>
         <Collapsible.Content
           boxShadow="md"
-          borderBottomRadius="lg"
+          roundedBottom="lg"
           position="fixed"
           w="full"
           zIndex="dropdown"
         >
-          <Box backgroundColor={'bg'} py={3} px={4}>
+          <Box bgColor={'bg'} py={3} px={4}>
             <VStack spaceY={3}>
               {siteConfig.header.menu.map((link) => (
-                <Button key={link.name} asChild variant="ghost" width="full" onClick={onClose}>
+                <Button key={link.name} asChild variant="ghost" w="full" onClick={onClose}>
                   <SmartLink href={link.href}>{link.name}</SmartLink>
                 </Button>
               ))}

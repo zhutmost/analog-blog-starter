@@ -9,8 +9,8 @@ function PageHeaderRoot(props: StackProps) {
       w="full"
       alignSelf="start"
       alignItems="start"
-      paddingTop={{ base: 8, md: 12 }}
-      paddingBottom={{ base: 6, md: 10 }}
+      pt={{ base: 8, md: 12 }}
+      pb={{ base: 6, md: 10 }}
       {...props}
     />
   )

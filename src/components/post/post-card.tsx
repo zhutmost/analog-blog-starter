@@ -37,14 +37,14 @@ export default function PostCard({ post }: { post: Post }) {
   })
 
   return (
-    <VStack width="full">
+    <VStack w="full">
       {banner && (
         <AspectRatio ratio={5 / 2} w="full">
           <LinkBox w="full">
             <SmartImage
               src={banner}
               alt={`Cover image of post: ${title}`}
-              borderRadius="md"
+              rounded="md"
               bgColor="bg.muted"
             />
             <LinkOverlay asChild>
@@ -54,12 +54,12 @@ export default function PostCard({ post }: { post: Post }) {
         </AspectRatio>
       )}
 
-      <SimpleGrid columns={{ base: 1, lg: 4 }} width="full" py={2}>
+      <SimpleGrid columns={{ base: 1, lg: 4 }} w="full" py={2}>
         <GridItem colSpan={1}>
           <Stack
             direction={{ base: 'row', lg: 'column' }}
             justifyContent={{ base: 'space-between', lg: 'start' }}
-            width="full"
+            w="full"
           >
             <Box>
               <VisuallyHidden>Category</VisuallyHidden>
@@ -87,7 +87,7 @@ export default function PostCard({ post }: { post: Post }) {
         </GridItem>
 
         <GridItem colSpan={{ base: 1, lg: 3 }}>
-          <VStack gap={3} align="start" width="full">
+          <VStack gap={3} align="start" w="full">
             <Box>
               <Heading as="h3" size="2xl" fontWeight="bold" letterSpacing="tight" truncate>
                 <Link href={`/post/${slug}`} color="fg" _hover={{ color: 'fg/80' }}>
@@ -176,7 +176,7 @@ export function PostCardList({
     <VStack gapY={8}>
       <VStack as="ul" gapY={8}>
         {posts.map((post) => (
-          <Box as="li" key={post.slug} width="full">
+          <Box as="li" key={post.slug} w="full">
             <PostCard post={post} />
           </Box>
         ))}

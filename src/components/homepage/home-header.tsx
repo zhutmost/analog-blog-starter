@@ -25,7 +25,7 @@ export default function HomeHeader() {
         bgClip="text"
         color="transparent"
         display="inline"
-        marginRight={6}
+        mr={6}
         textDecorationColor="brand/20"
       >
         {siteConfig.author}

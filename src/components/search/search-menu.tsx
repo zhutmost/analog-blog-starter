@@ -74,7 +74,7 @@ export default function SearchMenu() {
       </Dialog.Trigger>
       <Dialog.Backdrop />
       <Dialog.Positioner>
-        <Dialog.Content p="2" width={{ base: 'full', sm: 'lg' }}>
+        <Dialog.Content p="2" w={{ base: 'full', sm: 'lg' }}>
           <Combobox.Root
             open
             disableLayer

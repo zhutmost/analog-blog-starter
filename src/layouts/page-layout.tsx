@@ -12,7 +12,7 @@ export interface PageLayoutProps {
 
 export default function PageLayout({ children, content }: PageLayoutProps) {
   return (
-    <VStack separator={<StackSeparator />} width="full">
+    <VStack separator={<StackSeparator />} w="full">
       <PageHeader.Root>
         <PageHeader.Title>{content.title}</PageHeader.Title>
         <PageHeader.Description>

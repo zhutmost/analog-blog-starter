@@ -9,7 +9,6 @@ import { tagCounter } from '@/lib/coco/'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<{ tag: string }[]> {
   return Object.keys(tagCounter).map((tag) => {
     return {
@@ -50,7 +49,7 @@ export default async function Page({
   const filteredPosts = tagCounter[tag].posts
 
   return (
-    <VStack as="article" separator={<StackSeparator />} width="full">
+    <VStack as="article" separator={<StackSeparator />} w="full">
       <PageHeader.Root>
         <PageHeader.Title>Tag - {tag}</PageHeader.Title>
         <PageHeader.Description>{siteConfig.pages.greetings.archive}</PageHeader.Description>

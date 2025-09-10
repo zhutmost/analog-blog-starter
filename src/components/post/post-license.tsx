@@ -74,18 +74,18 @@ function PostLicense({ post }: { post: Post }) {
     <Box
       position="relative"
       color="fg.muted"
-      backgroundColor="bg.muted"
+      bgColor="bg.muted"
       borderColor="border"
       borderWidth="thin"
-      borderRadius="md"
-      padding={5}
+      rounded="md"
+      p={5}
       overflow="hidden"
     >
       <Icon
         position="absolute"
         color="fg.muted"
-        width={72}
-        height={72}
+        w={72}
+        h={72}
         opacity={0.2}
         top="-70px"
         right="-50px"
@@ -93,7 +93,7 @@ function PostLicense({ post }: { post: Post }) {
         <IconCreativeCommons />
       </Icon>
 
-      <VStack alignItems="start" paddingBottom={5} position="relative" zIndex={1} gapY={0}>
+      <VStack alignItems="start" pb={5} position="relative" zIndex={1} gapY={0}>
         <Text fontWeight="semibold" fontSize="lg" truncate>
           {title}
         </Text>
@@ -102,7 +102,7 @@ function PostLicense({ post }: { post: Post }) {
           {postUrl}
         </Link>
       </VStack>
-      <SimpleGrid columns={{ base: 2, md: 4 }} maxWidth="xl">
+      <SimpleGrid columns={{ base: 2, md: 4 }} maxW="xl">
         <GridItem>
           <PostInfoItem title="Authors" content={authorName} />
         </GridItem>

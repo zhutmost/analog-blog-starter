@@ -62,18 +62,12 @@ function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'chi
     <VStack
       separator={<StackSeparator display={{ base: 'none', lg: 'block' }} />}
       gapY={{ base: 4, lg: 6 }}
-      paddingTop={10}
-      width="full"
-      height="full"
+      pt={{ base: 0, lg: 10 }}
+      w="full"
+      h="full"
       alignItems="start"
     >
-      <Wrap
-        paddingY={2}
-        gapY={6}
-        gapX={10}
-        width="full"
-        justifyContent={{ base: 'center', lg: 'start' }}
-      >
+      <Wrap py={2} gapY={6} gapX={10} w="full" justifyContent={{ base: 'center', lg: 'start' }}>
         <VisuallyHidden>Authors</VisuallyHidden>
         {authors.map(({ name, href, bio, avatar }) => (
           <LinkBox key={name}>
@@ -116,7 +110,7 @@ function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'chi
       )}
 
       {(postNext ?? postPrev) && (
-        <Wrap justifyContent="space-between" width="full" gap={{ base: 4, lg: 8 }}>
+        <Wrap justifyContent="space-between" w="full" gap={{ base: 4, lg: 8 }}>
           {postPrev && (
             <PostSidebarItem label="Previous Article">
               <Link
@@ -147,7 +141,7 @@ function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'chi
       )}
 
       {filteredToc.length > 0 && (
-        <Box height="full" display={{ base: 'none', lg: 'block' }} padding={0}>
+        <Box height="full" display={{ base: 'none', lg: 'block' }} p={0}>
           <Box position="sticky" top={20} insetX={0}>
             <PostSidebarItem label="Table of Contents">
               <PostToc toc={toc} />
@@ -171,7 +165,7 @@ function PostHeader({ content }: { content: Post }) {
   }
 
   return (
-    <VStack as="header" paddingY="6" width="full">
+    <VStack as="header" py="6" w="full">
       {banner && (
         <Bleed
           w={{ base: '100vw', lg: 'full' }}
@@ -201,11 +195,11 @@ function PostHeader({ content }: { content: Post }) {
 
 export default function PostLayout({ content, postNext, postPrev, children }: PostLayoutProps) {
   return (
-    <VStack as="article" width="full">
+    <VStack as="article" w="full">
       <PostHeader content={content} />
-      <Separator display={{ base: 'none', lg: 'block' }} orientation="horizontal" width="full" />
+      <Separator display={{ base: 'none', lg: 'block' }} orientation="horizontal" w="full" />
 
-      <SimpleGrid columns={{ base: 1, lg: 4 }} gap={4} width="full">
+      <SimpleGrid columns={{ base: 1, lg: 4 }} gap={4} w="full">
         <GridItem colSpan={1}>
           <PostSidebar content={content} postNext={postNext} postPrev={postPrev} />
         </GridItem>

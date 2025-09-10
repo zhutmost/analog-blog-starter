@@ -36,7 +36,7 @@ const HomepageSectionPopularTags: React.FC<HomepageSectionPopularTagsProps> = ({
             mx="auto"
             w="160px"
             color="white"
-            backgroundColor={`chart${(index + 1).toString()}`}
+            bgColor={`chart${(index + 1).toString()}`}
             rounded="lg"
             textTransform="capitalize"
           >

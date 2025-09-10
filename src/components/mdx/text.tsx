@@ -4,14 +4,14 @@ export function P(props: BoxProps) {
   return (
     <Box
       as="p"
-      {...props}
       lineHeight="1.7"
-      marginTop="1em"
-      marginBottom="1em"
+      mt="1em"
+      mb="1em"
       css={{
-        _first: { marginTop: '0' },
-        _last: { marginBottom: '0' },
+        _first: { mt: '0' },
+        _last: { mb: '0' },
       }}
+      {...props}
     />
   )
 }

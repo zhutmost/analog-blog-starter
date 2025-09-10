@@ -65,17 +65,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Analytics analyticsConfig={siteConfig.analytics} />
       <body className={`${customFontVariables.join(' ')} antialiased`}>
         <Provider>
-          <VStack minHeight="dvh" backgroundColor="bg">
+          <VStack minH="dvh" bgColor="bg">
             <SiteHeader />
             <Flex
               as="main"
               flexGrow={1}
-              width="full"
-              maxWidth="5xl"
+              w="full"
+              maxW="5xl"
               justify="center"
               color="fg.muted"
-              paddingX={{ base: 6, lg: 0 }}
-              paddingBottom={10}
+              px={{ base: 6, xl: 0 }}
+              pb={10}
             >
               {children}
             </Flex>

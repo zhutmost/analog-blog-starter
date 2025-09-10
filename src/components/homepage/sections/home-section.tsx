@@ -22,13 +22,8 @@ export function HomepageSection<T>({
 }: HomepageSectionProps<T>) {
   return (
     <VStack w="full">
-      <VStack
-        w="full"
-        alignItems="start"
-        paddingTop={{ base: 8, md: 12 }}
-        paddingBottom={{ base: 6, md: 10 }}
-      >
-        <HStack width="full" alignItems="end" justifyContent="space-between">
+      <VStack w="full" alignItems="start" pt={{ base: 8, md: 12 }} pb={{ base: 6, md: 10 }}>
+        <HStack w="full" alignItems="end" justifyContent="space-between">
           <Heading
             as="h2"
             size={{ base: '3xl', lg: '4xl' }}

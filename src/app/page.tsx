@@ -9,7 +9,7 @@ import siteConfig from '@/lib/site-config'
 
 export default function HomePage() {
   return (
-    <VStack width="full" alignItems="start">
+    <VStack w="full" alignItems="start">
       <HomeHeader />
 
       {siteConfig.homepage.greetings?.map((item, index) => (
@@ -19,7 +19,7 @@ export default function HomePage() {
       ))}
 
       {siteConfig.homepage.githubCalendar && (
-        <Box py={4} spaceY={2} width="full">
+        <Box py={4} spaceY={2} w="full">
           <Text fontSize="lg">
             I also go by&nbsp;
             <Link

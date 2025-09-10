@@ -5,8 +5,8 @@ export function Ol(props: BoxProps) {
     <Box
       as="ol"
       color="fg.muted"
-      marginTop="1em"
-      marginBottom="1em"
+      mt="1em"
+      mb="1em"
       paddingInlineStart="1.5em"
       css={{
         '& > li': {
@@ -16,15 +16,15 @@ export function Ol(props: BoxProps) {
             color: 'fg.subtle',
           },
           '& > p:first-of-type': {
-            marginTop: '1em',
+            mt: '1em',
           },
           '& > p:last-of-type': {
-            marginBottom: '1em',
+            mb: '1em',
           },
         },
         '& ol, & ul': {
-          marginTop: '0.5em',
-          marginBottom: '0.5em',
+          mt: '0.5em',
+          mb: '0.5em',
         },
       }}
       {...props}
@@ -37,8 +37,8 @@ export function Ul(props: BoxProps) {
     <Box
       as="ul"
       color="fg.muted"
-      marginTop="1em"
-      marginBottom="1em"
+      mt="1em"
+      mb="1em"
       paddingInlineStart="1.5em"
       css={{
         '& > li': {
@@ -48,15 +48,15 @@ export function Ul(props: BoxProps) {
             color: 'fg.subtle',
           },
           '& > p:first-of-type': {
-            marginTop: '1em',
+            mt: '1em',
           },
           '& > p:last-of-type': {
-            marginBottom: '1em',
+            mb: '1em',
           },
         },
         '& ol, & ul': {
-          marginTop: '0.5em',
-          marginBottom: '0.5em',
+          mt: '0.5em',
+          mb: '0.5em',
         },
       }}
       {...props}
@@ -65,5 +65,5 @@ export function Ul(props: BoxProps) {
 }
 
 export function Li(props: BoxProps) {
-  return <Box as="li" marginY="0.8em" {...props} />
+  return <Box as="li" my="0.8em" {...props} />
 }

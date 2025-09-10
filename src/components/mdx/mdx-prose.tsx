@@ -51,7 +51,7 @@ export default function MdxProse({ code }: { code: string }) {
       pt={10}
       css={{
         '&>*': {
-          _first: { marginTop: '0' },
+          _first: { mt: '0' },
         },
       }}
     >

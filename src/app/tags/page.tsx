@@ -11,7 +11,6 @@ export const metadata: Metadata = generatePageMetadata({
   description: 'Things I blog about',
 })
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export default async function Page() {
   const tags = Object.keys(tagCounter)
   const tagsSorted = tags.sort((a, b) => tagCounter[b].count - tagCounter[a].count)
@@ -20,7 +19,7 @@ export default async function Page() {
       justifyContent={{ base: 'none', lg: 'center' }}
       direction={{ base: 'column', lg: 'row' }}
       alignItems={{ base: 'start', lg: 'center' }}
-      width="full"
+      w="full"
       gap={6}
     >
       <Box>
@@ -28,9 +27,9 @@ export default async function Page() {
           <PageHeader.Title>Tags</PageHeader.Title>
         </PageHeader.Root>
       </Box>
-      <Separator orientation="vertical" display={{ base: 'none', lg: 'block' }} height="xs" />
-      <Separator orientation="horizontal" display={{ base: 'block', lg: 'none' }} width="full" />
-      <Wrap maxWidth="xl" alignSelf="center" gap={3}>
+      <Separator orientation="vertical" display={{ base: 'none', lg: 'block' }} h="xs" />
+      <Separator orientation="horizontal" display={{ base: 'block', lg: 'none' }} w="full" />
+      <Wrap maxW="xl" alignSelf="center" gap={3}>
         {tags.length === 0 && (
           <WrapItem>
             <Text>No tags found.</Text>

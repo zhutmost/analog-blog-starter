@@ -8,14 +8,14 @@ function SiteFooter() {
   const thisYear = new Date().getFullYear()
 
   return (
-    <Flex as="footer" width="full" marginTop="auto" justifyContent="center">
+    <Flex as="footer" w="full" mt="auto" justifyContent="center" px={{ base: 6, xl: 0 }}>
       <Flex
-        maxWidth="5xl"
-        width="full"
+        maxW="5xl"
+        w="full"
         direction={{ base: 'column', md: 'row' }}
         align={{ base: 'center', md: 'flex-start' }}
         justify="space-between"
-        paddingY={5}
+        py={5}
         gap={3}
       >
         {/* Social icons (at top when mobile) */}
