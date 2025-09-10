@@ -2,6 +2,7 @@ import type * as React from 'react'
 import {
   AspectRatio,
   Avatar,
+  Bleed,
   Box,
   GridItem,
   Heading,
@@ -172,9 +173,15 @@ function PostHeader({ content }: { content: Post }) {
   return (
     <VStack as="header" paddingY="6" width="full">
       {banner && (
-        <AspectRatio ratio={5 / 2} width="full" marginBottom={10} bg="bg.muted">
-          <SmartImage src={banner} alt={`Cover image of post: ${title}`} />
-        </AspectRatio>
+        <Bleed
+          w={{ base: '100vw', lg: 'full' }}
+          blockStart={{ base: 8, lg: 0 }} // gap 2 + padding 6 = 8
+          mb={{ base: 5, lg: 10 }}
+        >
+          <AspectRatio ratio={5 / 2} w="full">
+            <SmartImage src={banner} alt={`Cover image of post: ${title}`} bgColor="bg.muted" />
+          </AspectRatio>
+        </Bleed>
       )}
       <Heading as="h1" size="5xl" fontWeight="extrabold" letterSpacing="tight" color="fg">
         {title}
