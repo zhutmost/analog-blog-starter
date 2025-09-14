@@ -8,13 +8,14 @@ function SiteFooter() {
   const thisYear = new Date().getFullYear()
 
   return (
-    <Flex as="footer" w="full" mt="auto" justifyContent="center" px={{ base: 6, xl: 0 }}>
+    <Flex as="footer" w="full" mt="auto" justifyContent="center">
       <Flex
         maxW="5xl"
         w="full"
         direction={{ base: 'column', md: 'row' }}
         align={{ base: 'center', md: 'flex-start' }}
         justify="space-between"
+        px={{ base: 6, xl: 0 }}
         py={5}
         gap={3}
       >
