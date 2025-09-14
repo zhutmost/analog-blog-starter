@@ -64,9 +64,9 @@ export default function PostCard({ post }: { post: Post }) {
             <Box>
               <VisuallyHidden>Category</VisuallyHidden>
               <Text fontWeight="semibold" color="fg" _hover={{ color: 'fg/80' }}>
-                <SmartLink href={`/category/${slugify(category)}`}>
+                <Link href={`/category/${slugify(category)}`}>
                   <Twemojify>{category}</Twemojify>
-                </SmartLink>
+                </Link>
               </Text>
             </Box>
 
@@ -89,8 +89,16 @@ export default function PostCard({ post }: { post: Post }) {
         <GridItem colSpan={{ base: 1, lg: 3 }}>
           <VStack gap={3} align="start" w="full">
             <Box>
-              <Heading as="h3" size="2xl" fontWeight="bold" letterSpacing="tight" truncate>
-                <Link href={`/post/${slug}`} color="fg" _hover={{ color: 'fg/80' }}>
+              <Heading
+                as="h3"
+                size="2xl"
+                color="fg"
+                _hover={{ color: 'fg/80' }}
+                fontWeight="bold"
+                letterSpacing="tight"
+                truncate
+              >
+                <Link href={`/post/${slug}`}>
                   <Twemojify>{title}</Twemojify>
                 </Link>
               </Heading>
