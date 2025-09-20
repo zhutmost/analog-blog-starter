@@ -1,0 +1,158 @@
+---
+title: PYNQ v3.1 编译的 Debug 之旅
+datePublish: 2025-09-21
+summary: '2021 年 8 月，我写了这个网站上的第一篇博文 EdgeBoard 的 PYNQ 移植，记录了将 Xilinx PYNQ 框架移植到了 Baidu EdgeBoard 上遇到的九九八十一难。一晃 4 年过去了，Xilinx 已经成了 AMD 的一部分，PYNQ 的版本号也从 v2.7 升级到了 v3.1。PYNQ 仍旧是课题组芯片测试最主要的平台，支撑我们完成了许多款芯片的流片后测试与演示工作。近期借项目需要，我重新试图编译了下 PYNQ，不得不说 PYNQ 的软件工程质量有了明显的提高（泪目！），本文用于记录编译过程，以及中间遇到的一些小问题。'
+category: ⚙️ Engineering
+tags:
+  - FPGA
+  - PYNQ
+banner: 'banner.png'
+---
+
+2021 年 8 月，我写了这个网站上的第一篇博文 [EdgeBoard 的 PYNQ 移植](/post/pynq-compile)，记录了将 Xilinx PYNQ 框架移植到了 Baidu EdgeBoard 上遇到的九九八十一难。一晃 4 年过去了，Xilinx 已经成了 AMD 的一部分，PYNQ 的版本号也从 v2.7 升级到了 v3.1。PYNQ 仍旧是课题组芯片测试最主要的平台，支撑我们完成了许多款芯片的流片后测试与演示工作。近期借项目需要，我重新试图编译了下 PYNQ，不得不说 PYNQ 的软件工程质量有了明显的提高（泪目！），本文用于记录过程中遇到的一些小问题。
+
+本文并不寻求作为 PYNQ 编译的文档，因此可能会跳过一些我认为官方文档中已经交代的很清楚的内容。我建议搭配官方文档同步食用本文，尤其是遇到一些匪夷所思的 bug 时。
+
+## v3.1 的变化——支持Docker
+
+升级到 v3.1 最主要的变化，我认为是官方提供了**基于 Docker 镜像的编译流程**。几乎整个编译流程都可以在 Docker 容器中进行，避免了在电脑上安装依赖，极大地避免了落入无尽的依赖地狱。与之同步带来的一个好处是，用户电脑的操作系统可以不用遵照 PYNQ 的指定 Ubuntu 版本（v3.1 对应 Ubuntu 22.04），从而选择最新的 Ubuntu 发行版或其他 Ubuntu 以外的发行版，享受新内核版本带来的便利（比如对 Intel 新网卡的原生支持）。
+
+当然，PYNQ 仍然支持直接在操作系统中进行编译，但我估计不会有人这么折磨自己了。
+
+## 准备运行环境
+
+首先，我们需要下载 PYNQ 的 GitHub 代码仓库，并切换到 `v3.1` 分支。
+```shell
+git clone https://github.com/Xilinx/PYNQ.git pynq
+cd pynq
+git checkout v3.1
+```
+
+PYNQ v3.1 要求操作系统为 Ubuntu 22.04，同时安装 Vivado/Vitis/PetaLinux 2024.1。我的操作系统是 Ubuntu 25.04，但得益于上文提到的 Docker 支持，这完全没有问题。
+
+安装 Vivado/Vitis/PetaLinux 的过程与之前并无较大差别，可以参考之前的博文 [EdgeBoard 的 PYNQ 移植](/post/pynq-compile)。唯一一个小问题是 Vivado 依赖 `libtinfo.so.5`，但 Ubuntu 25.04 仅提供 `libtinfo.so.6`，但这个问题很容易解决，仅需添加一个软连接：
+```shell
+sudo ln -S ...
+```
+
+而后，我们需要一个 Docker 镜像的运行环境。兼容 Dockerfile 的容器软件有很多，出于我个人的喜好，我选择了 [Podman](https://podman.io)：
+```shell
+sudo apt install podman
+```
+
+此外，为了简化编译过程，PYNQ 建议从[官网 Boards 页面](https://www.pynq.io/boards.html)下载 Root FS 和 PYNQ Source Distribution 等预编译文件，存放到对应的文件夹：
+```shell
+cp pynq_rootfs.<arm|aarch64>.tar.gz <pynq repo path>/sdbuild/prebuilt/pynq_rootfs.<arm|aarch64>.tar.gz
+cp pynq-<version>.tar.gz <pynq repo path>/sdbuild/prebuilt/pynq_sdist.tar.gz
+```
+PYNQ 也要求从 AMD 官网下载各个开发板的板级支持包（BSP 文件），放到对应的文件夹 `<pynq repo path>/boards/<board>` 下。这个部分官网有明确的说明，我就不展开了。
+
+## PYNQ 编译的基本流程
+
+编译的主体过程和 PYNQ 文档中给出的过程基本没有差别。首先，我们需要构建（build）容器，并启动（run）它，而后在容器内运行编译脚本。
+
+### 构建并启动容器
+
+[PYNQ 文档](https://pynq.readthedocs.io/en/latest/pynq_sd_card.html)中给出的代码是基于 Docker 运行的，我们需要改用 Podman，不过好在两者的用法差异很小。值得一提的是，当我们以普通用户身份运行 Podman（rootless模式），`--privileged` 选项可能被降级为 `--security-opt privileged` 的部分权限，因此我们需要以 `sudo` 管理员权限构建和启动容器。
+
+- 容器构建
+  ```shell
+  cd <pynq repo path>/sdbuild
+  sudo podman build \
+    --build-arg USERNAME=$(whoami) \
+    --build-arg USER_UID=$(id -u) \
+    --build-arg USER_GID=$(id -g) \
+    -t pynqdock:latest .
+  ```
+- 容器启动
+  ```shell
+  cd <pynq repo path>
+  sudo podman run --init --rm -it \
+    -e DISPLAY \
+    -e "TERM=xterm-256color" \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v <xilinx install path>:<xilinx install path>:ro \
+    -v <petalinux install path>:<petalinux install path>:ro \
+    -v $(pwd):/workspace \
+    --name pynq-sdbuild-env \
+    --privileged \
+    pynqdock:latest \
+    /bin/bash
+  ```
+
+启动完成后，可以看到 Shell 显示的主机名会变成一串乱码，这表示目前已经处于容器内了。此时我们可以在容器内 source Vivado 等软件的初始化脚本，将相关的软件都加入到 `PATH` 环境变量中：
+```shell
+source <xilinx install path>/Vivado/2024.1/settings64.sh
+source <petalinux install path>/settings64.sh
+```
+
+### 运行编译脚本
+
+由于我们在容器启动时已经将 PYNQ 的 repo 目录（也就是 `pwd`）映射到容器的 `/workspace` 目录，我们现在可以移动到该目录内运行后续的编译脚本：
+```shell
+cd /workspace/sdbuild
+# Generate the PYNQ image file for ZCU104
+make BOARD=ZCU104
+```
+
+PYNQ 框架默认预置了 ZCU104、PYNQ-Z1、PYNQ-Z2 三款开发板，可以通过选项 `BOARD=<BOARD_NAME>` 选择其中之一进行编译。除了 `BOARD=` 上述 Makefile 还有不少编译选项，具体可以访问 [PYNQ 代码仓库中的相关说明](https://github.com/Xilinx/PYNQ/blob/master/sdbuild/README.md)。
+
+根据官方说法，此处等上一两个小时（下楼遛个弯），编译脚本就会生成对应的镜像。当然，经验丰富的我可以预见，必然有不少 bug 会成为编译成功的拦路虎。
+
+## 与 Bug 搏斗
+
+### 运行环境检查失败
+
+PYNQ 的 make 脚本中预置了几行代码，用于检查 Vivado、Vitis、PetaLinux、QEMU 等软件是否已安装，以及版本是否和推荐的版本一致：
+```shell
+vivado -version | fgrep ${KERNEL_VERSION}
+vitis -version | fgrep ${KERNEL_VERSION}
+which petalinux-config
+which arm-linux-gnueabihf-gcc
+which microblaze-xilinx-elf-gcc
+which ct-ng
+bash $(SCRIPT_DIR)/check_env.sh
+```
+
+上述代码会在两处抛出错误：
+- 第 2 行 Vitis 的版本检查不会成功，因为 `vitis` 就不存在 `-version` 这个参数。可以考虑改成
+  ```shell
+  vitis-run -v | fgrep ${KERNEL_VERSION}
+  ```
+- 第 4 行检查 `arm-linux-gnueabihf-gcc` 这一软件是否已经安装，就我的经验来说它已经不再被需要了，不如考虑注释掉这行。
+
+### chroot ... Exec format error
+
+PYNQ 的编译过程中，会使用 QEMU 进入 PetaLinux 镜像，执行脚本 `sdbuild/scripts/install_packages.sh` 安装一些软件。该脚本会使用 QEMU 环境下的 Bash 执行一个叫 `qemu.sh` 的脚本，涉及代码如下：
+```shell highlightLines="6"
+for p in $@
+do
+  ...
+  if [ -e $f/qemu.sh ]; then
+    $dry_run cp $f/qemu.sh $target
+    $dry_run sudo -E chroot $target bash qemu.sh
+    $dry_run rm $target/qemu.sh
+  fi
+  ...
+done
+```
+其中，执行到高亮行时，可能会遇到错误：
+```
+chroot: failed to run command '/bin/bash': Exec format error
+```
+
+上述错误通常是由 ELF 的指令集架构与硬件不匹配引起的。在这里的上下文中，主要是宿主机（注意对于 QEMU 来说宿主机指的是 Docker/Podman 容器）没有安装并启用对应的 `qemu-user-static` 包（比如 `qemu-aarch64-static` / `qemu-arm-static`），导致 chroot 试图在宿主机上直接执行 chroot 中的 bash 程序（与宿主机指令集架构不同），于是内核返回 “Format Error” 的错误。
+
+我们可以观察 Dockerfile 镜像文件（`sdbuild/Dockerfile`），其中 `qemu-user-static` 软件包确实已经安装了，那很可能是 arm / aarch64 两个指令集架构没有自动启用。因此我们可以手动注册它们：
+```shell
+sudo update-binfmts --enable qemu-arm
+sudo update-binfmts --enable qemu-aarch64
+```
+
+我们也可以将上述两行命令直接加到 Dockerfile 镜像文件中，这样的话构建镜像时可以自动执行它们。我将上述改进提交了 PYNQ 官方仓库的 [Pull Request](https://github.com/Xilinx/PYNQ/pull/1507)，希望能被合并。
+
+## 写在最后
+
+希望 PYNQ 作为一个非常适合非重度 FPGA 嵌入式开发的脚手架，能够继续茁壮成长。希望以后不需要继续更新 PYNQ 编译捉 bug 系列的博文了。
+
+也希望 PYNQ 早日更新对 Versal 系列器件的支持。
