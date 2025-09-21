@@ -184,9 +184,14 @@ const posts = defineCollection({
       return { ...author, avatar }
     })
 
+    // If the post is published later than the last git update, we use the publish date as the update date.
+    const { dateUpdate: dateUpdateRaw } = await commonTransform(document, context)
+    const dateUpdate = document.datePublish > dateUpdateRaw ? document.datePublish : dateUpdateRaw
+
     return {
       ...document,
       ...(await commonTransform(document, context)),
+      dateUpdate,
       readingTime,
       authors,
       banner,
