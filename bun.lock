@@ -4,7 +4,7 @@
     "": {
       "name": "zhutmost-blog",
       "dependencies": {
-        "@chakra-ui/react": "^3.27.0",
+        "@chakra-ui/react": "^3.27.1",
         "@emotion/react": "^11.14.0",
         "@next/third-parties": "15.5.4",
         "next": "15.5.4",
@@ -19,16 +19,16 @@
         "@giscus/react": "^3.1.0",
         "@tabler/icons-react": "^3.35.0",
         "@twemoji/parser": "^16.0.0",
-        "@types/node": "^24.6.2",
-        "@types/react": "19.2.0",
-        "@types/react-dom": "19.2.0",
+        "@types/node": "^24.7.0",
+        "@types/react": "19.2.2",
+        "@types/react-dom": "19.2.1",
         "@types/react-twemoji": "^0.4.3",
         "@types/slug": "^5.0.9",
         "deepmerge-ts": "^7.1.5",
         "feed": "^5.1.0",
         "match-sorter": "^8.1.0",
         "next-themes": "^0.4.6",
-        "react-github-calendar": "^4.5.10",
+        "react-github-calendar": "^4.5.11",
         "react-twemoji": "^0.6.0",
         "reading-time": "^1.5.0",
         "rehype-github-alerts": "^4.1.1",
@@ -38,7 +38,7 @@
         "rehype-probe-image-size": "^1.0.0",
         "rehype-slug": "^6.0.0",
         "rehype-unwrap-images": "^1.0.0",
-        "remark-flexible-toc": "^1.2.1",
+        "remark-flexible-toc": "^1.2.3",
         "remark-gfm": "^4.0.1",
         "remark-math": "^6.0.0",
         "shiki": "^3.13.0",
@@ -325,9 +325,9 @@
 
     "@types/parse-json": ["@types/parse-json@4.0.2", "https://registry.npmmirror.com/@types/parse-json/-/parse-json-4.0.2.tgz", {}, "sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw=="],
 
-    "@types/react": ["@types/react@19.2.0", "https://registry.npmmirror.com/@types/react/-/react-19.2.0.tgz", { "dependencies": { "csstype": "^3.0.2" } }, "sha512-1LOH8xovvsKsCBq1wnT4ntDUdCJKmnEakhsuoUSy6ExlHCkGP2hqnatagYTgFk6oeL0VU31u7SNjunPN+GchtA=="],
+    "@types/react": ["@types/react@19.2.2", "https://registry.npmmirror.com/@types/react/-/react-19.2.2.tgz", { "dependencies": { "csstype": "^3.0.2" } }, "sha512-6mDvHUFSjyT2B2yeNx2nUgMxh9LtOWvkhIU3uePn2I2oyNymUAX1NIsdgviM4CH+JSrp2D2hsMvJOkxY+0wNRA=="],
 
-    "@types/react-dom": ["@types/react-dom@19.2.0", "https://registry.npmmirror.com/@types/react-dom/-/react-dom-19.2.0.tgz", { "peerDependencies": { "@types/react": "^19.2.0" } }, "sha512-brtBs0MnE9SMx7px208g39lRmC5uHZs96caOJfTjFcYSLHNamvaSMfJNagChVNkup2SdtOxKX1FDBkRSJe1ZAg=="],
+    "@types/react-dom": ["@types/react-dom@19.2.1", "https://registry.npmmirror.com/@types/react-dom/-/react-dom-19.2.1.tgz", { "peerDependencies": { "@types/react": "^19.2.0" } }, "sha512-/EEvYBdT3BflCWvTMO7YkYBHVE9Ci6XdqZciZANQgKpaiDRGOLIlRo91jbTNRQjgPFWVaRxcYc0luVNFitz57A=="],
 
     "@types/react-twemoji": ["@types/react-twemoji@0.4.3", "https://registry.npmmirror.com/@types/react-twemoji/-/react-twemoji-0.4.3.tgz", { "dependencies": { "@types/react": "*" } }, "sha512-VzWkjmO8yJ31JSWgQhe0LCLU3FxcurTOklECm9p8v1xI/WfUBOGbSrqPjQPL46LE4oOqfrYIQ+0LM/8I6A8EDQ=="],
 
