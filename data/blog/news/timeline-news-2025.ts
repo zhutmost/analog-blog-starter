@@ -2,6 +2,13 @@ import type { TimelineNewsList } from '@/components/timeline'
 
 const timelineNews2025: TimelineNewsList = [
   {
+    date: new Date('2025-10-13'),
+    title:
+      "Our ISSCC'25 paper about “SHINSAI: Reusable Active TSV-Interposer” was invited to JSSC and was accepted.",
+    description:
+      'SHINSAI (芯斋) is a 586mm2 reusable active TSV interposer with microbump-level programmable interconnect fabric and 512Mb 3D underdeck SRAM memory.',
+  },
+  {
     date: new Date('2025-08-10'),
     title:
       'Our paper about “VLA-driven Manipulator on FPGA” is accepted by A-SSCC 2025 and selected as a Highlight paper.',
