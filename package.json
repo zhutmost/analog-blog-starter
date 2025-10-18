@@ -12,8 +12,8 @@
   "dependencies": {
     "@chakra-ui/react": "^3.27.1",
     "@emotion/react": "^11.14.0",
-    "@next/third-parties": "15.5.4",
-    "next": "15.5.4",
+    "@next/third-parties": "15.5.6",
+    "next": "15.5.6",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
@@ -25,9 +25,9 @@
     "@giscus/react": "^3.1.0",
     "@tabler/icons-react": "^3.35.0",
     "@twemoji/parser": "^16.0.0",
-    "@types/node": "^24.7.2",
+    "@types/node": "^24.8.1",
     "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.1",
+    "@types/react-dom": "19.2.2",
     "@types/react-twemoji": "^0.4.3",
     "@types/slug": "^5.0.9",
     "deepmerge-ts": "^7.1.5",
