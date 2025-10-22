@@ -15,7 +15,7 @@ const tsConfig = {
     moduleResolution: 'bundler',
     resolveJsonModule: true,
     isolatedModules: true,
-    jsx: 'preserve',
+    jsx: 'react-jsx',
     incremental: true,
     plugins: [
       {
@@ -32,6 +32,7 @@ const tsConfig = {
     'src/**/*.ts',
     'src/**/*.tsx',
     '.next/types/**/*.ts',
+    '.next/dev/types/**/*.ts',
     'content-collections.ts',
     '*.config.mjs',
   ],

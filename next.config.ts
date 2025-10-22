@@ -19,9 +19,6 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizePackageImports: ['@chakra-ui/react'],
-    // A workaround for Turbopack build error: The high bits of the position xxxx are not all 0s or 1s.
-    // Refer to: https://github.com/vercel/next.js/issues/82584
-    turbopackScopeHoisting: false,
   },
 }
 
