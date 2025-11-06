@@ -4,7 +4,7 @@
     "": {
       "name": "zhutmost-blog",
       "dependencies": {
-        "@chakra-ui/react": "^3.28.0",
+        "@chakra-ui/react": "^3.28.1",
         "@emotion/react": "^11.14.0",
         "@next/third-parties": "16.0.1",
         "next": "16.0.1",
@@ -12,14 +12,14 @@
         "react-dom": "19.2.0",
       },
       "devDependencies": {
-        "@biomejs/biome": "^2.3.2",
+        "@biomejs/biome": "^2.3.4",
         "@content-collections/core": "^0.12.0",
         "@content-collections/mdx": "^0.2.2",
         "@content-collections/next": "^0.2.9",
         "@giscus/react": "^3.1.0",
         "@tabler/icons-react": "^3.35.0",
-        "@twemoji/parser": "^16.0.0",
-        "@types/node": "^24.9.2",
+        "@twemoji/parser": "^17.0.1",
+        "@types/node": "^24.10.0",
         "@types/react": "19.2.2",
         "@types/react-dom": "19.2.2",
         "@types/react-twemoji": "^0.4.3",
@@ -38,10 +38,10 @@
         "rehype-probe-image-size": "^1.0.0",
         "rehype-slug": "^6.0.0",
         "rehype-unwrap-images": "^1.0.0",
-        "remark-flexible-toc": "^1.2.3",
+        "remark-flexible-toc": "^1.2.4",
         "remark-gfm": "^4.0.1",
         "remark-math": "^6.0.0",
-        "shiki": "^3.14.0",
+        "shiki": "^3.15.0",
         "slug": "^11.0.1",
         "typescript": "^5.9.3",
         "unist-util-visit": "^5.0.0",
@@ -305,7 +305,7 @@
 
     "@twemoji/api": ["@twemoji/api@15.1.0", "https://registry.npmmirror.com/@twemoji/api/-/api-15.1.0.tgz", { "dependencies": { "@twemoji/parser": "15.1.0", "fs-extra": "^8.0.1", "jsonfile": "^5.0.0", "universalify": "^0.1.2" } }, "sha512-CySXR4/e6vY0z9lC2tW9EVjsH6zzz2/LQvLRMwwpHsDI4xcaweSIP+LcESf1Mq7w2/zcrrhG4ozniMvpSsEXag=="],
 
-    "@twemoji/parser": ["@twemoji/parser@16.0.0", "https://registry.npmmirror.com/@twemoji/parser/-/parser-16.0.0.tgz", {}, "sha512-jmuIjkp3OIaEemwMy3sArBwZSuZkRqmueGwRe2Zk4cFzbUJISFBJSZLDUUBNIgq3c+nY49ideYN2OiII6JUqwA=="],
+    "@twemoji/parser": ["@twemoji/parser@17.0.1", "", {}, "sha512-Uiq5sq1Wx91Y6C0DczMlu4Gj4nC/0z8UIhT7S53hi/JATaS1oLM5jXygjot7STtyVoIagfnpsBCWaNy3ayfyFw=="],
 
     "@types/debug": ["@types/debug@4.1.12", "https://registry.npmmirror.com/@types/debug/-/debug-4.1.12.tgz", { "dependencies": { "@types/ms": "*" } }, "sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ=="],
 
