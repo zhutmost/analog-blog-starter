@@ -2,7 +2,7 @@
 
 import { Flex } from '@chakra-ui/react'
 import { useTheme } from 'next-themes'
-import GitHubCalendar from 'react-github-calendar'
+import { GitHubCalendar } from 'react-github-calendar'
 
 export default function GithubCalendar({ username }: { username: string }) {
   const { resolvedTheme } = useTheme()
