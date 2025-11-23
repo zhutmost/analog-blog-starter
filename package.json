@@ -10,7 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.29.0",
+    "@chakra-ui/react": "^3.30.0",
     "@emotion/react": "^11.14.0",
     "@next/third-parties": "16.0.3",
     "next": "16.0.3",
@@ -18,7 +18,7 @@
     "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.6",
+    "@biomejs/biome": "^2.3.7",
     "@content-collections/core": "^0.12.0",
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.9",
@@ -37,7 +37,7 @@
     "react-github-calendar": "^5.0.0",
     "react-twemoji": "^0.6.0",
     "reading-time": "^1.5.0",
-    "rehype-github-alerts": "^4.1.1",
+    "rehype-github-alerts": "^4.2.0",
     "rehype-katex": "^7.0.1",
     "rehype-mdx-code-props": "^3.0.1",
     "rehype-pre-language": "^1.1.6",
