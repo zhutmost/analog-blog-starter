@@ -1,13 +1,12 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "zhutmost-blog",
       "dependencies": {
         "@chakra-ui/react": "^3.30.0",
         "@emotion/react": "^11.14.0",
-        "@next/third-parties": "16.0.3",
+        "@next/third-parties": "16.0.6",
         "next": "16.0.3",
         "react": "19.2.0",
         "react-dom": "19.2.0",
@@ -280,7 +279,7 @@
 
     "@next/swc-win32-x64-msvc": ["@next/swc-win32-x64-msvc@16.0.3", "https://registry.npmmirror.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-16.0.3.tgz", { "os": "win32", "cpu": "x64" }, "sha512-N7EJ6zbxgIYpI/sWNzpVKRMbfEGgsWuOIvzkML7wxAAZhPk1Msxuo/JDu1PKjWGrAoOLaZcIX5s+/pF5LIbBBg=="],
 
-    "@next/third-parties": ["@next/third-parties@16.0.3", "https://registry.npmmirror.com/@next/third-parties/-/third-parties-16.0.3.tgz", { "dependencies": { "third-party-capital": "1.0.20" }, "peerDependencies": { "next": "^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0-beta.0", "react": "^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0" } }, "sha512-QjTRQ4ydXguFkpMCUMl5oSslxmh8mAtmnzc9DEtLkZcGmAuQcZg2M3lswMn62sdID+F06crS3IQ58X3sjjBLVA=="],
+    "@next/third-parties": ["@next/third-parties@16.0.6", "", { "dependencies": { "third-party-capital": "1.0.20" }, "peerDependencies": { "next": "^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0-beta.0", "react": "^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0" } }, "sha512-yYZkmgc3YuMsvouklk3R3oDEmzq1rEiEm/5wGHjTfyTCsRrrD3jBX84xrMtEN7vVWbWXXWbV0SZ5TfkgeMLGWg=="],
 
     "@pandacss/is-valid-prop": ["@pandacss/is-valid-prop@1.4.3", "https://registry.npmmirror.com/@pandacss/is-valid-prop/-/is-valid-prop-1.4.3.tgz", {}, "sha512-9xHAFaRGoXikp0SKUyTHdO97mjIRuGFLDqQ+zphaVeNjTIsyac+fZjOS/2jJNuTS1eybU0/ny1FZ3BpS6SkEqw=="],
 
