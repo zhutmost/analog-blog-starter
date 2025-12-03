@@ -41,7 +41,7 @@ Analog includes plentiful search, comment, sharing and other plugins out of the 
 - [**Comment System**](https://analog-demo.zhutmost.com/post/doc/comment)
 
   Giscus
-- **Built-in Search**
+- [**Built-in Search**](https://analog-demo.zhutmost.com/post/test/markdown-style)
 
   KBar (support Cmd+K shortcuts, including pages & posts)
 - [**Analytics**](https://analog-demo.zhutmost.com/post/doc/analytics)
@@ -71,7 +71,7 @@ In addition to the blog posts, Analog provides various pages to enrich your blog
 
 ## 🎉 Issues & Feature Requests
 
-If you find any bugs in my code or have any ideas to improve this, please feel free to open an [issue](https://github.com/zhutmost/analog-blog-starter). I will be glad to join the discussion.
+If you find any bugs in my code or have any ideas to improve this, please feel free to open an [issue](https://github.com/zhutmost/analog-blog-starter/issues). I will be glad to join the discussion.
 
 ## 💡 Inspiration
 
