@@ -2,6 +2,18 @@ import type { TimelineNewsList } from '@/components/timeline'
 
 const timelineNews2025: TimelineNewsList = [
   {
+    date: new Date('2025-11-03'),
+    title: 'Our paper won IEEE A-SSCC 2025 Distinguished Design Award!',
+    description:
+      'It is our second time to win the Distinguished Design Award on IEEE A-SSCC. And two students, Siqi He and Yujie Ma, received the IEEE WiC TG Award.',
+  },
+  {
+    date: new Date('2025-10-26'),
+    title: 'Our paper “GauRPE” is selected as ICCAD 2025 Best Paper Award Candidate!',
+    description:
+      'GauRPE is a SW/HW co-design that performs 3DGS rasterization via pattern matching.',
+  },
+  {
     date: new Date('2025-10-13'),
     title:
       "Our ISSCC'25 paper about “SHINSAI: Reusable Active TSV-Interposer” was invited to JSSC and was accepted.",
