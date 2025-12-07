@@ -95,6 +95,7 @@ const authors = defineCollection({
   directory: path.join(USER_DATA_DIR, 'authors'),
   include: ['**/*.mdx'],
   schema: z.object({
+    content: z.string(), // MDX content must now be explicitly defined
     name: z.string(),
     avatar: z.string().optional(),
     bio: z.string().optional(),
@@ -138,6 +139,7 @@ const posts = defineCollection({
   directory: path.join(USER_DATA_DIR, 'posts'),
   include: ['**/*.mdx'],
   schema: z.object({
+    content: z.string(), // MDX content must now be explicitly defined
     title: z.string(),
     authors: z
       .array(
@@ -208,6 +210,7 @@ const pages = defineCollection({
   directory: path.join(USER_DATA_DIR, 'pages'),
   include: ['**/*.mdx'],
   schema: z.object({
+    content: z.string(), // MDX content must now be explicitly defined
     title: z.string(),
     greeting: z.string().optional(),
     head: z

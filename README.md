@@ -35,18 +35,18 @@ Analog includes plentiful search, comment, sharing and other plugins out of the 
 - [**Diverse Pages**](#diverse-pages)
 
   Tags · Category · Team · About · News
-- **Style-rich Writing**
+- [**Style-rich Writing**](https://analog-demo.zhutmost.com/post/test/markdown-style)
 
   MDX (Markdown + JSX) · Katex (math support) · Shiki (code highlighting) · License
 - [**Comment System**](https://analog-demo.zhutmost.com/post/doc/comment)
 
   Giscus
-- [**Built-in Search**](https://analog-demo.zhutmost.com/post/test/markdown-style)
+- **Built-in Search**
 
   KBar (support Cmd+K shortcuts, including pages & posts)
 - [**Analytics**](https://analog-demo.zhutmost.com/post/doc/analytics)
 
-  Umami · Google Analytics · Google Tag Manager
+  Umami · Google Analytics
 - **Other**
 
   RSS · Sitemap · SEO (OpenGraph + Twitter Card)
