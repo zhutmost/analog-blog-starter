@@ -1,5 +1,5 @@
 import type * as React from 'react'
-import { Button, Wrap } from '@chakra-ui/react'
+import { Button, Text, Wrap } from '@chakra-ui/react'
 import { icons } from '@tabler/icons-react'
 import slugify from 'slug'
 
@@ -41,7 +41,8 @@ const HomepageSectionPopularTags: React.FC<HomepageSectionPopularTagsProps> = ({
             textTransform="capitalize"
           >
             <SmartLink href={`/tags/${tagSlug}`}>
-              <IconSvg /> {title ?? tag}
+              <IconSvg />
+              <Text truncate>{title ?? tag}</Text>
             </SmartLink>
           </Button>
         )

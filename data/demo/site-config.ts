@@ -38,7 +38,11 @@ const userConfig: DeepPartial<SiteConfig> = {
             { tag: 'mac', icon: 'IconCommand', title: 'MacOS' },
             { tag: 'shopping', icon: 'IconTag', title: 'Shopping' },
             { tag: 'writing', icon: 'IconNote', title: 'Writing' },
-            { tag: 'windows', icon: 'IconBrandWindows', title: 'Windows' },
+            {
+              tag: 'a very very very long tag',
+              icon: 'IconBrandWindows',
+              title: 'a very very very long tag',
+            },
           ],
         },
       },

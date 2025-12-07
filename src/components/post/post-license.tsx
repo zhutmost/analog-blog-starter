@@ -94,11 +94,11 @@ function PostLicense({ post }: { post: Post }) {
       </Icon>
 
       <VStack alignItems="start" pb={5} position="relative" zIndex={1} gapY={0}>
-        <Text fontWeight="semibold" fontSize="lg" truncate>
+        <Text fontWeight="semibold" fontSize="lg" lineClamp={1}>
           {title}
         </Text>
 
-        <Link href={postUrl} color="fg.muted" fontSize="sm" truncate>
+        <Link href={postUrl} color="fg.muted" fontSize="sm" lineClamp={1}>
           {postUrl}
         </Link>
       </VStack>

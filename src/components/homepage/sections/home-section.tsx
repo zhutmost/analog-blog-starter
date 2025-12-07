@@ -1,8 +1,8 @@
 import type * as React from 'react'
 import { Flex, Heading, HStack, Icon, Text, VStack } from '@chakra-ui/react'
 import { IconArrowRight } from '@tabler/icons-react'
-import NextLink from 'next/link'
 
+import { Link } from '@/components/smart-link'
 import Twemojify from '@/components/twemojify'
 
 export interface HomepageSectionProps<T> {
@@ -24,25 +24,27 @@ export function HomepageSection<T>({
     <VStack w="full">
       <VStack w="full" alignItems="start" pt={{ base: 8, md: 12 }} pb={{ base: 6, md: 10 }}>
         <HStack w="full" alignItems="end" justifyContent="space-between">
-          <Heading
-            as="h2"
-            size={{ base: '3xl', lg: '4xl' }}
-            color="fg"
-            letterSpacing="tighter"
-            lineHeight={{ base: 'short', lg: '[1.1]' }}
-            fontWeight="bold"
-            _hover={{ opacity: 0.8 }}
-          >
-            <NextLink href={href}>{title}</NextLink>
-          </Heading>
-          <NextLink href={href}>
+          <Link asChild href={href}>
+            <Heading
+              as="h2"
+              size={{ base: '3xl', lg: '4xl' }}
+              color="fg"
+              letterSpacing="tighter"
+              lineHeight={{ base: 'short', lg: '[1.1]' }}
+              fontWeight="bold"
+              _hover={{ opacity: 0.8 }}
+            >
+              {title}
+            </Heading>
+          </Link>
+          <Link href={href}>
             <Flex align="center" fontWeight="medium" color="brand" _hover={{ color: 'brand/60' }}>
               View all&nbsp;
               <Icon ml={1} boxSize={5}>
                 <IconArrowRight />
               </Icon>
             </Flex>
-          </NextLink>
+          </Link>
         </HStack>
         <Text fontSize="lg" color="fg.muted" fontWeight="light">
           <Twemojify>{description}</Twemojify>

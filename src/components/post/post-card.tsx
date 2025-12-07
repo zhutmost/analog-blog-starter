@@ -32,7 +32,7 @@ export default function PostCard({ post }: { post: Post }) {
   const { title, summary, datePublish, slug, tags, banner, category, readingTime } = post
   const datePublishString = datePublish.toLocaleDateString(siteConfig.locale, {
     day: 'numeric',
-    month: 'long',
+    month: 'short',
     year: 'numeric',
   })
 
@@ -87,8 +87,8 @@ export default function PostCard({ post }: { post: Post }) {
         </GridItem>
 
         <GridItem colSpan={{ base: 1, lg: 3 }}>
-          <VStack gap={3} align="start" w="full">
-            <Box>
+          <VStack align="start" w="full">
+            <Link asChild href={`/post/${slug}`}>
               <Heading
                 as="h3"
                 size="2xl"
@@ -96,21 +96,19 @@ export default function PostCard({ post }: { post: Post }) {
                 _hover={{ color: 'fg/80' }}
                 fontWeight="bold"
                 letterSpacing="tight"
-                truncate
+                lineClamp={1}
               >
-                <Link href={`/post/${slug}`}>
-                  <Twemojify>{title}</Twemojify>
-                </Link>
+                <Twemojify>{title}</Twemojify>
               </Heading>
+            </Link>
 
-              {tags.length > 0 && (
-                <Wrap>
-                  {tags.map((tag) => (
-                    <PostTag key={tag} text={tag} />
-                  ))}
-                </Wrap>
-              )}
-            </Box>
+            {tags.length > 0 && (
+              <Wrap>
+                {tags.map((tag) => (
+                  <PostTag key={tag} text={tag} />
+                ))}
+              </Wrap>
+            )}
 
             <Text color="fg.muted" lineClamp={3}>
               <Twemojify>{summary}</Twemojify>
@@ -181,8 +179,8 @@ export function PostCardList({
   if (posts.length === 0) return <PostEmptyList />
 
   return (
-    <VStack gapY={8}>
-      <VStack as="ul" gapY={8}>
+    <VStack gapY={8} w="full">
+      <VStack as="ul" gapY={8} w="full">
         {posts.map((post) => (
           <Box as="li" key={post.slug} w="full">
             <PostCard post={post} />
