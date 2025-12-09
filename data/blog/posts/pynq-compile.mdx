@@ -200,7 +200,7 @@ RootFS 分区的文件系统是 Ext4，它在开机时会检查分区尺寸，�
 
 #### SD卡的写保护
 
-这个问题似乎是来自于很多人使用了淘宝购买 EdgeBoard FZ3A 开发板时店家提供的所谓 “Vivado 参考设计”。这个参考设计中关于 SD 卡的配置存在错误，它打开了 SD 卡槽的写保护引脚。但是据 [WhyCan Forum 社区的文章](https://whycan.com/t_3467.html)指出，EdgeBoard 的 PCB 设计中去掉了这一引脚。因此，我们稳妥起见，可以在设备树中禁用掉写保护功能。
+这个问题似乎是来自很多人使用了淘宝购买 EdgeBoard FZ3A 开发板时店家提供的所谓 “Vivado 参考设计”。这个参考设计中关于 SD 卡的配置存在错误，它打开了 SD 卡槽的写保护引脚。但是据 [WhyCan Forum 社区的文章](https://whycan.com/t_3467.html)指出，EdgeBoard 的 PCB 设计中去掉了这一引脚。因此，我们稳妥起见，可以在设备树中禁用掉写保护功能。
 
 如前文所述，PYNQ 为我们提供了一个修改设备树的接口，就是 `boards/<board_name>/petalinux_bsp` 文件夹。我们先在相应目录下创建一个设备树文件：
 ```shell
@@ -245,7 +245,7 @@ bootargs = "root=/dev/mmcblk0p2 rw earlyprintk rootfstype=ext4 rootwait devtmpfs
 7. 重新运行 `petalinux-config` 生成新的 Config 文件；
 8. 开始各种 build，最终生成我们需要的 BOOT.bin。
 
-其中步骤1、2、3、4在 `sdbuild/scripts/create_bsp.sh` 脚本中进行，步骤 5、6、7、8 在 `sdbuild/Makefile` 中进行。如果用户指定了预编译的 BSP 文件，就把上文中的第1步换成 “利用用户提供的BSP文件建立一个新的PetaLinux项目”。这里最令人困惑的地方是，为什么要进行两次 “create-config-build” 的流程，至少我没有看出它这么做的必要性。这样一通操作之后，用户在 `petalinux_bsp/meta-user` 的子目录下的 `system-user.dtsi` 文件中修改的一些设备树节点（对应上文步骤 2），会在步骤6中被新引入的一些设备树文件冲刷掉。步骤6通过`CONFIG_USER_LAYER_0`这一设置混入了一些新的设备树文件，这些额外的设备树文件位于 `sdbuild/boot/meta-pynq/recipes-bsp/device-tree`。就 Boot 参数而言，这里边的 `pynq_bootargs.dtsi` 文件提供了前述的默认 `/chosen/bootargs`。因此无论我们在 `system-user.dtsi` 文件中如何修改 `/chosen/bootargs`，最终都会被覆盖掉。因此，我们的解决方案很简单，修改下该文件，将其中的 `root=/dev/mmcblk0p2` 变成 `root=/dev/mmcblk1p2`。因为这个文件只有几行，改动也很小，我就不把代码贴出来了。
+其中步骤1、2、3、4在 `sdbuild/scripts/create_bsp.sh` 脚本中进行，步骤 5、6、7、8 在 `sdbuild/Makefile` 中进行。如果用户指定了预编译的 BSP 文件，就把上文中的第 1 步换成 “利用用户提供的BSP文件建立一个新的PetaLinux项目”。这里最令人困惑的地方是，为什么要进行两次 “create-config-build” 的流程，至少我没有看出它这么做的必要性。这样一通操作之后，用户在 `petalinux_bsp/meta-user` 的子目录下的 `system-user.dtsi` 文件中修改的一些设备树节点（对应上文步骤 2），会在步骤6中被新引入的一些设备树文件冲刷掉。步骤6通过`CONFIG_USER_LAYER_0`这一设置混入了一些新的设备树文件，这些额外的设备树文件位于 `sdbuild/boot/meta-pynq/recipes-bsp/device-tree`。就 Boot 参数而言，这里边的 `pynq_bootargs.dtsi` 文件提供了前述的默认 `/chosen/bootargs`。因此无论我们在 `system-user.dtsi` 文件中如何修改 `/chosen/bootargs`，最终都会被覆盖掉。因此，我们的解决方案很简单，修改下该文件，将其中的 `root=/dev/mmcblk0p2` 变成 `root=/dev/mmcblk1p2`。因为这个文件只有几行，改动也很小，我就不把代码贴出来了。
 
 除了修改 `pynq_bootargs.dtsi`，我们还需要修改 `sdbuild/Makefile`，将下面这行代码中的 `mmcblk0p2` 变成 `mmcblk1p2`。
 ```makefile fileName="sdbuild/Makefile"
@@ -286,7 +286,7 @@ new_size=$(( $used_size + (300 * 1024) ))
 
 ## Speedup！编译提速
 
-在我的破笔记本上，完整的一次PYNQ流程需要整一个下午，中间还需要多次输入管理员密码。因为我们很难一次成功，所以需要不断地重新进行编译流程，所以我们总希望整个编译能够进行地快一些。接下来我们开始着手加速编译流程。
+在我的破笔记本上，完整的一次 PYNQ 流程需要整一个下午，中间还需要多次输入管理员密码。因为我们很难一次成功，所以需要不断地重新进行编译流程，所以我们总希望整个编译能够进行地快一些。接下来我们开始着手加速编译流程。
 
 ### 跳过输入管理员密码
 
@@ -332,7 +332,7 @@ SSTATE_DIR = "<sstate_extract_dir>/2020.2/sstate-cache/aarch64"
 
 ### 删除 `boards` 目录下 Pynq-Z2 以外的开发板
 
-因为我们的编译目标是 EdgeBoard FZ3A，所以 `boards` 目录下的 `Pynq-Z1`、`Pynq-Z2`、`ZCU104` 三个目录对我们来说就是多余的。然而PYNQ在编译过程中会遍历 `boards` 目录下的各个开发板并试图生成比特流文件。其中 `Pynq-Z2` 的输出会在 `pynq` 自身编译时用到，另外两个开发板的相关文件的编译纯属是浪费时间（关键是这步还特别费时），我怀疑这是个编译流程上的 bug。因此，我们可以将 `Pynq-Z1`、`ZCU104` 两个文件夹删除。
+因为我们的编译目标是 EdgeBoard FZ3A，所以 `boards` 目录下的 `Pynq-Z1`、`Pynq-Z2`、`ZCU104` 三个目录对我们来说就是多余的。然而PYNQ在编译过程中会遍历 `boards` 目录下的各个开发板并试图生成比特流文件。其中 `Pynq-Z2` 的输出会在 `pynq` 自身编译时用到，另外两个开发板的相关文件的编译纯属是浪费时间（关键是这一步还特别费时），我怀疑这是个编译流程上的 bug。因此，我们可以将 `Pynq-Z1`、`ZCU104` 两个文件夹删除。
 ```shell
 cd <pynq_repo_dir>
 rm -rf boards/Pynq-Z1 boards/ZCU104

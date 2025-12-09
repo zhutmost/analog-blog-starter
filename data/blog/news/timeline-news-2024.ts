@@ -12,7 +12,7 @@ const timelineNews2024: TimelineNewsList = [
     date: new Date('2024-11-01'),
     title: 'Our paper “GauSPU: 3D Gaussian Splatting Processor ...” appeared on MICRO 2024.',
     description:
-      'GauSPU is a HW/SW-cooptimized GPU extension aiming to realize real-time pose tracking in 3D Gaussian Spltting-based SLAM systems. ',
+      'GauSPU is a HW/SW-cooptimized GPU extension aiming to realize real-time pose tracking in 3D Gaussian Splatting-based SLAM systems. ',
   },
   {
     date: new Date('2024-10-25'),
