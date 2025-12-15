@@ -25,7 +25,7 @@
     "@giscus/react": "^3.1.0",
     "@tabler/icons-react": "^3.35.0",
     "@twemoji/parser": "^17.0.1",
-    "@types/node": "^25.0.1",
+    "@types/node": "^25.0.2",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@types/react-twemoji": "^0.4.3",
