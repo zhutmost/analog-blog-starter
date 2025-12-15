@@ -23,7 +23,7 @@
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.9",
     "@giscus/react": "^3.1.0",
-    "@tabler/icons-react": "^3.35.0",
+    "@tabler/icons-react": "^3.36.0",
     "@twemoji/parser": "^17.0.1",
     "@types/node": "^25.0.1",
     "@types/react": "19.2.7",
