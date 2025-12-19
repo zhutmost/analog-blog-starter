@@ -1,3 +1,5 @@
+import { IconCommand, IconMarkdown, IconNote, IconTag } from '@tabler/icons-react'
+
 import HomepageSectionContents from '@/components/homepage/sections'
 import timelineNews from '@/data/news/timeline-news'
 import type { SiteConfig } from '@/lib/site-config'
@@ -34,10 +36,10 @@ const userConfig: DeepPartial<SiteConfig> = {
         content: HomepageSectionContents.PopularTags,
         contentProps: {
           tags: [
-            { tag: 'markdown', icon: 'IconMarkdown', title: 'Markdown' },
-            { tag: 'mac', icon: 'IconCommand', title: 'MacOS' },
-            { tag: 'shopping', icon: 'IconTag', title: 'Shopping' },
-            { tag: 'writing', icon: 'IconNote', title: 'Writing' },
+            { tag: 'markdown', icon: IconMarkdown, title: 'Markdown' },
+            { tag: 'mac', icon: IconCommand, title: 'MacOS' },
+            { tag: 'shopping', icon: IconTag, title: 'Shopping' },
+            { tag: 'writing', icon: IconNote, title: 'Writing' },
             {
               tag: 'a very very very long tag',
               icon: 'IconBrandWindows',

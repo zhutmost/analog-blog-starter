@@ -1,6 +1,6 @@
 import type * as React from 'react'
 import { Button, Text, Wrap } from '@chakra-ui/react'
-import { icons } from '@tabler/icons-react'
+import { type Icon, IconTag } from '@tabler/icons-react'
 import slugify from 'slug'
 
 import SmartLink from '@/components/smart-link'
@@ -9,7 +9,7 @@ import { tagCounter } from '@/lib/coco'
 export interface HomepageSectionPopularTagsProps {
   tags?: {
     tag: string
-    icon?: string
+    icon?: Icon
     title?: string
   }[]
 }
@@ -17,7 +17,7 @@ export interface HomepageSectionPopularTagsProps {
 const HomepageSectionPopularTags: React.FC<HomepageSectionPopularTagsProps> = ({
   tags = [],
 }: HomepageSectionPopularTagsProps) => {
-  const popularTags: { tag: string; icon?: string; title?: string }[] = tags?.length
+  const popularTags: { tag: string; icon?: Icon; title?: string }[] = tags?.length
     ? tags
     : Object.keys(tagCounter)
         .sort((a, b) => tagCounter[b].count - tagCounter[a].count)
@@ -28,7 +28,7 @@ const HomepageSectionPopularTags: React.FC<HomepageSectionPopularTagsProps> = ({
     <Wrap w="full">
       {popularTags.map(({ tag, icon, title }, index) => {
         const tagSlug = slugify(tag)
-        const IconSvg = icon && icon in icons ? icons[icon as keyof typeof icons] : icons.IconTag
+        const IconSvg = icon ?? IconTag
         return (
           <Button
             asChild

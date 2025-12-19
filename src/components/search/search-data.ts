@@ -1,3 +1,5 @@
+import { type Icon, IconCode, IconHome, IconNews, IconUser } from '@tabler/icons-react'
+
 import { allPages, allPosts } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
@@ -5,7 +7,7 @@ export interface SearchDataItem {
   label: string
   value: string
   sublabel?: string
-  icon?: string
+  icon?: Icon
   searchContent?: string[]
 }
 
@@ -19,7 +21,7 @@ const posts: SearchDataItem[] = allPosts.map((post) => ({
   label: post.title,
   value: `/post/${post.slug}`,
   sublabel: `${post.category} - ${post.datePublish.toLocaleDateString(siteConfig.locale, dateOptions)}`,
-  icon: 'IconNews',
+  icon: IconNews,
   searchContent: [post.category, ...post.tags, post.summary],
 }))
 
@@ -27,14 +29,14 @@ const pages: SearchDataItem[] = allPages.map((page) => ({
   label: page.title,
   value: `/${page.slug}`,
   sublabel: page.greeting,
-  icon: 'IconCode',
+  icon: IconCode,
 }))
 
 const about: SearchDataItem = {
   label: 'About',
   value: '/about',
   sublabel: `About me and this site.`,
-  icon: 'IconUser',
+  icon: IconUser,
   searchContent: ['contact', 'email', 'authors'],
 }
 
@@ -42,7 +44,7 @@ const home: SearchDataItem = {
   label: 'Home',
   value: '/',
   sublabel: `Go back to the homepage.`,
-  icon: 'IconHome',
+  icon: IconHome,
 }
 
 const searchData: SearchDataItem[] = [...posts, ...pages, home, about]
