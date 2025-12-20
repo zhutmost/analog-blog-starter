@@ -15,7 +15,7 @@ const gfmAlertBuild: rehypeGithubAlertsBuildType = (alertOptions, originalChildr
   }
 }
 
-// The option type (IOptions) must have a `alerts` array, so we set it to Partial<T>.
+// The option type (IOptions) must have an `alerts` array, so we set it to Partial<T>.
 export const rehypeGithubAlertsOptions: Partial<rehypeGithubAlertsOptionsType> = {
   build: gfmAlertBuild,
 }

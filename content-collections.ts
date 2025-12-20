@@ -17,6 +17,7 @@ import slugify from 'slug'
 import { z } from 'zod'
 
 import rehypeAssetCopy, { assetSourceRedirect } from '@/coco/rehype-asset-copy'
+import rehypeCodeLanguageStats from '@/coco/rehype-code-language-stats'
 import { rehypeGithubAlertsOptions } from '@/coco/rehype-gfm-alert'
 import { assertSlugUnique, getDataUpdate } from '@/coco/utils'
 
@@ -32,10 +33,12 @@ async function commonTransform(
   mdx: string
   slug: string
   dateUpdate: Date
+  codeLanguages: string[]
   toc: Omit<TocItem, 'data'>[]
 }> {
-  const { mdx, toc } = await context.cache(document, async () => {
+  const compiled = await context.cache(document, async () => {
     const toc: TocItem[] = []
+    const codeLanguages: Set<string> = new Set()
 
     const assetPath = path.join(context.collection.directory, document._meta.path)
 
@@ -51,6 +54,7 @@ async function commonTransform(
           rehypeKatex,
           rehypeMdxCodeProps,
           [rehypePreLanguage, 'language'],
+          [rehypeCodeLanguageStats, { codeLanguages }],
           rehypeSlug,
           [rehypeAssetCopy, { assetPath }],
           rehypeUnwrapImages,
@@ -59,7 +63,7 @@ async function commonTransform(
         ],
       }
     )
-    return { mdx, toc }
+    return { mdx, toc, codeLanguages: Array.from(codeLanguages) }
   })
 
   const slug: string = document._meta.path
@@ -71,7 +75,7 @@ async function commonTransform(
     path.join(context.collection.directory, document._meta.filePath)
   )
 
-  return { mdx, toc, slug, dateUpdate }
+  return { ...compiled, slug, dateUpdate }
 }
 
 function printCollectionInfo(

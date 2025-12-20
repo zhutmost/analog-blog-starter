@@ -2,10 +2,9 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import type { Element } from 'hast'
 import type { Root } from 'mdast'
-import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 
-export interface rehypeAssetCopyOptions {
+export interface RehypeAssetCopyOptions {
   assetPath: string
 }
 
@@ -37,7 +36,7 @@ export function assetSourceRedirect(
   return path.join('/_assets', assetPath, src)
 }
 
-const rehypeAssetCopy: Plugin<[rehypeAssetCopyOptions], Root> = ({ assetPath }) => {
+export default function rehypeAssetCopy({ assetPath }: RehypeAssetCopyOptions) {
   const srcFolder = path.join(assetPath)
   const destFolder = path.join('./public/_assets', assetPath)
 
@@ -46,7 +45,7 @@ const rehypeAssetCopy: Plugin<[rehypeAssetCopyOptions], Root> = ({ assetPath }) 
     copyFolder(srcFolder, destFolder)
   }
 
-  return (tree) => {
+  return (tree: Root) => {
     visit(tree, 'element', (node: Element) => {
       if (node.tagName === 'img') {
         node.properties.src = assetSourceRedirect(node.properties.src as string, assetPath)
@@ -54,5 +53,3 @@ const rehypeAssetCopy: Plugin<[rehypeAssetCopyOptions], Root> = ({ assetPath }) 
     })
   }
 }
-
-export default rehypeAssetCopy
