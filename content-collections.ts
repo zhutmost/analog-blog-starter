@@ -52,8 +52,8 @@ async function commonTransform(
         rehypePlugins: [
           [rehypeGithubAlerts, rehypeGithubAlertsOptions],
           rehypeKatex,
-          rehypeMdxCodeProps,
           [rehypePreLanguage, 'language'],
+          rehypeMdxCodeProps,
           [rehypeCodeLanguageStats, { codeLanguages }],
           rehypeSlug,
           [rehypeAssetCopy, { assetPath }],
