@@ -13,12 +13,7 @@
 # Generated Files
 
 /tsconfig.json
-
-/public/*
-!/public/favicons/
-!/public/avatar-default.jpg
-!/public/banner-*.png
-!/public/images/posts/
+/public/_assets/
 
 # ==============================================================================
 # Language & Build Tool - Content Collections
