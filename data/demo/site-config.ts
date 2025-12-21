@@ -1,4 +1,4 @@
-import { IconCommand, IconMarkdown, IconNote, IconTag } from '@tabler/icons-react'
+import { IconBrandWindows, IconCommand, IconMarkdown, IconNote, IconTag } from '@tabler/icons-react'
 
 import HomepageSectionContents from '@/components/homepage/sections'
 import timelineNews from '@/data/news/timeline-news'
@@ -42,7 +42,7 @@ const userConfig: DeepPartial<SiteConfig> = {
             { tag: 'writing', icon: IconNote, title: 'Writing' },
             {
               tag: 'a very very very long tag',
-              icon: 'IconBrandWindows',
+              icon: IconBrandWindows,
               title: 'a very very very long tag',
             },
           ],
