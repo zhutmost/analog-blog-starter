@@ -29,7 +29,7 @@
         "feed": "^5.1.0",
         "match-sorter": "^8.2.0",
         "next-themes": "^0.4.6",
-        "react-github-calendar": "^5.0.3",
+        "react-github-calendar": "^4.5.11",
         "react-twemoji": "^0.6.0",
         "reading-time": "^1.5.0",
         "rehype-github-alerts": "^4.2.0",
@@ -188,10 +188,6 @@
     "@floating-ui/core": ["@floating-ui/core@1.7.3", "https://registry.npmmirror.com/@floating-ui/core/-/core-1.7.3.tgz", { "dependencies": { "@floating-ui/utils": "^0.2.10" } }, "sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w=="],
 
     "@floating-ui/dom": ["@floating-ui/dom@1.7.4", "https://registry.npmmirror.com/@floating-ui/dom/-/dom-1.7.4.tgz", { "dependencies": { "@floating-ui/core": "^1.7.3", "@floating-ui/utils": "^0.2.10" } }, "sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA=="],
-
-    "@floating-ui/react": ["@floating-ui/react@0.27.16", "https://registry.npmmirror.com/@floating-ui/react/-/react-0.27.16.tgz", { "dependencies": { "@floating-ui/react-dom": "^2.1.6", "@floating-ui/utils": "^0.2.10", "tabbable": "^6.0.0" }, "peerDependencies": { "react": ">=17.0.0", "react-dom": ">=17.0.0" } }, "sha512-9O8N4SeG2z++TSM8QA/KTeKFBVCNEz/AGS7gWPJf6KFRzmRWixFRnCnkPHRDwSVZW6QPDO6uT0P2SpWNKCc9/g=="],
-
-    "@floating-ui/react-dom": ["@floating-ui/react-dom@2.1.6", "https://registry.npmmirror.com/@floating-ui/react-dom/-/react-dom-2.1.6.tgz", { "dependencies": { "@floating-ui/dom": "^1.7.4" }, "peerDependencies": { "react": ">=16.8.0", "react-dom": ">=16.8.0" } }, "sha512-4JX6rEatQEvlmgU80wZyq9RT96HZJa88q8hp0pBd+LrczeDI4o6uA2M+uvxngVHo4Ihr8uibXxH6+70zhAFrVw=="],
 
     "@floating-ui/utils": ["@floating-ui/utils@0.2.10", "https://registry.npmmirror.com/@floating-ui/utils/-/utils-0.2.10.tgz", {}, "sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ=="],
 
@@ -881,11 +877,11 @@
 
     "react": ["react@19.2.3", "https://registry.npmmirror.com/react/-/react-19.2.3.tgz", {}, "sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA=="],
 
-    "react-activity-calendar": ["react-activity-calendar@3.0.4", "https://registry.npmmirror.com/react-activity-calendar/-/react-activity-calendar-3.0.4.tgz", { "dependencies": { "@floating-ui/react": "^0.27.12", "date-fns": "^4.1.0" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-buCiBiD95UGfOJs9DZKuJX5fvrcSWBd7xNhLDtwhOz9yvkziWZ2zqPm8FtMIZV5HVHnVo/3gHBMUfcRzXHPPyA=="],
+    "react-activity-calendar": ["react-activity-calendar@2.7.15", "https://registry.npmmirror.com/react-activity-calendar/-/react-activity-calendar-2.7.15.tgz", { "dependencies": { "date-fns": "^4.1.0" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-sPO4tDJp+sRbV8F/LhUZ/woHmi4dg0Phd+Kt1Jw0orSfGfEqGCm7fFXiTIAvuuAwpwxqPEYEnfNzOLEfUrdg1A=="],
 
     "react-dom": ["react-dom@19.2.3", "https://registry.npmmirror.com/react-dom/-/react-dom-19.2.3.tgz", { "dependencies": { "scheduler": "^0.27.0" }, "peerDependencies": { "react": "^19.2.3" } }, "sha512-yELu4WmLPw5Mr/lmeEpox5rw3RETacE++JgHqQzd2dg+YbJuat3jH4ingc+WPZhxaoFzdv9y33G+F7Nl5O0GBg=="],
 
-    "react-github-calendar": ["react-github-calendar@5.0.3", "https://registry.npmmirror.com/react-github-calendar/-/react-github-calendar-5.0.3.tgz", { "dependencies": { "react-activity-calendar": "^3.0.4" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-CSFqdKB25SvNSbc0BG0ceLYNDa4E61NTZdjEfZDOvpLL9Rv7wbmFqsr8a7mFow57K+q7kzx1nJ1+oyhVITkp2A=="],
+    "react-github-calendar": ["react-github-calendar@4.5.11", "https://registry.npmmirror.com/react-github-calendar/-/react-github-calendar-4.5.11.tgz", { "dependencies": { "react-activity-calendar": "^2.7.15" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-tDUjAIYILYtPmPUrA/KKuCcGY9A0PcRQEjnOGcAoqV2qeaibh3IQ+YznQOYr78PsBfLIVtq4nZYYM3QadjGu+Q=="],
 
     "react-is": ["react-is@16.13.1", "https://registry.npmmirror.com/react-is/-/react-is-16.13.1.tgz", {}, "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="],
 
@@ -992,8 +988,6 @@
     "stylis": ["stylis@4.2.0", "https://registry.npmmirror.com/stylis/-/stylis-4.2.0.tgz", {}, "sha512-Orov6g6BB1sDfYgzWfTHDOxamtX1bE/zo104Dh9e6fqJ3PooipYyfJ0pUmrZO2wAvO8YbEyeFrkV91XTsGMSrw=="],
 
     "supports-preserve-symlinks-flag": ["supports-preserve-symlinks-flag@1.0.0", "https://registry.npmmirror.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz", {}, "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="],
-
-    "tabbable": ["tabbable@6.3.0", "https://registry.npmmirror.com/tabbable/-/tabbable-6.3.0.tgz", {}, "sha512-EIHvdY5bPLuWForiR/AN2Bxngzpuwn1is4asboytXtpTgsArc+WmSJKVLlhdh71u7jFcryDqB2A8lQvj78MkyQ=="],
 
     "third-party-capital": ["third-party-capital@1.0.20", "https://registry.npmmirror.com/third-party-capital/-/third-party-capital-1.0.20.tgz", {}, "sha512-oB7yIimd8SuGptespDAZnNkzIz+NWaJCu2RMsbs4Wmp9zSDUM8Nhi3s2OOcqYuv3mN4hitXc8DVx+LyUmbUDiA=="],
 
