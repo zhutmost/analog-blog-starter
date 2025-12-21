@@ -24,13 +24,6 @@ export default function BackToTop() {
   }
 
   return (
-    // <div className={`fixed bottom-24 right-8 z-50 ${show ? 'block' : 'hidden'}`}>
-    //   <button
-    //     id="backToTop"
-    //     aria-label="Scroll To Top"
-    //     onClick={handleScrollTop}
-    //     className="rounded-full bg-accent p-2 text-accent-foreground opacity-90 shadow-lg transition-all hover:text-accent-foreground/60"
-    //   >
     <Box display={show ? 'block' : 'none'} zIndex="sticky" bottom="24" right="8" position="fixed">
       <IconButton
         id="backToTop"
