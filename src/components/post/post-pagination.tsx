@@ -8,6 +8,7 @@ import {
   usePaginationContext,
 } from '@chakra-ui/react'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
+import NextLink from 'next/link'
 
 const PaginationLink = (props: IconButtonProps & { page: 'prev' | 'next' | number }) => {
   const { page, ...rest } = props
@@ -18,7 +19,7 @@ const PaginationLink = (props: IconButtonProps & { page: 'prev' | 'next' | numbe
 
   return (
     <IconButton asChild {...rest}>
-      <a href={`?page=${pageValue.toString()}`}>{props.children}</a>
+      <NextLink href={`./${pageValue.toString()}`}>{props.children}</NextLink>
     </IconButton>
   )
 }

@@ -1,13 +1,7 @@
-import { StackSeparator, VStack } from '@chakra-ui/react'
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import slugify from 'slug'
 
-import PageHeader from '@/components/page-header'
-import { PostCardList } from '@/components/post/post-card'
-import { tagCounter } from '@/lib/coco/'
-import generatePageMetadata from '@/lib/page-metadata'
-import siteConfig from '@/lib/site-config'
+import { tagCounter } from '@/lib/coco'
 
 export async function generateStaticParams(): Promise<{ tag: string }[]> {
   return Object.keys(tagCounter).map((tag) => {
@@ -17,45 +11,11 @@ export async function generateStaticParams(): Promise<{ tag: string }[]> {
   })
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ tag: string }>
-}): Promise<Metadata | undefined> {
-  const paramTag = (await params).tag
-
+export default async function Page(props: PageProps<'/tags/[tag]'>) {
+  const { tag: paramTag } = await props.params
   const tag = Object.keys(tagCounter).find((t) => slugify(t) === decodeURI(paramTag))
-  if (!tag) return
 
-  return generatePageMetadata({
-    title: `Tag - ${tag}`,
-    description: `"${tag}" tagged posts on ${siteConfig.siteTitle}`,
-  })
-}
-
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ tag: string }>
-  searchParams: Promise<{ page?: string }>
-}) {
-  const paramPage = parseInt((await searchParams).page ?? '1', 10)
-  const paramTag = (await params).tag
-
-  const tag = Object.keys(tagCounter).find((t) => slugify(t) === decodeURI(paramTag))
   if (!tag) return notFound()
 
-  const filteredPosts = tagCounter[tag].posts
-
-  return (
-    <VStack as="article" separator={<StackSeparator />} w="full">
-      <PageHeader.Root>
-        <PageHeader.Title>Tag - {tag}</PageHeader.Title>
-        <PageHeader.Description>{siteConfig.pages.greetings.archive}</PageHeader.Description>
-      </PageHeader.Root>
-
-      <PostCardList currentPage={paramPage} allPosts={filteredPosts} />
-    </VStack>
-  )
+  redirect(`/tags/${paramTag}/1`)
 }
