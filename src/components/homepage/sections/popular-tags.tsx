@@ -4,7 +4,7 @@ import { type Icon, IconTag } from '@tabler/icons-react'
 import slugify from 'slug'
 
 import SmartLink from '@/components/smart-link'
-import { tagCounter } from '@/lib/coco'
+import { postsByTag } from '@/lib/coco'
 
 export interface HomepageSectionPopularTagsProps {
   tags?: {
@@ -19,8 +19,8 @@ const HomepageSectionPopularTags: React.FC<HomepageSectionPopularTagsProps> = ({
 }: HomepageSectionPopularTagsProps) => {
   const popularTags: { tag: string; icon?: Icon; title?: string }[] = tags?.length
     ? tags
-    : Object.keys(tagCounter)
-        .sort((a, b) => tagCounter[b].count - tagCounter[a].count)
+    : Object.keys(postsByTag)
+        .sort((a, b) => postsByTag[b].length - postsByTag[a].length)
         .slice(0, 5)
         .map((tag) => ({ tag }))
 

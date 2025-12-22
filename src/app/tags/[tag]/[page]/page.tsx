@@ -4,13 +4,13 @@ import slugify from 'slug'
 
 import { PostCardList } from '@/components/post/post-card'
 import SimplePageLayout from '@/layouts/simple-page-layout'
-import { tagCounter } from '@/lib/coco'
+import { postsByTag } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
 
 export async function generateStaticParams(): Promise<{ tag: string; page: string }[]> {
-  return Object.keys(tagCounter).flatMap((tag) => {
-    const totalPages = Math.ceil(tagCounter[tag].count / siteConfig.pagination)
+  return Object.keys(postsByTag).flatMap((tag) => {
+    const totalPages = Math.ceil(postsByTag[tag].length / siteConfig.pagination)
     return Array.from({ length: totalPages }, (_, i) => ({
       tag: encodeURI(slugify(tag)),
       page: (i + 1).toString(),
@@ -23,7 +23,7 @@ export async function generateMetadata(
 ): Promise<Metadata | undefined> {
   const { tag: paramTag } = await props.params
 
-  const tag = Object.keys(tagCounter).find((t) => slugify(t) === decodeURI(paramTag))
+  const tag = Object.keys(postsByTag).find((t) => slugify(t) === decodeURI(paramTag))
   if (!tag) return
 
   return generatePageMetadata({
@@ -34,20 +34,18 @@ export async function generateMetadata(
 
 export default async function Page(props: PageProps<'/tags/[tag]/[page]'>) {
   const { tag: paramTag, page: paramPage } = await props.params
-  const tag = Object.keys(tagCounter).find((t) => slugify(t) === decodeURI(paramTag))
+  const tag = Object.keys(postsByTag).find((t) => slugify(t) === decodeURI(paramTag))
   if (!tag) return notFound()
 
   const currentPage = parseInt(paramPage, 10)
-  const totalPages = Math.ceil(tagCounter[tag].count / siteConfig.pagination)
+  const totalPages = Math.ceil(postsByTag[tag].length / siteConfig.pagination)
   if (Number.isNaN(currentPage) || currentPage < 1 || currentPage > totalPages) {
     redirect(`/tags/${paramTag}/1`)
   }
 
-  const filteredPosts = tagCounter[tag].posts
-
   return (
     <SimplePageLayout title={`Tag - ${tag}`} greeting={siteConfig.pages.greetings.archive}>
-      <PostCardList currentPage={currentPage} allPosts={filteredPosts} />
+      <PostCardList currentPage={currentPage} allPosts={postsByTag[tag]} />
     </SimplePageLayout>
   )
 }

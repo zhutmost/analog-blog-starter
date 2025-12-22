@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 import PageHeader from '@/components/page-header'
 import PostTag from '@/components/post/post-tag'
-import { tagCounter } from '@/lib/coco'
+import { postsByTag } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 
 export const metadata: Metadata = generatePageMetadata({
@@ -12,8 +12,8 @@ export const metadata: Metadata = generatePageMetadata({
 })
 
 export default async function Page() {
-  const tags = Object.keys(tagCounter)
-  const tagsSorted = tags.sort((a, b) => tagCounter[b].count - tagCounter[a].count)
+  const tags = Object.keys(postsByTag)
+  const tagsSorted = tags.sort((a, b) => postsByTag[b].length - postsByTag[a].length)
   return (
     <Stack
       justifyContent={{ base: 'none', lg: 'center' }}
@@ -36,7 +36,7 @@ export default async function Page() {
           </WrapItem>
         )}
         {tagsSorted.map((t) => (
-          <PostTag key={t} text={t} count={tagCounter[t].count} />
+          <PostTag key={t} text={t} count={postsByTag[t].length} />
         ))}
       </Wrap>
     </Stack>

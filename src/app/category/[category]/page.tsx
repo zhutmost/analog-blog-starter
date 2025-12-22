@@ -1,10 +1,10 @@
 import { notFound, redirect } from 'next/navigation'
 import slugify from 'slug'
 
-import { categoryCounter } from '@/lib/coco'
+import { postsByCategory } from '@/lib/coco'
 
 export async function generateStaticParams(): Promise<{ category: string }[]> {
-  return Object.keys(categoryCounter).map((tag) => {
+  return Object.keys(postsByCategory).map((tag) => {
     return {
       category: encodeURI(slugify(tag)),
     }
@@ -13,7 +13,7 @@ export async function generateStaticParams(): Promise<{ category: string }[]> {
 
 export default async function Page(props: PageProps<'/category/[category]'>) {
   const { category: paramCategory } = await props.params
-  const category = Object.keys(categoryCounter).find((t) => slugify(t) === decodeURI(paramCategory))
+  const category = Object.keys(postsByCategory).find((t) => slugify(t) === decodeURI(paramCategory))
 
   if (!category) return notFound()
 

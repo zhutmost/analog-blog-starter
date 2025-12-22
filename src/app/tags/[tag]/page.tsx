@@ -1,10 +1,10 @@
 import { notFound, redirect } from 'next/navigation'
 import slugify from 'slug'
 
-import { tagCounter } from '@/lib/coco'
+import { postsByTag } from '@/lib/coco'
 
 export async function generateStaticParams(): Promise<{ tag: string }[]> {
-  return Object.keys(tagCounter).map((tag) => {
+  return Object.keys(postsByTag).map((tag) => {
     return {
       tag: encodeURI(slugify(tag)),
     }
@@ -13,7 +13,7 @@ export async function generateStaticParams(): Promise<{ tag: string }[]> {
 
 export default async function Page(props: PageProps<'/tags/[tag]'>) {
   const { tag: paramTag } = await props.params
-  const tag = Object.keys(tagCounter).find((t) => slugify(t) === decodeURI(paramTag))
+  const tag = Object.keys(postsByTag).find((t) => slugify(t) === decodeURI(paramTag))
 
   if (!tag) return notFound()
 
