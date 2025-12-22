@@ -1,22 +1,12 @@
 import * as path from 'node:path'
-import {
-  Avatar,
-  Heading,
-  Icon,
-  Link,
-  StackSeparator,
-  Text,
-  VStack,
-  Wrap,
-  WrapItem,
-} from '@chakra-ui/react'
+import { Avatar, Heading, Icon, Link, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react'
 import { IconMapPinFilled } from '@tabler/icons-react'
 import type { Metadata } from 'next'
 import NextLink from 'next/link'
 import { notFound } from 'next/navigation'
 
-import PageHeader from '@/components/page-header'
 import SocialIcon from '@/components/social-icon'
+import SimplePageLayout from '@/layouts/simple-page-layout'
 import { type Author, allAuthorsNonDefault, sortAuthors } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
@@ -83,12 +73,8 @@ export default function Page() {
   }, {})
 
   return (
-    <VStack as="article" separator={<StackSeparator />} w="full">
-      <PageHeader.Root>
-        <PageHeader.Title>Our Team</PageHeader.Title>
-        <PageHeader.Description>{siteConfig.pages.greetings.team}</PageHeader.Description>
-      </PageHeader.Root>
-      <VStack pt={6} w="full">
+    <SimplePageLayout title={'Our Team'} greeting={siteConfig.pages.greetings.team}>
+      <VStack w="full">
         {Object.entries(allAuthorsGrouped).map(([group, authors]) => (
           <VStack key={group} alignItems="start" w="full" pb={6}>
             <Heading as="h2" size={{ base: '3xl', lg: '4xl' }} color="fg" fontWeight="bold">
@@ -104,6 +90,6 @@ export default function Page() {
           </VStack>
         ))}
       </VStack>
-    </VStack>
+    </SimplePageLayout>
   )
 }

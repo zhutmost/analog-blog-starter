@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import MdxProse from '@/components/mdx/mdx-prose'
-import PageLayout from '@/layouts/page-layout'
+import SimplePageLayout from '@/layouts/simple-page-layout'
 import { allPages, type Page as PageType } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 
@@ -34,8 +34,8 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   }
 
   return (
-    <PageLayout content={page}>
+    <SimplePageLayout title={page.title} greeting={page.greeting}>
       <MdxProse code={page.mdx} />
-    </PageLayout>
+    </SimplePageLayout>
   )
 }

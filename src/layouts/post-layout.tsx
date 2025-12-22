@@ -62,41 +62,47 @@ function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'chi
     <VStack
       separator={<StackSeparator display={{ base: 'none', lg: 'block' }} />}
       gapY={{ base: 4, lg: 6 }}
-      pt={{ base: 0, lg: 10 }}
       w="full"
       h="full"
       alignItems="start"
+      pb={4}
     >
-      <Wrap py={2} gapY={6} gapX={10} w="full" justifyContent={{ base: 'center', lg: 'start' }}>
-        <VisuallyHidden>Authors</VisuallyHidden>
-        {authors.map(({ name, href, bio, avatar }) => (
-          <LinkBox key={name}>
-            <HStack gapX={4}>
-              <Avatar.Root>
-                <Avatar.Fallback name={name} />
-                <Avatar.Image objectFit="cover" src={avatar} />
-              </Avatar.Root>
-              <VStack alignItems="start" gapY={0}>
-                <LinkOverlay asChild>
-                  <SmartLink href={href}>
-                    <VisuallyHidden>Name</VisuallyHidden>
-                    <Text color="fg" fontSize="md" fontWeight="bold" letterSpacing="tight">
-                      {name}
-                    </Text>
-                  </SmartLink>
-                </LinkOverlay>
-                {bio && (
-                  <div>
-                    <VisuallyHidden>Short bio</VisuallyHidden>
-                    <Text fontSize="sm" color="fg.muted" letterSpacing="tight" lineHeight="shorter">
-                      {bio}
-                    </Text>
-                  </div>
-                )}
-              </VStack>
-            </HStack>
-          </LinkBox>
-        ))}
+      <Wrap py={2} gapY={6} gapX={10} w="full">
+        <PostSidebarItem label="Posted by">
+          {authors.map(({ name, href, bio, avatar }) => (
+            <LinkBox key={name}>
+              <HStack gapX={4}>
+                <Avatar.Root>
+                  <Avatar.Fallback name={name} />
+                  <Avatar.Image objectFit="cover" src={avatar} />
+                </Avatar.Root>
+                <VStack alignItems="start" gapY={0}>
+                  <LinkOverlay asChild>
+                    <SmartLink href={href}>
+                      <VisuallyHidden>Name</VisuallyHidden>
+                      <Text color="fg" fontSize="md" fontWeight="bold" letterSpacing="tight">
+                        {name}
+                      </Text>
+                    </SmartLink>
+                  </LinkOverlay>
+                  {bio && (
+                    <div>
+                      <VisuallyHidden>Short bio</VisuallyHidden>
+                      <Text
+                        fontSize="sm"
+                        color="fg.muted"
+                        letterSpacing="tight"
+                        lineHeight="shorter"
+                      >
+                        {bio}
+                      </Text>
+                    </div>
+                  )}
+                </VStack>
+              </HStack>
+            </LinkBox>
+          ))}
+        </PostSidebarItem>
       </Wrap>
 
       {tags.length && (
@@ -154,7 +160,7 @@ function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'chi
 }
 
 function PostHeader({ content }: { content: Post }) {
-  const { title, banner, datePublish, dateUpdate } = content
+  const { title, banner, datePublish } = content
 
   function formatDate(date: Date): string {
     return date.toLocaleDateString(content.head?.locale ?? siteConfig.locale, {
@@ -177,17 +183,18 @@ function PostHeader({ content }: { content: Post }) {
           </AspectRatio>
         </Bleed>
       )}
-      <Heading as="h1" size="5xl" fontWeight="extrabold" letterSpacing="tight" color="fg">
+      <Heading
+        as="h1"
+        size="5xl"
+        fontWeight="extrabold"
+        letterSpacing="tight"
+        color="fg"
+        alignSelf={{ base: 'start', lg: 'center' }}
+      >
         {title}
       </Heading>
-      <Text color="fg.muted">
+      <Text color="fg.muted" alignSelf={{ base: 'start', lg: 'center' }}>
         Published on <time dateTime={datePublish.toISOString()}>{formatDate(datePublish)}</time>
-        {formatDate(datePublish) !== formatDate(dateUpdate) && (
-          <>
-            {' · '}
-            Edited on <time dateTime={dateUpdate.toISOString()}>{formatDate(dateUpdate)}</time>
-          </>
-        )}
       </Text>
     </VStack>
   )
@@ -199,14 +206,14 @@ export default function PostLayout({ content, postNext, postPrev, children }: Po
       <PostHeader content={content} />
       <Separator display={{ base: 'none', lg: 'block' }} orientation="horizontal" w="full" />
 
-      <SimpleGrid columns={{ base: 1, lg: 4 }} gap={4} w="full">
+      <SimpleGrid columns={{ base: 1, lg: 4 }} gap={4} w="full" mt={{ base: 0, lg: 8 }}>
         <GridItem colSpan={1}>
           <PostSidebar content={content} postNext={postNext} postPrev={postPrev} />
         </GridItem>
         <GridItem colSpan={{ base: 1, lg: 3 }} spaceY={12}>
           <Box>
             <Separator display={{ base: 'block', lg: 'none' }} orientation="horizontal" />
-            {children}
+            <Box mt={{ base: 8, lg: 0 }}>{children}</Box>
           </Box>
           <PostLicense post={content} />
           <Box id="comments">

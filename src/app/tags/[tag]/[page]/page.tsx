@@ -1,10 +1,9 @@
-import { StackSeparator, VStack } from '@chakra-ui/react'
 import type { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 import slugify from 'slug'
 
-import PageHeader from '@/components/page-header'
 import { PostCardList } from '@/components/post/post-card'
+import SimplePageLayout from '@/layouts/simple-page-layout'
 import { tagCounter } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
@@ -47,13 +46,8 @@ export default async function Page(props: PageProps<'/tags/[tag]/[page]'>) {
   const filteredPosts = tagCounter[tag].posts
 
   return (
-    <VStack as="article" separator={<StackSeparator />} w="full">
-      <PageHeader.Root>
-        <PageHeader.Title>Tag - {tag}</PageHeader.Title>
-        <PageHeader.Description>{siteConfig.pages.greetings.archive}</PageHeader.Description>
-      </PageHeader.Root>
-
+    <SimplePageLayout title={`Tag - ${tag}`} greeting={siteConfig.pages.greetings.archive}>
       <PostCardList currentPage={currentPage} allPosts={filteredPosts} />
-    </VStack>
+    </SimplePageLayout>
   )
 }

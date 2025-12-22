@@ -31,7 +31,7 @@ function AuthorSidebar({ author }: { author: Author }) {
   const avatarSrc: string = path.join(siteConfig.siteRoot ?? '', avatar ?? '/avatar-default.jpg')
 
   return (
-    <VStack pt={10} gapY={5}>
+    <VStack gapY={5}>
       <Avatar.Root w="48" h="48">
         <Avatar.Fallback name={name} />
         <Avatar.Image objectFit="cover" src={avatarSrc} alt={`Avatar of ${name}`} />
@@ -80,7 +80,8 @@ function AuthorLayout({ children, author }: AuthorLayoutProps) {
         <PageHeader.Title>{title}</PageHeader.Title>
         <PageHeader.Description>{siteConfig.pages.greetings.about}</PageHeader.Description>
       </PageHeader.Root>
-      <SimpleGrid columns={{ base: 1, lg: 3 }} gap={4}>
+
+      <SimpleGrid columns={{ base: 1, lg: 3 }} gap={4} mt={8}>
         <GridItem colSpan={{ base: 1, lg: 1 }}>
           <AuthorSidebar author={author} />
         </GridItem>

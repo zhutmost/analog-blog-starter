@@ -1,67 +1,56 @@
-import { StackSeparator, VStack } from "@chakra-ui/react";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import slugify from "slug";
+import type { Metadata } from 'next'
+import { notFound, redirect } from 'next/navigation'
+import slugify from 'slug'
 
-import PageHeader from "@/components/page-header";
-import { PostCardList } from "@/components/post/post-card";
-import { categoryCounter } from "@/lib/coco";
-import generatePageMetadata from "@/lib/page-metadata";
-import siteConfig from "@/lib/site-config";
+import { PostCardList } from '@/components/post/post-card'
+import SimplePageLayout from '@/layouts/simple-page-layout'
+import { allPosts, categoryCounter } from '@/lib/coco'
+import generatePageMetadata from '@/lib/page-metadata'
+import siteConfig from '@/lib/site-config'
 
-export async function generateStaticParams(): Promise<{ category: string }[]> {
-  return Object.keys(categoryCounter).map((category) => {
-    return {
+export async function generateStaticParams(): Promise<{ category: string; page: string }[]> {
+  return Object.keys(categoryCounter).flatMap((category) => {
+    const totalPages = Math.ceil(categoryCounter[category].count / siteConfig.pagination)
+    return Array.from({ length: totalPages }, (_, i) => ({
       category: encodeURI(slugify(category)),
-    };
-  });
+      page: (i + 1).toString(),
+    }))
+  })
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ category: string }>;
-}): Promise<Metadata | undefined> {
-  const paramCategory = (await params).category;
+export async function generateMetadata(
+  props: PageProps<'/category/[category]/[page]'>
+): Promise<Metadata | undefined> {
+  const { category: paramCategory } = await props.params
 
-  const category = Object.keys(categoryCounter).find(
-    (t) => slugify(t) === decodeURI(paramCategory),
-  );
-  if (!category) return;
+  const category = Object.keys(categoryCounter).find((t) => slugify(t) === decodeURI(paramCategory))
+  if (!category) return
 
   return generatePageMetadata({
     title: `Category - ${category}`,
     description: `"${category}" category posts on ${siteConfig.siteTitle}`,
-  });
+  })
 }
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ category: string }>;
-  searchParams: Promise<{ page?: string }>;
-}) {
-  const paramPage = parseInt((await searchParams).page ?? "1", 10);
-  const paramCategory = (await params).category;
+export default async function Page(props: PageProps<'/category/[category]/[page]'>) {
+  const { category: paramCategory, page: paramPage } = await props.params
+  const category = Object.keys(categoryCounter).find((t) => slugify(t) === decodeURI(paramCategory))
+  if (!category) return notFound()
 
-  const category = Object.keys(categoryCounter).find(
-    (t) => slugify(t) === decodeURI(paramCategory),
-  );
-  if (!category) return notFound();
+  const currentPage = parseInt(paramPage, 10)
+  const totalPages = Math.ceil(allPosts.length / siteConfig.pagination)
+  if (Number.isNaN(currentPage) || currentPage < 1 || currentPage > totalPages) {
+    redirect(`/category/${paramCategory}/1`)
+  }
 
-  const filteredPosts = categoryCounter[category].posts;
+  const filteredPosts = categoryCounter[category].posts
 
   return (
-    <VStack as="article" separator={<StackSeparator />} w="full">
-      <PageHeader.Root>
-        <PageHeader.Title>Category - {category}</PageHeader.Title>
-        <PageHeader.Description>
-          {siteConfig.pages.greetings.archive}
-        </PageHeader.Description>
-      </PageHeader.Root>
-
-      <PostCardList currentPage={paramPage} allPosts={filteredPosts} />
-    </VStack>
-  );
+    <SimplePageLayout
+      title={`Category - ${category}`}
+      greeting={siteConfig.pages.greetings.archive}
+    >
+      <PostCardList currentPage={currentPage} allPosts={filteredPosts} />
+    </SimplePageLayout>
+  )
 }

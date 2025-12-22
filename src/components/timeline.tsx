@@ -1,4 +1,3 @@
-import type * as React from 'react'
 import { Button, Icon, Tag, Timeline } from '@chakra-ui/react'
 import {
   IconArrowRight,

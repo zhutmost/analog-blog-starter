@@ -48,7 +48,6 @@ export default function MdxProse({ code }: { code: string }) {
   return (
     <Box
       w="full"
-      pt={10}
       css={{
         '&>*': {
           _first: { mt: '0' },

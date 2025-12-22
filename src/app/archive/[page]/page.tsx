@@ -1,9 +1,8 @@
-import { StackSeparator, VStack } from '@chakra-ui/react'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
-import PageHeader from '@/components/page-header'
 import { PostCardList } from '@/components/post/post-card'
+import SimplePageLayout from '@/layouts/simple-page-layout'
 import { allPosts } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
@@ -27,13 +26,8 @@ export default async function Page(props: PageProps<'/archive/[page]'>) {
   }
 
   return (
-    <VStack as="article" separator={<StackSeparator />} w="full">
-      <PageHeader.Root>
-        <PageHeader.Title>All Posts</PageHeader.Title>
-        <PageHeader.Description>{siteConfig.pages.greetings.archive}</PageHeader.Description>
-      </PageHeader.Root>
-
+    <SimplePageLayout title="All Posts" greeting={siteConfig.pages.greetings.archive}>
       <PostCardList currentPage={currentPage} allPosts={allPosts} />
-    </VStack>
+    </SimplePageLayout>
   )
 }

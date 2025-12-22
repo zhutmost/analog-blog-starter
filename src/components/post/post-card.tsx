@@ -179,7 +179,7 @@ export function PostCardList({
   if (posts.length === 0) return <PostEmptyList />
 
   return (
-    <VStack py={8} gapY={8} w="full">
+    <VStack gapY={8} w="full">
       <VStack as="ul" gapY={8} w="full">
         {posts.map((post) => (
           <Box as="li" key={post.slug} w="full">
