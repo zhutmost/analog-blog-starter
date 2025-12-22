@@ -4,7 +4,7 @@ import slugify from 'slug'
 
 import { PostCardList } from '@/components/post/post-card'
 import SimplePageLayout from '@/layouts/simple-page-layout'
-import { allPosts, postsByCategory } from '@/lib/coco'
+import { postsByCategory } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
 
@@ -38,7 +38,7 @@ export default async function Page(props: PageProps<'/category/[category]/[page]
   if (!category) return notFound()
 
   const currentPage = parseInt(paramPage, 10)
-  const totalPages = Math.ceil(allPosts.length / siteConfig.pagination)
+  const totalPages = Math.ceil(postsByCategory[category].length / siteConfig.pagination)
   if (Number.isNaN(currentPage) || currentPage < 1 || currentPage > totalPages) {
     redirect(`/category/${paramCategory}/1`)
   }
