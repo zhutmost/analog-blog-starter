@@ -1,15 +1,19 @@
 import {
   AspectRatio,
+  Avatar,
+  Badge,
   Box,
   Button,
   EmptyState,
   Flex,
-  GridItem,
   Heading,
+  HStack,
   Icon,
   LinkBox,
   LinkOverlay,
-  SimpleGrid,
+  Menu,
+  Portal,
+  Spacer,
   Stack,
   Text,
   VisuallyHidden,
@@ -20,6 +24,7 @@ import { IconArrowRight, IconWritingSign } from '@tabler/icons-react'
 import NextLink from 'next/link'
 import slugify from 'slug'
 
+import AuthorLittleCard from '@/components/author-little-card'
 import PostPagination from '@/components/post/post-pagination'
 import PostTag from '@/components/post/post-tag'
 import SmartImage from '@/components/smart-image'
@@ -29,17 +34,19 @@ import type { Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
 export default function PostCard({ post }: { post: Post }) {
-  const { title, summary, datePublish, slug, tags, banner, category, readingTime } = post
+  const { title, summary, authors, datePublish, slug, tags, banner, category, readingTime } = post
   const datePublishString = datePublish.toLocaleDateString(siteConfig.locale, {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
   })
+  const firstAuthors = authors.slice(0, 2)
+  const otherAuthors = authors.slice(2)
 
   return (
-    <VStack w="full">
+    <Stack as="article" direction={{ base: 'column', lg: 'row' }} w="full" gapX={6}>
       {banner && (
-        <AspectRatio ratio={5 / 2} w="full">
+        <AspectRatio ratio={{ base: 5 / 2, lg: 1 }} w={{ base: 'full', lg: '20rem' }}>
           <LinkBox w="full">
             <SmartImage
               src={banner}
@@ -53,87 +60,97 @@ export default function PostCard({ post }: { post: Post }) {
           </LinkBox>
         </AspectRatio>
       )}
-
-      <SimpleGrid columns={{ base: 1, lg: 4 }} w="full" py={2}>
-        <GridItem colSpan={1}>
-          <Stack
-            direction={{ base: 'row', lg: 'column' }}
-            justifyContent={{ base: 'space-between', lg: 'start' }}
-            w="full"
-          >
-            <Box>
+      <VStack align="start" w="full" py={1}>
+        <HStack justify="space-between" w="full" gapX={4}>
+          <Badge size="md" rounded="full" px={3}>
+            <Link href={`/category/${slugify(category)}`}>
               <VisuallyHidden>Category</VisuallyHidden>
-              <Text fontWeight="semibold" color="fg" _hover={{ color: 'fg/80' }}>
-                <Link href={`/category/${slugify(category)}`}>
-                  <Twemojify>{category}</Twemojify>
-                </Link>
-              </Text>
-            </Box>
-
-            <Box>
-              <VisuallyHidden>Published date</VisuallyHidden>
-              <Text fontSize="sm" color="fg.muted">
-                <time dateTime={datePublish.toISOString()}>{datePublishString}</time>
-              </Text>
-            </Box>
-
-            <Box display={{ base: 'none', lg: 'block' }}>
-              <VisuallyHidden>Estimated reading time</VisuallyHidden>
-              <Text fontSize="sm" color="fg.muted">
-                {Math.round(readingTime)} min read
-              </Text>
-            </Box>
-          </Stack>
-        </GridItem>
-
-        <GridItem colSpan={{ base: 1, lg: 3 }}>
-          <VStack align="start" w="full">
-            <Link asChild href={`/post/${slug}`}>
-              <Heading
-                as="h3"
-                size="2xl"
-                color="fg"
-                _hover={{ color: 'fg/80' }}
-                fontWeight="bold"
-                letterSpacing="tight"
-                lineClamp={1}
-              >
-                <Twemojify>{title}</Twemojify>
-              </Heading>
+              <Twemojify>{category}</Twemojify>
             </Link>
-
-            {tags.length > 0 && (
-              <Wrap>
-                {tags.map((tag) => (
-                  <PostTag key={tag} text={tag} />
-                ))}
-              </Wrap>
-            )}
-
-            <Text color="fg.muted" lineClamp={3}>
-              <Twemojify>{summary}</Twemojify>
-            </Text>
-
-            <Box>
-              <Link
-                href={`/post/${slug}`}
-                color="brand"
-                fontWeight="medium"
-                _hover={{ color: 'brand/80' }}
-                aria-label={`Read more: ${title}`}
-              >
-                <Flex align="center">
-                  Read more
-                  <Icon ml={1} boxSize={5}>
-                    <IconArrowRight />
-                  </Icon>
-                </Flex>
-              </Link>
+          </Badge>
+          <Spacer />
+          <Text fontSize="sm" color="fg.muted">
+            <VisuallyHidden>Published date</VisuallyHidden>
+            <time dateTime={datePublish.toISOString()}>{datePublishString}</time>
+            &nbsp;&nbsp;·&nbsp;&nbsp;
+            <VisuallyHidden>Estimated reading time</VisuallyHidden>
+            {Math.round(readingTime)} min read
+          </Text>
+        </HStack>
+        <Link asChild href={`/post/${slug}`}>
+          <Heading
+            as="h3"
+            size="2xl"
+            color="fg"
+            _hover={{ color: 'fg/80' }}
+            fontWeight="bold"
+            letterSpacing="tight"
+            lineClamp={1}
+          >
+            <Twemojify>{title}</Twemojify>
+          </Heading>
+        </Link>
+        {tags.length > 0 && (
+          <Wrap>
+            {tags.map((tag) => (
+              <PostTag key={tag} text={tag} />
+            ))}
+          </Wrap>
+        )}
+        <Text color="fg.muted" lineClamp={3}>
+          <Twemojify>{summary}</Twemojify>
+        </Text>
+        <Spacer />
+        <Flex w="full" align="end" gap={4}>
+          {firstAuthors.map(({ name, avatar, href }) => (
+            <Box hideBelow="lg">
+              <AuthorLittleCard name={name} avatar={avatar} href={href} />
             </Box>
-          </VStack>
-        </GridItem>
-      </SimpleGrid>
-    </VStack>
+          ))}
+          {otherAuthors.length > 0 && (
+            <Menu.Root positioning={{ placement: 'bottom' }}>
+              <Menu.Trigger rounded="full" focusRing="outside">
+                <Avatar.Root variant="outline" hideBelow="lg">
+                  <Avatar.Fallback>+{otherAuthors.length}</Avatar.Fallback>
+                </Avatar.Root>
+              </Menu.Trigger>
+              <Portal>
+                <Menu.Positioner>
+                  <Menu.Content>
+                    {otherAuthors.map(({ name, avatar, href }) => (
+                      <Menu.Item asChild value={name} key={name}>
+                        <SmartLink href={href}>
+                          <Avatar.Root size="xs">
+                            <Avatar.Image src={avatar} alt={`Avatar of ${name}`} />
+                            <Avatar.Fallback name={name} />
+                          </Avatar.Root>
+                          {name}
+                        </SmartLink>
+                      </Menu.Item>
+                    ))}
+                  </Menu.Content>
+                </Menu.Positioner>
+              </Portal>
+            </Menu.Root>
+          )}
+          <Spacer />
+          <Link
+            href={`/post/${slug}`}
+            color="brand"
+            fontWeight="medium"
+            _hover={{ color: 'brand/80' }}
+            aria-label={`Read more: ${title}`}
+          >
+            <Flex align="center">
+              Read more
+              <Icon mx={1} boxSize={5}>
+                <IconArrowRight />
+              </Icon>
+            </Flex>
+          </Link>
+        </Flex>
+      </VStack>
+    </Stack>
   )
 }
 
@@ -180,7 +197,7 @@ export function PostCardList({
 
   return (
     <VStack gapY={8} w="full">
-      <VStack as="ul" gapY={8} w="full">
+      <VStack as="ul" gapY={12} w="full">
         {posts.map((post) => (
           <Box as="li" key={post.slug} w="full">
             <PostCard post={post} />

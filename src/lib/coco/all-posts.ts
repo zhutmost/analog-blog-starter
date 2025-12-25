@@ -6,8 +6,8 @@ const isProduction: boolean = process.env.NODE_ENV === 'production'
 export type Post = Omit<CocoPost, 'authors'> & {
   authors: {
     name: string
+    avatar: string
     href?: string
-    avatar?: string
     bio?: string
   }[]
 }
@@ -47,6 +47,7 @@ const allPostsSorted: Post[] = sortPosts(
         }
       else
         return {
+          // External authors use the data from the post front-matter
           ...author,
           avatar: author.avatar ?? '/avatar-default.jpg',
         }

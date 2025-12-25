@@ -1,29 +1,25 @@
 import type * as React from 'react'
 import {
   AspectRatio,
-  Avatar,
   Bleed,
   Box,
   GridItem,
   Heading,
-  HStack,
-  LinkBox,
-  LinkOverlay,
   Separator,
   SimpleGrid,
   StackSeparator,
   Text,
-  VisuallyHidden,
   VStack,
   Wrap,
 } from '@chakra-ui/react'
 
+import AuthorLittleCard from '@/components/author-little-card'
 import PostComment from '@/components/post/comment/post-comment'
 import PostLicense from '@/components/post/post-license'
 import PostTag from '@/components/post/post-tag'
 import PostToc from '@/components/post/post-toc'
 import SmartImage from '@/components/smart-image'
-import SmartLink, { Link } from '@/components/smart-link'
+import { Link } from '@/components/smart-link'
 import type { Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
@@ -70,37 +66,7 @@ function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'chi
       <Wrap py={2} gapY={6} gapX={10} w="full">
         <PostSidebarItem label="Posted by">
           {authors.map(({ name, href, bio, avatar }) => (
-            <LinkBox key={name}>
-              <HStack gapX={4}>
-                <Avatar.Root>
-                  <Avatar.Fallback name={name} />
-                  <Avatar.Image objectFit="cover" src={avatar} />
-                </Avatar.Root>
-                <VStack alignItems="start" gapY={0}>
-                  <LinkOverlay asChild>
-                    <SmartLink href={href}>
-                      <VisuallyHidden>Name</VisuallyHidden>
-                      <Text color="fg" fontSize="md" fontWeight="bold" letterSpacing="tight">
-                        {name}
-                      </Text>
-                    </SmartLink>
-                  </LinkOverlay>
-                  {bio && (
-                    <div>
-                      <VisuallyHidden>Short bio</VisuallyHidden>
-                      <Text
-                        fontSize="sm"
-                        color="fg.muted"
-                        letterSpacing="tight"
-                        lineHeight="shorter"
-                      >
-                        {bio}
-                      </Text>
-                    </div>
-                  )}
-                </VStack>
-              </HStack>
-            </LinkBox>
+            <AuthorLittleCard name={name} avatar={avatar} bio={bio} href={href} />
           ))}
         </PostSidebarItem>
       </Wrap>
