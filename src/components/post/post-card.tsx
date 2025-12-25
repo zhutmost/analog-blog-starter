@@ -103,7 +103,7 @@ export default function PostCard({ post }: { post: Post }) {
         <Spacer />
         <Flex w="full" align="end" gap={4}>
           {firstAuthors.map(({ name, avatar, href }) => (
-            <Box hideBelow="lg">
+            <Box key={name} hideBelow="lg">
               <AuthorLittleCard name={name} avatar={avatar} href={href} />
             </Box>
           ))}

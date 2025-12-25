@@ -66,7 +66,7 @@ function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'chi
       <Wrap py={2} gapY={6} gapX={10} w="full">
         <PostSidebarItem label="Posted by">
           {authors.map(({ name, href, bio, avatar }) => (
-            <AuthorLittleCard name={name} avatar={avatar} bio={bio} href={href} />
+            <AuthorLittleCard key={name} name={name} avatar={avatar} bio={bio} href={href} />
           ))}
         </PostSidebarItem>
       </Wrap>
