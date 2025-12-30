@@ -1,7 +1,7 @@
 'use client'
 
 import { Flex } from '@chakra-ui/react'
-import GitHubCalendar from 'react-github-calendar'
+import { GitHubCalendar } from 'react-github-calendar'
 
 import { useColorMode } from '@/components/ui/color-mode'
 
