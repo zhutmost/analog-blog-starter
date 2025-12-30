@@ -101,7 +101,7 @@ export default function PostCard({ post }: { post: Post }) {
           <Twemojify>{summary}</Twemojify>
         </Text>
         <Spacer />
-        <Flex w="full" align="end" gap={4}>
+        <Flex w="full" align="end" gapX={6}>
           {firstAuthors.map(({ name, avatar, href }) => (
             <Box key={name} hideBelow="lg">
               <AuthorLittleCard name={name} avatar={avatar} href={href} />

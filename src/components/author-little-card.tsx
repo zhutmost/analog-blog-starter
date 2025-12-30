@@ -23,7 +23,7 @@ export default function AuthorLittleCard({
   bio?: string
 }) {
   return (
-    <LinkBox>
+    <LinkBox py={2}>
       <HStack gap={4}>
         <Avatar.Root>
           <Avatar.Fallback name={name} />
