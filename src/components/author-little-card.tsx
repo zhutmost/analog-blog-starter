@@ -8,6 +8,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 
+import SmartImage from '@/components/smart-image'
 import { Link } from '@/components/smart-link'
 
 export default function AuthorLittleCard({
@@ -26,7 +27,12 @@ export default function AuthorLittleCard({
       <HStack gap={4}>
         <Avatar.Root>
           <Avatar.Fallback name={name} />
-          <Avatar.Image src={avatar} alt={`Avatar of ${name}`} />
+          <SmartImage
+            src={avatar}
+            alt={`Avatar of ${name}`}
+            objectFit="cover"
+            borderRadius="full"
+          />
         </Avatar.Root>
         <VStack gap="0" align="start">
           <LinkOverlay asChild>
