@@ -14,7 +14,7 @@
       },
       "devDependencies": {
         "@biomejs/biome": "^2.3.11",
-        "@content-collections/core": "^0.13.0",
+        "@content-collections/core": "^0.13.1",
         "@content-collections/mdx": "^0.2.2",
         "@content-collections/next": "^0.2.10",
         "@giscus/react": "^3.1.0",
@@ -95,7 +95,7 @@
 
     "@chakra-ui/react": ["@chakra-ui/react@3.30.0", "https://registry.npmmirror.com/@chakra-ui/react/-/react-3.30.0.tgz", { "dependencies": { "@ark-ui/react": "^5.29.1", "@emotion/is-prop-valid": "^1.4.0", "@emotion/serialize": "^1.3.3", "@emotion/use-insertion-effect-with-fallbacks": "^1.2.0", "@emotion/utils": "^1.4.2", "@pandacss/is-valid-prop": "^1.4.2", "csstype": "^3.2.3" }, "peerDependencies": { "@emotion/react": ">=11", "react": ">=18", "react-dom": ">=18" } }, "sha512-eIRRAilqY4f2zN8GWRnjcciBYsvy3GZDOmzGD9xk596LBxCTNCJaivdBiHCcgNlqA3y1wMyM1jepy2b2vQC4QA=="],
 
-    "@content-collections/core": ["@content-collections/core@0.13.0", "https://registry.npmmirror.com/@content-collections/core/-/core-0.13.0.tgz", { "dependencies": { "@standard-schema/spec": "^1.0.0", "camelcase": "^8.0.0", "chokidar": "^4.0.3", "esbuild": "^0.25.11", "gray-matter": "^4.0.3", "p-limit": "^6.1.0", "picomatch": "^4.0.2", "pluralize": "^8.0.0", "serialize-javascript": "^6.0.2", "tinyglobby": "^0.2.5", "yaml": "^2.4.5" }, "peerDependencies": { "typescript": "^5.0.2" } }, "sha512-AWU06OLQ8N6Ma2ICLOCDqEaRZZHidmbXzKDTEtPh9JOiP6S6LBUqvBarWopeeqs3l4p830kCywFJ3rPv9rOPWA=="],
+    "@content-collections/core": ["@content-collections/core@0.13.1", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "camelcase": "^8.0.0", "chokidar": "^4.0.3", "esbuild": "^0.25.11", "gray-matter": "^4.0.3", "p-limit": "^6.1.0", "picomatch": "^4.0.2", "pluralize": "^8.0.0", "serialize-javascript": "^6.0.2", "tinyglobby": "^0.2.5", "yaml": "^2.4.5" }, "peerDependencies": { "typescript": "^5.0.2" } }, "sha512-AKcyh8INdmd9wFxsAdC9r93xsr0Urev0BOhYfrYXtRhkDdWkNVHI1lENPd3clWQKsoQLekV7XQzZ3hRNiABOuA=="],
 
     "@content-collections/integrations": ["@content-collections/integrations@0.4.0", "https://registry.npmmirror.com/@content-collections/integrations/-/integrations-0.4.0.tgz", { "peerDependencies": { "@content-collections/core": "0.x" } }, "sha512-ZNOoB61BlsfyJRno/Fc+eziKETN5O+40bJxhiwU6gMUC9bOGtN9TPOdHJH27wD9nUNL+F/H4R+dyDNoTJ4Y1/A=="],
 
