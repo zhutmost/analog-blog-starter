@@ -27,7 +27,7 @@
     "@tabler/icons-react": "^3.36.1",
     "@twemoji/parser": "^17.0.1",
     "@types/node": "^25.0.6",
-    "@types/react": "19.2.7",
+    "@types/react": "19.2.8",
     "@types/react-dom": "19.2.3",
     "@types/react-twemoji": "^0.4.3",
     "@types/slug": "^5.0.9",
