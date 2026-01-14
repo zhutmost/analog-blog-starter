@@ -30,7 +30,7 @@ export function assetSourceRedirect(
   src: string | undefined,
   assetPath: string
 ): string | undefined {
-  if (!src || src.startsWith('http') || src.startsWith('/')) {
+  if (!src || /https?:\/\//.test(src) || src.startsWith('/')) {
     return src
   }
   return path.join('/_assets', assetPath, src)

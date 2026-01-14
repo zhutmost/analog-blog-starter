@@ -291,6 +291,9 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# MCP server data
+.ai/
+
 # ==============================================================================
 # Operating System - macOS
 
