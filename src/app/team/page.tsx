@@ -80,9 +80,9 @@ export default function Page() {
             <Heading as="h2" size={{ base: '3xl', lg: '4xl' }} color="fg" fontWeight="bold">
               {group}
             </Heading>
-            <Wrap w="full">
+            <Wrap gap={8}>
               {sortAuthors(authors).map((author) => (
-                <WrapItem key={author.slug} w={{ base: 'full', md: '50%', lg: '25%' }}>
+                <WrapItem key={author.slug}>
                   <AuthorCard author={author} />
                 </WrapItem>
               ))}
