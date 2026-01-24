@@ -59,4 +59,4 @@ fs.writeFileSync(
   )
 )
 
-console.log('Generate tsconfig.json with:', { DATA_DIR: userDataDir })
+console.log('Generate tsconfig.json with:', { USER_DATA_DIR: userDataDir })
