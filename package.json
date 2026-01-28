@@ -15,7 +15,7 @@
     "@emotion/react": "^11.14.0",
     "@next/third-parties": "16.1.6",
     "next": "16.1.6",
-    "react": "19.2.3",
+    "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
@@ -27,7 +27,7 @@
     "@tabler/icons-react": "^3.36.1",
     "@twemoji/parser": "^17.0.1",
     "@types/node": "^25.0.10",
-    "@types/react": "19.2.9",
+    "@types/react": "19.2.10",
     "@types/react-dom": "19.2.3",
     "@types/react-twemoji": "^0.4.3",
     "@types/slug": "^5.0.9",
