@@ -11,7 +11,7 @@
     "analyze": "next experimental-analyze"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.31.0",
+    "@chakra-ui/react": "^3.32.0",
     "@emotion/react": "^11.14.0",
     "@next/third-parties": "16.1.6",
     "next": "16.1.6",
