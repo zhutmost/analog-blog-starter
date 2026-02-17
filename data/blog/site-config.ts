@@ -2,7 +2,8 @@ import type { SiteConfig } from '@/lib/site-config'
 import type { DeepPartial } from '@/lib/utils'
 
 import HomepageSectionContents from '../../src/components/homepage/sections'
-import timelineNews from '../blog/news/timeline-news-2025'
+import timelineNews2025 from '../blog/news/timeline-news-2025'
+import timelineNews2026 from '../blog/news/timeline-news-2026'
 
 const userConfig: DeepPartial<SiteConfig> = {
   siteUrl: 'https://zhutmost.com',
@@ -22,7 +23,7 @@ const userConfig: DeepPartial<SiteConfig> = {
         content: HomepageSectionContents.LatestNews,
         contentProps: {
           hrefViewAll: '/news',
-          news: timelineNews.slice(0, 10),
+          news: [...timelineNews2026, ...timelineNews2025].slice(0, 10),
         },
       },
       {
