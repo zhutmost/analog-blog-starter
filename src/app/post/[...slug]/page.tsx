@@ -28,7 +28,7 @@ export async function generateMetadata({
   const seoImage: string = postCurr.banner ?? siteConfig.seo.socialBanner
   const ogImage: string = seoImage.includes('http')
     ? seoImage
-    : new URL(seoImage, siteConfig.siteUrl).toString()
+    : new URL(seoImage, siteConfig.siteUrl).href
 
   return {
     title: postCurr.title,

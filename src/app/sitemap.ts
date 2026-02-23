@@ -10,7 +10,7 @@ export const dynamic = 'force-static'
 
 export default function sitemap(): Sitemap {
   const homeRoute: SitemapSingleFile = {
-    url: new URL(siteConfig.siteUrl).toString(),
+    url: new URL(siteConfig.siteUrl).href,
     lastModified: new Date().toISOString(),
     priority: 1,
     changeFrequency: 'monthly',
@@ -19,21 +19,21 @@ export default function sitemap(): Sitemap {
   const postRoutes: Sitemap = allPosts
     .filter((post) => !post.draft)
     .map((post) => ({
-      url: new URL(`/post/${post.slug}`, siteConfig.siteUrl).toString(),
+      url: new URL(`/post/${post.slug}`, siteConfig.siteUrl).href,
       lastModified: post.dateUpdate.toISOString(),
       priority: 1,
       changeFrequency: 'monthly',
     }))
 
   const aboutRoute: SitemapSingleFile = {
-    url: new URL('/about', siteConfig.siteUrl).toString(),
+    url: new URL('/about', siteConfig.siteUrl).href,
     lastModified: authorDefault.dateUpdate.toISOString(),
     priority: 0.7,
     changeFrequency: 'monthly',
   }
 
   const authorsRoutes: Sitemap = allAuthorsNonDefault.map((author) => ({
-    url: new URL(`/about/${author.slug}`, siteConfig.siteUrl).toString(),
+    url: new URL(`/about/${author.slug}`, siteConfig.siteUrl).href,
     lastModified: author.dateUpdate.toISOString(),
     priority: 0.5,
     changeFrequency: 'monthly',
@@ -43,14 +43,14 @@ export default function sitemap(): Sitemap {
     'tags',
     ...(siteConfig.pages.team && allAuthorsNonDefault.length !== 0 ? ['team'] : []),
   ].map((route) => ({
-    url: new URL(route, siteConfig.siteUrl).toString(),
+    url: new URL(route, siteConfig.siteUrl).href,
     lastModified: new Date().toISOString(),
     priority: 0.5,
     changeFrequency: 'monthly',
   }))
 
   const userPagesRoutes: Sitemap = allPages.map((page) => ({
-    url: new URL(page.slug, siteConfig.siteUrl).toString(),
+    url: new URL(page.slug, siteConfig.siteUrl).href,
     lastModified: page.dateUpdate.toISOString(),
     priority: 0.7,
     changeFrequency: 'monthly',

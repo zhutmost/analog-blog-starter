@@ -12,14 +12,14 @@ export default function generateRssFeed(): Feed {
     description: siteConfig.description,
     id: '/',
     link: siteUrl,
-    image: new URL(siteConfig.seo.socialBanner, siteUrl).toString(),
-    favicon: new URL('favicon.ico', siteUrl).toString(),
+    image: new URL(siteConfig.seo.socialBanner, siteUrl).href,
+    favicon: new URL('favicon.ico', siteUrl).href,
     language: siteConfig.locale,
     updated: new Date(),
     copyright: `All rights reserved ${thisYear.toString()} ${siteConfig.author}`,
     author: {
       name: siteConfig.author,
-      link: new URL('about', siteUrl).toString(),
+      link: new URL('about', siteUrl).href,
     },
   }
 
@@ -28,8 +28,8 @@ export default function generateRssFeed(): Feed {
     feed.addItem({
       title: post.title,
       id: `/post/${post.slug}`,
-      link: new URL(`post/${post.slug}`, siteUrl).toString(),
-      image: new URL(post.banner ?? siteConfig.seo.socialBanner, siteUrl).toString(),
+      link: new URL(`post/${post.slug}`, siteUrl).href,
+      image: new URL(post.banner ?? siteConfig.seo.socialBanner, siteUrl).href,
       description: post.summary,
       content: post.content,
       author: post.authors.map((author) => ({

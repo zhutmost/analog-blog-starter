@@ -46,7 +46,7 @@ function PostLicense({ post }: { post: Post }) {
   if (!(siteConfig.license || post.license)) return null
 
   const { title, authors, slug, datePublish, dateUpdate, license } = post
-  const postUrl = new URL(`post/${slug}`, siteConfig.siteUrl).toString()
+  const postUrl = new URL(`post/${slug}`, siteConfig.siteUrl).href
 
   const authorName = authors[0].name + (authors.length > 1 ? ' et al.' : '')
 

@@ -158,7 +158,7 @@ const siteConfig: SiteConfig = (() => {
   // Merge default config with user config
   const c: SiteConfig = deepmerge(defaultSiteConfig, userConfig) as SiteConfig
 
-  c.siteUrl = new URL(c.siteUrl).toString()
+  c.siteUrl = new URL(c.siteUrl).href
 
   // Set default values for Open Graph and Twitter SEO
   c.seo.openGraph = {
@@ -166,12 +166,12 @@ const siteConfig: SiteConfig = (() => {
     description: c.seo.openGraph?.description ?? c.description,
     siteName: c.seo.openGraph?.siteName ?? c.siteTitle,
     locale: c.seo.openGraph?.locale ?? c.locale,
-    images: new URL(c.seo.openGraph?.images ?? c.seo.socialBanner, c.siteUrl).toString(),
+    images: new URL(c.seo.openGraph?.images ?? c.seo.socialBanner, c.siteUrl).href,
   }
   c.seo.twitter = {
     title: c.seo.twitter?.title ?? c.siteTitle,
     description: c.seo.twitter?.description ?? c.description,
-    images: new URL(c.seo.twitter?.images ?? c.seo.socialBanner, c.siteUrl).toString(),
+    images: new URL(c.seo.twitter?.images ?? c.seo.socialBanner, c.siteUrl).href,
   }
 
   return c
