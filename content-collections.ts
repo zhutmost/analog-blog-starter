@@ -1,6 +1,11 @@
 import * as console from 'node:console'
 import * as path from 'node:path'
-import { type Context, defineCollection, defineConfig, type Meta } from '@content-collections/core'
+import {
+  type CollectionContext,
+  defineCollection,
+  defineConfig,
+  type Meta,
+} from '@content-collections/core'
 import { compileMDX } from '@content-collections/mdx'
 import readingTimeEstimate from 'reading-time'
 import { rehypeGithubAlerts } from 'rehype-github-alerts'
@@ -28,7 +33,7 @@ async function commonTransform(
     _meta: Meta
     content: string
   },
-  context: Context
+  context: CollectionContext
 ): Promise<{
   mdx: string
   slug: string
@@ -237,5 +242,5 @@ const pages = defineCollection({
 })
 
 export default defineConfig({
-  collections: [posts, authors, pages],
+  content: [posts, authors, pages],
 })
