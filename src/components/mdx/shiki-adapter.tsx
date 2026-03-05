@@ -4,18 +4,19 @@ import { CodeBlock, createShikiAdapter } from '@chakra-ui/react'
 import { allAuthors, allPages, allPosts } from '@/lib/coco'
 
 function getAllCodeLanguages(): Set<string> {
-  const allItems: { codeLanguages: string[] }[] = [...allPosts, ...allAuthors, ...allPages]
-  const allLanguages = allItems.flatMap((item) => item.codeLanguages)
+  const allLanguages: string[] = [...allPosts, ...allAuthors, ...allPages].flatMap(
+    (item) => item.codeLanguages
+  )
   return new Set(allLanguages)
 }
 
 const shikiAdapter = createShikiAdapter({
   async load() {
-    const { createHighlighter, createOnigurumaEngine } = await import('shiki')
+    const { createHighlighter, createJavaScriptRegexEngine } = await import('shiki')
     return createHighlighter({
       langs: Array.from(getAllCodeLanguages()),
       themes: ['one-light', 'one-dark-pro'],
-      engine: createOnigurumaEngine(import('shiki/wasm')),
+      engine: createJavaScriptRegexEngine({ forgiving: true }),
     })
   },
   theme: {
