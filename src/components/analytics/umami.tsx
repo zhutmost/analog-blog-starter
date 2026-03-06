@@ -45,7 +45,7 @@ export default function UmamiAnalytics({
     const propValue = props[propKey]
 
     // Skip src and undefined values
-    if (dataKey !== 'src' && propValue !== undefined) {
+    if (propValue !== undefined) {
       acc[dataKey] = propValue.toString()
     }
     return acc
