@@ -1,17 +1,14 @@
-import {
-  GoogleAnalytics,
-  type GoogleAnalyticsProps,
-  GoogleTagManager,
-  type GoogleTagManagerProps,
-} from './google'
+import type * as React from 'react'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+
 import UmamiAnalytics, { type UmamiAnalyticsProps } from './umami'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
 export interface AnalyticsConfig {
   umamiAnalytics?: UmamiAnalyticsProps
-  googleAnalytics?: GoogleAnalyticsProps
-  googleTagManager?: GoogleTagManagerProps
+  googleAnalytics?: React.ComponentProps<typeof GoogleAnalytics>
+  googleTagManager?: React.ComponentProps<typeof GoogleTagManager>
 }
 
 export interface AnalyticsProps {
@@ -41,5 +38,3 @@ export default function Analytics({ analyticsConfig }: AnalyticsProps) {
     </>
   )
 }
-
-export type { UmamiAnalyticsProps, GoogleAnalyticsProps, GoogleTagManagerProps }
