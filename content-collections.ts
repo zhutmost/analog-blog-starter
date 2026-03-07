@@ -126,6 +126,8 @@ const authors = defineCollection({
       .optional(),
   }),
   transform: async (document, context) => {
+    const commonTransformed = await commonTransform(document, context)
+
     const avatar: string | undefined = assetSourceRedirect(
       document.avatar,
       path.join(context.collection.directory, document._meta.path)
@@ -133,7 +135,7 @@ const authors = defineCollection({
 
     return {
       ...document,
-      ...(await commonTransform(document, context)),
+      ...commonTransformed,
       avatar,
     }
   },
@@ -178,6 +180,8 @@ const posts = defineCollection({
       .optional(),
   }),
   transform: async (document, context) => {
+    const commonTransformed = await commonTransform(document, context)
+
     const readingTime: number = readingTimeEstimate(document.content).minutes
 
     const banner: string | undefined = assetSourceRedirect(
@@ -195,13 +199,14 @@ const posts = defineCollection({
       return { ...author, avatar }
     })
 
-    // If the post is published later than the last git update, we use the publish date as the update date.
-    const { dateUpdate: dateUpdateRaw } = await commonTransform(document, context)
-    const dateUpdate = document.datePublish > dateUpdateRaw ? document.datePublish : dateUpdateRaw
+    // If the post is published later than the last git update, we use the publishing date as the update date.
+    const dateUpdate = new Date(
+      Math.max(commonTransformed.dateUpdate.getTime(), document.datePublish.getTime())
+    )
 
     return {
       ...document,
-      ...(await commonTransform(document, context)),
+      ...commonTransformed,
       dateUpdate,
       readingTime,
       authors,
@@ -230,9 +235,10 @@ const pages = defineCollection({
       .optional(),
   }),
   transform: async (document, context) => {
+    const commonTransformed = await commonTransform(document, context)
     return {
       ...document,
-      ...(await commonTransform(document, context)),
+      ...commonTransformed,
     }
   },
   onSuccess: (docs) => {
