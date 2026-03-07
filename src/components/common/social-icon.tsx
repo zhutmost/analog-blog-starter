@@ -1,7 +1,7 @@
 import { IconButton } from '@chakra-ui/react'
 import { icons } from '@tabler/icons-react'
 
-import SmartLink from '@/components/smart-link'
+import SmartLink from '@/components/common/smart-link'
 import { Tooltip } from '@/components/ui/tooltip'
 
 interface SocialIconProps {

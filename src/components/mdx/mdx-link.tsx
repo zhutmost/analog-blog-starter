@@ -2,7 +2,7 @@ import type * as React from 'react'
 import { Icon, type LinkProps } from '@chakra-ui/react'
 import { IconExternalLink } from '@tabler/icons-react'
 
-import { isUrlExternal, Link } from '@/components/smart-link'
+import { isUrlExternal, Link } from '@/components/common/smart-link'
 
 export default function MdxLink({
   href,

@@ -24,12 +24,12 @@ import { IconArrowRight, IconWritingSign } from '@tabler/icons-react'
 import NextLink from 'next/link'
 import slugify from 'slug'
 
-import AuthorLittleCard from '@/components/author-little-card'
-import PostPagination from '@/components/post/post-pagination'
-import PostTag from '@/components/post/post-tag'
-import SmartImage from '@/components/smart-image'
-import SmartLink, { Link } from '@/components/smart-link'
-import Twemojify from '@/components/twemojify'
+import SmartImage from '@/components/common/smart-image'
+import SmartLink, { Link } from '@/components/common/smart-link'
+import Twemojify from '@/components/common/twemojify'
+import AuthorCard from '@/components/features/post/author-card'
+import PostPagination from '@/components/features/post/post-pagination'
+import PostTag from '@/components/features/post/post-tag'
 import type { Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
@@ -104,7 +104,7 @@ export default function PostCard({ post }: { post: Post }) {
         <Flex w="full" align="end" gapX={6}>
           {firstAuthors.map(({ name, avatar, href }) => (
             <Box key={name} hideBelow="lg">
-              <AuthorLittleCard name={name} avatar={avatar} href={href} />
+              <AuthorCard name={name} avatar={avatar} href={href} />
             </Box>
           ))}
           {otherAuthors.length > 0 && (
@@ -168,7 +168,7 @@ function PostEmptyList() {
           </EmptyState.Description>
         </VStack>
         <Button asChild>
-          <NextLink href="/">Back to Home</NextLink>
+          <NextLink href="/public">Back to Home</NextLink>
         </Button>
       </EmptyState.Content>
     </EmptyState.Root>

@@ -1,7 +1,7 @@
 import { Text } from '@chakra-ui/react'
 import slugify from 'slug'
 
-import { Link } from '@/components/smart-link'
+import { Link } from '@/components/common/smart-link'
 
 export interface PostTagProps {
   text: string

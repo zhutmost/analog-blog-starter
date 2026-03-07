@@ -1,7 +1,7 @@
 import type * as React from 'react'
 import { Heading, type StackProps, Text, VStack } from '@chakra-ui/react'
 
-import Twemojify from '@/components/twemojify'
+import Twemojify from '@/components/common/twemojify'
 
 function PageHeaderRoot(props: StackProps) {
   return (

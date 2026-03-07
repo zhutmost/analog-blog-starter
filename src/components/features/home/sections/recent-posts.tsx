@@ -1,6 +1,6 @@
 import type * as React from 'react'
 
-import { PostCardList } from '@/components/post/post-card'
+import { PostCardList } from '@/components/features/post/post-card'
 import { allPosts } from '@/lib/coco'
 
 export interface HomepageSectionRecentPostsProps {

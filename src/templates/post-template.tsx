@@ -13,13 +13,13 @@ import {
   Wrap,
 } from '@chakra-ui/react'
 
-import AuthorLittleCard from '@/components/author-little-card'
-import PostComment from '@/components/post/comment/post-comment'
-import PostLicense from '@/components/post/post-license'
-import PostTag from '@/components/post/post-tag'
-import PostToc from '@/components/post/post-toc'
-import SmartImage from '@/components/smart-image'
-import { Link } from '@/components/smart-link'
+import SmartImage from '@/components/common/smart-image'
+import { Link } from '@/components/common/smart-link'
+import PostComment from '@/components/features/comment/post-comment'
+import AuthorCard from '@/components/features/post/author-card'
+import PostLicense from '@/components/features/post/post-license'
+import PostTag from '@/components/features/post/post-tag'
+import PostToc from '@/components/features/post/post-toc'
 import type { Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
@@ -67,7 +67,7 @@ function PostSidebar({ content, postNext, postPrev }: Omit<PostLayoutProps, 'chi
         <PostSidebarItem label="Posted by">
           <Wrap alignItems="start" gapX={6}>
             {authors.map(({ name, href, bio, avatar }) => (
-              <AuthorLittleCard key={name} name={name} avatar={avatar} bio={bio} href={href} />
+              <AuthorCard key={name} name={name} avatar={avatar} bio={bio} href={href} />
             ))}
           </Wrap>
         </PostSidebarItem>
@@ -168,7 +168,7 @@ function PostHeader({ content }: { content: Post }) {
   )
 }
 
-export default function PostLayout({ content, postNext, postPrev, children }: PostLayoutProps) {
+export default function PostTemplate({ content, postNext, postPrev, children }: PostLayoutProps) {
   return (
     <VStack as="article" w="full">
       <PostHeader content={content} />

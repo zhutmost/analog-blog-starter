@@ -1,7 +1,7 @@
 import { Heading } from '@chakra-ui/react'
 
-import { Link } from '@/components/smart-link'
-import Twemojify from '@/components/twemojify'
+import { Link } from '@/components/common/smart-link'
+import Twemojify from '@/components/common/twemojify'
 import siteConfig from '@/lib/site-config'
 
 export default function HomeHeader() {

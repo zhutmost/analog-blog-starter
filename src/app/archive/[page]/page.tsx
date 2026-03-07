@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
-import { PostCardList } from '@/components/post/post-card'
-import SimplePageLayout from '@/layouts/simple-page-layout'
+import { PostCardList } from '@/components/features/post/post-card'
 import { allPosts } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
+import PageTemplate from '@/templates/page-template'
 
 export async function generateStaticParams(): Promise<{ page: string }[]> {
   const totalPages = Math.ceil(allPosts.length / siteConfig.pagination)
@@ -26,8 +26,8 @@ export default async function Page(props: PageProps<'/archive/[page]'>) {
   }
 
   return (
-    <SimplePageLayout title="All Posts" greeting={siteConfig.pages.greetings.archive}>
+    <PageTemplate title="All Posts" greeting={siteConfig.pages.greetings.archive}>
       <PostCardList currentPage={currentPage} allPosts={allPosts} />
-    </SimplePageLayout>
+    </PageTemplate>
   )
 }

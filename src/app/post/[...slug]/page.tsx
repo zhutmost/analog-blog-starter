@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import MdxProse from '@/components/mdx/mdx-prose'
-import PostLayout from '@/layouts/post-layout'
 import { allPosts, type Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
+import PostTemplate from '@/templates/post-template'
 
 import 'katex/dist/katex.css'
 
@@ -79,8 +79,8 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   //     {/*/>*/}
 
   return (
-    <PostLayout content={postCurr} postNext={postNext} postPrev={postPrev}>
+    <PostTemplate content={postCurr} postNext={postNext} postPrev={postPrev}>
       <MdxProse code={postCurr.mdx} />
-    </PostLayout>
+    </PostTemplate>
   )
 }

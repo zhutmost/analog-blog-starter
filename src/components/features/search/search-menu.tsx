@@ -16,8 +16,8 @@ import { IconSearch } from '@tabler/icons-react'
 import { matchSorter } from 'match-sorter'
 import { useRouter } from 'next/navigation'
 
-import searchData from '@/components/search/search-data'
-import Twemojify from '@/components/twemojify'
+import Twemojify from '@/components/common/twemojify'
+import searchData from '@/components/features/search/search-data'
 
 function SearchButton(props: ButtonProps) {
   return (

@@ -10,8 +10,8 @@ import {
   type Icon as TablerIcon,
 } from '@tabler/icons-react'
 
-import SmartLink from '@/components/smart-link'
-import Twemojify from '@/components/twemojify'
+import SmartLink from '@/components/common/smart-link'
+import Twemojify from '@/components/common/twemojify'
 
 export type TimelineNewsList = {
   date: Date

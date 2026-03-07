@@ -16,8 +16,8 @@ import { IconMenu2, IconX } from '@tabler/icons-react'
 import Image from 'next/image'
 import NextLink from 'next/link'
 
-import SearchMenu from '@/components/search/search-menu'
-import SmartLink from '@/components/smart-link'
+import SmartLink from '@/components/common/smart-link'
+import SearchMenu from '@/components/features/search/search-menu'
 import { ColorModeButton } from '@/components/ui/color-mode'
 import siteConfig from '@/lib/site-config'
 
@@ -71,7 +71,7 @@ function SiteHeader() {
           align="center"
           justify="space-between"
         >
-          <NextLink href="/">
+          <NextLink href="/public">
             <HStack spaceX={3}>
               {siteConfig.header.logo && (
                 <Image

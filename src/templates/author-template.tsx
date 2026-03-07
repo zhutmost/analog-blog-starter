@@ -16,8 +16,8 @@ import {
 } from '@chakra-ui/react'
 import { IconMapPinFilled } from '@tabler/icons-react'
 
-import PageHeader from '@/components/page-header'
-import SocialIcon from '@/components/social-icon'
+import SocialIcon from '@/components/common/social-icon'
+import PageHeader from '@/components/layout/page-header'
 import type { Author } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 
@@ -74,7 +74,7 @@ function AuthorSidebar({ author }: { author: Author }) {
   )
 }
 
-function AuthorLayout({ children, author }: AuthorLayoutProps) {
+function AuthorTemplate({ children, author }: AuthorLayoutProps) {
   const title: string = author.slug === 'default' ? 'About' : `About - ${author.name}`
 
   return (
@@ -94,4 +94,4 @@ function AuthorLayout({ children, author }: AuthorLayoutProps) {
   )
 }
 
-export default AuthorLayout
+export default AuthorTemplate

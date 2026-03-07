@@ -1,7 +1,7 @@
 import type * as React from 'react'
 import { Box, StackSeparator, VStack } from '@chakra-ui/react'
 
-import PageHeader from '@/components/page-header'
+import PageHeader from '@/components/layout/page-header'
 import siteConfig from '@/lib/site-config'
 
 export interface SimplePageLayoutProps {
@@ -10,7 +10,7 @@ export interface SimplePageLayoutProps {
   greeting?: string
 }
 
-export default function SimplePageLayout({ children, title, greeting }: SimplePageLayoutProps) {
+export default function PageTemplate({ children, title, greeting }: SimplePageLayoutProps) {
   return (
     <VStack as="article" separator={<StackSeparator />} w="full">
       <PageHeader.Root>

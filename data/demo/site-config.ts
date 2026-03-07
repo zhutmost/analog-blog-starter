@@ -1,6 +1,6 @@
 import { IconBrandWindows, IconCommand, IconMarkdown, IconNote, IconTag } from '@tabler/icons-react'
 
-import HomepageSectionContents from '@/components/homepage/sections'
+import HomepageSectionContents from '@/components/features/home/sections'
 import timelineNews from '@/data/news/timeline-news'
 import type { SiteConfig } from '@/lib/site-config'
 import type { DeepPartial } from '@/lib/utils'

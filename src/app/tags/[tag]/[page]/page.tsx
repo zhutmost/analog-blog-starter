@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 import slugify from 'slug'
 
-import { PostCardList } from '@/components/post/post-card'
-import SimplePageLayout from '@/layouts/simple-page-layout'
+import { PostCardList } from '@/components/features/post/post-card'
 import { postsByTag } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
+import PageTemplate from '@/templates/page-template'
 
 export async function generateStaticParams(): Promise<{ tag: string; page: string }[]> {
   return Object.keys(postsByTag).flatMap((tag) => {
@@ -44,8 +44,8 @@ export default async function Page(props: PageProps<'/tags/[tag]/[page]'>) {
   }
 
   return (
-    <SimplePageLayout title={`Tag - ${tag}`} greeting={siteConfig.pages.greetings.archive}>
+    <PageTemplate title={`Tag - ${tag}`} greeting={siteConfig.pages.greetings.archive}>
       <PostCardList currentPage={currentPage} allPosts={postsByTag[tag]} />
-    </SimplePageLayout>
+    </PageTemplate>
   )
 }

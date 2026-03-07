@@ -1,9 +1,9 @@
 import { deepmerge } from 'deepmerge-ts'
 
-import type { AnalyticsConfig } from '@/components/analytics'
-import type { HomepageSectionProps } from '@/components/homepage/sections/home-section'
-import type { GiscusCommentProps } from '@/components/post/comment/giscus-comment'
-import type { CreativeCommonsLicenseChoices } from '@/components/post/post-license'
+import type { AnalyticsConfig } from '@/components/features/analytics'
+import type { GiscusCommentProps } from '@/components/features/comment/giscus-comment'
+import type { HomepageSectionProps } from '@/components/features/home/sections/home-section'
+import type { CreativeCommonsLicenseChoices } from '@/components/features/post/post-license'
 import userConfig from '@/data/site-config'
 
 export interface SiteConfig {
@@ -26,12 +26,12 @@ export interface SiteConfig {
   pagination: number
 
   homepage: {
-    // An array of greetings displayed on the homepage.
+    // An array of greetings displayed on the home.
     greetings?: string[]
-    // GitHub username for the GitHub calendar on the homepage. (Example: 'zhutmost')
+    // GitHub username for the GitHub calendar on the home. (Example: 'zhutmost')
     // Leave it blank to disable the GitHub calendar. (Default: null)
     githubCalendar?: string
-    // Sections displayed on the homepage. You can refer to /data/demo/site-config.ts as an example.
+    // Sections displayed on the home. You can refer to /data/demo/site-config.ts as an example.
     sections?: HomepageSectionProps<unknown>[]
   }
 
@@ -61,7 +61,7 @@ export interface SiteConfig {
       about: string
       // Greetings for 'All Posts' (/archive & /category/... & /tags/...) pages.
       archive: string
-      // Greetings for the 'Popular Tags' section on the homepage.
+      // Greetings for the 'Popular Tags' section on the home.
       tags: string
       // Greetings for 'Our Team'(/team) page.
       team: string

@@ -8,10 +8,10 @@ import {
   VStack,
 } from '@chakra-ui/react'
 
-import SmartImage from '@/components/smart-image'
-import { Link } from '@/components/smart-link'
+import SmartImage from '@/components/common/smart-image'
+import { Link } from '@/components/common/smart-link'
 
-export default function AuthorLittleCard({
+export default function AuthorCard({
   name,
   avatar,
   href,

@@ -1,8 +1,8 @@
 import { Box, Separator, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react'
 import type { Metadata } from 'next'
 
-import PageHeader from '@/components/page-header'
-import PostTag from '@/components/post/post-tag'
+import PostTag from '@/components/features/post/post-tag'
+import PageHeader from '@/components/layout/page-header'
 import { postsByTag } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 

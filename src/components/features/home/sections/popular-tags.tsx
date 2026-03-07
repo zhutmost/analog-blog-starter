@@ -3,7 +3,7 @@ import { Button, Text, Wrap } from '@chakra-ui/react'
 import { type Icon, IconTag } from '@tabler/icons-react'
 import slugify from 'slug'
 
-import SmartLink from '@/components/smart-link'
+import SmartLink from '@/components/common/smart-link'
 import { postsByTag } from '@/lib/coco'
 
 export interface HomepageSectionPopularTagsProps {

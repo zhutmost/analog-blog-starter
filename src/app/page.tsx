@@ -1,10 +1,10 @@
 import { Box, Text, VStack } from '@chakra-ui/react'
 
-import GithubCalendar from '@/components/homepage/github-calendar'
-import HomeHeader from '@/components/homepage/home-header'
-import { HomepageSection } from '@/components/homepage/sections'
-import { Link } from '@/components/smart-link'
-import Twemojify from '@/components/twemojify'
+import { Link } from '@/components/common/smart-link'
+import Twemojify from '@/components/common/twemojify'
+import GithubCalendar from '@/components/features/home/github-calendar'
+import HomeHeader from '@/components/features/home/home-header'
+import { HomepageSection } from '@/components/features/home/sections'
 import siteConfig from '@/lib/site-config'
 
 export default function HomePage() {

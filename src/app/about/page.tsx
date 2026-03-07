@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 
 import MdxProse from '@/components/mdx/mdx-prose'
-import AuthorLayout from '@/layouts/author-layout'
 import { authorDefault } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
+import AuthorTemplate from '@/templates/author-template'
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'About',
@@ -13,8 +13,8 @@ export const metadata: Metadata = generatePageMetadata({
 
 export default function Page() {
   return (
-    <AuthorLayout author={authorDefault}>
+    <AuthorTemplate author={authorDefault}>
       <MdxProse code={authorDefault.mdx} />
-    </AuthorLayout>
+    </AuthorTemplate>
   )
 }

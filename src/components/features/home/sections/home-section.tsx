@@ -2,8 +2,8 @@ import type * as React from 'react'
 import { Flex, Heading, HStack, Icon, Text, VStack } from '@chakra-ui/react'
 import { IconArrowRight } from '@tabler/icons-react'
 
-import { Link } from '@/components/smart-link'
-import Twemojify from '@/components/twemojify'
+import { Link } from '@/components/common/smart-link'
+import Twemojify from '@/components/common/twemojify'
 
 export interface HomepageSectionProps<T> {
   href: string

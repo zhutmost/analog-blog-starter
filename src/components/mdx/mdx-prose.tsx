@@ -2,6 +2,7 @@ import { Box, Em, Kbd, Table } from '@chakra-ui/react'
 import { MDXContent } from '@content-collections/mdx/react'
 import type { MDXComponents } from 'mdx/types'
 
+import TimelineNews from '@/components/common/timeline'
 import GfmAlert from '@/components/mdx/gfm-alert'
 import { H1, H2, H3, H4 } from '@/components/mdx/heading'
 import { Li, Ol, Ul } from '@/components/mdx/list'
@@ -9,7 +10,6 @@ import MdxImage from '@/components/mdx/mdx-image'
 import MdxLink from '@/components/mdx/mdx-link'
 import CodeHighlightBlock from '@/components/mdx/shiki-highlight'
 import { Code, P, Strong } from '@/components/mdx/text'
-import TimelineNews from '@/components/timeline'
 import { Blockquote } from '@/components/ui/blockquote'
 
 const components: MDXComponents = {

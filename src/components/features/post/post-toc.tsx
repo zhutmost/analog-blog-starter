@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Box, Span } from '@chakra-ui/react'
 import type { TocItem } from 'remark-flexible-toc'
 
-import SmartLink from '@/components/smart-link'
+import SmartLink from '@/components/common/smart-link'
 
 function useActiveItem(itemIds: string[]) {
   const [activeId, setActiveId] = React.useState(null as string | null)

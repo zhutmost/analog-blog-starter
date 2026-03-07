@@ -1,7 +1,7 @@
 import type * as React from 'react'
 import { Text, VStack } from '@chakra-ui/react'
 
-import SmartImage from '@/components/smart-image'
+import SmartImage from '@/components/common/smart-image'
 
 export default function MdxImage({
   src,

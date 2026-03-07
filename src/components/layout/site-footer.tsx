@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 
-import { Link } from '@/components/smart-link'
-import SocialIcon from '@/components/social-icon'
+import { Link } from '@/components/common/smart-link'
+import SocialIcon from '@/components/common/social-icon'
 import siteConfig from '@/lib/site-config'
 
 function SiteFooter() {

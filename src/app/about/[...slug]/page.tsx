@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import MdxProse from '@/components/mdx/mdx-prose'
-import AuthorLayout from '@/layouts/author-layout'
 import { allAuthorsNonDefault } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
+import AuthorTemplate from '@/templates/author-template'
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
   return allAuthorsNonDefault.map((author) => ({ slug: author.slug.split('/') }))
@@ -34,8 +34,8 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   }
 
   return (
-    <AuthorLayout author={author}>
+    <AuthorTemplate author={author}>
       <MdxProse code={author.mdx} />
-    </AuthorLayout>
+    </AuthorTemplate>
   )
 }

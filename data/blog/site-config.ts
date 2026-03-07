@@ -1,7 +1,7 @@
+import HomepageSectionContents from '@/components/features/home/sections'
 import type { SiteConfig } from '@/lib/site-config'
 import type { DeepPartial } from '@/lib/utils'
 
-import HomepageSectionContents from '../../src/components/homepage/sections'
 import timelineNews2025 from '../blog/news/timeline-news-2025'
 import timelineNews2026 from '../blog/news/timeline-news-2026'
 

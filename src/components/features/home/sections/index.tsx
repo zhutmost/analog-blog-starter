@@ -1,6 +1,6 @@
 import type * as React from 'react'
 
-import TimelineNews, { type TimelineNewsProps } from '@/components/timeline'
+import TimelineNews, { type TimelineNewsProps } from '@/components/common/timeline'
 
 import HomepageSectionPopularTags from './popular-tags'
 import HomepageSectionRecentPosts from './recent-posts'

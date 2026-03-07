@@ -5,11 +5,11 @@ import type { Metadata } from 'next'
 import NextLink from 'next/link'
 import { notFound } from 'next/navigation'
 
-import SocialIcon from '@/components/social-icon'
-import SimplePageLayout from '@/layouts/simple-page-layout'
+import SocialIcon from '@/components/common/social-icon'
 import { type Author, allAuthorsNonDefault, sortAuthors } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
+import PageTemplate from '@/templates/page-template'
 
 function AuthorCard({ author }: { author: Author }) {
   const { name, avatar, bio, affiliation, icons, slug } = author
@@ -76,7 +76,7 @@ export default function Page() {
   }, {})
 
   return (
-    <SimplePageLayout title={'Our Team'} greeting={siteConfig.pages.greetings.team}>
+    <PageTemplate title={'Our Team'} greeting={siteConfig.pages.greetings.team}>
       <VStack w="full">
         {Object.entries(allAuthorsGrouped).map(([group, authors]) => (
           <VStack key={group} alignItems="start" w="full" pb={6}>
@@ -93,6 +93,6 @@ export default function Page() {
           </VStack>
         ))}
       </VStack>
-    </SimplePageLayout>
+    </PageTemplate>
   )
 }

@@ -22,12 +22,12 @@ These objects are then used by Next.js to generate the HTML pages.
 
 Analog uses the following content collections:
 
-| Content        | Source Path                 | Target Route    | Layout Template                  |
-|----------------|-----------------------------|-----------------|----------------------------------|
-| Blog Posts     | `/data/posts/[slug].mdx`    | `/post/[slug]`  | `/src/layouts/post-layout.tsx`   |
-| Default Author | `/data/authors/default.mdx` | `/about`        | `/src/layouts/author-layout.tsx` |
-| Authors        | `/data/authors/[slug].mdx`  | `/about/[slug]` | `/src/layouts/author-layout.tsx` |
-| General Pages  | `/data/pages/[slug].mdx`    | `/[slug]`       | `/src/layouts/page-layout.tsx`   |
+| Content        | Source Path                 | Target Route    | Layout Template                      |
+|----------------|-----------------------------|-----------------|--------------------------------------|
+| Blog Posts     | `/data/posts/[slug].mdx`    | `/post/[slug]`  | `/src/templates/post-template.tsx`   |
+| Default Author | `/data/authors/default.mdx` | `/about`        | `/src/templates/author-template.tsx` |
+| Authors        | `/data/authors/[slug].mdx`  | `/about/[slug]` | `/src/templates/author-template.tsx` |
+| General Pages  | `/data/pages/[slug].mdx`    | `/[slug]`       | `/src/templates/page-template.tsx`   |
 
 For example, if you create a MDX file `/data/posts/sub/path/hello-world.mdx`, it will be available at `https://base.url/post/sub/path/hello-world`.
 

@@ -2,7 +2,7 @@ import type * as React from 'react'
 import { Heading, type HeadingProps, Icon, Span } from '@chakra-ui/react'
 import { IconLink } from '@tabler/icons-react'
 
-import SmartLink from '@/components/smart-link'
+import SmartLink from '@/components/common/smart-link'
 
 function HeadingLinkIcon({
   children,

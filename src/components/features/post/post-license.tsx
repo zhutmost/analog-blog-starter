@@ -19,7 +19,7 @@ import {
   type Icon as TablerIcon,
 } from '@tabler/icons-react'
 
-import SmartLink, { Link } from '@/components/smart-link'
+import SmartLink, { Link } from '@/components/common/smart-link'
 import type { Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 

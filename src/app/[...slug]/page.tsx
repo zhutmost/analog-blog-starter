@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import MdxProse from '@/components/mdx/mdx-prose'
-import SimplePageLayout from '@/layouts/simple-page-layout'
 import { allPages, type Page as PageType } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
+import PageTemplate from '@/templates/page-template'
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
   return allPages.map((page) => ({ slug: page.slug.split('/') }))
@@ -34,8 +34,8 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   }
 
   return (
-    <SimplePageLayout title={page.title} greeting={page.greeting}>
+    <PageTemplate title={page.title} greeting={page.greeting}>
       <MdxProse code={page.mdx} />
-    </SimplePageLayout>
+    </PageTemplate>
   )
 }
