@@ -10,7 +10,7 @@ export const dynamic = 'force-static'
 
 export default function sitemap(): Sitemap {
   const homeRoute: SitemapSingleFile = {
-    url: new URL(siteConfig.siteUrl).href,
+    url: siteConfig.siteUrl.href,
     lastModified: new Date().toISOString(),
     priority: 1,
     changeFrequency: 'monthly',

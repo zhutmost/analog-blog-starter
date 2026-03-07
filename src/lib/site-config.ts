@@ -7,10 +7,10 @@ import type { CreativeCommonsLicenseChoices } from '@/components/post/post-licen
 import userConfig from '@/data/site-config'
 
 export interface SiteConfig {
-  // The URL of your site, without a trailing slash.
+  // The URL of your site.
   // Note that it should include the protocol (https://) and the subdirectory if applicable.
   // For example, 'https://example.com' or 'https://example.com/blog'.
-  siteUrl: string
+  siteUrl: URL
   // The root path of your site (only needed when the site is at a subdirectory).
   // For example, if your site is at 'https://example.com/blog', set it to '/blog'.
   // Leave it blank to use the environment variable `BASE_PATH`.
@@ -111,7 +111,7 @@ export interface SiteConfig {
 
 // Default site config. You can override it in the user config (/data/site-config.ts).
 export const defaultSiteConfig: SiteConfig = {
-  siteUrl: 'https://example.com',
+  siteUrl: new URL('https://example.com'),
   siteRoot: process.env.BASE_PATH ?? undefined,
   siteTitle: 'Example Site',
   description: 'This is an example site',
@@ -157,8 +157,6 @@ export const defaultSiteConfig: SiteConfig = {
 const siteConfig: SiteConfig = (() => {
   // Merge default config with user config
   const c: SiteConfig = deepmerge(defaultSiteConfig, userConfig) as SiteConfig
-
-  c.siteUrl = new URL(c.siteUrl).href
 
   // Set default values for Open Graph and Twitter SEO
   c.seo.openGraph = {

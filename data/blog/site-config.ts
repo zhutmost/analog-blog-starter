@@ -6,7 +6,7 @@ import timelineNews2025 from '../blog/news/timeline-news-2025'
 import timelineNews2026 from '../blog/news/timeline-news-2026'
 
 const userConfig: DeepPartial<SiteConfig> = {
-  siteUrl: 'https://zhutmost.com',
+  siteUrl: new URL('https://zhutmost.com'),
   siteTitle: "Haozhe's Blog",
   description:
     "This is Haozhe Zhu (@zhutmost)'s personal blog. I write about my research, thoughts, and life.",

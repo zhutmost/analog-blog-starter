@@ -13,7 +13,7 @@ import siteConfig from '@/lib/site-config'
 import '@/styles/twemoji.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.siteUrl),
+  metadataBase: siteConfig.siteUrl,
   title: {
     default: siteConfig.siteTitle,
     template: `%s | ${siteConfig.siteTitle}`,
@@ -24,14 +24,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteConfig.seo.openGraph?.title,
     description: siteConfig.seo.openGraph?.description,
-    url: new URL(siteConfig.siteUrl),
+    url: siteConfig.siteUrl,
     siteName: siteConfig.seo.openGraph?.siteName,
     images: siteConfig.seo.openGraph?.images,
     locale: siteConfig.seo.openGraph?.locale,
     type: 'website',
   },
   alternates: {
-    canonical: new URL(siteConfig.siteUrl),
+    canonical: siteConfig.siteUrl,
     types: {
       'application/rss+xml': new URL('rss.xml', siteConfig.siteUrl),
     },
