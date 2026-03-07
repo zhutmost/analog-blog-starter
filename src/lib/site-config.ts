@@ -11,10 +11,6 @@ export interface SiteConfig {
   // Note that it should include the protocol (https://) and the subdirectory if applicable.
   // For example, 'https://example.com' or 'https://example.com/blog'.
   siteUrl: URL
-  // The root path of your site (only needed when the site is at a subdirectory).
-  // For example, if your site is at 'https://example.com/blog', set it to '/blog'.
-  // Leave it blank to use the environment variable `BASE_PATH`.
-  siteRoot?: string
   // The title of your site, such as "John's Blog".
   siteTitle: string
   // A short description used for SEO and social media.
@@ -57,6 +53,7 @@ export interface SiteConfig {
 
   pages: {
     // Whether to have a team page. (Default: true)
+    // Note that the team page is generated only when there are at least one non-default author.
     team: boolean
     // Set the greetings (displayed under the page header) for different pages.
     greetings: {
@@ -112,7 +109,6 @@ export interface SiteConfig {
 // Default site config. You can override it in the user config (/data/site-config.ts).
 export const defaultSiteConfig: SiteConfig = {
   siteUrl: new URL('https://example.com'),
-  siteRoot: process.env.BASE_PATH ?? undefined,
   siteTitle: 'Example Site',
   description: 'This is an example site',
   locale: 'en-US',

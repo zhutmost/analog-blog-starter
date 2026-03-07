@@ -7,7 +7,7 @@ import siteConfig from '@/lib/site-config'
 export default function SmartImage({ src, alt, htmlHeight, htmlWidth, ...rest }: ChakraImageProps) {
   const imgPath =
     typeof src === 'string' && !/https?:\/\//.test(src)
-      ? path.join(siteConfig.siteRoot ?? '', src)
+      ? path.join(siteConfig.siteUrl.pathname ?? '', src)
       : (src as string)
 
   const imgWidth = typeof htmlWidth === 'string' ? parseInt(htmlWidth, 10) : htmlWidth

@@ -13,7 +13,10 @@ import siteConfig from '@/lib/site-config'
 
 function AuthorCard({ author }: { author: Author }) {
   const { name, avatar, bio, affiliation, icons, slug } = author
-  const avatarSrc: string = path.join(siteConfig.siteRoot ?? '', avatar ?? '/avatar-default.jpg')
+  const avatarSrc: string = path.join(
+    siteConfig.siteUrl.pathname ?? '',
+    avatar ?? '/avatar-default.jpg'
+  )
 
   return (
     <VStack pt={10} gapY={5}>

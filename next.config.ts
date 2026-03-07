@@ -1,9 +1,11 @@
 import { withContentCollections } from '@content-collections/next'
 import type { NextConfig } from 'next'
 
+import siteConfig from '@/lib/site-config'
+
 const output = process.env.STATIC_EXPORT ? 'export' : undefined
 const unoptimized = process.env.STATIC_EXPORT ? true : undefined
-const basePath = process.env.BASE_PATH ?? undefined
+const basePath = siteConfig.siteUrl.pathname !== '/' ? siteConfig.siteUrl.pathname : undefined
 
 const nextConfig: NextConfig = {
   output,
@@ -24,4 +26,7 @@ const nextConfig: NextConfig = {
 
 const plugins = [withContentCollections]
 
-export default plugins.reduce((acc, next) => next(acc), nextConfig)
+export default plugins.reduce(
+  (config: NextConfig | Promise<NextConfig>, plugin) => plugin(config),
+  nextConfig
+)

@@ -28,7 +28,10 @@ export interface AuthorLayoutProps {
 
 function AuthorSidebar({ author }: { author: Author }) {
   const { name, avatar, bio, affiliation, icons } = author
-  const avatarSrc: string = path.join(siteConfig.siteRoot ?? '', avatar ?? '/avatar-default.jpg')
+  const avatarSrc: string = path.join(
+    siteConfig.siteUrl.pathname ?? '',
+    avatar ?? '/avatar-default.jpg'
+  )
 
   return (
     <VStack gapY={5}>

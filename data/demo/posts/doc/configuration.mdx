@@ -30,21 +30,10 @@ The metadata of the site will be used in the meta tags of the website and may be
 #### Site URL - `siteUrl`
 
 ```yaml
-siteUrl: 'https://example.com',
+siteUrl: new URL('https://example.com'),
 ```
 
 The `siteUrl` field is the URL of your website. It must start with `https://` or `http://`. If your site is hosted on a subdirectory, you should add the subdirectory path to the URL, such as `https://example.com/blog`.
-
-#### Site Root - `siteRoot`
-
-```yaml
-siteRoot: '/',
-```
-
-The `siteRoot` field is the root path of your website. If your site is hosted on a subdirectory, you should add the subdirectory path to the URL, such as `/blog`. This field is used to generate the correct path for assets, so you may find broken post banners or avatars if it is not set correctly.
-
-By default, it is set to the environment variable `BASE_PATH` in the build process.
-When deploying to GitHub Pages, the `BASE_PATH` is set to the repository name by the built-in Action.
 
 #### Site Title - `siteTitle`
 
