@@ -35,6 +35,8 @@ siteUrl: new URL('https://example.com'),
 
 The `siteUrl` field is the URL of your website. It must start with `https://` or `http://`. If your site is hosted on a subdirectory, you should add the subdirectory path to the URL, such as `https://example.com/blog`.
 
+Note that if your site is hosted on a subdirectory, you also need to set the environment variable `BASE_PATH` to the subdirectory path, such as `/blog`. This is required by Next.js to ensure that the routing works correctly.
+
 #### Site Title - `siteTitle`
 
 ```yaml
