@@ -16,7 +16,7 @@ export default function HomeHeader() {
       letterSpacing="tight"
       color="fg/80"
     >
-      Hello! I am&nbsp;
+      Hello! I&nbsp;am{' '}
       <Link
         href={'/about'}
         bgGradient="to-r"
