@@ -71,7 +71,7 @@ function SiteHeader() {
           align="center"
           justify="space-between"
         >
-          <NextLink href="/public">
+          <NextLink href="/">
             <HStack spaceX={3}>
               {siteConfig.header.logo && (
                 <Image

@@ -168,7 +168,7 @@ function PostEmptyList() {
           </EmptyState.Description>
         </VStack>
         <Button asChild>
-          <NextLink href="/public">Back to Home</NextLink>
+          <NextLink href="/">Back to Home</NextLink>
         </Button>
       </EmptyState.Content>
     </EmptyState.Root>
