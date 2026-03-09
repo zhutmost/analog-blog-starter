@@ -4,6 +4,7 @@ import {
   Badge,
   Box,
   Button,
+  Image as ChakraImage,
   EmptyState,
   Flex,
   Heading,
@@ -24,7 +25,7 @@ import { IconArrowRight, IconWritingSign } from '@tabler/icons-react'
 import NextLink from 'next/link'
 import slugify from 'slug'
 
-import SmartImage from '@/components/common/smart-image'
+import NextImageWithBasePath from '@/components/common/next-image-with-base-path'
 import SmartLink, { Link } from '@/components/common/smart-link'
 import Twemojify from '@/components/common/twemojify'
 import AuthorCard from '@/components/features/post/author-card'
@@ -48,12 +49,9 @@ export default function PostCard({ post }: { post: Post }) {
       {banner && (
         <AspectRatio ratio={{ base: 5 / 2, lg: 1 }} w={{ base: 'full', lg: '20rem' }}>
           <LinkBox w="full">
-            <SmartImage
-              src={banner}
-              alt={`Cover image of post: ${title}`}
-              rounded="md"
-              bgColor="bg.muted"
-            />
+            <ChakraImage asChild rounded="md" bgColor="bg.muted">
+              <NextImageWithBasePath src={banner} alt={`Cover image of post: ${title}`} fill />
+            </ChakraImage>
             <LinkOverlay asChild>
               <SmartLink href={`/post/${slug}`} aria-label={`Read more: ${title}`} />
             </LinkOverlay>
