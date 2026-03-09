@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Image as ChakraImage,
   HStack,
   LinkBox,
   LinkOverlay,
@@ -8,7 +9,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 
-import SmartImage from '@/components/common/smart-image'
+import NextImageWithBasePath from '@/components/common/next-image-with-base-path'
 import { Link } from '@/components/common/smart-link'
 
 export default function AuthorCard({
@@ -27,12 +28,9 @@ export default function AuthorCard({
       <HStack gap={4}>
         <Avatar.Root>
           <Avatar.Fallback name={name} />
-          <SmartImage
-            src={avatar}
-            alt={`Avatar of ${name}`}
-            objectFit="cover"
-            borderRadius="full"
-          />
+          <ChakraImage asChild objectFit="cover" borderRadius="full">
+            <NextImageWithBasePath src={avatar} alt={`Avatar of ${name}`} fill />
+          </ChakraImage>
         </Avatar.Root>
         <VStack gap="0" align="start">
           <LinkOverlay asChild>

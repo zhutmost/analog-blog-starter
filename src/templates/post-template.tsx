@@ -3,6 +3,7 @@ import {
   AspectRatio,
   Bleed,
   Box,
+  Image as ChakraImage,
   GridItem,
   Heading,
   Separator,
@@ -13,7 +14,7 @@ import {
   Wrap,
 } from '@chakra-ui/react'
 
-import SmartImage from '@/components/common/smart-image'
+import NextImageWithBasePath from '@/components/common/next-image-with-base-path'
 import { Link } from '@/components/common/smart-link'
 import PostComment from '@/components/features/comment/post-comment'
 import AuthorCard from '@/components/features/post/author-card'
@@ -147,7 +148,9 @@ function PostHeader({ content }: { content: Post }) {
           mb={{ base: 5, lg: 10 }}
         >
           <AspectRatio ratio={5 / 2} w="full">
-            <SmartImage src={banner} alt={`Cover image of post: ${title}`} bgColor="bg.muted" />
+            <ChakraImage asChild bgColor="bg.muted">
+              <NextImageWithBasePath src={banner} alt={`Cover image of post: ${title}`} fill />
+            </ChakraImage>
           </AspectRatio>
         </Bleed>
       )}

@@ -1,7 +1,7 @@
 import type * as React from 'react'
-import { Text, VStack } from '@chakra-ui/react'
+import { Image as ChakraImage, Text, VStack } from '@chakra-ui/react'
 
-import SmartImage from '@/components/common/smart-image'
+import NextImageWithBasePath from '@/components/common/next-image-with-base-path'
 
 export default function MdxImage({
   src,
@@ -9,22 +9,24 @@ export default function MdxImage({
   title,
   width,
   height,
-  ...rest
 }: React.ImgHTMLAttributes<HTMLImageElement>) {
   if (!src) return null
 
   const imgTitle = title ?? alt ?? ''
 
+  const imgWidth = typeof width === 'string' ? parseInt(width, 10) : width
+  const imgHeight = typeof height === 'string' ? parseInt(height, 10) : height
+
   return (
     <VStack as="figure" my="1.625em">
-      <SmartImage
-        src={src as string}
-        alt={alt ?? 'image'}
-        rounded="lg"
-        htmlHeight={height}
-        htmlWidth={width}
-        {...rest}
-      />
+      <ChakraImage asChild rounded="lg">
+        <NextImageWithBasePath
+          src={src as string}
+          alt={alt ?? 'image'}
+          width={imgWidth}
+          height={imgHeight}
+        />
+      </ChakraImage>
       {imgTitle && (
         <Text fontSize="sm" color="fg.muted">
           {imgTitle}
