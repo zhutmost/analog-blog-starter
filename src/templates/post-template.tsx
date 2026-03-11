@@ -149,7 +149,12 @@ function PostHeader({ content }: { content: Post }) {
         >
           <AspectRatio ratio={5 / 2} w="full">
             <ChakraImage asChild bgColor="bg.muted">
-              <NextImageWithBasePath src={banner} alt={`Cover image of post: ${title}`} fill />
+              <NextImageWithBasePath
+                src={banner}
+                alt={`Cover image of post: ${title}`}
+                fill
+                preload
+              />
             </ChakraImage>
           </AspectRatio>
         </Bleed>
