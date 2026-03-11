@@ -23,7 +23,7 @@ import { z } from 'zod'
 
 import rehypeAssetCopy, { assetSourceRedirect } from '@/coco/rehype-asset-copy'
 import rehypeCodeLanguageStats from '@/coco/rehype-code-language-stats'
-import { rehypeGithubAlertsOptions } from '@/coco/rehype-gfm-alert'
+import { gfmAlertBuild } from '@/coco/rehype-gfm-alert'
 import { assertSlugUnique, getDataUpdate } from '@/coco/utils'
 
 const USER_DATA_DIR: string = process.env.USER_DATA_DIR ?? 'data/demo'
@@ -55,7 +55,7 @@ async function commonTransform(
       {
         remarkPlugins: [remarkGfm, remarkMath, [remarkFlexibleToc, { tocRef: toc }]],
         rehypePlugins: [
-          [rehypeGithubAlerts, rehypeGithubAlertsOptions],
+          [rehypeGithubAlerts, { build: gfmAlertBuild }],
           rehypeKatex,
           [rehypePreLanguage, 'language'],
           rehypeMdxCodeProps,
