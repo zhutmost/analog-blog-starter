@@ -10,5 +10,5 @@ export function joinUrlPath(...parts: (string | undefined)[]): string {
     .map((p) => p.replace(/^\/+|\/+$/g, ''))
     .filter((s) => s.length > 0)
 
-  return segments.length ? '/' + segments.join('/') : '/'
+  return segments.length ? `/${segments.join('/')}` : '/'
 }
