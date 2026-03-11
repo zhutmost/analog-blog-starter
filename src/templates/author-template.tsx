@@ -1,4 +1,3 @@
-import * as path from 'node:path'
 import type * as React from 'react'
 import {
   Avatar,
@@ -20,6 +19,7 @@ import SocialIcon from '@/components/common/social-icon'
 import PageHeader from '@/components/layout/page-header'
 import type { Author } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
+import { joinUrlPath } from '@/lib/utils'
 
 export interface AuthorLayoutProps {
   children: React.ReactNode
@@ -28,8 +28,8 @@ export interface AuthorLayoutProps {
 
 function AuthorSidebar({ author }: { author: Author }) {
   const { name, avatar, bio, affiliation, icons } = author
-  const avatarSrc: string = path.join(
-    siteConfig.siteUrl.pathname ?? '',
+  const avatarSrc: string = joinUrlPath(
+    siteConfig.siteUrl.pathname,
     avatar ?? '/avatar-default.jpg'
   )
 
