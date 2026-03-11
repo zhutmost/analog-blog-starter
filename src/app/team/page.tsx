@@ -1,4 +1,3 @@
-import * as path from 'node:path'
 import { Avatar, Heading, Icon, Link, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react'
 import { IconMapPinFilled } from '@tabler/icons-react'
 import type { Metadata } from 'next'
@@ -9,12 +8,13 @@ import SocialIcon from '@/components/common/social-icon'
 import { type Author, allAuthorsNonDefault, sortAuthors } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
+import { joinUrlPath } from '@/lib/utils'
 import PageTemplate from '@/templates/page-template'
 
 function AuthorCard({ author }: { author: Author }) {
   const { name, avatar, bio, affiliation, icons, slug } = author
-  const avatarSrc: string = path.join(
-    siteConfig.siteUrl.pathname ?? '',
+  const avatarSrc: string = joinUrlPath(
+    siteConfig.siteUrl.pathname,
     avatar ?? '/avatar-default.jpg'
   )
 
