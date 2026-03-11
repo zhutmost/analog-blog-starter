@@ -6,12 +6,9 @@ export type DeepPartial<T> = T extends object
 
 export function joinUrlPath(...parts: (string | undefined)[]): string {
   const segments = parts
-    .filter((p): p is string => p != null && p !== '')
+    .filter((p): p is string => p != null)
     .map((p) => p.replace(/^\/+|\/+$/g, ''))
+    .filter((s) => s.length > 0)
 
-  if (segments.length === 0) {
-    return '/'
-  }
-
-  return '/' + segments.join('/')
+  return segments.length ? '/' + segments.join('/') : '/'
 }
