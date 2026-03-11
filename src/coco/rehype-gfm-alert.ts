@@ -1,9 +1,6 @@
-import type {
-  DefaultBuildType as rehypeGithubAlertsBuildType,
-  IOptions as rehypeGithubAlertsOptionsType,
-} from 'rehype-github-alerts'
+import type { DefaultBuildType as RehypeGithubAlertsBuildType } from 'rehype-github-alerts'
 
-const gfmAlertBuild: rehypeGithubAlertsBuildType = (alertOptions, originalChildren) => {
+export const gfmAlertBuild: RehypeGithubAlertsBuildType = (alertOptions, originalChildren) => {
   return {
     type: 'element',
     tagName: 'GithubMarkdownAlert',
@@ -13,9 +10,4 @@ const gfmAlertBuild: rehypeGithubAlertsBuildType = (alertOptions, originalChildr
     },
     children: [...originalChildren],
   }
-}
-
-// The option type (IOptions) must have an `alerts` array, so we set it to Partial<T>.
-export const rehypeGithubAlertsOptions: Partial<rehypeGithubAlertsOptionsType> = {
-  build: gfmAlertBuild,
 }
