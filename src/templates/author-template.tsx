@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { IconMapPinFilled } from '@tabler/icons-react'
 
+import NextImageWithBasePath from '@/components/common/next-image-with-base-path'
 import SocialIcon from '@/components/common/social-icon'
 import PageHeader from '@/components/layout/page-header'
 import type { Author } from '@/lib/coco'
@@ -37,7 +38,9 @@ function AuthorSidebar({ author }: { author: Author }) {
     <VStack gapY={5}>
       <Avatar.Root w="48" h="48">
         <Avatar.Fallback name={name} />
-        <Avatar.Image src={avatarSrc} alt={`Avatar of ${name}`} />
+        <Avatar.Image asChild>
+          <NextImageWithBasePath src={avatarSrc} alt={`Avatar of ${name}`} fill preload />
+        </Avatar.Image>
       </Avatar.Root>
       <Heading as="h3" size="2xl" fontWeight="bold" letterSpacing="tight" color="fg">
         {name}
