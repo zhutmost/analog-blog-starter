@@ -1,15 +1,25 @@
-import { Avatar, Heading, Icon, Link, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import {
+  Avatar,
+  Heading,
+  Icon,
+  Link,
+  StackSeparator,
+  Text,
+  VStack,
+  Wrap,
+  WrapItem,
+} from '@chakra-ui/react'
 import { IconMapPinFilled } from '@tabler/icons-react'
 import type { Metadata } from 'next'
 import NextLink from 'next/link'
 import { notFound } from 'next/navigation'
 
 import SocialIcon from '@/components/common/social-icon'
+import PageHeader from '@/components/layout/page-header'
 import { type Author, allAuthorsNonDefault, sortAuthors } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
 import { joinUrlPath } from '@/lib/utils'
-import PageTemplate from '@/templates/page-template'
 
 function AuthorCard({ author }: { author: Author }) {
   const { name, avatar, bio, affiliation, icons, slug } = author
@@ -76,8 +86,13 @@ export default function Page() {
   }, {})
 
   return (
-    <PageTemplate title={'Our Team'} greeting={siteConfig.pages.greetings.team}>
-      <VStack w="full">
+    <VStack separator={<StackSeparator />} w="full">
+      <PageHeader.Root>
+        <PageHeader.Title>Our Team</PageHeader.Title>
+        <PageHeader.Description>{siteConfig.pages.greetings.team}</PageHeader.Description>
+      </PageHeader.Root>
+
+      <VStack w="full" mt={8}>
         {Object.entries(allAuthorsGrouped).map(([group, authors]) => (
           <VStack key={group} alignItems="start" w="full" pb={6}>
             <Heading as="h2" size={{ base: '3xl', lg: '4xl' }} color="fg" fontWeight="bold">
@@ -93,6 +108,6 @@ export default function Page() {
           </VStack>
         ))}
       </VStack>
-    </PageTemplate>
+    </VStack>
   )
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import MdxProse from '@/components/mdx/mdx-prose'
 import { allPages, type Page as PageType } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import PageTemplate from '@/templates/page-template'
@@ -33,9 +32,5 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     return notFound()
   }
 
-  return (
-    <PageTemplate title={page.title} greeting={page.greeting}>
-      <MdxProse code={page.mdx} />
-    </PageTemplate>
-  )
+  return <PageTemplate page={page} />
 }

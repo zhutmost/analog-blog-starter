@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import MdxProse from '@/components/mdx/mdx-prose'
 import { allPosts, type Post } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 import PostTemplate from '@/templates/post-template'
@@ -78,9 +77,5 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   //     {/*  dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}*/}
   //     {/*/>*/}
 
-  return (
-    <PostTemplate content={postCurr} postNext={postNext} postPrev={postPrev}>
-      <MdxProse code={postCurr.mdx} />
-    </PostTemplate>
-  )
+  return <PostTemplate post={postCurr} postNext={postNext} postPrev={postPrev} />
 }

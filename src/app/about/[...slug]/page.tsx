@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import MdxProse from '@/components/mdx/mdx-prose'
 import { allAuthorsNonDefault } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import AuthorTemplate from '@/templates/author-template'
@@ -33,9 +32,5 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     return notFound()
   }
 
-  return (
-    <AuthorTemplate author={author}>
-      <MdxProse code={author.mdx} />
-    </AuthorTemplate>
-  )
+  return <AuthorTemplate author={author} />
 }

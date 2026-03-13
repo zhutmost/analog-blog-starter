@@ -1,11 +1,12 @@
+import { Box, StackSeparator, VStack } from '@chakra-ui/react'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { PostCardList } from '@/components/features/post/post-card'
+import PageHeader from '@/components/layout/page-header'
 import { allPosts } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
-import PageTemplate from '@/templates/page-template'
 
 export async function generateStaticParams(): Promise<{ page: string }[]> {
   const totalPages = Math.ceil(allPosts.length / siteConfig.pagination)
@@ -26,8 +27,15 @@ export default async function Page(props: PageProps<'/archive/[page]'>) {
   }
 
   return (
-    <PageTemplate title="All Posts" greeting={siteConfig.pages.greetings.archive}>
-      <PostCardList currentPage={currentPage} allPosts={allPosts} />
-    </PageTemplate>
+    <VStack separator={<StackSeparator />} w="full">
+      <PageHeader.Root>
+        <PageHeader.Title>All Posts</PageHeader.Title>
+        <PageHeader.Description>{siteConfig.pages.greetings.archive}</PageHeader.Description>
+      </PageHeader.Root>
+
+      <Box w="full" mt={8}>
+        <PostCardList currentPage={currentPage} allPosts={allPosts} />
+      </Box>
+    </VStack>
   )
 }

@@ -1,12 +1,13 @@
+import { Box, StackSeparator, VStack } from '@chakra-ui/react'
 import type { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 import slugify from 'slug'
 
 import { PostCardList } from '@/components/features/post/post-card'
+import PageHeader from '@/components/layout/page-header'
 import { postsByCategory } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import siteConfig from '@/lib/site-config'
-import PageTemplate from '@/templates/page-template'
 
 export async function generateStaticParams(): Promise<{ category: string; page: string }[]> {
   return Object.keys(postsByCategory).flatMap((category) => {
@@ -44,8 +45,15 @@ export default async function Page(props: PageProps<'/category/[category]/[page]
   }
 
   return (
-    <PageTemplate title={`Category - ${category}`} greeting={siteConfig.pages.greetings.archive}>
-      <PostCardList currentPage={currentPage} allPosts={postsByCategory[category]} />
-    </PageTemplate>
+    <VStack separator={<StackSeparator />} w="full">
+      <PageHeader.Root>
+        <PageHeader.Title>{`Category - ${category}`}</PageHeader.Title>
+        <PageHeader.Description>{siteConfig.pages.greetings.archive}</PageHeader.Description>
+      </PageHeader.Root>
+
+      <Box w="full" mt={8}>
+        <PostCardList currentPage={currentPage} allPosts={postsByCategory[category]} />
+      </Box>
+    </VStack>
   )
 }
