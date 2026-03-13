@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 
-import MdxProse from '@/components/mdx/mdx-prose'
 import { authorDefault } from '@/lib/coco'
 import generatePageMetadata from '@/lib/page-metadata'
 import AuthorTemplate from '@/templates/author-template'
@@ -12,9 +11,5 @@ export const metadata: Metadata = generatePageMetadata({
 })
 
 export default function Page() {
-  return (
-    <AuthorTemplate author={authorDefault}>
-      <MdxProse code={authorDefault.mdx} />
-    </AuthorTemplate>
-  )
+  return <AuthorTemplate author={authorDefault} />
 }

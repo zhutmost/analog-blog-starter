@@ -13,4 +13,4 @@ allPosts.forEach((post) => {
   postsByCategory[post.category].push(post)
 })
 
-export { postsByTag, postsByCategory }
+export { postsByCategory, postsByTag }

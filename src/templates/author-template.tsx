@@ -1,4 +1,3 @@
-import type * as React from 'react'
 import {
   Avatar,
   Box,
@@ -18,12 +17,12 @@ import { IconMapPinFilled } from '@tabler/icons-react'
 import NextImageWithBasePath from '@/components/common/next-image-with-base-path'
 import SocialIcon from '@/components/common/social-icon'
 import PageHeader from '@/components/layout/page-header'
+import MdxProse from '@/components/mdx/mdx-prose'
 import type { Author } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
 import { joinUrlPath } from '@/lib/utils'
 
-export interface AuthorLayoutProps {
-  children: React.ReactNode
+export interface AuthorTemplateProps {
   author: Author
 }
 
@@ -35,7 +34,7 @@ function AuthorSidebar({ author }: { author: Author }) {
   )
 
   return (
-    <VStack gapY={5}>
+    <VStack gapY={{ base: 4, lg: 6 }} pb={4}>
       <Avatar.Root w="48" h="48">
         <Avatar.Fallback name={name} />
         <Avatar.Image asChild>
@@ -77,7 +76,7 @@ function AuthorSidebar({ author }: { author: Author }) {
   )
 }
 
-function AuthorTemplate({ children, author }: AuthorLayoutProps) {
+function AuthorTemplate({ author }: AuthorTemplateProps) {
   const title: string = author.slug === 'default' ? 'About' : `About - ${author.name}`
 
   return (
@@ -88,10 +87,12 @@ function AuthorTemplate({ children, author }: AuthorLayoutProps) {
       </PageHeader.Root>
 
       <SimpleGrid columns={{ base: 1, lg: 3 }} gap={4} mt={8}>
-        <GridItem colSpan={{ base: 1, lg: 1 }}>
+        <GridItem>
           <AuthorSidebar author={author} />
         </GridItem>
-        <GridItem colSpan={{ base: 1, lg: 2 }}>{children}</GridItem>
+        <GridItem colSpan={{ base: 1, lg: 2 }}>
+          <MdxProse code={author.mdx} />
+        </GridItem>
       </SimpleGrid>
     </VStack>
   )

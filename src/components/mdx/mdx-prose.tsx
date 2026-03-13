@@ -48,11 +48,11 @@ export default function MdxProse({ code }: { code: string }) {
   return (
     <Box
       w="full"
-      css={{
-        '& > :first-child': {
-          mt: '0',
-        },
-      }}
+      // css={{
+      //   '& > :first-child': {
+      //     mt: '0',
+      //   },
+      // }}
     >
       <MDXContent code={code} components={components} />
     </Box>

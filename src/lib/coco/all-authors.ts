@@ -20,6 +20,7 @@ export function sortAuthors(
 }
 
 const allAuthorsSorted: Author[] = sortAuthors(allAuthors)
+
 export { allAuthorsSorted as allAuthors }
 
 export const authorDefault: Author =
