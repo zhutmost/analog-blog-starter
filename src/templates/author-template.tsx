@@ -20,7 +20,6 @@ import PageHeader from '@/components/layout/page-header'
 import MdxProse from '@/components/mdx/mdx-prose'
 import type { Author } from '@/lib/coco'
 import siteConfig from '@/lib/site-config'
-import { joinUrlPath } from '@/lib/utils'
 
 export interface AuthorTemplateProps {
   author: Author
@@ -28,10 +27,7 @@ export interface AuthorTemplateProps {
 
 function AuthorSidebar({ author }: { author: Author }) {
   const { name, avatar, bio, affiliation, icons } = author
-  const avatarSrc: string = joinUrlPath(
-    siteConfig.siteUrl.pathname,
-    avatar ?? '/avatar-default.jpg'
-  )
+  const avatarSrc: string = avatar ?? '/avatar-default.jpg'
 
   return (
     <VStack gapY={{ base: 4, lg: 6 }} pb={4}>
