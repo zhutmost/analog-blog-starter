@@ -5,26 +5,25 @@ import Twemojify from '@/components/common/twemojify'
 
 function PageHeaderRoot(props: StackProps) {
   return (
-    <VStack
-      w="full"
-      alignSelf="start"
-      alignItems="start"
-      mt={{ base: 8, md: 12 }}
-      mb={{ base: 6, md: 10 }}
-      {...props}
-    />
+    <VStack w="full" align="start" mt={{ base: 8, md: 12 }} mb={{ base: 6, md: 10 }} {...props} />
   )
 }
 
-function PageHeaderTitle({ children }: { children: React.ReactNode }) {
+function PageHeaderTitle({ children }: React.PropsWithChildren) {
   return (
-    <Heading as="h1" color="fg" size="5xl" fontWeight="bold" letterSpacing="tight">
+    <Heading
+      as="h1"
+      color="fg"
+      size={{ base: '4xl', md: '5xl' }}
+      fontWeight="bold"
+      letterSpacing="tight"
+    >
       <Twemojify>{children}</Twemojify>
     </Heading>
   )
 }
 
-function PageHeaderDescription({ children }: { children: React.ReactNode }) {
+function PageHeaderDescription({ children }: React.PropsWithChildren) {
   return (
     <Text fontSize="lg" color="fg.muted" fontWeight="light">
       <Twemojify>{children}</Twemojify>

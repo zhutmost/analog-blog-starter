@@ -1,39 +1,25 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Center, HStack, Stack, Text } from '@chakra-ui/react'
 
 import { Link } from '@/components/common/smart-link'
 import SocialIcon from '@/components/common/social-icon'
 import siteConfig from '@/lib/site-config'
 
-function SiteFooter() {
-  const thisYear = new Date().getFullYear()
+const thisYear = new Date().getFullYear()
 
+function SiteFooter() {
   return (
-    <Flex as="footer" w="full" mt="auto" justifyContent="center">
-      <Flex
+    <Center as="footer" w="full">
+      <Stack
         maxW="5xl"
         w="full"
-        direction={{ base: 'column', md: 'row' }}
+        direction={{ base: 'column-reverse', md: 'row' }}
         align={{ base: 'center', md: 'flex-start' }}
         justify="space-between"
         px={{ base: 6, xl: 0 }}
-        py={5}
-        gap={3}
+        py={4}
       >
-        {/* Social icons (at top when mobile) */}
-        <Flex order={{ base: 1, md: 2 }} gap={1} justifyContent="center">
-          {siteConfig.footer.icons &&
-            Object.entries(siteConfig.footer.icons).map(([key, item]) => (
-              <SocialIcon key={key} name={key} icon={item.icon} href={item.href} />
-            ))}
-        </Flex>
-
         {/* License info (at bottom when mobile) */}
-        <Box
-          textAlign={{ base: 'center', md: 'left' }}
-          order={{ base: 2, md: 1 }}
-          color="fg.muted"
-          fontSize="sm"
-        >
+        <Box textAlign={{ base: 'center', md: 'left' }} color="fg.muted" fontSize="sm">
           <Text>
             Copyright &copy; {thisYear}{' '}
             <Link href="/about" variant="plain" color="fg.muted">
@@ -60,8 +46,16 @@ function SiteFooter() {
             </Text>
           )}
         </Box>
-      </Flex>
-    </Flex>
+
+        {/* Social icons (at top when mobile) */}
+        <HStack>
+          {siteConfig.footer.icons &&
+            Object.entries(siteConfig.footer.icons).map(([key, { icon, href }]) => (
+              <SocialIcon key={key} name={key} icon={icon} href={href} />
+            ))}
+        </HStack>
+      </Stack>
+    </Center>
   )
 }
 

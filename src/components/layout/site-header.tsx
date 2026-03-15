@@ -4,6 +4,7 @@ import * as React from 'react'
 import {
   Box,
   Button,
+  Center,
   Collapsible,
   Flex,
   Heading,
@@ -33,7 +34,7 @@ function SiteHeader() {
       // Close the menu if the user scrolls while it's open
       if (open) onClose()
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
@@ -41,6 +42,7 @@ function SiteHeader() {
 
   // Click outside to close the menu
   React.useEffect(() => {
+    if (!open) return
     const handleClickOutside = (event: MouseEvent) => {
       if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
         onClose()
@@ -50,29 +52,24 @@ function SiteHeader() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [onClose])
+  }, [open, onClose])
+
+  const headerHeight = '14'
 
   return (
     <Box as="header" position="sticky" top={0} w="full" zIndex="sticky" ref={headerRef}>
-      <Box
-        h="56px"
+      {/* Header bar */}
+      <Center
+        h={headerHeight}
         bgColor="bg"
         boxShadow={isScrolled ? 'md' : 'none'}
         borderBottom="sm"
         borderColor="border"
         transition="all 0.3s ease"
       >
-        <Flex
-          maxW="5xl"
-          w="full"
-          h="full"
-          mx="auto"
-          px={{ base: 6, xl: 0 }}
-          align="center"
-          justify="space-between"
-        >
+        <Flex maxW="5xl" w="full" px={{ base: 6, xl: 0 }} align="center" justify="space-between">
           <NextLink href="/">
-            <HStack spaceX={3}>
+            <HStack>
               {siteConfig.header.logo && (
                 <Image
                   src={siteConfig.header.logo}
@@ -82,7 +79,7 @@ function SiteHeader() {
                 />
               )}
               {siteConfig.header.title && (
-                <Heading as="div" size="xl" fontWeight="bold">
+                <Heading as="span" fontWeight="bold">
                   {siteConfig.header.title}
                 </Heading>
               )}
@@ -91,15 +88,9 @@ function SiteHeader() {
 
           <HStack>
             {/* Desktop Navigation Links */}
-            {siteConfig.header.menu.map((link) => (
-              <Button
-                key={link.name}
-                asChild
-                display={{ base: 'none', md: 'flex' }}
-                variant="ghost"
-                size="sm"
-              >
-                <SmartLink href={link.href}>{link.name}</SmartLink>
+            {siteConfig.header.menu.map(({ name, href }) => (
+              <Button key={name} asChild hideBelow="md" variant="ghost" size="sm">
+                <SmartLink href={href}>{name}</SmartLink>
               </Button>
             ))}
 
@@ -109,7 +100,7 @@ function SiteHeader() {
 
             {/* Hamburger button for mobile navigation menu */}
             <IconButton
-              display={{ base: 'flex', md: 'none' }}
+              hideFrom="md"
               aria-label="Navigation menu"
               onClick={onToggle}
               variant="ghost"
@@ -118,26 +109,25 @@ function SiteHeader() {
             </IconButton>
           </HStack>
         </Flex>
-      </Box>
+      </Center>
 
       {/* Mobile collapsible menu */}
       <Collapsible.Root open={open}>
         <Collapsible.Content
+          top={headerHeight}
           boxShadow="md"
           roundedBottom="lg"
           position="fixed"
           w="full"
           zIndex="dropdown"
         >
-          <Box bgColor={'bg'} py={3} px={4}>
-            <VStack spaceY={3}>
-              {siteConfig.header.menu.map((link) => (
-                <Button key={link.name} asChild variant="ghost" w="full" onClick={onClose}>
-                  <SmartLink href={link.href}>{link.name}</SmartLink>
-                </Button>
-              ))}
-            </VStack>
-          </Box>
+          <VStack bgColor={'bg'} p={2}>
+            {siteConfig.header.menu.map(({ name, href }) => (
+              <Button key={name} asChild variant="ghost" w="full" onClick={onClose}>
+                <SmartLink href={href}>{name}</SmartLink>
+              </Button>
+            ))}
+          </VStack>
         </Collapsible.Content>
       </Collapsible.Root>
     </Box>
