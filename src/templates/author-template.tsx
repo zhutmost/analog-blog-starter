@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Image as ChakraImage,
   Flex,
   GridItem,
   Heading,
@@ -33,9 +34,9 @@ function AuthorSidebar({ author }: { author: Author }) {
     <VStack gapY={{ base: 4, lg: 6 }} pb={4}>
       <Avatar.Root w="48" h="48">
         <Avatar.Fallback name={name} />
-        <Avatar.Image asChild>
-          <NextImageWithBasePath src={avatarSrc} alt={`Avatar of ${name}`} fill preload />
-        </Avatar.Image>
+        <ChakraImage asChild rounded="full">
+          <NextImageWithBasePath src={avatarSrc} alt={`Avatar of ${name}`} preload fill />
+        </ChakraImage>
       </Avatar.Root>
       <Heading as="h3" size="2xl" fontWeight="bold" letterSpacing="tight" color="fg">
         {name}
