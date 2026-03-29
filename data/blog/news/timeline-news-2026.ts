@@ -3,7 +3,8 @@ import type { TimelineNewsList } from '@/components/common/timeline'
 const timelineNews2026: TimelineNewsList = [
   {
     date: new Date('2026-03-28'),
-    title: 'Our paper “GauTracer” is accepted by ISCA 2026. Looking forward to sharing our work at Raleigh, North Carolina!',
+    title:
+      'Our paper “GauTracer” is accepted by ISCA 2026. Looking forward to sharing our work at Raleigh, North Carolina!',
     description:
       'GauTracer fully integrates Gaussian primitives into the GPU Ray Tracer pipeline, eliminating software shader invocations.',
   },
