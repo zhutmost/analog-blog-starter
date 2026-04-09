@@ -10,7 +10,7 @@
         "@next/third-parties": "16.2.3",
         "next": "16.2.3",
         "react": "19.2.4",
-        "react-dom": "19.2.4",
+        "react-dom": "19.2.5",
       },
       "devDependencies": {
         "@biomejs/biome": "^2.4.10",
@@ -879,7 +879,7 @@
 
     "react-activity-calendar": ["react-activity-calendar@3.1.1", "https://registry.npmmirror.com/react-activity-calendar/-/react-activity-calendar-3.1.1.tgz", { "dependencies": { "@floating-ui/react": "^0.27.12", "date-fns": "^4.1.0" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-YvHNS4anlW3Xy0fxOU2ZTWrJkOt0ALxX8IfgDRg6jr/vgYsbh//4djf2c7CPhYNROh+5oYZzR0EJaPbrFUj2tA=="],
 
-    "react-dom": ["react-dom@19.2.4", "https://registry.npmmirror.com/react-dom/-/react-dom-19.2.4.tgz", { "dependencies": { "scheduler": "^0.27.0" }, "peerDependencies": { "react": "^19.2.4" } }, "sha512-AXJdLo8kgMbimY95O2aKQqsz2iWi9jMgKJhRBAxECE4IFxfcazB2LmzloIoibJI3C12IlY20+KFaLv+71bUJeQ=="],
+    "react-dom": ["react-dom@19.2.5", "", { "dependencies": { "scheduler": "^0.27.0" }, "peerDependencies": { "react": "^19.2.5" } }, "sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag=="],
 
     "react-github-calendar": ["react-github-calendar@5.0.5", "https://registry.npmmirror.com/react-github-calendar/-/react-github-calendar-5.0.5.tgz", { "dependencies": { "react-activity-calendar": "^3.0.6" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-eZ7aSI626nY9ni/lr7ygkqD6c2adPKRb+hr7yzF+BKxKs0VBJ2FPC0EFRthk8mQQSlfzTJrbUA/uR2/ZOIAs0Q=="],
 
