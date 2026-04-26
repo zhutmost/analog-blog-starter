@@ -2,10 +2,8 @@ import fs from 'node:fs'
 
 const tsConfig = {
   compilerOptions: {
-    baseUrl: './',
-    composite: true,
     target: 'ESNext',
-    lib: ['dom', 'dom.iterable', 'esnext'],
+    lib: ['dom', 'esnext'],
     allowJs: true,
     skipLibCheck: true,
     strict: true,
@@ -17,6 +15,7 @@ const tsConfig = {
     isolatedModules: true,
     jsx: 'react-jsx',
     incremental: true,
+    types: ['node'],
     plugins: [
       {
         name: 'next',
