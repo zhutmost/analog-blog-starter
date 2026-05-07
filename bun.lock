@@ -9,8 +9,8 @@
         "@emotion/react": "^11.14.0",
         "@next/third-parties": "16.2.4",
         "next": "16.2.4",
-        "react": "19.2.5",
-        "react-dom": "19.2.5",
+        "react": "19.2.6",
+        "react-dom": "19.2.6",
       },
       "devDependencies": {
         "@biomejs/biome": "^2.4.12",
@@ -877,11 +877,11 @@
 
     "proxy-memoize": ["proxy-memoize@3.0.1", "https://registry.npmmirror.com/proxy-memoize/-/proxy-memoize-3.0.1.tgz", { "dependencies": { "proxy-compare": "^3.0.0" } }, "sha512-VDdG/VYtOgdGkWJx7y0o7p+zArSf2383Isci8C+BP3YXgMYDoPd3cCBjw0JdWb6YBb9sFiOPbAADDVTPJnh+9g=="],
 
-    "react": ["react@19.2.5", "", {}, "sha512-llUJLzz1zTUBrskt2pwZgLq59AemifIftw4aB7JxOqf1HY2FDaGDxgwpAPVzHU1kdWabH7FauP4i1oEeer2WCA=="],
+    "react": ["react@19.2.6", "", {}, "sha512-sfWGGfavi0xr8Pg0sVsyHMAOziVYKgPLNrS7ig+ivMNb3wbCBw3KxtflsGBAwD3gYQlE/AEZsTLgToRrSCjb0Q=="],
 
     "react-activity-calendar": ["react-activity-calendar@3.1.2", "", { "dependencies": { "@floating-ui/react": "^0.27.19", "date-fns": "^4.1.0" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-tKJZ4aU+WVp4exBKmeji+umiElnvfiZc39Tq3c9SI9j+Qzplri5hIAedMjBRFMkwUSL7BrsG4gUx9n/o1EtMzQ=="],
 
-    "react-dom": ["react-dom@19.2.5", "", { "dependencies": { "scheduler": "^0.27.0" }, "peerDependencies": { "react": "^19.2.5" } }, "sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag=="],
+    "react-dom": ["react-dom@19.2.6", "", { "dependencies": { "scheduler": "^0.27.0" }, "peerDependencies": { "react": "^19.2.6" } }, "sha512-0prMI+hvBbPjsWnxDLxlCGyM8PN6UuWjEUCYmZhO67xIV9Xasa/r/vDnq+Xyq4Lo27g8QSbO5YzARu0D1Sps3g=="],
 
     "react-github-calendar": ["react-github-calendar@5.0.6", "", { "dependencies": { "react-activity-calendar": "^3.1.2" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-BXgk1blzmkXjzc3CJRtSxscNuL0y/pHHVihmY+H+8bak0Syg2G/7gCM4Ja6CzE5wtABDv6N97kKSufWqMazq/g=="],
 
