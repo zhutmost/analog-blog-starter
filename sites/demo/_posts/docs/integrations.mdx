@@ -1,6 +1,6 @@
 ---
 title: Analog User Guide - Integrations
-summary: Connect an Analog Starter site to Giscus comments, RSS readers, and other external services.
+summary: Connect an Analog Starter site to Giscus comments, Umami analytics, RSS readers, and other external services.
 authors:
   - name: Haozhe Zhu
     href: https://github.com/zhutmost
@@ -9,20 +9,23 @@ category: 💡 Documentation
 tags:
   - Analog Starter
   - Integrations
-  - Giscus
+  - Comment
+  - Analytics
   - RSS
+  - Giscus
+  - Umami
 cover: banner.jpg
 seo:
-  description: Learn how Analog Starter works with Giscus comments, RSS readers, and other external services.
+  description: Learn how Analog Starter works with Giscus comments, Umami analytics, RSS readers, and other external services.
 ---
 
-Analog Starter currently has two user-facing integration points: optional comments through Giscus and a built-in RSS feed.
+Analog Starter includes three user-facing integration points: optional comments through Giscus, optional analytics through Umami, and a built-in RSS feed.
 
-| Integration     | Status   | Account required    |
-| --------------- | -------- | ------------------- |
-| Giscus comments | Optional | Yes, through GitHub |
-| RSS feed        | Built in | No                  |
-| Analytics       | TBD      | —                   |
+| Integration     | Status   | External service required             |
+| --------------- | -------- | ------------------------------------- |
+| Giscus comments | Optional | GitHub Discussions                    |
+| Umami analytics | Optional | Umami Cloud or a self-hosted instance |
+| RSS feed        | Built in | No                                    |
 
 ## Giscus comments
 
@@ -60,6 +63,43 @@ To make it easier to find, add an RSS link to the footer as described in [Site C
 
 The feed URL can also be submitted to a feed directory or used by a separate email-subscription service.
 
-## Analytics
+## Umami analytics
 
-TBD.
+[Umami](https://umami.is) provides lightweight, privacy-focused web analytics. Analog loads the Umami tracker directly through Next.js, so no additional analytics package is required.
+
+Create a website in Umami and copy its **Website ID** into the `analytics` section of `site.config.ts`:
+
+```ts
+analytics: {
+  umami: {
+    websiteId: "00000000-0000-0000-0000-000000000000",
+  },
+},
+```
+
+Omitting `analytics.umami` disables analytics completely and prevents the tracker script from being loaded.
+
+By default, Analog:
+
+- loads the tracker from https://cloud.umami.is/script.js;
+- restricts tracking to the hostname defined by siteUrl;
+- respects the visitor's Do Not Track preference;
+- excludes URL hash fragments;
+- lets Umami follow client-side route changes automatically.
+
+The hostname restriction prevents local development and unrelated preview domains from contributing analytics events. Additional domains can be configured when preview deployments should also be tracked.
+
+A self-hosted Umami instance can provide its own script and API origin:
+
+```ts
+analytics: {
+  umami: {
+    websiteId: "00000000-0000-0000-0000-000000000000",
+    src: "https://analytics.example.com/script.js",
+    hostUrl: "https://analytics.example.com",
+    domains: ["example.com", "www.example.com"],
+  },
+},
+```
+
+The complete list of options is documented in [Site Configuration](/post/docs/site-configuration#analytics).
