@@ -45,7 +45,7 @@ export default async function UserpagePage(props: PageProps<"/[...slug]">) {
       </PageShell.Top>
 
       <PageShell.Body>
-        <PageShell.Content width="prose">
+        <PageShell.Content>
           <MdxProse code={userpage.content} />
 
           {userpage.comment && <CommentSystem />}
