@@ -21,10 +21,10 @@ const config: InputSiteConfig = {
     nav: [
       { label: "Home", href: "/" },
       { label: "Blog", href: "/posts" },
-      { label: "Tags", href: "/posts/tags" },
       { label: "News", href: "/news" },
       { label: "Publication", href: "/publication" },
-      { label: "About", href: "/about" },
+      { label: "Publication", href: "/team" },
+      { label: "About", href: "/author/haozhe-zhu" },
     ],
   },
   footer: {
