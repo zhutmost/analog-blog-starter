@@ -1,33 +1,73 @@
-import { withContentCollections } from '@content-collections/next'
-import type { NextConfig } from 'next'
+import { type NextConfig } from "next"
 
-// import siteConfig from '@/lib/site-config'
-// const basePath = siteConfig.siteUrl.pathname !== '/' ? siteConfig.siteUrl.pathname : undefined
-const basePath = process.env.BASE_PATH ?? undefined
+import { access } from "node:fs/promises"
+import path from "node:path"
 
-const output = process.env.STATIC_EXPORT ? 'export' : undefined
-const unoptimized = process.env.STATIC_EXPORT ? true : undefined
+import { withContentCollections } from "@content-collections/next"
 
-const nextConfig: NextConfig = {
-  output,
-  basePath,
+const siteDir = process.env.SITE_DIR ?? "sites/demo"
+
+const baseNextConfig: NextConfig = {
+  allowedDevOrigins: ["127.0.0.1"],
   images: {
-    unoptimized,
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'picsum.photos',
+        protocol: "https",
+        hostname: "github.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/**",
       },
     ],
   },
+  reactCompiler: true,
   experimental: {
-    optimizePackageImports: ['@chakra-ui/react'],
+    // TypeScript 7 does not provide the compiler API required by Next.js. Enable experimental.useTypeScriptCli in the
+    // Next.js config to use the TypeScript CLI as a workaround.
+    useTypeScriptCli: true,
+    // Use the Rust port instead of the Babel transform
+    turbopackRustReactCompiler: true,
   },
 }
 
-const plugins = [withContentCollections]
+async function loadSiteNextConfig(configPath: string): Promise<NextConfig> {
+  try {
+    await access(configPath)
+  } catch (error) {
+    if (error instanceof Error && "code" in error && error.code === "ENOENT") {
+      return {}
+    }
+    throw error
+  }
 
-export default plugins.reduce(
-  (config: NextConfig | Promise<NextConfig>, plugin) => plugin(config),
-  nextConfig
-)
+  const mod = await import(configPath)
+  return mod.default ?? {}
+}
+
+export default async function config(): Promise<NextConfig> {
+  const siteNextConfig = await loadSiteNextConfig(path.resolve(siteDir, "next.config.ts"))
+
+  const nextConfig: NextConfig = {
+    ...baseNextConfig,
+    ...siteNextConfig,
+
+    images: {
+      ...baseNextConfig.images,
+      ...siteNextConfig.images,
+      remotePatterns: [
+        ...(baseNextConfig.images?.remotePatterns ?? []),
+        ...(siteNextConfig.images?.remotePatterns ?? []),
+      ],
+    },
+
+    experimental: {
+      ...baseNextConfig.experimental,
+      ...siteNextConfig.experimental,
+    },
+  }
+
+  return withContentCollections(nextConfig)
+}

@@ -1,0 +1,239 @@
+---
+title: Analog User Guide - Site Configuration
+summary: Configure site identity, navigation, content defaults, comments, social sharing, and optional Next.js settings.
+authors:
+  - name: Haozhe Zhu
+    href: https://github.com/zhutmost
+datePublish: 2026-06-15
+category: 💡 Documentation
+tags:
+  - Analog Starter
+  - Configuration
+  - Next.js
+cover: banner.jpg
+seo:
+  description: A practical reference to the site.config.ts and optional next.config.ts files used by an Analog Starter site.
+---
+
+Site-wide settings live in `site.config.ts` inside the active site directory. They describe the site itself rather than an individual post or page.
+
+For the demo site:
+
+```text
+sites/demo/
+├── site.config.ts
+└── next.config.ts
+```
+
+The optional `next.config.ts` is only needed for Next.js-specific settings such as remote image hosts or redirects.
+
+## Basic configuration
+
+A minimal configuration contains four required fields:
+
+```ts title="sites/demo/site.config.ts"
+import { type InputSiteConfig } from "@/lib/site/schema"
+
+const config: InputSiteConfig = {
+  siteUrl: "https://example.com",
+  siteTitle: "Example Site",
+  description: "Notes, projects, and other updates.",
+  author: "Your Name",
+}
+
+export default config
+```
+
+| Field         | Required | Description                            |
+| ------------- | -------- | -------------------------------------- |
+| `siteUrl`     | Yes      | Production origin of the site          |
+| `siteTitle`   | Yes      | Name used by the site and its metadata |
+| `description` | Yes      | Default site description               |
+| `author`      | Yes      | Default site author                    |
+| `locale`      | No       | Site locale; defaults to `en-US`       |
+
+Use the final production origin for `siteUrl`. It is used when generating canonical URLs, social metadata, and the RSS feed.
+
+## Favicons
+
+Place favicon files under the site's `public` directory and reference them with public paths:
+
+```ts
+favicon: {
+  ico: "/favicon/favicon.ico",
+  svg: "/favicon/favicon.svg",
+  png96x96: "/favicon/favicon-96x96.png",
+  apple: "/favicon/apple-touch-icon.png",
+  manifest192x192: "/favicon/web-app-manifest-192x192.png",
+  manifest512x512: "/favicon/web-app-manifest-512x512.png",
+},
+```
+
+Only the files used by the site need to be listed. A favicon generator such as [RealFaviconGenerator](https://realfavicongenerator.net) can create the common formats and sizes.
+
+## Header and footer
+
+The header controls the site logo, displayed title, and primary navigation:
+
+```ts
+header: {
+  logo: "/favicon/favicon.svg",
+  title: "Example Site",
+  nav: [
+    { label: "Articles", href: "/posts" },
+    { label: "Tags", href: "/posts/tags" },
+    { label: "News", href: "/news" },
+    { label: "People", href: "/people" },
+    { label: "About", href: "/about" },
+  ],
+},
+```
+
+Both `logo` and `title` are optional. Navigation links may point to pages in the site or to external URLs.
+
+The footer can contain links with optional [Tabler Icons](https://tabler.io/icons):
+
+```ts
+footer: {
+  socialIcons: [
+    {
+      label: "GitHub",
+      href: "https://github.com/your-name",
+      icon: "IconBrandGithub",
+    },
+    {
+      label: "RSS Feed",
+      href: "/rss.xml",
+      icon: "IconRss",
+    },
+  ],
+},
+```
+
+Sites hosted in mainland China may also provide ICP and public-security registration information:
+
+```ts
+footer: {
+  beian: {
+    icp: {
+      code: "Example ICP record",
+    },
+    publicSecurity: {
+      code: "Example public security record",
+      href: "https://example.com",
+    },
+  },
+},
+```
+
+The `beian` section may be omitted when it is not applicable.
+
+## Content behavior
+
+The `content` section controls drafts, pagination, post ordering, and taxonomy aliases:
+
+```ts
+content: {
+  includeDraft: false,
+  post: {
+    pageSize: 10,
+    sortKey: "datePublish",
+    sortDirection: "desc",
+  },
+  category: {
+    aliases: {},
+  },
+  tag: {
+    aliases: {
+      Markdown: ["MDX"],
+    },
+  },
+},
+```
+
+Posts can be sorted by `datePublish`, `dateUpdate`, or `title` in ascending or descending order. The defaults are reverse publication order with ten posts per page.
+
+Aliases combine equivalent names under one category or tag. In the example above, posts tagged `MDX` are collected under the canonical `Markdown` tag.
+
+Keep `includeDraft` disabled for a normal production deployment. When enabled, content marked with `draft: true` is included in the generated site.
+
+## Page summaries
+
+Archive and taxonomy pages use default summaries. They can be replaced when the wording should match a particular site:
+
+```ts
+pageSummaries: {
+  archive: "All published articles, collected in one place.",
+  tags: "Explore articles by topic.",
+  category: "Browse articles filed under “{name}”.",
+  tag: "Browse articles tagged with “{name}”.",
+  author: "Browse articles written by {name}.",
+},
+```
+
+`{name}` is replaced with the current category, tag, or author name.
+
+## Comments
+
+Comments are disabled when no provider is configured. The current implementation supports [Giscus](https://giscus.app):
+
+```ts
+comment: {
+  provider: "giscus",
+  repo: "your-name/your-repository",
+  repoId: "R_example",
+  category: "Announcements",
+  categoryId: "DIC_example",
+},
+```
+
+Use the values generated by Giscus rather than writing the IDs manually. The external setup process is described in [Integrations](/post/docs/integrations).
+
+Posts enable comments by default and can opt out with `comment: false`. Pages and author profiles disable them by default and can opt in with `comment: true`.
+
+## Social sharing
+
+Default Open Graph and Twitter images are configured with `socialShare`:
+
+```ts
+socialShare: {
+  defaultImages: ["/social-images-default.png"],
+  twitterSite: "@your_name",
+},
+```
+
+Place local images in the site's `public` directory. `twitterSite` is optional and must begin with `@` when provided.
+
+Content-specific descriptions and post covers can override these defaults. The relationship between `summary` and `seo.description` is described in [Content Model](/post/docs/content-model).
+
+## Optional Next.js configuration
+
+A site may provide its own `next.config.ts`:
+
+```ts title="sites/demo/next.config.ts"
+import { type NextConfig } from "next"
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.example.com",
+        pathname: "/**",
+      },
+    ],
+  },
+}
+
+export default nextConfig
+```
+
+The file is merged with the shared project configuration. Most sites only need it when they use remote images or define redirects. Remove it when no additional Next.js option is required.
+
+See the [Next.js configuration reference](https://nextjs.org/docs/app/api-reference/config/next-config-js) and [remote image guide](https://nextjs.org/docs/app/getting-started/images#remote-images) for additional options.
+
+## Validation
+
+The configuration is checked when the site starts or builds. Missing required values, invalid URLs, and unsupported options are reported as configuration errors.
+
+Post dates, authors, categories, covers, and other content-specific fields belong in the corresponding content files and are covered in [Content Model](/post/docs/content-model).

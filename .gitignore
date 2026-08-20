@@ -12,8 +12,7 @@
 # ==============================================================================
 # Generated Files
 
-/tsconfig.json
-/public/_assets/
+/public/
 
 # ==============================================================================
 # Language & Build Tool - Content Collections
@@ -141,22 +140,6 @@ dist
 .yarn/unplugged
 .yarn/build-state.yml
 .yarn/install-state.gz
-.pnp.*
-
-# ==============================================================================
-# Language & Build Tool - Yarn
-
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-
-# if you are NOT using Zero-installs, then:
-# comment the following lines
-#!.yarn/cache
-
-# and uncomment the following lines
 .pnp.*
 
 # ==============================================================================

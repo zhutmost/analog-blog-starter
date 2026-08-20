@@ -1,78 +1,65 @@
 <div align="center" class="mb-2">
-  <h1>Analog: Another (Academic) Blog Starter</h1>
-  <p>An out-of-the-box feature-rich blog template with Next.js</p>
-  <p>
-    <a href="https://analog-demo.zhutmost.com">🔍 Preview</a> |
-    <a href="https://analog-demo.zhutmost.com/category/docs">📖 Documentation</a> |
-    <a href="https://github.com/zhutmost/analog-blog-starter/issues">🐞 Issues</a>
-  </p>
+  <h1>⚡ Next.js Web Development Starter ⚡</h1>
+  <p>A playground for building modern web applications with the latest practices.</p>
 </div>
 
-![Analog screenshot](img/cover.png)
+This is a modern, minimal Next.js starter template for building web applications with **Next.js**, **React** and **shadcn-ui**.
 
-**Analog** is easy to customize and reconfigure to suit your needs. It is perfect for individual blogs, especially **academic or technology blogs**.
+## ✨ Tech Stack
 
-**Live Preview**:
-- [Analog Demo](https://analog-demo.zhutmost.com) - Demo blog (i.e., Docs site) of the Analog Blog Starter.
-- [zhutmost.com](https://blog.zhutmost.com) - My personal blog.
+- **Next.js 16** with App Router
+- **React 19**
+- **TypeScript 7**
+- **Tailwind CSS 4**
+- **shadcn-ui** support for adding components quickly
+- **oxlint** & **oxfmt** for code linting and formatting
 
-Check out the documentation below to get started.
+## 🚀 Getting Started
 
-## 🚀 Quick Start
+### Develop Locally
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fzhutmost%2Fanalog-blog-starter&project-name=analog-blog&repository-name=analog-blog&demo-title=Analog%20Blog%20Demo&demo-description=Demo%20Blog%20(i.e.%2C%20Docs%20site)%20of%20the%20Analog%20Bolog%20Starter&demo-url=https%3A%2F%2Fanalog-demo.zhutmost.com&demo-image=https%3A%2F%2Fgithub.com%2Fzhutmost%2Fanalog-blog-starter%2Fraw%2Fmain%2Fimg%2Fcover.png)
+Install dependencies:
 
-Click it and follow its steps! You will get your own blog in minutes (with [Vercel](https://vercel.com)).
+```bash
+bun install
+```
 
-To deploy this blog on GitHub Pages or on your local computer, you can visit [Analog User Guide - Get Started](https://analog-demo.zhutmost.com/post/doc/get-started).
+Start the development server:
 
-## 🎁 Features
+```bash
+bun run dev
+```
 
-Analog includes plentiful search, comment, sharing and other plugins out of the box that makes your blog feature-rich and powerful.
+Open your browser and visit: http://localhost:3000
 
-- [**Fully Responsive Design**](#responsive-design)
-- [**Dark & Light Mode Switching**](#dark--light-mode)
-- [**Diverse Pages**](#diverse-pages)
+### Build for Production
 
-  Tags · Category · Team · About · News
-- [**Style-rich Writing**](https://analog-demo.zhutmost.com/post/test/markdown-style)
+Create a production build:
 
-  MDX (Markdown + JSX) · Katex (math support) · Shiki (code highlighting) · License
-- [**Comment System**](https://analog-demo.zhutmost.com/post/doc/comment)
+```bash
+bun run build
+```
 
-  Giscus
-- **Built-in Search**
+Start the production server:
 
-  KBar (support Cmd+K shortcuts, including pages & posts)
-- [**Analytics**](https://analog-demo.zhutmost.com/post/doc/analytics)
+```bash
+bun run start
+```
 
-  Umami · Google Analytics
-- **Other**
+### More Scripts
 
-  RSS · Sitemap · SEO (OpenGraph + Twitter Card)
-
-### Responsive Design
-
-Give your audiences best viewing experience with the mobile-friendly responsive layout.
-
-![Responsive Design](img/responsive-design.png)
-
-### Dark & Light Mode
-
-Make your blog more comfortable to read with the dark/light mode switching.
-
-![Dark & Light Modes](img/dark-mode.png)
-
-### Diverse Pages
-
-In addition to the blog posts, Analog provides various pages to enrich your blog.
-
-![Diverse Pages](img/pages.png)
+| Command                | Description                                |
+| :--------------------- | :----------------------------------------- |
+| `bun run dev`.         | Start the development server               |
+| `bun run build`        | Build the application for production       |
+| `bun run start`        | Start the production server                |
+| `bun run lint`         | Run lint checks with oxlint                |
+| `bun run lint:write`   | Fix auto-fixable lint issues with oxlint   |
+| `bun run format`       | Check code formatting with oxfmt           |
+| `bun run format:write` | Format code with oxfmt                     |
+| `bun run check`        | Run scripts `lint` && `format`             |
+| `bun run check:write`  | Run scripts `lint:write` && `format:write` |
 
 ## 🎉 Issues & Feature Requests
 
-If you find any bugs in my code or have any ideas to improve this, please feel free to open an [issue](https://github.com/zhutmost/analog-blog-starter/issues). I will be glad to join the discussion.
-
-## 💡 Inspiration
-
-This project is on the shoulder of giants. See [Tech Stack](https://analog-demo.zhutmost.com/post/doc/tech-stack) for more details.
+If you find any bugs in my code or have any ideas to improve this, please feel free to open an issue. I will be glad to join the discussion.

@@ -1,0 +1,76 @@
+title: People
+
+summary: >
+  A sample directory of current members and alumni.
+
+seo:
+  description: >
+    Explore a demo people directory showing how the starter presents members,
+    alumni, profiles, avatars, and external links.
+
+current:
+  "Ph.D.":
+    - name: Hermione Granger
+      startYear: 2022
+      github: example
+      research:
+        - Ancient runes
+        - Magical history
+
+    - name: Luna Lovegood
+      startYear: 2023
+      research:
+        - Mythical creatures
+        - Unexplained phenomena
+
+  "Master":
+    - name: Ginny Weasley
+      startYear: 2024
+      research:
+        - Modern magical history
+        - Cultural studies
+
+    - name: Draco Malfoy
+      startYear: 2025
+      research:
+        - Historical artifacts
+        - Institutional history
+
+  "Undergraduate Students & Internships":
+    - name: Ron Weasley
+      startYear: 2023
+      research:
+        - Wizarding chess
+        - Strategic games
+
+    - name: Seamus Finnigan
+      startYear: 2024
+      avatar: /people/seamus-finnigan.jpeg
+      research:
+        - Experimental charms
+        - Applied magic
+
+alumni:
+  "Ph.D.":
+    - name: Cedric Diggory
+      startYear: 2019
+      endYear: 2024
+      description: Now a lecturer at Example University.
+
+    - name: Fleur Delacour
+      startYear: 2020
+      endYear: 2025
+      description: Now a research fellow at Beauxbatons Academy.
+
+  "Master":
+    - name: Viktor Krum
+      startYear: 2021
+      endYear: 2024
+      description: Joined the Bulgarian National Quidditch programme.
+
+  "Undergraduate":
+    - name: Fred Weasley
+      startYear: 2020
+      endYear: 2024
+      description: Co-founded Weasleys' Wizard Wheezes.
+      github: example

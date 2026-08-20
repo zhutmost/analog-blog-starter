@@ -1,12 +1,12 @@
-import generateRssFeed from '@/lib/rss'
+import { generateRssFeed } from "@/lib/site/rss"
 
-export const dynamic = 'force-static'
+export const dynamic = "force-static"
 
-export async function GET() {
+export function GET(): Response {
   const feed = generateRssFeed()
   return new Response(feed.rss2(), {
     headers: {
-      'Content-Type': 'application/rss+xml',
+      "Content-Type": "application/rss+xml; charset=utf-8",
     },
   })
 }

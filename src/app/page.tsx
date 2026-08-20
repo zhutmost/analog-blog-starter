@@ -1,47 +1,80 @@
-import { Box, Text, VStack } from '@chakra-ui/react'
+import * as React from "react"
 
-import { Link } from '@/components/common/smart-link'
-import Twemojify from '@/components/common/twemojify'
-import GithubCalendar from '@/components/features/home/github-calendar'
-import HomeHeader from '@/components/features/home/home-header'
-import { HomepageSection } from '@/components/features/home/sections'
-import siteConfig from '@/lib/site-config'
+import { homeConfig } from "content-collections"
+
+import { HomeHero } from "@/components/home/home-hero"
+import { HomeSectionArticles } from "@/components/home/home-section-articles"
+import { HomeSectionNews } from "@/components/home/home-section-news"
+import { HomeSectionResearch } from "@/components/home/home-section-research"
+import { PageShell } from "@/components/pages/basic/page-shell"
+import { getPostMetaBySlug, newsConfig, postMetas } from "@/lib/content"
+import { siteConfig } from "@/lib/site/config"
 
 export default function HomePage() {
   return (
-    <VStack w="full" alignItems="start">
-      <HomeHeader />
+    <PageShell.Root className="max-w-5xl gap-20 lg:gap-20">
+      <HomeHero
+        greeting={homeConfig.hero.greeting}
+        name={homeConfig.hero.name ?? siteConfig.author}
+        introduction={homeConfig.content}
+        actions={homeConfig.hero.actions}
+      />
 
-      {siteConfig.homepage.greetings?.map((item, index) => (
-        <Text key={`greetings-${index.toString()}`} fontSize="lg">
-          <Twemojify size="lg">{item}</Twemojify>
-        </Text>
-      ))}
+      {homeConfig.sections.map((section) => {
+        switch (section.type) {
+          case "news":
+            const newsItems = section.items ?? newsConfig?.items ?? []
 
-      {siteConfig.homepage.githubCalendar && (
-        <Box py={4} spaceY={2} w="full">
-          <Text fontSize="lg">
-            I also go by&nbsp;
-            <Link
-              href={`https://github.com/${siteConfig.homepage.githubCalendar}`}
-              variant="plain"
-              color="brand"
-            >
-              @{siteConfig.homepage.githubCalendar}
-            </Link>
-            &nbsp;when coding. Catch me on GitHub!
-          </Text>
-          <GithubCalendar username={siteConfig.homepage.githubCalendar} />
-        </Box>
-      )}
+            return (
+              <HomeSectionNews
+                key={section.type}
+                title={section.title}
+                summary={section.summary}
+                href={section.href}
+                actionLabel={section.actionLabel}
+                items={newsItems.slice(0, section.limit)}
+              />
+            )
 
-      <Text fontSize="lg">
-        <Twemojify>Happy reading!&nbsp;🍻</Twemojify>
-      </Text>
+          case "research":
+            return (
+              <HomeSectionResearch
+                key={section.type}
+                title={section.title}
+                summary={section.summary}
+                href={section.href ?? null}
+                actionLabel={section.actionLabel}
+                areas={section.areas}
+              />
+            )
 
-      {siteConfig.homepage.sections?.map((sectionProps, index) => (
-        <HomepageSection key={`homepage-section-${index.toString()}`} {...sectionProps} />
-      ))}
-    </VStack>
+          case "posts":
+            const postsItems = section.items
+              ? section.items.map((slug) => {
+                  const post = getPostMetaBySlug(slug)
+                  if (!post) {
+                    throw new Error(
+                      `Unknown post "${slug}" referenced by the homepage posts section.`
+                    )
+                  }
+                  return post
+                })
+              : postMetas
+
+            return (
+              <HomeSectionArticles
+                key={section.type}
+                title={section.title}
+                summary={section.summary}
+                href={section.href}
+                actionLabel={section.actionLabel}
+                posts={postsItems.slice(0, section.limit)}
+              />
+            )
+          default:
+            return null
+        }
+      })}
+    </PageShell.Root>
   )
 }

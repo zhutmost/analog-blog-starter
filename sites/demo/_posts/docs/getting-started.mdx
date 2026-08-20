@@ -1,0 +1,214 @@
+---
+title: Analog User Guide - Getting Started
+summary: Deploy Analog Starter, run it locally, create a site directory, and publish your first post.
+authors:
+  - name: Haozhe Zhu
+    href: https://github.com/zhutmost
+datePublish: 2026-08-01
+category: 💡 Documentation
+tags:
+  - Analog Starter
+  - Getting Started
+  - Next.js
+cover: banner.jpg
+seo:
+  description: Learn how to deploy Analog Starter with Vercel, preview it locally, create a site directory, and publish a first post.
+---
+
+Analog Starter keeps the shared application under `src` and stores site-specific content, configuration, and assets under `sites`. The repository includes `sites/demo`, which is used by default and provides examples of every supported content type.
+
+This guide covers the shortest path from the repository to a deployed site. It also explains how to run the project locally when you are ready to replace the demo content.
+
+## Deploy with Vercel
+
+The quickest way to see the starter online is to deploy the demo site with [Vercel](https://vercel.com).
+
+### Start from the repository
+
+Open the repository README and click the **Deploy** button.
+
+![The Deploy button in the repository README](vercel-button.png "Start a Vercel deployment from the repository")
+
+Vercel may ask you to sign in and connect a GitHub account before continuing.
+
+### Create the project repository
+
+Choose the GitHub account that should own the new repository and enter a repository name.
+
+![Create a Git repository for the Vercel project](vercel-setup.png "Choose a GitHub account and repository name")
+
+Continue with the detected **Next.js** framework settings. The first deployment uses `sites/demo`, so no environment variable is required yet.
+
+### Open the deployment
+
+Vercel builds the project and assigns it a temporary `vercel.app` domain. When the deployment is ready, use **Visit** to open the site.
+
+![A completed Vercel deployment](vercel-deployed.png "Open the deployed site from the Vercel dashboard")
+
+Future pushes to the connected GitHub repository trigger new deployments automatically.
+
+## Run the project locally
+
+Local development is useful when replacing several files, previewing MDX, or checking a change before pushing it to GitHub.
+
+You will need:
+
+- [Git](https://git-scm.com) to clone and manage the repository;
+- [Bun](https://bun.sh) to install packages and run the project.
+
+On macOS, Bun can be installed with Homebrew:
+
+```bash
+brew install oven-sh/bun/bun
+```
+
+Instructions for other platforms are available in the [Bun installation guide](https://bun.sh/docs/installation).
+
+Clone the repository created during deployment:
+
+```bash
+git clone https://github.com/your-name/your-repository.git
+cd your-repository
+```
+
+Install the dependencies and start the development server:
+
+```bash
+bun install
+bun run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). Changes to most MDX and YAML content are reflected automatically while the server is running.
+
+## Create your site directory
+
+You can edit `sites/demo` directly, but copying it keeps the documentation and placeholder content available as a reference:
+
+```bash
+cp -R sites/demo sites/my-site
+```
+
+Create a `.env.local` file at the repository root:
+
+```dotenv title=".env.local"
+SITE_DIR=sites/my-site
+```
+
+Restart the development server after changing `SITE_DIR`.
+
+The copied directory contains:
+
+```text
+sites/my-site/
+├── _authors/
+├── _pages/
+├── _posts/
+├── public/
+├── home.mdx
+├── news.yml
+├── people.yml
+├── site.config.ts
+└── next.config.ts
+```
+
+Start by replacing the site configuration, homepage, example profiles, and posts. The `news.yml` and `people.yml` files are optional and may be removed when those pages are not needed.
+
+### Select the same directory on Vercel
+
+When the deployed site is stored outside `sites/demo`, open the Vercel project and go to **Settings → Environment Variables**. Add:
+
+```dotenv
+SITE_DIR=sites/my-site
+```
+
+![Set the site directory in Vercel](vercel-environment-variables.png "Add SITE_DIR to the Vercel project")
+
+Save the variable and redeploy the project. `SITE_DIR` is read during the build, so changing it always requires a new deployment.
+
+## Update the basic site information
+
+Open:
+
+```text
+sites/my-site/site.config.ts
+```
+
+At minimum, replace the URL, title, description, and author:
+
+```ts title="sites/my-site/site.config.ts"
+import { type InputSiteConfig } from "@/lib/site/schema"
+
+const config: InputSiteConfig = {
+  siteUrl: "https://example.com",
+  siteTitle: "Example Site",
+  description: "A short description of the site.",
+  author: "Your Name",
+}
+
+export default config
+```
+
+After Vercel assigns the final domain, use that origin for `siteUrl`. It is used when generating canonical URLs, social metadata, and the RSS feed.
+
+Navigation, favicons, post ordering, comments, and other site-wide options are covered in [Site Configuration](/post/docs/site-configuration).
+
+## Write your first post
+
+Create an MDX file under the active site's `_posts` directory:
+
+```text
+sites/my-site/_posts/hello-world.mdx
+```
+
+A minimal post contains a title, summary, publication date, and category:
+
+```mdx title="sites/my-site/_posts/hello-world.mdx"
+---
+title: Hello, World
+summary: My first post with Analog Starter.
+datePublish: 2026-08-21
+category: Notes
+---
+
+This is my first post.
+
+## A section
+
+Posts use ordinary Markdown syntax and may also include MDX components.
+```
+
+The post is available at:
+
+```text
+/post/hello-world
+```
+
+See [Content Model](/post/docs/content-model) for authors, tags, covers, drafts, pages, profiles, and other content types.
+
+## Optional project checks
+
+Before pushing a larger change, you can run the configured lint and formatting checks:
+
+```bash
+bun run check
+```
+
+Auto-fixable issues can be handled with:
+
+```bash
+bun run check:write
+```
+
+These checks are mainly useful when source code or configuration files have been edited.
+
+## Documentation
+
+The remaining guides cover each part of the starter in more detail:
+
+- [Site Configuration](/post/docs/site-configuration) — site identity, navigation, content defaults, comments, and social metadata;
+- [Content Model](/post/docs/content-model) — posts, pages, authors, homepage sections, news, and people;
+- [Customization](/post/docs/customization) — colors, fonts, rounded corners, and the overall visual style;
+- [Integrations](/post/docs/integrations) — Giscus comments, RSS, and other external services;
+- [Tech Stack](/post/docs/tech-stack) — the main frameworks and the reasons behind the current architecture.
+
+The articles under `_posts/test` provide rendered examples of Markdown syntax, images, tables of contents, and large tag collections.
