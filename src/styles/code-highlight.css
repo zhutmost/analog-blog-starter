@@ -1,0 +1,248 @@
+/*
+ * Shiki themes
+ *
+ * Applies to both highlighted inline code and fenced code blocks.
+ * Background colors are controlled by the typography components
+ * because rehype-pretty-code uses `keepBackground: false`.
+ */
+
+[data-slot="mdx-prose"] code[data-theme*=" "],
+[data-slot="mdx-prose"] code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+.dark [data-slot="mdx-prose"] code[data-theme*=" "],
+.dark [data-slot="mdx-prose"] code[data-theme*=" "] span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style);
+  font-weight: var(--shiki-dark-font-weight);
+  text-decoration: var(--shiki-dark-text-decoration);
+}
+
+/*
+ * Inline code
+ *
+ * Only applies when <code> is not a direct child of <pre>.
+ * This covers paragraphs, headings, links, lists and table cells
+ * without affecting fenced code blocks.
+ */
+
+[data-slot="mdx-prose"] :not(pre) > [data-slot="mdx-code"] {
+  border-radius: var(--radius-sm);
+  background-color: var(--muted);
+  padding: 0.2rem 0.3rem;
+
+  overflow-wrap: break-word;
+
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+/*
+ * Highlighted inline code
+ *
+ * Shiki controls token colors while the surrounding inline-code
+ * element keeps the standard muted background.
+ */
+
+[data-slot="mdx-prose"] :not(pre) > [data-slot="mdx-code"][data-theme*=" "] {
+  background-color: var(--muted);
+}
+
+/*
+ * Fenced code reset
+ *
+ * Keep this explicit as a defensive rule in case other typography
+ * styles are added later.
+ */
+
+[data-slot="mdx-code-block"] pre > [data-slot="mdx-code"] {
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+
+  overflow-wrap: normal;
+
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+ * Code block layout
+ */
+
+[data-slot="mdx-code-block"] pre {
+  margin: 0;
+  overflow-x: auto;
+  background: transparent;
+  padding-block: 1rem;
+
+  scrollbar-width: thin;
+}
+
+[data-slot="mdx-code-block"] pre > code {
+  display: grid;
+  width: max-content;
+  min-width: 100%;
+  background: transparent;
+}
+
+[data-slot="mdx-code-block"] [data-line] {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-height: 1.5rem;
+  padding-inline: 1rem;
+}
+
+/*
+ * Line-number and diff gutters
+ */
+
+[data-slot="mdx-code-block"] code[data-line-numbers] {
+  --code-gutter-width: 3rem;
+
+  counter-reset: line;
+}
+
+[data-slot="mdx-code-block"] code[data-line-numbers-max-digits="3"] {
+  --code-gutter-width: 3.5rem;
+}
+
+[data-slot="mdx-code-block"] code[data-line-numbers-max-digits="4"] {
+  --code-gutter-width: 4rem;
+}
+
+[data-slot="mdx-code-block"] code[data-line-numbers-max-digits="5"] {
+  --code-gutter-width: 4.5rem;
+}
+
+[data-slot="mdx-code-block"] code[data-line-numbers-max-digits="6"] {
+  --code-gutter-width: 5rem;
+}
+
+[data-slot="mdx-code-block"] pre.has-diff code {
+  --code-gutter-width: 3rem;
+}
+
+[data-slot="mdx-code-block"] :is(code[data-line-numbers], pre.has-diff code) > [data-line] {
+  padding-inline-start: calc(var(--code-gutter-width) + 1rem);
+}
+
+[data-slot="mdx-code-block"] :is(code[data-line-numbers], pre.has-diff code) > [data-line]::before {
+  position: absolute;
+  inset-inline-start: 0;
+
+  width: var(--code-gutter-width);
+  padding-inline-end: 0.75rem;
+
+  user-select: none;
+  text-align: end;
+
+  color: color-mix(in oklab, var(--muted-foreground) 65%, transparent);
+}
+
+/*
+ * Regular line numbers
+ */
+
+[data-slot="mdx-code-block"] code[data-line-numbers] > [data-line] {
+  counter-increment: line;
+}
+
+[data-slot="mdx-code-block"] code[data-line-numbers] > [data-line]::before {
+  content: counter(line);
+}
+
+/*
+ * Reserve the gutter for diff blocks without line numbers.
+ */
+
+[data-slot="mdx-code-block"] pre.has-diff code:not([data-line-numbers]) > [data-line]::before {
+  content: "";
+}
+
+/*
+ * Highlighted lines
+ *
+ * rehype-pretty-code:
+ *   [data-highlighted-line]
+ *
+ * transformerNotationHighlight:
+ *   .line.highlighted
+ */
+
+[data-slot="mdx-code-block"] :is([data-highlighted-line], [data-line].highlighted) {
+  background-color: color-mix(in oklab, var(--primary) 10%, transparent);
+
+  box-shadow: inset 2px 0 var(--primary);
+}
+
+/*
+ * Added diff lines
+ */
+
+[data-slot="mdx-code-block"] [data-line].diff.add {
+  background-color: color-mix(in oklab, rgb(34 197 94) 13%, transparent);
+
+  box-shadow: inset 2px 0 rgb(34 197 94);
+}
+
+[data-slot="mdx-code-block"] [data-line].diff.add::before {
+  content: "+";
+
+  color: rgb(22 163 74);
+  font-weight: 600;
+}
+
+/*
+ * Removed diff lines
+ */
+
+[data-slot="mdx-code-block"] [data-line].diff.remove {
+  background-color: color-mix(in oklab, rgb(239 68 68) 13%, transparent);
+
+  box-shadow: inset 2px 0 rgb(239 68 68);
+}
+
+[data-slot="mdx-code-block"] [data-line].diff.remove::before {
+  content: "-";
+
+  color: rgb(220 38 38);
+  font-weight: 600;
+}
+
+/*
+ * Highlighted words
+ *
+ * rehype-pretty-code:
+ *   [data-highlighted-chars]
+ *
+ * transformerNotationWordHighlight:
+ *   .highlighted-word
+ */
+
+[data-slot="mdx-code-block"] :is([data-highlighted-chars], .highlighted-word) {
+  margin-inline: -0.125rem;
+  border-radius: var(--radius-sm);
+  padding-inline: 0.125rem;
+
+  background-color: color-mix(in oklab, var(--primary) 16%, transparent);
+
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 25%, transparent);
+}
+
+/*
+ * Text selection
+ */
+
+[data-slot="mdx-code-block"] ::selection {
+  background-color: color-mix(in oklab, var(--primary) 30%, transparent);
+}

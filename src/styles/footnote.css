@@ -1,0 +1,129 @@
+/*
+ * Footnote section
+ */
+
+[data-slot="mdx-prose"] section[data-footnotes] {
+  margin-top: 3rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+/*
+ * The generated h2 remains visually hidden.
+ * It provides the accessible label referenced by
+ * aria-describedby="footnote-label".
+ */
+
+/*
+ * Reset the generic MdxOrderedList styles.
+ */
+
+[data-slot="mdx-prose"] section[data-footnotes] > ol {
+  margin: 0;
+  padding-inline-start: 1.5rem;
+
+  list-style-position: outside;
+  list-style-type: decimal;
+}
+
+/*
+ * Reset generic list-item spacing and typography.
+ */
+
+[data-slot="mdx-prose"] section[data-footnotes] > ol > li {
+  padding-block: 0.25rem;
+  padding-inline-start: 0.375rem;
+
+  scroll-margin-top: 5rem;
+
+  color: var(--muted-foreground);
+  line-height: 1.625;
+}
+
+[data-slot="mdx-prose"] section[data-footnotes] > ol > li + li {
+  margin-top: 0.625rem;
+}
+
+[data-slot="mdx-prose"] section[data-footnotes] > ol > li::marker {
+  color: var(--muted-foreground);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Reset generic MdxParagraph spacing inside footnotes.
+ */
+
+[data-slot="mdx-prose"] section[data-footnotes] p {
+  margin: 0;
+
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+[data-slot="mdx-prose"] section[data-footnotes] p + p {
+  margin-top: 0.5rem;
+}
+
+/*
+ * Nested content inside a footnote.
+ */
+
+[data-slot="mdx-prose"] section[data-footnotes] :is(ul, ol) {
+  font-size: inherit;
+}
+
+[data-slot="mdx-prose"] section[data-footnotes] li > :is(ul, ol) {
+  margin-top: 0.5rem;
+}
+
+/*
+ * Footnote reference targets.
+ *
+ * Clicking a backreference scrolls to the corresponding
+ * reference marker. Highlight it briefly through :target.
+ */
+
+[data-slot="mdx-prose"] [data-footnote-ref] {
+  scroll-margin-top: 5rem;
+}
+
+[data-slot="mdx-prose"] [data-footnote-ref]:target {
+  outline: 2px solid color-mix(in oklab, var(--primary) 55%, transparent);
+
+  outline-offset: 2px;
+}
+
+/*
+ * Highlight the selected footnote definition after navigation.
+ */
+
+[data-slot="mdx-prose"] section[data-footnotes] > ol > li:target {
+  border-radius: var(--radius-md);
+
+  background-color: color-mix(in oklab, var(--primary) 6%, transparent);
+
+  box-shadow:
+    -0.5rem 0 0 color-mix(in oklab, var(--primary) 6%, transparent),
+    0.5rem 0 0 color-mix(in oklab, var(--primary) 6%, transparent);
+}
+
+/*
+ * Backreferences.
+ */
+
+[data-slot="mdx-prose"] [data-footnote-backref] {
+  vertical-align: baseline;
+}
+
+/*
+ * Keep long URLs and references from overflowing.
+ */
+
+[data-slot="mdx-prose"] section[data-footnotes] a {
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,65 @@
+---
+title: Analog User Guide - Integrations
+summary: Connect an Analog Starter site to Giscus comments, RSS readers, and other external services.
+authors:
+  - name: Haozhe Zhu
+    href: https://github.com/zhutmost
+datePublish: 2026-05-15
+category: 💡 Documentation
+tags:
+  - Analog Starter
+  - Integrations
+  - Giscus
+  - RSS
+cover: banner.jpg
+seo:
+  description: Learn how Analog Starter works with Giscus comments, RSS readers, and other external services.
+---
+
+Analog Starter currently has two user-facing integration points: optional comments through Giscus and a built-in RSS feed.
+
+| Integration     | Status   | Account required    |
+| --------------- | -------- | ------------------- |
+| Giscus comments | Optional | Yes, through GitHub |
+| RSS feed        | Built in | No                  |
+| Analytics       | TBD      | —                   |
+
+## Giscus comments
+
+[Giscus](https://giscus.app) stores comments in GitHub Discussions.
+
+Use the configuration form on the Giscus website to select a repository, discussion category, page mapping, language, and other preferences. The page also checks the required repository settings and generates the IDs needed by the site.
+
+Copy the generated values into the `comment` section of `site.config.ts`. A minimal configuration is shown in [Site Configuration](/post/docs/site-configuration#comments).
+
+Comments are only rendered when Giscus is configured globally and the current content enables them. Posts enable comments by default and can opt out with:
+
+```yaml
+comment: false
+```
+
+Pages and author profiles disable comments by default and can opt in with:
+
+```yaml
+comment: true
+```
+
+Visitors use a GitHub account to comment. Discussions can be reviewed and moderated from the repository selected during Giscus setup.
+
+## RSS feed
+
+The site exposes its RSS feed at:
+
+```text
+/rss.xml
+```
+
+The feed is generated from the site's posts and advertised in the page metadata, so no external feed service is required.
+
+To make it easier to find, add an RSS link to the footer as described in [Site Configuration](/post/docs/site-configuration#header-and-footer).
+
+The feed URL can also be submitted to a feed directory or used by a separate email-subscription service.
+
+## Analytics
+
+TBD.

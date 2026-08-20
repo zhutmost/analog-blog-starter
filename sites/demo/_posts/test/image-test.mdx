@@ -1,0 +1,117 @@
+---
+title: Image Test
+summary: A test article for responsive images, captions, aspect ratios, and linked media.
+datePublish: 2026-01-02
+authors:
+  - Ginny Weasley
+cover: cover.jpg
+category: ⚙️ Test
+tags:
+  - Test
+  - MDX
+seo:
+  description: A demo article showing how the starter renders responsive images, captions, aspect ratios, and linked media in MDX.
+---
+
+This post exercises the image rendering paths used by the MDX typography system, including plain images, captions, unusual aspect ratios, linked images, inline images, decorative images, and an explicit rich-text figure.
+
+## Basic image
+
+A standalone Markdown image without a title should render as a normal responsive image without a caption.
+
+![A wide placeholder used to test the default MDX image style](https://placehold.co/1200x675/png?text=Basic+Landscape+Image)
+
+The paragraph following the image should retain the normal prose spacing.
+
+## Local image
+
+Use a relative path to load the images stored in the asset folder with the same name as the MDX file.
+
+![A image stored in the asset folder](248-600x400-grayscale.jpg)
+
+## Image with caption
+
+The Markdown image title is used as the visible caption. The native `title` attribute should be removed after the image is converted into a semantic `figure`.
+
+![A system architecture diagram represented by a placeholder](https://placehold.co/1200x675/png?text=Architecture+Overview "Figure 1. Overview of the example system architecture.")
+
+The caption should be centered, visually secondary, and separated from the image without creating excessive vertical space.
+
+## Portrait image
+
+A tall image should preserve its intrinsic aspect ratio and remain within the prose width.
+
+![A portrait placeholder used to test tall images](https://placehold.co/720x1080/png?text=Portrait+Image "Figure 2. A portrait image used to verify responsive height and aspect-ratio handling.")
+
+## Small image
+
+A small image should not be stretched to the full width of the article.
+
+![A compact square placeholder](https://placehold.co/240x240/png?text=Small+Image "Figure 3. A small image should remain compact rather than being enlarged to the full content width.")
+
+## SVG image
+
+SVG files should use the same responsive layout and caption treatment as raster images.
+
+![A vector placeholder used to test SVG rendering](forecast-weather-hail-cloud.svg "Figure 4. SVG rendering should remain sharp in both light and dark modes.")
+
+## Long caption
+
+This image has a deliberately long caption to test wrapping, maximum caption width, alignment, and line height on narrow screens.
+
+![A wide diagram with a long explanatory caption](https://placehold.co/1400x700/png?text=Long+Caption+Test "Figure 5. This deliberately long caption verifies that figure descriptions wrap cleanly, remain centered beneath the image, and do not become difficult to read on narrow mobile displays.")
+
+## Linked image
+
+A linked image should remain clickable. Because the image is wrapped by an anchor, the automatic Markdown-title-to-caption transform should not treat it as a standalone captioned image.
+
+[![A linked image that opens the project repository](https://placehold.co/1200x500/png?text=Linked+Image)](https://github.com/zhutmost/nextjs-web-starter)
+
+## Decorative image
+
+The following image intentionally uses an empty alt value. It should render with `alt=""` and be ignored by assistive technologies.
+
+![](https://placehold.co/1000x300/png?text=Decorative+Image)
+
+## Rich-text caption
+
+Use an explicit MDX figure when a caption needs formatting such as emphasis, inline code, or a link.
+
+<figure>
+  <img
+    src="https://placehold.co/1200x675/png?text=Rich+Caption"
+    alt="A placeholder diagram demonstrating a rich MDX caption"
+  />
+  <figcaption>
+    <strong>Figure 6.</strong> This caption contains <em>emphasis</em>, an inline <code>MDX</code>{" "}
+    term, and a{" "}
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure">reference link</a>.
+  </figcaption>
+</figure>
+
+## Image inside a GitHub alert
+
+The image should remain responsive when nested inside a generated alert component.
+
+> [!NOTE]
+> The following image is nested inside a GitHub-style alert.
+>
+> ![A compact image nested inside an alert](https://placehold.co/800x360/png?text=Image+Inside+Alert)
+
+## Image inside a blockquote
+
+A regular blockquote should also contain images without overflow.
+
+> The following image belongs to a normal blockquote rather than a GitHub alert.
+>
+> ![A compact image nested inside a blockquote](https://placehold.co/800x360/png?text=Image+Inside+Blockquote)
+
+## Consecutive images
+
+Consecutive image blocks should preserve consistent spacing without collapsing into each other.
+
+![The first image in a consecutive pair](https://placehold.co/1200x500/png?text=Consecutive+Image+A "Figure 7. The first image in a consecutive pair.")
+
+![The second image in a consecutive pair](https://placehold.co/1200x500/png?text=Consecutive+Image+B "Figure 8. The second image in a consecutive pair.")
+
+The final paragraph verifies that normal prose resumes cleanly after the image sequence.

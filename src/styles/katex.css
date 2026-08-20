@@ -1,0 +1,13 @@
+.katex {
+  font-size: 1.1em;
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.25rem;
+}
+
+[data-slot="mdx-prose"] > .katex-display {
+  margin-block: 0;
+}

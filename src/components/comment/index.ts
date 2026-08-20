@@ -1,0 +1,1 @@
+export { CommentSystem } from "./comment"

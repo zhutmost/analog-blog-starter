@@ -1,81 +1,121 @@
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { type Metadata } from "next"
+import { notFound } from "next/navigation"
+import * as React from "react"
 
-import { allPosts, type Post } from '@/lib/coco'
-import siteConfig from '@/lib/site-config'
-import PostTemplate from '@/templates/post-template'
-
-import 'katex/dist/katex.css'
+import { CommentSystem } from "@/components/comment"
+import { MdxProse } from "@/components/mdx/mdx-prose"
+import { PageShell } from "@/components/pages/basic/page-shell"
+import { PostHeader } from "@/components/pages/post/post-header"
+import { hasPostTocItems, PostToc } from "@/components/pages/post/post-toc"
+import { AutoLink, TwemojifyText } from "@/components/ui/my"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/shadcn/breadcrumb"
+import { getPostBySlug, getPostMetaBySlug, postMetas } from "@/lib/content"
+import { siteConfig } from "@/lib/site/config"
+import { buildRobotsMetadata } from "@/lib/site/metadata"
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
-  return allPosts.map((post) => ({ slug: post.slug.split('/') }))
+  return postMetas.map((post) => ({ slug: post.slug.split("/") }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string[] }>
-}): Promise<Metadata | undefined> {
-  const paramSlug = (await params).slug
-  const postCurr = allPosts.find((post: Post) => post.slug === paramSlug.join('/'))
-  if (!postCurr) {
-    return
+export async function generateMetadata(props: PageProps<"/post/[...slug]">): Promise<Metadata> {
+  const { slug: paramSlug } = await props.params
+
+  const post = getPostMetaBySlug(paramSlug.join("/"))
+  if (!post) {
+    return {}
   }
 
-  const datePublish: string = postCurr.datePublish.toISOString()
-  const dateUpdate: string = postCurr.dateUpdate.toISOString()
-  const seoImage: string = postCurr.banner ?? siteConfig.seo.socialBanner
-  const ogImage: string = seoImage.includes('http')
-    ? seoImage
-    : new URL(seoImage, siteConfig.siteUrl).href
+  const socialShareImages = post.cover ? [post.cover] : siteConfig.socialShare.defaultImages
+  const pathname = `/post/${post.slug}`
 
   return {
-    title: postCurr.title,
-    description: postCurr.summary,
+    title: post.title,
+    description: post.seo.description,
+
+    alternates: {
+      canonical: pathname,
+      types: {
+        "application/rss+xml": new URL("/rss.xml", siteConfig.siteUrl),
+      },
+    },
+
     openGraph: {
-      type: 'article',
-      title: postCurr.title,
-      description: postCurr.summary,
-      siteName: siteConfig.siteTitle,
-      locale: postCurr.head?.locale ?? siteConfig.seo.openGraph?.locale,
-      publishedTime: datePublish,
-      modifiedTime: dateUpdate,
-      url: './',
-      images: ogImage,
-      authors: postCurr.authors.map((a) => a.name),
+      type: "article",
+      url: pathname,
+      title: post.title,
+      description: post.summary,
+      publishedTime: post.datePublish,
+      modifiedTime: post.dateUpdate,
+      images: socialShareImages,
+      authors: post.authors.map((author) => author.name),
     },
     twitter: {
-      card: 'summary_large_image',
-      title: postCurr.title,
-      description: postCurr.summary,
-      images: seoImage,
+      card: "summary_large_image",
+      title: post.title,
+      description: post.summary,
+      site: siteConfig.socialShare.twitterSite,
+      images: socialShareImages,
     },
+
+    robots: buildRobotsMetadata(post.seo.noIndex),
   }
 }
 
-export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
-  const params = await props.params
-
-  const postIndex = allPosts.findIndex((post: Post) => post.slug === params.slug.join('/'))
-  if (postIndex === -1) {
-    return notFound()
+export default async function PostPage(props: PageProps<"/post/[...slug]">) {
+  const { slug: paramSlug } = await props.params
+  const post = getPostBySlug(paramSlug.join("/"))
+  if (!post) {
+    notFound()
   }
 
-  const postCurr: Post = allPosts[postIndex]
-  const postPrev: Post = allPosts[postIndex + 1]
-  const postNext: Post = allPosts[postIndex - 1]
+  const hasToc = hasPostTocItems(post.toc)
 
-  // const jsonLd = post.structuredData
-  // jsonLd['author'] = authorsCurr.map((author) => {
-  //   return {
-  //     '@type': 'Person',
-  //     name: author.name,
-  //   }
-  // })
-  //     {/*<script*/}
-  //     {/*  type="application/ld+json"*/}
-  //     {/*  dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}*/}
-  //     {/*/>*/}
+  return (
+    <PageShell.Root as="article">
+      <PageShell.Top>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink render={<AutoLink href="/posts" />}>Articles</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                render={<AutoLink href={`/posts/by-category/${post.category.slug}`} />}
+              >
+                <TwemojifyText text={post.category.name} />
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="max-w-40 truncate">{post.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
 
-  return <PostTemplate post={postCurr} postNext={postNext} postPrev={postPrev} />
+        <PostHeader post={post} />
+      </PageShell.Top>
+
+      <PageShell.Body asidePosition={hasToc ? "right" : undefined}>
+        <PageShell.Content width="prose">
+          <MdxProse code={post.content} />
+
+          {post.comment && <CommentSystem />}
+        </PageShell.Content>
+
+        {hasToc && (
+          <PageShell.Aside sticky className="hidden xl:block">
+            <PostToc toc={post.toc} />
+          </PageShell.Aside>
+        )}
+      </PageShell.Body>
+    </PageShell.Root>
+  )
 }

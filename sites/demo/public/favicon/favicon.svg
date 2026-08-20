@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1323)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(5,0,0,5,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" fill="url('#gradient')"></rect><defs><linearGradient id="gradient" gradientTransform="rotate(45 0.5 0.5)"><stop offset="0%" stop-color="#59d7ce"></stop><stop offset="100%" stop-color="#3a55d3"></stop></linearGradient><clipPath id="SvgjsClipPath1323"><rect width="1000" height="1000" x="0" y="0" rx="300" ry="300"></rect></clipPath></defs><g><g fill="#ffffff" transform="matrix(5.48722176422094,0,0,5.48722176422094,26.85525396060865,113.581459376012)" stroke="#ffffff" stroke-width="1.35"><path d="M7.35-7.40L7.35-4.85L1.48-4.85L1.48-7.40L7.35-7.40ZM17.81 0L17.81 2.45L8.99 2.45L8.99 0L17.81 0ZM25.18-7.40L25.18-4.85L19.31-4.85L19.31-7.40L25.18-7.40Z"></path></g></g></svg></g></g></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1324)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(5,0,0,5,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" fill="url('#gradient')"></rect><defs><linearGradient id="gradient" gradientTransform="rotate(45 0.5 0.5)"><stop offset="0%" stop-color="#59d7ce"></stop><stop offset="100%" stop-color="#3a55d3"></stop></linearGradient><clipPath id="SvgjsClipPath1324"><rect width="1000" height="1000" x="0" y="0" rx="300" ry="300"></rect></clipPath></defs><g><g fill="#ffffff" transform="matrix(5.48722176422094,0,0,5.48722176422094,26.85525396060865,113.581459376012)" stroke="#ffffff" stroke-width="1.35"><path d="M7.35-7.40L7.35-4.85L1.48-4.85L1.48-7.40L7.35-7.40ZM17.81 0L17.81 2.45L8.99 2.45L8.99 0L17.81 0ZM25.18-7.40L25.18-4.85L19.31-4.85L19.31-7.40L25.18-7.40Z"></path></g></g></svg></g></g></svg></g></svg>

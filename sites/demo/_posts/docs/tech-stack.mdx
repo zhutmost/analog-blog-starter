@@ -1,0 +1,145 @@
+---
+title: Analog User Guide - Tech Stack
+summary: An overview of the application framework, content system, interface foundations, and tooling behind Analog Starter.
+authors:
+  - name: Haozhe Zhu
+    href: https://github.com/zhutmost
+datePublish: 2026-07-01
+category: 💡 Documentation
+tags:
+  - Analog Starter
+  - Next.js
+  - React
+  - MDX
+cover: banner.jpg
+seo:
+  description: Learn how Analog Starter uses Next.js, React, TypeScript, Tailwind CSS, shadcn/ui, Content Collections, MDX, and Oxc tooling.
+---
+
+Analog Starter is a content-driven Next.js project. Shared application code lives under `src`, while each site keeps its content, configuration, and public assets under `sites`.
+
+This page gives a high-level overview of the technologies used by the project. Exact package versions are available in [`package.json`](https://github.com/zhutmost/analog-blog-starter/blob/main/package.json).
+
+## At a glance
+
+| Layer       | Main tools                       | Role                                                            |
+| ----------- | -------------------------------- | --------------------------------------------------------------- |
+| Application | Next.js, React                   | Routing, rendering, metadata, and application structure         |
+| Language    | TypeScript, Zod                  | Source types and validation of site data                        |
+| Interface   | Tailwind CSS, shadcn/ui, Base UI | Styling, components, and interaction                            |
+| Content     | Content Collections, MDX         | Loading, validating, and compiling site content                 |
+| Markdown    | Remark, Rehype, KaTeX, Shiki     | Markdown extensions, math, code, images, and tables of contents |
+| Features    | cmdk, Giscus, Feed               | Search, comments, and RSS                                       |
+| Tooling     | Bun, Oxlint, Oxfmt               | Package management, development, linting, and formatting        |
+
+## Application foundation
+
+### Next.js and React
+
+[Next.js](https://nextjs.org/docs) provides the application framework. The project uses the App Router for pages, layouts, dynamic content routes, metadata, images, fonts, and production builds.
+
+[React](https://react.dev) provides the component model used throughout the interface. Interactive features such as search, navigation, theme controls, and comments use client-side components where necessary, while most content rendering remains server-side.
+
+### TypeScript and Zod
+
+[TypeScript](https://www.typescriptlang.org) is used for application code and site configuration.
+
+[Zod](https://zod.dev) validates values read from `site.config.ts`, MDX frontmatter, `home.mdx`, `news.yml`, and `people.yml`. This allows content errors to be reported during development or builds rather than appearing as broken pages later.
+
+Users do not need to understand the schemas to write content. The accepted fields are documented in [Site Configuration](/post/docs/site-configuration) and [Content Model](/post/docs/content-model).
+
+## Interface and styling
+
+### Tailwind CSS
+
+[Tailwind CSS](https://tailwindcss.com) provides the styling foundation. Components use semantic utilities connected to shared design tokens, including:
+
+```text
+bg-background
+text-foreground
+text-muted-foreground
+border-border
+```
+
+The color palette, fonts, and rounded corners can therefore be changed from a small set of CSS variables. These common changes are covered in [Customization](/post/docs/customization).
+
+### shadcn/ui and Base UI
+
+[shadcn/ui](https://ui.shadcn.com) components are stored as source files in the repository rather than provided by a runtime component package. They can be adjusted alongside the rest of the interface.
+
+[Base UI](https://base-ui.com) supplies lower-level behavior and accessibility for interactive elements such as dialogs, menus, checkboxes, and tooltips.
+
+Most icons come from [Tabler Icons](https://tabler.io/icons). Light and dark themes are managed through `@wrksz/themes` and CSS design tokens.
+
+## Content system
+
+### Content Collections
+
+[Content Collections](https://www.content-collections.dev) reads and validates the files belonging to the selected site.
+
+The current model includes:
+
+- posts and general pages;
+- internal author profiles;
+- homepage content and sections;
+- optional news and people data.
+
+Content Collections also compiles MDX and makes the resulting content available to the Next.js routes. The file locations and accepted fields are described in [Content Model](/post/docs/content-model).
+
+### MDX
+
+[MDX](https://mdxjs.com) combines Markdown with React components. Ordinary articles can be written with familiar Markdown syntax, while a small number of components can be inserted when needed.
+
+The current pipeline supports:
+
+- GitHub Flavored Markdown;
+- inline and display mathematics through KaTeX;
+- GitHub-style alert blocks;
+- syntax-highlighted code;
+- local article images;
+- heading links and tables of contents;
+- Twemoji rendering.
+
+Rendered examples are available in [Markdown Basic Syntax](/post/test/markdown-basic). The complete list of Markdown-related packages is available in `package.json`.
+
+## Site features
+
+The built-in search dialog uses [cmdk](https://cmdk.paco.me) and searches across the content available to the active site.
+
+Comments are optionally provided through [Giscus](https://giscus.app), while the `feed` package generates `/rss.xml`. Their user-facing setup is covered in [Integrations](/post/docs/integrations).
+
+Next.js metadata APIs generate page descriptions, canonical URLs, robots directives, Open Graph metadata, Twitter cards, and favicon declarations from the validated site and content data.
+
+## Developer tooling
+
+[Bun](https://bun.sh) is used to install packages and run the development and build scripts.
+
+[Oxlint](https://oxc.rs/docs/guide/usage/linter) checks JavaScript and TypeScript source code, while [Oxfmt](https://oxc.rs/docs/guide/usage/formatter) formats source files and supported content formats.
+
+The commands needed for local development are introduced in [Getting Started](/post/docs/getting-started).
+
+## Why this architecture?
+
+The current stack is the result of several rounds of implementation rather than a collection of tools selected all at once.
+
+### From Chakra UI to Tailwind CSS and shadcn/ui
+
+Earlier versions of the project used [Chakra UI](https://chakra-ui.com). It provided a convenient component library and a consistent styling API during the initial development of the site.
+
+The project later moved to Tailwind CSS, shadcn/ui, and lower-level component primitives. The change makes component styles visible in the source, keeps the reusable component code inside the repository, and reduces dependence on the design decisions of one UI library.
+
+AI-assisted development was another practical consideration. Tailwind CSS and shadcn/ui are widely used in current React projects, so coding models generally have more public examples and established patterns to draw from.
+
+### Separating the application from site content
+
+The other central choice is the separation between `src` and `sites`:
+
+```text
+src/                 Shared application code
+sites/demo/          Demo content and documentation
+sites/another-site/  Content and configuration for another site
+```
+
+Routes, components, schemas, and shared behavior remain under `src`. Each site provides its own content, public assets, site configuration, and optional Next.js configuration.
+
+This keeps site-specific material out of the shared application and allows the same codebase to support a personal blog, a project site, or a research-group website.

@@ -1,34 +1,75 @@
-import type * as React from 'react'
-import { Icon, type LinkProps } from '@chakra-ui/react'
-import { IconExternalLink } from '@tabler/icons-react'
+import * as React from "react"
 
-import { isUrlExternal, Link } from '@/components/common/smart-link'
+import { TextLink, textLinkVariants } from "@/components/ui/my"
+import { cn } from "@/lib/utils"
 
-export default function MdxLink({
+type MdxLinkProps = React.ComponentPropsWithoutRef<"a"> & {
+  "data-footnote-ref"?: string | boolean
+  "data-footnote-backref"?: string | boolean
+}
+
+export function MdxLink({
   href,
+  className,
   children,
-  ...rest
-}: LinkProps & React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  "data-footnote-ref": footnoteRef,
+  "data-footnote-backref": footnoteBackref,
+  ...props
+}: MdxLinkProps) {
+  if (footnoteRef !== undefined) {
+    return (
+      <a
+        href={href}
+        data-footnote-ref={footnoteRef}
+        className={cn(
+          "mx-0.5 inline-flex min-w-4 items-center justify-center rounded-sm px-1",
+          "bg-primary/10 text-[0.6875rem] leading-4 font-semibold text-primary",
+          "tabular-nums no-underline",
+          "transition-colors hover:bg-primary/20",
+          "focus-visible:outline-2 focus-visible:outline-offset-2",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </a>
+    )
+  }
+
+  if (footnoteBackref !== undefined) {
+    return (
+      <a
+        href={href}
+        data-footnote-backref={footnoteBackref}
+        className={cn(
+          "ml-1 inline-flex min-w-5 items-center justify-center rounded-sm px-1",
+          "text-xs leading-5 text-muted-foreground no-underline",
+          "transition-colors hover:bg-muted hover:text-foreground",
+          "focus-visible:outline-2 focus-visible:outline-offset-2",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </a>
+    )
+  }
+
+  const proseLinkClassName = cn("font-medium text-primary", "[overflow-wrap:anywhere]", className)
+
+  // Preserve support for malformed or manually constructed <a> elements
+  // without weakening TextLink's required href type.
   if (!href) {
-    console.warn("MdxLink component received an empty 'href' prop.")
+    return (
+      <a className={cn(textLinkVariants({ variant: "underline" }), proseLinkClassName)} {...props}>
+        {children}
+      </a>
+    )
   }
 
   return (
-    <Link
-      href={href}
-      variant="underline"
-      color="brand"
-      overflowWrap="break-word"
-      display="inline"
-      css={{ '& strong': { color: 'inherit' } }}
-      {...rest}
-    >
+    <TextLink href={href} variant="underline" className={proseLinkClassName} {...props}>
       {children}
-      {href && isUrlExternal(href) && (
-        <Icon size="sm" ml="1">
-          <IconExternalLink />
-        </Icon>
-      )}
-    </Link>
+    </TextLink>
   )
 }

@@ -1,0 +1,338 @@
+---
+title: Analog User Guide - Content Model
+summary: Learn where to add posts, pages, author profiles, homepage content, news, and people.
+authors:
+  - name: Haozhe Zhu
+    href: https://github.com/zhutmost
+datePublish: 2026-06-10
+category: 💡 Documentation
+tags:
+  - Analog Starter
+  - Content Collections
+  - MDX
+  - YAML
+cover: banner.jpg
+seo:
+  description: Learn how posts, pages, authors, homepage sections, news, and people are organized in an Analog Starter site.
+---
+
+Each site stores its content in one directory under `sites`. Posts, pages, authors, and the homepage use MDX, while the optional news and people pages use YAML.
+
+For the demo site:
+
+```text
+sites/demo/
+├── _posts/
+├── _pages/
+├── _authors/
+├── home.mdx
+├── news.yml
+└── people.yml
+```
+
+## Content types
+
+| Content  | Source            | Example URL               | Required |
+| -------- | ----------------- | ------------------------- | -------- |
+| Posts    | `_posts/**/*.mdx` | `/post/notes/hello-world` | No       |
+| Pages    | `_pages/**/*.mdx` | `/about`                  | No       |
+| Authors  | `_authors/*.mdx`  | `/author/your-name`       | No       |
+| Homepage | `home.mdx`        | `/`                       | Yes      |
+| News     | `news.yml`        | `/news`                   | No       |
+| People   | `people.yml`      | `/people`                 | No       |
+
+Nested directories are supported for posts and pages. Author MDX files are kept directly under `_authors`.
+
+## Common fields
+
+Posts, pages, and author profiles share these fields:
+
+```yaml
+title: Example Title
+summary: A short description displayed near the page title.
+comment: false
+seo:
+  description: An optional description used in metadata.
+  noIndex: false
+```
+
+`title` and `summary` are required. When `seo.description` is omitted, `summary` is also used for metadata. Set `seo.noIndex` to `true` when a page should not be indexed by search engines.
+
+The examples below focus on content structure. Markdown syntax and rendering are demonstrated in [Markdown Basic Syntax](/post/test/markdown-basic).
+
+## Posts
+
+Posts are stored anywhere below `_posts`. Their URL follows the source path:
+
+```text
+_posts/hello-world.mdx        → /post/hello-world
+_posts/notes/hello-world.mdx  → /post/notes/hello-world
+```
+
+A typical post begins with:
+
+```mdx
+---
+title: Hello World
+summary: A short example post.
+authors:
+  - Your Name
+datePublish: 2026-08-20
+category: Notes
+tags:
+  - Next.js
+  - MDX
+cover: cover.jpg
+---
+
+Write the article here.
+```
+
+| Field         | Required | Description                                     |
+| ------------- | -------- | ----------------------------------------------- |
+| `title`       | Yes      | Post title                                      |
+| `summary`     | Yes      | Short text displayed with the post              |
+| `datePublish` | Yes      | Publication date in `YYYY-MM-DD` format         |
+| `category`    | Yes      | Primary category                                |
+| `authors`     | No       | Internal or external authors                    |
+| `dateUpdate`  | No       | Last update date                                |
+| `tags`        | No       | List of tags                                    |
+| `cover`       | No       | Local or remote cover image                     |
+| `comment`     | No       | Defaults to `true` for posts                    |
+| `draft`       | No       | Excludes the post from normal production output |
+| `seo`         | No       | Metadata description and indexing preference    |
+
+When `dateUpdate` is omitted, the build attempts to use the file's Git modification date and otherwise falls back to `datePublish`.
+
+### Internal and external authors
+
+An author name written as a string refers to a profile under `_authors`:
+
+```yaml
+authors:
+  - Your Name
+```
+
+The name should match the `title` of the corresponding author profile.
+
+An external author does not need a local profile:
+
+```yaml
+authors:
+  - name: Guest Author
+    href: https://example.com
+```
+
+### Categories and tags
+
+Every post has one category and may have multiple tags:
+
+```yaml
+category: Documentation
+tags:
+  - Next.js
+  - MDX
+```
+
+Equivalent names can be combined through the aliases described in [Site Configuration](/post/docs/site-configuration).
+
+### Local images
+
+Keep images used only by one post in a directory beside its MDX file:
+
+```text
+_posts/notes/
+├── hello-world.mdx
+└── hello-world/
+    ├── cover.jpg
+    └── diagram.png
+```
+
+Reference them by filename:
+
+```yaml
+cover: cover.jpg
+```
+
+```md
+![Architecture diagram](diagram.png)
+```
+
+## Pages
+
+Pages are stored below `_pages` and map directly to site routes:
+
+```text
+_pages/about.mdx             → /about
+_pages/projects/example.mdx  → /projects/example
+```
+
+A minimal page looks like this:
+
+```mdx
+---
+title: About
+summary: Background information about this site.
+---
+
+Write the page here.
+```
+
+Pages do not require publication dates, categories, or tags. They support `draft`, `comment`, and `seo` when needed.
+
+Some paths are reserved by built-in application routes. A conflicting page path is reported during the build.
+
+## Authors
+
+Author profiles are top-level MDX files under `_authors`:
+
+```text
+_authors/
+├── your-name.mdx
+└── your-name/
+    └── avatar.jpg
+```
+
+For example:
+
+```mdx
+---
+title: Your Name
+summary: Researcher and software developer.
+avatar: avatar.jpg
+info:
+  - label: Role
+    value: Researcher
+  - label: Affiliation
+    value: Example University
+socials:
+  - label: GitHub
+    href: https://github.com/your-name
+    icon: IconBrandGithub
+---
+
+Write a short biography here.
+```
+
+This profile is available at `/author/your-name`. Posts that list `Your Name` as an internal author are connected to it and may appear in the profile's recent-articles section.
+
+The `info` list contains label-value pairs. The `socials` list contains external links and [Tabler icon](https://tabler.io/icons) names.
+
+## Homepage
+
+The required `home.mdx` file controls the homepage hero and its sections:
+
+```mdx title="sites/demo/home.mdx"
+---
+hero:
+  greeting: Hi, I’m
+  name: Your Name
+  actions:
+    - label: Articles
+      href: /posts
+      primary: true
+    - label: About
+      href: /about
+
+sections:
+  - type: news
+    title: Latest News
+    limit: 5
+
+  - type: research
+    title: Research
+    areas:
+      - title: Research Area
+        description: A short description of the research area.
+        keywords:
+          - Keyword One
+          - Keyword Two
+
+  - type: posts
+    title: Recent Articles
+    limit: 4
+---
+
+Write the homepage introduction here.
+```
+
+The MDX body becomes the hero introduction. Sections appear in the declared order.
+
+Three section types are available:
+
+- `news` uses inline entries or the optional `news.yml` file;
+- `research` lists areas written directly in `home.mdx`;
+- `posts` uses selected post slugs or the globally sorted post collection.
+
+See the [demo homepage source](https://github.com/zhutmost/analog-blog-starter/blob/main/sites/demo/home.mdx) for a complete example.
+
+## News
+
+The optional `news.yml` file creates the news page and can also supply the homepage news section:
+
+```yaml title="sites/demo/news.yml"
+title: News
+summary: Recent updates, publications, and events.
+
+items:
+  - date: 2026-08-20
+    type: publication
+    title: A new paper has been published
+    description: The paper is now available online.
+
+  - date: 2026-07-12
+    type: talk
+    title: Talk at an example conference
+```
+
+`date` and `title` are required for each entry. `description` and `type` are optional.
+
+The supported types are `publication`, `talk`, `project`, `award`, `people`, and `event`. Entries are displayed in reverse chronological order.
+
+See the complete [demo news file](https://github.com/zhutmost/analog-blog-starter/blob/main/sites/demo/news.yml) for a longer example.
+
+## People
+
+The optional `people.yml` file creates a directory of current members and alumni:
+
+```yaml title="sites/demo/people.yml"
+title: People
+summary: Current members and alumni of the group.
+
+current:
+  Faculty:
+    - name: Example Professor
+      startYear: 2020
+      research:
+        - Human-computer interaction
+      avatar: example-professor.jpg
+      github: example
+      author: example-professor
+
+  Students:
+    - name: Example Student
+      startYear: 2024
+      research:
+        - Web systems
+
+alumni:
+  Former Students:
+    - name: Example Alumnus
+      startYear: 2020
+      endYear: 2024
+      description: Now working as a software engineer.
+```
+
+The keys below `current` and `alumni` become group headings and may be chosen freely.
+
+Current members require `name`, `startYear`, and at least one `research` entry. Alumni require `name`, `startYear`, and `endYear`.
+
+The optional `author` field links a person to an author-profile slug, while `github` accepts a GitHub username. Avatar and profile information can then be reused where available.
+
+See the complete [demo people file](https://github.com/zhutmost/analog-blog-starter/blob/main/sites/demo/people.yml) for additional groups and entries.
+
+## Content errors
+
+Content is checked during development and production builds. Missing required fields, invalid dates, unknown references, and conflicting routes are reported with the affected file whenever possible.
+
+Site-wide defaults, taxonomy aliases, and comments are configured separately in [Site Configuration](/post/docs/site-configuration).

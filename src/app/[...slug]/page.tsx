@@ -1,36 +1,56 @@
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { type Metadata } from "next"
+import { notFound } from "next/navigation"
 
-import { allPages, type Page as PageType } from '@/lib/coco'
-import generatePageMetadata from '@/lib/page-metadata'
-import PageTemplate from '@/templates/page-template'
+import { CommentSystem } from "@/components/comment"
+import { MdxProse } from "@/components/mdx/mdx-prose"
+import { PageHeader } from "@/components/pages/basic/page-header"
+import { PageShell } from "@/components/pages/basic/page-shell"
+import { getUserpageBySlug, userpages } from "@/lib/content"
+import { buildPageMetadata } from "@/lib/site/metadata"
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
-  return allPages.map((page) => ({ slug: page.slug.split('/') }))
+  return userpages.map((page) => ({ slug: page.slug.split("/") }))
 }
 
-export async function generateMetadata(props: {
-  params: Promise<{ slug: string[] }>
-}): Promise<Metadata | undefined> {
-  const params = await props.params
-  const page: PageType | undefined = allPages.find((page) => page.slug === params.slug.join('/'))
-  if (!page) {
-    return
+export async function generateMetadata(props: PageProps<"/[...slug]">): Promise<Metadata> {
+  const { slug: paramSlug } = await props.params
+
+  const userpage = getUserpageBySlug(paramSlug.join("/"))
+
+  if (!userpage) {
+    return {}
   }
 
-  return generatePageMetadata({
-    title: page.title,
-    description: page.head?.description,
-    locale: page.head?.locale,
+  return buildPageMetadata({
+    title: userpage.title,
+    description: userpage.seo.description,
+    pathname: `/${userpage.slug}` satisfies `/${string}`,
+    noIndex: userpage.seo.noIndex,
   })
 }
 
-export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
-  const params = await props.params
-  const page: PageType | undefined = allPages.find((page) => page.slug === params.slug.join('/'))
-  if (!page) {
-    return notFound()
+export default async function UserpagePage(props: PageProps<"/[...slug]">) {
+  const { slug: paramSlug } = await props.params
+
+  const userpage = getUserpageBySlug(paramSlug.join("/"))
+
+  if (!userpage) {
+    notFound()
   }
 
-  return <PageTemplate page={page} />
+  return (
+    <PageShell.Root as="article">
+      <PageShell.Top>
+        <PageHeader title={userpage.title} summary={userpage.summary} />
+      </PageShell.Top>
+
+      <PageShell.Body>
+        <PageShell.Content width="prose">
+          <MdxProse code={userpage.content} />
+
+          {userpage.comment && <CommentSystem />}
+        </PageShell.Content>
+      </PageShell.Body>
+    </PageShell.Root>
+  )
 }

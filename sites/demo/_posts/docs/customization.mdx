@@ -1,0 +1,109 @@
+---
+title: Analog User Guide - Style Customization
+summary: Change the colors, fonts, rounded corners, and general visual character of an Analog Starter site.
+authors:
+  - name: Haozhe Zhu
+    href: https://github.com/zhutmost
+datePublish: 2026-06-21
+category: 💡 Documentation
+tags:
+  - Analog Starter
+  - Customization
+  - Tailwind CSS
+  - shadcn/ui
+cover: banner.jpg
+seo:
+  description: A short guide to customizing the colors, typography, rounded corners, and visual style of Analog Starter.
+---
+
+Site identity, navigation, and public assets are configured in [Site Configuration](/post/docs/site-configuration). This page focuses on the shared visual theme.
+
+Most theme values are defined in:
+
+```text
+src/app/globals.css
+```
+
+Changes to this file affect every site built from the project.
+
+## Colors
+
+The interface uses semantic color variables based on the shadcn/ui theme system. Light-theme values are defined under `:root` and dark-theme values under `.dark`.
+
+The smallest useful change is usually the primary color:
+
+```css title="src/app/globals.css"
+:root {
+  --primary: oklch(0.511 0.096 186.391);
+  --primary-foreground: oklch(0.984 0.014 180.72);
+}
+
+.dark {
+  --primary: oklch(0.704 0.14 182.503);
+  --primary-foreground: oklch(0.277 0.046 192.524);
+}
+```
+
+`--primary` is used for links and emphasized elements. `--primary-foreground` is used for text placed on a primary-colored background, so the two values should maintain sufficient contrast.
+
+Update both the light and dark values. They do not need to be identical: a lighter primary color is often easier to read against a dark background.
+
+For a broader palette change, use the [shadcn/ui theme generator](https://ui.shadcn.com/themes). Copy its light variables into `:root` and its dark variables into `.dark`, while keeping project-specific variables that are not part of the generated theme.
+
+## Fonts
+
+The default typography uses:
+
+| Role    | Default font  | Used for                                   |
+| ------- | ------------- | ------------------------------------------ |
+| Body    | Geist         | Paragraphs, navigation, and interface text |
+| Heading | Space Grotesk | Page and section headings                  |
+| Code    | Geist Mono    | Inline code and code blocks                |
+
+Their mapping appears near the beginning of `globals.css`:
+
+```css
+@theme inline {
+  --font-sans: var(--font-geist);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-space-grotesk);
+}
+```
+
+The simplest alternative is a system font stack:
+
+```css
+@theme inline {
+  --font-sans: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --font-heading: Georgia, "Songti SC", serif;
+}
+```
+
+System fonts may look slightly different across operating systems. To bundle another Google or local font for consistent rendering, follow the [Next.js font guide](https://nextjs.org/docs/app/getting-started/fonts).
+
+Changing only the heading font is a good first experiment: it changes the character of the design without affecting every paragraph and control.
+
+## Rounded corners
+
+Buttons, cards, inputs, menus, and dialogs derive their rounded corners from one base value:
+
+```css title="src/app/globals.css"
+:root {
+  --radius: 0.625rem;
+}
+```
+
+Reduce it for sharper corners or increase it for a softer appearance. Setting it to `0` removes most rounded corners.
+
+## Further customization
+
+Colors, fonts, and radius values cover the most common visual changes. Modifying page layouts or individual components requires some familiarity with React and Tailwind CSS.
+
+The following references are useful when going further:
+
+- [shadcn/ui documentation](https://ui.shadcn.com/docs)
+- [Tailwind CSS theme variables](https://tailwindcss.com/docs/theme)
+- [Next.js font guide](https://nextjs.org/docs/app/getting-started/fonts)
+
+The main frameworks used by the project are summarized in [Tech Stack](/post/docs/tech-stack).

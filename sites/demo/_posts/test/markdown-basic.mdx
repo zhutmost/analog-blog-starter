@@ -1,0 +1,299 @@
+---
+title: Markdown Basic Syntax
+summary: A reference article covering the Markdown and MDX syntax supported by the site.
+datePublish: 2026-01-10
+authors:
+  - Luna Lovegood
+  - Ron Weasley
+cover: cover.jpg
+category: ⚙️ Test
+tags:
+  - Test
+  - MDX
+  - Markdown
+  - Typography
+seo:
+  description: Explore a demo article showing how the starter renders Markdown and MDX typography, links, lists, tables, code, math, and media.
+---
+
+## Headings & Paragraphs
+
+On a rainy September evening, a stack of parchment appeared beside the kettle with no owl in sight. The envelope was sealed in red wax, addressed in a hand so precise that even the commas seemed to be wearing dress robes. No one in the kitchen admitted sending it, but the cat on the windowsill looked unusually smug.
+
+The purpose of this file is not to teach Transfiguration, brew Felix Felicis, or reveal the password to the Headmaster's office. Its purpose is typography: long paragraphs, short paragraphs, nested structures, tables, code blocks, math, links, footnotes, and a few magical artifacts hiding in plain sight.
+
+### A Very Long Heading About the Bureaucratic, Pedagogical, and Mildly Chaotic Consequences of Asking the Sorting Hat to Maintain a Markdown Table of Every Student, Spell, Wand Core, House Point Deduction, Quidditch Injury, and Library Overdue Notice Since 990 AD
+
+This deliberately long heading should stress-test table-of-contents wrapping, anchor generation, heading spacing, and responsive layout behavior on narrow screens. If the heading spills into three lines, the goblin in charge of vertical rhythm will probably file a complaint.
+
+### CJK Paragraphs
+
+#### 日本語
+
+ホグワーツの朝は、ふくろう便と焼きたてのトースト、そして誰かが階段をまちがえた音で始まる。談話室の掲示板には、魔法薬学の補講、クィディッチの練習、禁じられた森に近づかないようにという注意書きが、いつもより少し斜めに貼られていた。
+
+#### 中文
+
+霍格沃茨的走廊总像一段会移动的程序：楼梯会重排路径，画像会改变状态，盔甲会在午夜触发事件。对于 Markdown 测试而言，这些中文段落可以检查 CJK 行距、标点悬挂、字体回退、粗体、斜体和中英文混排的显示效果。
+
+#### 한국어
+
+도서관의 금지 구역 앞에는 “허가 없는 접근 금지”라는 안내문이 붙어 있었다. 그러나 테스트 문서의 목적은 모험이 아니라 조판이다. 한글 문단은 줄바꿈, 글꼴 fallback, 문장 간격을 확인하기 위한 작은 마법 장치처럼 쓰인다.
+
+## Basic Inline Syntax
+
+### Strong and Emphasis Text
+
+The _Sorting Hat_ considered the case for **Gryffindor**, paused dramatically, and then whispered **_“perhaps the footnotes deserve Ravenclaw”_**. The Marauder's Map showed ~~nothing suspicious~~ absolutely everything suspicious, including a tiny label that read `typography: active`.
+
+Here is a dense inline run: **bold**, _italic_, **_bold italic_**, ~~strikethrough~~, `inline code`, <Kbd>⌘+K</Kbd>, and a deliberatelyLongInlineTokenThatShouldTestWrappingWithoutBreakingTheWholeLayoutOrSummoningPeeves.
+
+### Links
+
+Visit [The Hogwarts Library](https://example.com/hogwarts-library), check the [Ministry form registry](https://example.com/ministry/forms), or jump back to [this section](#links). Owl mail may be simulated with [Mail](mailto:owl.post@example.com), although delivery latency is not guaranteed during thunderstorms.
+
+A very long URL should wrap safely: https://example.com/department-of-magical-transportation/floo-network/compliance/audit/2026/september/platform-nine-and-three-quarters/gate-reopening-procedure?spell=alohomora&wand=holly-phoenix-feather&requires-approval=true
+
+### References
+
+The librarian marked the restricted shelf with [ref1][ref1], while the Quidditch captain cited [ref2] for broom maintenance procedures. Another reference-style link uses the compact form [ref2][]. A small footnote explains why the invisibility cloak is not a recommended CSS strategy[^inline], and a block footnote keeps a complete field report[^block].
+
+[ref1]: https://example.com/hogwarts-archive "Hogwarts Archive"
+[ref2]: https://example.com/quidditch-safety "Quidditch Safety Manual"
+
+[^inline]: This footnote has **bold**, _italic_, `inline code`, [a link](https://example.com), and ~~a deleted prophecy~~.
+
+[^block]: This is the first line of a block footnote about an enchanted bookmark.
+
+    This is an indented continuation line, useful for testing footnote spacing.
+
+    ```ts
+    const charm = "Lumos"
+    const target = "reading-corner"
+    console.log(`${charm} applied to ${target}`)
+    ```
+
+    - footnote list item: check parchment texture
+    - footnote list item: verify anti-Peeves ward
+
+## Quote Block
+
+> Professor McGonagall would like everyone to remember that typography, unlike a first-year Transfiguration attempt, should not unexpectedly turn into a hedgehog.
+> The notice is _official_, the margins are **non-negotiable**, and the line height has been reviewed by three portraits and one skeptical cat.
+
+> The Fat Lady changed the password again.
+> This time it is not “sherbet lemon,” not “caput draconis,” and certainly not `password123`.
+>
+> Anyone attempting brute force entry will be redirected to Filch's office.
+
+> #### Quoted Heading: Emergency Style Inspection
+>
+> 1. Check whether ordered lists render correctly inside blockquotes.
+> 2. Confirm that code fences inside blockquotes retain indentation.
+>    Example spell-log parser:
+>    ```python
+>    def normalize_spell_name(name: str) -> str:
+>      return name.strip().lower().replace(" ", "-")
+>    ```
+
+## List
+
+### Ordered List
+
+1. Receive letter.
+2. Buy wand.
+3. Miss the train entrance once.
+4. Find Platform 9¾ without walking into the wrong wall twice.
+
+### Unordered List
+
+- Chocolate Frog card
+- Self-inking quill
+- Cauldron, standard size 2
+- A suspiciously blank piece of parchment
+
+### Task List
+
+- [ ] Polish wand before Charms
+- [x] Label potion bottles
+- [x] Return _Hogwarts: A History_
+- [ ] Remove animated bookmark before returning
+- [x] Check for marginalia written by former students
+
+### Nested List
+
+1. First-year survival kit
+   - Robes
+   - Winter cloak
+   - Spare socks, because the lake is colder than expected
+   - Books
+   - _A Beginner's Guide to Markdown Charms_
+   - _Defensive Typesetting Against the Dark Arts_
+2. Common-room diagnostics
+   ```txt
+   portrait-door: responsive
+   fireplace: warm
+   password-cache: expired
+   layout-shift: 0.00
+   ```
+3. Quidditch packing list
+   - Broom polish
+   - Gloves
+   - Courage, preferably version-controlled
+
+## `Code` Block
+
+This is `inline code`, and this is an inline spell registry key: `spell:lumos:max-brightness`.
+
+```ts
+import { z } from "zod"
+
+export const spellSchema = z.object({
+  incantation: z.string().min(1),
+  wandMovement: z.string().optional(),
+  difficulty: z.enum(["first-year", "ordinary-wizarding-level", "newt-level"]),
+})
+```
+
+Code block with many lines:
+
+```ts
+type HogwartsHouse = "Gryffindor" | "Hufflepuff" | "Ravenclaw" | "Slytherin"
+
+type MagicalPost = {
+  title: string
+  slug: string
+  tags: string[]
+  house?: HogwartsHouse
+  draft?: boolean
+  createdAt: Date
+}
+
+const posts: MagicalPost[] = [
+  {
+    title:
+      "A Practical Study of Moving Staircases, Portrait-Based Access Control, and MDX Collection Sorting at Hogwarts",
+    slug: "practical-study-moving-staircases-portrait-access-control-mdx-collection-sorting-hogwarts",
+    tags: ["hogwarts", "mdx", "content-collections", "typography", "marauders-map"],
+    house: "Ravenclaw",
+    draft: false,
+    createdAt: new Date("2026-05-18"),
+  },
+  {
+    title: "Why You Should Not Use an Invisibility Cloak as a Loading Skeleton",
+    slug: "why-you-should-not-use-an-invisibility-cloak-as-a-loading-skeleton",
+    tags: ["css", "ux", "defense-against-the-dark-patterns"],
+    house: "Hufflepuff",
+    draft: true,
+    createdAt: new Date("2026-05-19"),
+  },
+]
+
+function getPublishedPosts(items: MagicalPost[]): MagicalPost[] {
+  return items
+    .filter((post) => !post.draft)
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+}
+
+function awardHousePoints(house: HogwartsHouse, points: number, reason: string): string {
+  return `${house} receives ${points} points for ${reason}, pending review by the Head of House.`
+}
+
+console.log(getPublishedPosts(posts))
+console.log(
+  awardHousePoints("Ravenclaw", 10, "excellent semantic HTML and accessible heading order")
+)
+```
+
+### Code Block With a Very Long Line
+
+```ts
+const maraudersMapStatus =
+  "I solemnly swear that this intentionally very very very very very very very very very very very very very very very very very very very long line is up to no good and should test horizontal overflow behavior."
+```
+
+## Math
+
+Inline math: $E = mc^2$，以及中文段落中的公式 $a^2 + b^2 = c^2$。For Quidditch scoring, a toy model could be $S = 10q + 150s$, where $q$ is the number of goals and $s \in \{0,1\}$ indicates whether the Snitch was caught.
+
+Block math:
+
+$$
+\frac{\partial \mathcal{L}}{\partial w}
+=
+\sum_{i=1}^{N}
+\frac{\partial \mathcal{L}}{\partial y_i}
+\frac{\partial y_i}{\partial w}
+$$
+
+Long equation:
+
+$$
+\operatorname*{argmin}_{\theta}
+\sum_{i=1}^{N}
+\left\|
+f_{\theta}(x_i)
+-
+y_i
+\right\|_2^2
++
+\lambda
+\sum_{j=1}^{M}
+\left|
+\theta_j
+\right|
+$$
+
+A potion-stability toy equation:
+
+$$
+\text{Stability}
+=
+\frac{
+\alpha \cdot \text{stirClockwise}
+  -
+\beta \cdot \text{unexpectedSmoke}
+}{
+1 + \gamma \cdot \text{cauldronTemperature}
+}
+$$
+
+## Table
+
+| House      | Founder | Common-room clue |
+| :--------- | ------: | :--------------: |
+| Gryffindor |  Godric |      Tower       |
+| Hufflepuff |   Helga |     Barrels      |
+| Ravenclaw  |  Rowena |      Riddle      |
+| Slytherin  | Salazar |     Dungeon      |
+
+| Very long header about wand metadata, spell compatibility, and typography stress behavior | Code           | 中文列             |
+| ----------------------------------------------------------------------------------------- | -------------- | ------------------ |
+| Holly wand, phoenix-feather core, eleven inches, surprisingly loyal to long paragraphs    | `wand.core`    | 魔杖属性           |
+| **bold spell** and [link](https://example.com/spells/lumos)                               | `lumos\|nox`   | 含有管道符需要转义 |
+| The Marauder's Map says the table is wider than it appears                                | `map.reveal()` | 活点地图彩蛋       |
+
+### GitHub Alert
+
+> [!NOTE]
+> The Restricted Section is closed after midnight, but this note block should remain readable at every viewport width.
+
+> [!TIP]
+> Use semantic headings. Even the Sorting Hat prefers a clean document outline.
+
+> [!IMPORTANT]
+> Never put powdered bicorn horn into a production deploy unless the recipe, CI logs, and rollback plan have all been reviewed.
+
+> [!WARNING]
+> A moving staircase may invalidate cached layout assumptions.
+
+> [!CAUTION]
+> Do not test hover-only interactions with an invisibility cloak. Nobody will find the focus state.
+
+## Images
+
+See [another post](./image-test) for inserted images.
+
+### Emoji 🔥
+
+This short paragraph is here to test emoji rendering in normal prose: a cheerful owl delivers the post 🦉, a spark of magic lights the page ✨, and the layout survives another Markdown experiment ✅. If Twemoji is enabled, icons such as 🚀, 📚, 💡, and 🎉 should appear in a consistent visual style.
