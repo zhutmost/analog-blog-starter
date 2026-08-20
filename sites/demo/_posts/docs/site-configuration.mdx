@@ -1,6 +1,6 @@
 ---
 title: Analog User Guide - Site Configuration
-summary: Configure site identity, navigation, content defaults, comments, social sharing, and optional Next.js settings.
+summary: Configure site identity, navigation, content defaults, analytics, comments, social sharing, and optional Next.js settings.
 authors:
   - name: Haozhe Zhu
     href: https://github.com/zhutmost
@@ -172,6 +172,37 @@ pageSummaries: {
 ```
 
 `{name}` is replaced with the current category, tag, or author name.
+
+## Analytics
+
+Analytics are disabled when no provider is configured. Analog currently supports [Umami](https://umami.is):
+
+```ts
+analytics: {
+  umami: {
+    websiteId: "00000000-0000-0000-0000-000000000000",
+  },
+},
+```
+
+`websiteId` is the only required field. It is generated when a website is added to Umami.
+
+The remaining options control script hosting, accepted domains, privacy behavior, and performance measurements:
+
+```ts
+analytics: {
+  umami: {
+    websiteId: "00000000-0000-0000-0000-000000000000",
+    src: "https://cloud.umami.is/script.js",
+    hostUrl: "https://analytics.example.com",
+    domains: ["example.com", "www.example.com"],
+    doNotTrack: true,
+    excludeSearch: false,
+    excludeHash: true,
+    performance: false,
+  },
+},
+```
 
 ## Comments
 

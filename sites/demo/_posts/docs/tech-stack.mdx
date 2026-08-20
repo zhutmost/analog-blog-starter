@@ -29,7 +29,7 @@ This page gives a high-level overview of the technologies used by the project. E
 | Interface   | Tailwind CSS, shadcn/ui, Base UI | Styling, components, and interaction                            |
 | Content     | Content Collections, MDX         | Loading, validating, and compiling site content                 |
 | Markdown    | Remark, Rehype, KaTeX, Shiki     | Markdown extensions, math, code, images, and tables of contents |
-| Features    | cmdk, Giscus, Feed               | Search, comments, and RSS                                       |
+| Features    | cmdk, Giscus, Umami, Feed        | Search, comments, analytics, and RSS                            |
 | Tooling     | Bun, Oxlint, Oxfmt               | Package management, development, linting, and formatting        |
 
 ## Application foundation
@@ -106,7 +106,7 @@ Rendered examples are available in [Markdown Basic Syntax](/post/test/markdown-b
 
 The built-in search dialog uses [cmdk](https://cmdk.paco.me) and searches across the content available to the active site.
 
-Comments are optionally provided through [Giscus](https://giscus.app), while the `feed` package generates `/rss.xml`. Their user-facing setup is covered in [Integrations](/post/docs/integrations).
+Comments are optionally provided through [Giscus](https://giscus.app), analytics through [Umami](https://umami.is), and the `feed` package generates `/rss.xml`. Their user-facing setup is covered in [Integrations](/post/docs/integrations).
 
 Next.js metadata APIs generate page descriptions, canonical URLs, robots directives, Open Graph metadata, Twitter cards, and favicon declarations from the validated site and content data.
 
