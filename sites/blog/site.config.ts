@@ -23,7 +23,7 @@ const config: InputSiteConfig = {
       { label: "Blog", href: "/posts" },
       { label: "News", href: "/news" },
       { label: "Publication", href: "/publication" },
-      { label: "Team", href: "/team" },
+      { label: "Team", href: "/people" },
       { label: "About", href: "/author/haozhe-zhu" },
     ],
   },
