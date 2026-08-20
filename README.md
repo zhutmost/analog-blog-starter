@@ -74,7 +74,7 @@ Analog includes plentiful search, comment, sharing and other plugins out of the 
 
   [Blog](https://analog-demo.zhutmost.com/posts) · [Tags](https://analog-demo.zhutmost.com/posts/tags) · [People](https://analog-demo.zhutmost.com/people) · [Author](https://analog-demo.zhutmost.com/about) · [News](https://analog-demo.zhutmost.com/news)
 
-- **Style-rich Writing** [Demo](<[https://analog-demo.zhutmost.com/post/test/markdown-style](https://analog-demo.zhutmost.com/post/test/markdown-basic)>)
+- **Style-rich Writing** [Demo](https://analog-demo.zhutmost.com/post/test/markdown-basic)
 
   MDX (Markdown + JSX) · Katex (math support) · Shiki (code highlighting)
 
