@@ -7,12 +7,16 @@ import { HomeSectionArticles } from "@/components/home/home-section-articles"
 import { HomeSectionNews } from "@/components/home/home-section-news"
 import { HomeSectionResearch } from "@/components/home/home-section-research"
 import { PageShell } from "@/components/pages/basic/page-shell"
+import { JsonLd } from "@/components/seo/json-ld"
 import { getPostMetaBySlug, newsConfig, postMetas } from "@/lib/content"
 import { siteConfig } from "@/lib/site/config"
+import { buildWebsiteJsonLd } from "@/lib/site/json-ld"
 
 export default function HomePage() {
   return (
     <PageShell.Root className="max-w-5xl gap-20 lg:gap-20">
+      <JsonLd data={buildWebsiteJsonLd()} />
+
       <HomeHero
         greeting={homeConfig.hero.greeting}
         name={homeConfig.hero.name ?? siteConfig.author}
