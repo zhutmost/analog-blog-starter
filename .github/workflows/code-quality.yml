@@ -2,10 +2,40 @@ name: Code quality
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  discover-sites:
+    name: Discover sites
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      directories: ${{ steps.directories.outputs.value }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Discover site directories
+        id: directories
+        shell: bash
+        run: |
+          directories="$(find sites -mindepth 1 -maxdepth 1 -type d -print | sort | jq -Rsc 'split("\n") | map(select(length > 0))')"
+
+          if [[ "${directories}" == "[]" ]]; then
+            echo "::error::No site directories found under sites/"
+            exit 1
+          fi
+
+          echo "value=${directories}" >> "${GITHUB_OUTPUT}"
+
   quality:
+    name: Lint and format
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,7 +48,39 @@ jobs:
           node-version: 26
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run build
-      - run: bun run lint --format=github
-      - run: bun run format
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Generate types
+        run: |
+          bun run prebuild
+          bunx next typegen
+      - name: Lint
+        run: bun run lint --format=github
+      - name: Check formatting
+        run: bun run format
+
+  build:
+    name: Build (${{ matrix.site-directory }})
+    needs: discover-sites
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        site-directory: ${{ fromJSON(needs.discover-sites.outputs.directories) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 26
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Build site
+        run: bun run build
+        env:
+          SITE_DIR: ${{ matrix.site-directory }}
