@@ -1,4 +1,5 @@
 import { type AuthorMeta, type PostMeta } from "@/lib/content"
+import { classifyHref } from "@/lib/href"
 import { siteConfig } from "@/lib/site/config"
 
 const schemaContext = "https://schema.org"
@@ -16,17 +17,17 @@ function webUrl(href: string | undefined): string | undefined {
     return undefined
   }
 
-  const url = new URL(href, siteConfig.siteUrl)
-  return url.protocol === "http:" || url.protocol === "https:" ? url.toString() : undefined
+  const kind = classifyHref(href)
+
+  if (kind === "internal") {
+    return absoluteUrl(href)
+  }
+
+  return kind === "external" ? href : undefined
 }
 
 function externalWebUrl(href: string): string | undefined {
-  try {
-    const url = new URL(href)
-    return url.protocol === "http:" || url.protocol === "https:" ? url.toString() : undefined
-  } catch {
-    return undefined
-  }
+  return classifyHref(href) === "external" ? href : undefined
 }
 
 function buildPostAuthor(author: PostMeta["authors"][number]) {
