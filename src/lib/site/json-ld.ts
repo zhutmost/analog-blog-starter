@@ -79,7 +79,7 @@ export function buildPostJsonLd(post: PostMeta) {
     description: post.seo.description,
     datePublished: post.datePublish,
     dateModified: post.dateUpdate,
-    image: post.cover ? absoluteUrl(post.cover) : undefined,
+    image: webUrl(post.cover),
     author: post.authors.length > 0 ? post.authors.map(buildPostAuthor) : undefined,
     articleSection: post.category.name,
     keywords: post.tags.map((tag) => tag.name),
@@ -132,7 +132,7 @@ export function buildAuthorJsonLd(author: AuthorMeta) {
     name: author.name,
     url: pageUrl,
     description: author.seo.description,
-    image: author.avatar ? absoluteUrl(author.avatar) : undefined,
+    image: webUrl(author.avatar),
     sameAs: sameAs.length > 0 ? sameAs : undefined,
   }
 
