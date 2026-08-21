@@ -7,6 +7,7 @@ import { MdxProse } from "@/components/mdx/mdx-prose"
 import { PageShell } from "@/components/pages/basic/page-shell"
 import { PostHeader } from "@/components/pages/post/post-header"
 import { hasPostTocItems, PostToc } from "@/components/pages/post/post-toc"
+import { JsonLd } from "@/components/seo/json-ld"
 import { AutoLink, TwemojifyText } from "@/components/ui/my"
 import {
   Breadcrumb,
@@ -18,6 +19,7 @@ import {
 } from "@/components/ui/shadcn/breadcrumb"
 import { getPostBySlug, getPostMetaBySlug, postMetas } from "@/lib/content"
 import { siteConfig } from "@/lib/site/config"
+import { buildPostJsonLd } from "@/lib/site/json-ld"
 import { buildRobotsMetadata } from "@/lib/site/metadata"
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
@@ -79,6 +81,8 @@ export default async function PostPage(props: PageProps<"/post/[...slug]">) {
 
   return (
     <PageShell.Root as="article">
+      {!post.seo.noIndex && <JsonLd data={buildPostJsonLd(post)} />}
+
       <PageShell.Top>
         <Breadcrumb>
           <BreadcrumbList>

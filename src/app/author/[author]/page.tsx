@@ -6,7 +6,9 @@ import { MdxProse } from "@/components/mdx/mdx-prose"
 import { AuthorProfile } from "@/components/pages/author/author-profile"
 import { AuthorRecentArticles } from "@/components/pages/author/author-recent-articles"
 import { PageShell } from "@/components/pages/basic/page-shell"
+import { JsonLd } from "@/components/seo/json-ld"
 import { authors, getAuthorBySlug, getPostMetasByAuthorSlug } from "@/lib/content"
+import { buildAuthorJsonLd } from "@/lib/site/json-ld"
 import { buildPageMetadata } from "@/lib/site/metadata"
 import { cn } from "@/lib/utils"
 
@@ -47,6 +49,8 @@ export default async function AuthorPage(props: PageProps<"/author/[author]">) {
 
   return (
     <PageShell.Root>
+      {!author.seo.noIndex && <JsonLd data={buildAuthorJsonLd(author)} />}
+
       <PageShell.Body
         className={cn(
           "grid gap-10",
