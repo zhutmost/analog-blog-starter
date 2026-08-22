@@ -108,8 +108,7 @@ Make your blog more comfortable to read with the dark/light mode switching.
 │   ├── content-collections/
 │   └── lib/
 ├── sites/
-│   ├── demo/               Demo content and documentation
-│   └── blog/               Example personal blog
+│   └── demo/               Demo content and documentation
 ├── scripts/                Build and asset synchronization scripts
 ├── content-collections.ts
 └── next.config.ts
@@ -149,7 +148,7 @@ The active site is selected through `SITE_DIR`. When it is omitted, Analog uses 
 A different site can be selected for development or builds:
 
 ```bash
-export SITE_DIR=sites/blog && bun run build
+export SITE_DIR=sites/my-site && bun run build
 ```
 
 ## 🎉 Issues & Feature Requests
