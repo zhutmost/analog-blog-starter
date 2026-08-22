@@ -55,7 +55,7 @@ alumni:
     - name: Cedric Diggory
       startYear: 2019
       endYear: 2024
-      coSupervisors:
+      cosupervisors:
         - name: Prof. Minerva McGonagall
           href: https://example.com/mcgonagall
       description: Now a lecturer at Example University.
