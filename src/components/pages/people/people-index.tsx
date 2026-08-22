@@ -1,4 +1,5 @@
 import NextLink from "next/link"
+import * as React from "react"
 
 import { IconUsers } from "@tabler/icons-react"
 
@@ -128,7 +129,16 @@ function CurrentPersonItem({ person }: { person: CurrentPerson }) {
       <div className="min-w-0 self-center">
         <PersonIdentity name={person.name} href={href} github={person.github} />
 
-        <p className="mt-0.5 text-sm text-muted-foreground">Since {person.startYear}</p>
+        <div className="mt-0.5 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 text-sm text-muted-foreground">
+          <span>Since {person.startYear}</span>
+
+          {person.cosupervisors.length > 0 && (
+            <>
+              <span aria-hidden="true">·</span>
+              <CosupervisorList supervisors={person.cosupervisors} />
+            </>
+          )}
+        </div>
 
         <p className="mt-2 text-sm leading-6 text-foreground/80">
           <TwemojifyText text={person.research.join(" · ")} />
@@ -146,12 +156,28 @@ function AlumniPersonItem({ person, role }: { person: AlumniPerson; role: string
       <div className="flex min-w-0 flex-wrap items-baseline justify-between gap-x-6 gap-y-0.5">
         <PersonIdentity name={person.name} href={href} github={person.github} />
 
-        <div className="flex shrink-0 items-baseline gap-2 text-sm">
-          <span className="font-medium text-foreground">
+        <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5 text-sm">
+          <span className="font-medium whitespace-nowrap text-foreground">
             <TwemojifyText text={role} />
           </span>
 
-          <span className="text-muted-foreground tabular-nums">
+          {person.cosupervisors.length > 0 && (
+            <>
+              <span aria-hidden="true" className="text-muted-foreground">
+                ·
+              </span>
+
+              <span className="text-muted-foreground">
+                <CosupervisorList supervisors={person.cosupervisors} />
+              </span>
+            </>
+          )}
+
+          <span aria-hidden="true" className="text-muted-foreground">
+            ·
+          </span>
+
+          <span className="whitespace-nowrap text-muted-foreground tabular-nums">
             {person.startYear}–{person.endYear}
           </span>
         </div>
@@ -222,5 +248,36 @@ function CurrentPersonAvatar({ name, src, href }: CurrentPersonAvatarProps) {
     >
       {avatar}
     </NextLink>
+  )
+}
+
+type CosupervisorListProps = {
+  supervisors: readonly CurrentPerson["cosupervisors"][number][]
+}
+
+function CosupervisorList({ supervisors }: CosupervisorListProps) {
+  return (
+    <span>
+      Co-supervised by{" "}
+      {supervisors.map((supervisor, index) => (
+        <React.Fragment key={`${supervisor.name}:${supervisor.href ?? ""}`}>
+          {index > 0 && (index === supervisors.length - 1 ? " and " : ", ")}
+
+          {supervisor.href ? (
+            <TextLink
+              href={supervisor.href}
+              variant="underline"
+              className="text-foreground/80 hover:text-primary"
+            >
+              <TwemojifyText text={supervisor.name} />
+            </TextLink>
+          ) : (
+            <span className="text-foreground/80">
+              <TwemojifyText text={supervisor.name} />
+            </span>
+          )}
+        </React.Fragment>
+      ))}
+    </span>
   )
 }

@@ -5,11 +5,19 @@ import { mz } from "@/lib/utils"
 
 const yearSchema = z.int().min(1900).max(2100)
 
-const personBaseSchema = z.object({
+const studentBaseSchema = z.object({
   name: mz.nonEmptyString(),
   startYear: yearSchema,
   avatar: mz.optionalString(),
   github: mz.optionalString(),
+  cosupervisors: z
+    .array(
+      z.object({
+        name: mz.nonEmptyString(),
+        href: mz.href().optional(),
+      })
+    )
+    .default([]),
 
   /**
    * Optional slug of an entry in the Author collection.
@@ -19,11 +27,11 @@ const personBaseSchema = z.object({
   author: mz.optionalString(),
 })
 
-const currentStudentSchema = personBaseSchema.extend({
+const currentStudentSchema = studentBaseSchema.extend({
   research: z.array(mz.nonEmptyString()).min(1),
 })
 
-const alumniSchema = personBaseSchema.extend({
+const alumniSchema = studentBaseSchema.extend({
   endYear: yearSchema,
 
   /** A short note such as "Now pursuing a Ph.D. at ..." or "Joined ...". */
