@@ -13,6 +13,7 @@
 # Generated Files
 
 /public/
+/sites/_*/
 
 # ==============================================================================
 # Language & Build Tool - Content Collections
