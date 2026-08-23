@@ -64,7 +64,7 @@ export default function NewsPage() {
   const yearGroups = groupNewsByYear(newsConfig.items)
 
   return (
-    <PageShell.Root>
+    <PageShell.Root width="5xl">
       <PageShell.Top>
         <PageHeader title={newsConfig.title} summary={newsConfig.summary} />
       </PageShell.Top>

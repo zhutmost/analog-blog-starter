@@ -14,7 +14,7 @@ import { buildWebsiteJsonLd } from "@/lib/site/json-ld"
 
 export default function HomePage() {
   return (
-    <PageShell.Root className="max-w-5xl gap-20 lg:gap-20">
+    <PageShell.Root width="5xl">
       <JsonLd data={buildWebsiteJsonLd()} />
 
       <HomeHero

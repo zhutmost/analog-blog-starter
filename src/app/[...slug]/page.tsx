@@ -39,7 +39,7 @@ export default async function UserpagePage(props: PageProps<"/[...slug]">) {
   }
 
   return (
-    <PageShell.Root as="article">
+    <PageShell.Root as="article" width="5xl">
       <PageShell.Top>
         <PageHeader title={userpage.title} summary={userpage.summary} />
       </PageShell.Top>
