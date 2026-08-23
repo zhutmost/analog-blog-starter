@@ -12,7 +12,7 @@ function HomeSectionRoot({ className, ...props }: HomeSectionRootProps) {
     <section
       {...props}
       data-slot="home-section"
-      className={cn("min-w-0 border-t pt-8", "sm:pt-10", className)}
+      className={cn("min-w-0 border-t py-8", "sm:py-10", className)}
     />
   )
 }
