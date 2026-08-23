@@ -1,28 +1,45 @@
 import * as React from "react"
 
-import { Container, type ContainerProps, VStack, type VStackProps } from "@/components/ui/layout"
+import { VStack, type VStackProps } from "@/components/ui/layout"
 import { cn } from "@/lib/utils"
 
-type PageShellRootProps = Omit<ContainerProps, "children" | "as"> & {
+const pageShellWidthClassNames = {
+  "5xl": "max-w-5xl",
+  "6xl": "max-w-6xl",
+} as const
+
+type PageShellWidth = keyof typeof pageShellWidthClassNames
+
+type PageShellRootProps = Omit<React.ComponentPropsWithoutRef<"div">, "children"> & {
   children: React.ReactNode
   as?: "div" | "article"
+  width?: PageShellWidth
 }
 
-function PageShellRoot({ children, className, as = "div", ...props }: PageShellRootProps) {
+function PageShellRoot({
+  children,
+  className,
+  as = "div",
+  width = "6xl",
+  ...props
+}: PageShellRootProps) {
+  const Comp = as
+
   return (
-    <Container
+    <Comp
       {...props}
-      as={as}
       data-slot="page-shell"
       className={cn(
-        "flex flex-1 flex-col gap-10 py-10",
-        "sm:py-14",
-        "lg:gap-12 lg:py-16",
+        "mx-auto flex w-full flex-1 flex-col",
+        "gap-10 px-4 py-10",
+        "sm:px-6 sm:py-14",
+        "lg:gap-12 lg:px-8 lg:py-16",
+        pageShellWidthClassNames[width],
         className
       )}
     >
       {children}
-    </Container>
+    </Comp>
   )
 }
 

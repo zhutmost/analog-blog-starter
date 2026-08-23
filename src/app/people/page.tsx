@@ -27,13 +27,13 @@ export default function PeoplePage() {
   }
 
   return (
-    <PageShell.Root>
+    <PageShell.Root width="6xl">
       <PageShell.Top>
         <PageHeader title={peopleConfig.title} summary={peopleConfig.summary} />
       </PageShell.Top>
 
       <PageShell.Body>
-        <PageShell.Content width="full">
+        <PageShell.Content>
           <PeopleIndex current={peopleConfig.current} alumni={peopleConfig.alumni} />
 
           {peopleConfig.comment && <CommentSystem />}
