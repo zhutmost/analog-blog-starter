@@ -62,11 +62,11 @@ export function HomeHero({
       </h1>
 
       {introduction && (
-        <div
-          data-slot="home-hero-content"
-          className={cn("space-y-4 sm:space-y-5", "mt-8 sm:mt-10")}
-        >
-          <MdxProse code={introduction} />
+        <div data-slot="home-hero-intro" className="mt-8 sm:mt-10">
+          <MdxProse
+            code={introduction}
+            className="max-w-3xl text-base text-muted-foreground sm:text-lg"
+          />
         </div>
       )}
 
