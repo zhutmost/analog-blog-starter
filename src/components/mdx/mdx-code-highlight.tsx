@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { CodeCopyButton } from "@/components/mdx/code-copy-button"
+import { CodeBlockContent } from "@/components/mdx/code-block-content"
 import { cn } from "@/lib/utils"
 
 type MdxCodeBlockProps = React.ComponentPropsWithoutRef<"figure"> & {
@@ -121,6 +121,8 @@ export function MdxCodeBlock({
 
   const code = getNodeText(preNode.props.children).replace(/\n$/, "")
 
+  const lineCount = code.split("\n").length
+
   const highlightedPre = React.cloneElement(preNode, {
     "data-slot": "mdx-code-pre",
     className: cn(
@@ -137,34 +139,9 @@ export function MdxCodeBlock({
       className={cn("overflow-hidden rounded-lg border bg-card shadow-xs", className)}
       {...props}
     >
-      <div
-        data-slot="mdx-code-header"
-        className={cn("flex min-h-10 items-center gap-2", "border-b bg-muted/40 px-3")}
-      >
-        <span
-          className={cn("min-w-0 flex-1 truncate", "font-mono text-xs font-medium text-foreground")}
-          title={title}
-        >
-          {title ?? languageName}
-        </span>
-
-        {title && (
-          <span
-            className={cn(
-              "shrink-0 rounded-sm border bg-background/60",
-              "px-1.5 py-0.5 font-mono",
-              "text-[0.625rem] leading-none",
-              "tracking-wide text-muted-foreground uppercase"
-            )}
-          >
-            {languageName}
-          </span>
-        )}
-
-        <CodeCopyButton value={code} />
-      </div>
-
-      <div data-slot="mdx-code-body">{highlightedPre}</div>
+      <CodeBlockContent title={title} languageName={languageName} code={code} lineCount={lineCount}>
+        {highlightedPre}
+      </CodeBlockContent>
 
       {captionNode && (
         <figcaption
