@@ -1,0 +1,21 @@
+/* Cross-fade the new theme over the current page when the browser supports View Transitions. */
+
+html[data-theme-transition]::view-transition-old(root) {
+  animation: none;
+}
+
+html[data-theme-transition]::view-transition-new(root) {
+  animation: theme-fade-in 200ms ease-out;
+}
+
+@keyframes theme-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-transition]::view-transition-new(root) {
+    animation: none;
+  }
+}
