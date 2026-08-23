@@ -6,6 +6,7 @@
 @import "../styles/code-highlight.css";
 @import "../styles/footnote.css";
 @import "../styles/katex.css";
+@import "../styles/mdx-heading.css";
 @import "../styles/twemoji.css";
 
 @custom-variant dark (&:is(.dark *));

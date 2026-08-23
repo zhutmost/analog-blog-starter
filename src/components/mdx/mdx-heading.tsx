@@ -1,7 +1,6 @@
 import React from "react"
 
-import { IconLink } from "@tabler/icons-react"
-
+import { HeadingAnchor } from "@/components/mdx/heading-anchor"
 import { cn } from "@/lib/utils"
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
@@ -35,24 +34,8 @@ function MdxHeading({ level, id, className, children, ...props }: MdxHeadingProp
       )}
       {...props}
     >
-      {children}
-      {id && (
-        <a
-          href={`#${id}`}
-          aria-label="Link to this section"
-          data-slot="mdx-heading-anchor"
-          className={cn(
-            "ml-2 inline-flex align-middle text-muted-foreground opacity-0 transition-opacity",
-            "group-hover:opacity-100 hover:text-primary",
-            "focus-visible:opacity-100 focus-visible:outline-none",
-            "focus-visible:ring-2 focus-visible:ring-ring",
-            "focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-            "motion-reduce:transition-none print:hidden"
-          )}
-        >
-          <IconLink aria-hidden />
-        </a>
-      )}
+      <span data-slot="mdx-heading-content">{children}</span>
+      {id && <HeadingAnchor id={id} />}
     </HeadingTag>
   )
 }

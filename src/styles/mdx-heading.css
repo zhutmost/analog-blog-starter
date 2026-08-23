@@ -1,0 +1,27 @@
+/* Briefly identify the section reached through a heading hash link. */
+
+[data-slot="mdx-heading"]:target > [data-slot="mdx-heading-content"] {
+  border-radius: var(--radius-sm);
+  animation: mdx-heading-target 1.5s ease-out;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@keyframes mdx-heading-target {
+  from {
+    background-color: color-mix(in oklab, var(--primary) 14%, transparent);
+    box-shadow: 0 0 0 0.2rem color-mix(in oklab, var(--primary) 14%, transparent);
+  }
+
+  to {
+    background-color: transparent;
+    box-shadow: 0 0 0 0.2rem transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="mdx-heading"]:target > [data-slot="mdx-heading-content"] {
+    animation: none;
+    color: var(--primary);
+  }
+}
