@@ -1,5 +1,6 @@
 import * as React from "react"
 
+import { PostUpdatedDate } from "@/components/pages/post/post-updated-date"
 import { TextLink, TwemojifyText } from "@/components/ui/my"
 import { type PostMeta } from "@/lib/content"
 import { formatDate, isSameDate } from "@/lib/site/format-date"
@@ -23,6 +24,7 @@ export function PostMetaInfo({
   ...props
 }: PostMetaInfoProps) {
   const shouldShowUpdatedDate = !isSameDate(datePublish, dateUpdate)
+  const formattedUpdatedDate = formatDate(dateUpdate)
 
   return (
     <div
@@ -73,7 +75,7 @@ export function PostMetaInfo({
             ·
           </span>
           <span>
-            Updated <time dateTime={dateUpdate}>{formatDate(dateUpdate)}</time>
+            Updated <PostUpdatedDate value={dateUpdate} formattedValue={formattedUpdatedDate} />
           </span>
         </>
       )}
