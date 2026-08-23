@@ -1,7 +1,7 @@
 import * as React from "react"
 
+import { MdxTableScroll } from "@/components/mdx/mdx-table-scroll"
 import {
-  Table,
   TableBody,
   TableCaption,
   TableCell,
@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils"
 
 export function MdxTable({ className, ...props }: React.ComponentPropsWithoutRef<"table">) {
   return (
-    <Table
+    <MdxTableScroll
       data-slot="mdx-table"
       className={cn("text-sm", "[&_code]:whitespace-nowrap", className)}
       {...props}
