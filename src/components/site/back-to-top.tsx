@@ -53,7 +53,8 @@ export function BackToTop() {
       onClick={scrollToTop}
       className={cn(
         "fixed right-6 bottom-6 z-40 hidden rounded-full",
-        "border-border/80 bg-background/85 shadow-md backdrop-blur-md md:inline-flex lg:right-8 lg:bottom-8",
+        "border-border/80 bg-background/85 shadow-md backdrop-blur-md",
+        "lg:right-8 lg:bottom-8 md:[@media(hover:hover)_and_(pointer:fine)]:inline-flex",
         "transition-[opacity,transform] duration-200 motion-reduce:transition-none",
         isVisible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
       )}
