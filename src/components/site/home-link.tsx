@@ -19,6 +19,8 @@ export function HomeLink({ onClick, target, ...props }: HomeLinkProps) {
     if (
       event.defaultPrevented ||
       pathname !== "/" ||
+      window.location.search !== "" ||
+      window.location.hash !== "" ||
       (target && target !== "_self") ||
       !isUnmodifiedLeftClick(event)
     ) {
