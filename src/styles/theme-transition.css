@@ -1,0 +1,22 @@
+/*
+ * Keep the current page visible and fade the new theme over it.
+ * The data attribute limits this animation to theme changes.
+ */
+
+html[data-theme-transition]::view-transition-old(root) {
+  animation: none;
+}
+
+html[data-theme-transition]::view-transition-new(root) {
+  animation: theme-fade-in 200ms ease-out both;
+}
+
+@keyframes theme-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
