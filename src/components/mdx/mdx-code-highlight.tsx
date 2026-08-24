@@ -1,7 +1,6 @@
 import * as React from "react"
 
-import { CodeCopyButton } from "@/components/mdx/code-copy-button"
-import { HStack } from "@/components/ui/layout"
+import { CodeBlock } from "@/components/mdx/code-block"
 import { cn } from "@/lib/utils"
 
 type MdxCodeBlockProps = React.ComponentPropsWithoutRef<"figure"> & {
@@ -115,17 +114,16 @@ export function MdxCodeBlock({
   }
 
   const language = preNode.props["data-language"] ?? "plaintext"
-
   const languageName = getLanguageName(language)
-
   const title = titleNode ? getNodeText(titleNode.props.children) : undefined
 
   const code = getNodeText(preNode.props.children).replace(/\n$/, "")
+  const lineCount = code.split("\n").length
 
   const highlightedPre = React.cloneElement(preNode, {
     "data-slot": "mdx-code-pre",
     className: cn(
-      "m-0 overflow-x-auto bg-transparent py-4",
+      "m-0 bg-transparent py-4",
       "font-mono text-sm leading-6",
       preNode.props.className
     ),
@@ -138,36 +136,9 @@ export function MdxCodeBlock({
       className={cn("overflow-hidden rounded-lg border bg-card shadow-xs", className)}
       {...props}
     >
-      <div
-        data-slot="mdx-code-header"
-        className="flex min-h-10 items-center gap-2 border-b bg-muted/40 px-3"
-      >
-        <span
-          className={cn(
-            "rounded-sm border bg-background/60",
-            "px-1.5 py-0.5 font-mono",
-            "text-[0.625rem] leading-none",
-            "tracking-wide text-muted-foreground uppercase"
-          )}
-        >
-          {languageName}
-        </span>
-
-        {title && (
-          <span
-            className="min-w-0 truncate font-mono text-xs font-medium text-foreground"
-            title={title}
-          >
-            {title}
-          </span>
-        )}
-
-        <HStack gap="sm" className="ml-auto shrink-0 items-center">
-          <CodeCopyButton value={code} />
-        </HStack>
-      </div>
-
-      <div data-slot="mdx-code-body">{highlightedPre}</div>
+      <CodeBlock title={title} languageName={languageName} code={code} lineCount={lineCount}>
+        {highlightedPre}
+      </CodeBlock>
 
       {captionNode && (
         <figcaption
