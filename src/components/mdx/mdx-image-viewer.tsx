@@ -17,6 +17,10 @@ const triggerSelector = "img[data-mdx-image-viewer-trigger]"
 
 type MdxImageViewerProps = React.ComponentPropsWithoutRef<"div">
 
+type MdxImageSlide = SlideImage & {
+  caption?: string
+}
+
 type PreservedAttributes = {
   image: HTMLImageElement
   ariaHasPopup: string | null
@@ -49,7 +53,25 @@ function getTriggerImage(target: EventTarget | null): HTMLImageElement | undefin
     : undefined
 }
 
-function getImageSlide(image: HTMLImageElement): SlideImage {
+function getImageCaption(image: HTMLImageElement): string | undefined {
+  let figure = image.closest("figure")
+
+  while (figure) {
+    const caption = Array.from(figure.children).find(
+      (child) => child.tagName === "FIGCAPTION"
+    )?.textContent
+
+    if (caption?.trim()) {
+      return caption.replace(/\s+/g, " ").trim()
+    }
+
+    figure = figure.parentElement?.closest("figure") ?? null
+  }
+
+  return undefined
+}
+
+function getImageSlide(image: HTMLImageElement): MdxImageSlide {
   const width = Number(image.getAttribute("width")) || image.naturalWidth || undefined
   const height = Number(image.getAttribute("height")) || image.naturalHeight || undefined
 
@@ -58,6 +80,7 @@ function getImageSlide(image: HTMLImageElement): SlideImage {
     alt: image.alt,
     width,
     height,
+    caption: getImageCaption(image),
   }
 }
 
@@ -84,7 +107,7 @@ function ZoomButtons() {
 
 export function MdxImageViewer({ className, children, ...props }: MdxImageViewerProps) {
   const rootRef = React.useRef<HTMLDivElement>(null)
-  const [slide, setSlide] = React.useState<SlideImage>()
+  const [slide, setSlide] = React.useState<MdxImageSlide>()
 
   React.useEffect(() => {
     const root = rootRef.current
@@ -183,9 +206,23 @@ export function MdxImageViewer({ className, children, ...props }: MdxImageViewer
             setSlide(undefined)
           }
         }}
-        toolbar={{ buttons: [<ZoomButtons key="zoom" />] }}
+        toolbar={{ fixed: true, buttons: [<ZoomButtons key="zoom" />] }}
         carousel={{ preload: 0 }}
         zoom={{ maxZoom: 4 }}
+        render={{
+          slideFooter: ({ slide: currentSlide }) => {
+            const caption =
+              "caption" in currentSlide && typeof currentSlide.caption === "string"
+                ? currentSlide.caption
+                : undefined
+
+            return caption ? (
+              <div className="yarll__interactive mt-4 max-w-3xl px-4 text-center text-sm leading-6 text-white/70">
+                {caption}
+              </div>
+            ) : null
+          },
+        }}
         slots={{
           portal: {
             style: {
@@ -203,11 +240,17 @@ export function MdxImageViewer({ className, children, ...props }: MdxImageViewer
             },
           },
           button: {
-            className: "rounded-md transition-colors hover:bg-white/20",
+            className: "rounded-md transition-colors hover:bg-white/20 [&_.tabler-icon]:fill-none",
           },
-          image: {
+          image: (currentSlide) => ({
             className: "rounded-lg shadow-2xl",
-          },
+            style: {
+              width: "auto",
+              height: "auto",
+              maxWidth: currentSlide.width ? `min(100%, ${currentSlide.width}px)` : "100%",
+              maxHeight: currentSlide.height ? `min(100%, ${currentSlide.height}px)` : "100%",
+            },
+          }),
         }}
       />
     </>
