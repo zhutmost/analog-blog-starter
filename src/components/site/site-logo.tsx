@@ -1,11 +1,11 @@
 import NextImage from "next/image"
-import NextLink from "next/link"
 
+import { HomeLink } from "@/components/site/home-link"
 import { siteConfig } from "@/lib/site/config"
 
 export function SiteLogo() {
   return (
-    <NextLink
+    <HomeLink
       href="/"
       className="group flex min-w-0 items-center gap-4"
       aria-label={`${siteConfig.siteTitle} home`}
@@ -25,6 +25,6 @@ export function SiteLogo() {
       <span className="truncate font-heading text-lg font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
         {siteConfig.header.title ?? siteConfig.siteTitle}
       </span>
-    </NextLink>
+    </HomeLink>
   )
 }
