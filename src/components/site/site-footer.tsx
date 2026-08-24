@@ -10,7 +10,7 @@ const thisYear = new Date().getFullYear()
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border/70">
+    <footer data-slot="site-footer" className="border-t border-border/70">
       <VStack gap="lg" className={cn("mx-auto w-full max-w-6xl", "px-4 sm:px-6 lg:px-8", "py-10")}>
         <VStack className="md:flex-row md:items-start md:justify-between">
           <SiteLogo />
