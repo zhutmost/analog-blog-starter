@@ -5,12 +5,13 @@ import { type ReactNode } from "react"
 import { ThemeProvider } from "@wrksz/themes/next"
 
 import { Analytics } from "@/components/analytics"
+import { BackToTop } from "@/components/site/back-top-top"
 import { SiteFooter } from "@/components/site/site-footer"
 import { SiteHeader } from "@/components/site/site-header"
 import { TooltipProvider } from "@/components/ui/shadcn/tooltip"
-import { siteConfig } from "@/lib/site/config"
 
 import "@/app/globals.css"
+import { siteConfig } from "@/lib/site/config"
 
 const fontSpaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -138,6 +139,8 @@ export default function RootLayout({
               <main className="flex flex-1 flex-col">{children}</main>
               <SiteFooter />
             </div>
+
+            <BackToTop />
           </TooltipProvider>
         </ThemeProvider>
         <Analytics />
