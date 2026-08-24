@@ -93,6 +93,7 @@ export function MdxImage({
         height={parsedHeight}
         sizes={sizes}
         data-slot="mdx-image"
+        data-mdx-image-src={src}
         className={cn(
           "h-auto max-w-3xl rounded-lg border bg-muted/20 object-contain shadow-xs",
           className

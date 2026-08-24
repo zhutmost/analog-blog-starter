@@ -8,6 +8,7 @@ import { MdxBlockquote } from "@/components/mdx/mdx-blockquote"
 import { MdxCode, MdxCodeBlock } from "@/components/mdx/mdx-code-highlight"
 import { MdxH1, MdxH2, MdxH3, MdxH4, MdxH5, MdxH6 } from "@/components/mdx/mdx-heading"
 import { MdxImage } from "@/components/mdx/mdx-image"
+import { MdxImageViewer } from "@/components/mdx/mdx-image-viewer"
 import { MdxLink } from "@/components/mdx/mdx-link"
 import { MdxInput, MdxListItem, MdxOrderedList, MdxUnorderedList } from "@/components/mdx/mdx-list"
 import {
@@ -72,7 +73,7 @@ type MdxProseProps = Omit<
 
 export function MdxProse({ code, className, ...props }: MdxProseProps) {
   return (
-    <div
+    <MdxImageViewer
       {...props}
       data-slot="mdx-prose"
       className={cn(
@@ -94,6 +95,6 @@ export function MdxProse({ code, className, ...props }: MdxProseProps) {
       )}
     >
       <MDXContent code={code} components={mdxComponents} />
-    </div>
+    </MdxImageViewer>
   )
 }
