@@ -84,8 +84,8 @@ export function CodeBlock({ title, languageName, code, lineCount, children }: Co
           <div
             aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute inset-x-0 bottom-0 h-12",
-              "bg-linear-to-t from-card to-transparent",
+              "pointer-events-none absolute inset-x-0 bottom-0 h-16",
+              "bg-linear-to-t from-muted via-muted/50 to-transparent",
               "print:hidden"
             )}
           />
