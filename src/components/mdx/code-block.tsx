@@ -27,6 +27,8 @@ export function CodeBlock({ title, languageName, code, lineCount, children }: Co
 
   const bodyId = React.useId()
 
+  const isCollapsed = canCollapse && !isExpanded
+
   const hiddenLineCount = lineCount - COLLAPSED_LINE_COUNT
 
   const toggleLabel = isExpanded
@@ -83,21 +85,12 @@ export function CodeBlock({ title, languageName, code, lineCount, children }: Co
       <div
         id={bodyId}
         data-slot="mdx-code-body"
-        data-collapsed={canCollapse && !isExpanded ? "" : undefined}
+        data-collapsed={isCollapsed ? "" : undefined}
         className="relative"
       >
-        <div
-          className={cn(
-            "overflow-x-auto print:overflow-visible",
-            canCollapse &&
-              !isExpanded &&
-              "max-h-68 overflow-y-hidden print:max-h-none print:overflow-visible"
-          )}
-        >
-          {children}
-        </div>
+        {children}
 
-        {canCollapse && !isExpanded && (
+        {isCollapsed && (
           <div
             aria-hidden="true"
             className={cn(

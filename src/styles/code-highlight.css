@@ -103,6 +103,27 @@
 }
 
 /*
+ * Collapsed code blocks
+ *
+ * Keep the line threshold in sync with COLLAPSED_LINE_COUNT
+ * in code-block.tsx.
+ */
+
+[data-slot="mdx-code-block"]
+  [data-slot="mdx-code-body"][data-collapsed]
+  [data-line]:nth-child(n + 11) {
+  display: none;
+}
+
+@media print {
+  [data-slot="mdx-code-block"]
+    [data-slot="mdx-code-body"][data-collapsed]
+    [data-line]:nth-child(n + 11) {
+    display: inline-block;
+  }
+}
+
+/*
  * Line-number and diff gutters
  */
 
