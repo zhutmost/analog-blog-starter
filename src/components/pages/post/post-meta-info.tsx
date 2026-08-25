@@ -1,7 +1,9 @@
 import * as React from "react"
 
+import { PostUpdatedDate } from "@/components/pages/post/post-updated-date"
 import { TextLink, TwemojifyText } from "@/components/ui/my"
 import { type PostMeta } from "@/lib/content"
+import { siteConfig } from "@/lib/site/config"
 import { formatDate, isSameDate } from "@/lib/site/format-date"
 import { cn } from "@/lib/utils"
 
@@ -72,9 +74,12 @@ export function PostMetaInfo({
           <span aria-hidden className="text-muted-foreground/80">
             ·
           </span>
-          <span>
-            Updated <time dateTime={dateUpdate}>{formatDate(dateUpdate)}</time>
-          </span>
+
+          <PostUpdatedDate
+            value={dateUpdate}
+            formattedValue={formatDate(dateUpdate)}
+            locale={siteConfig.locale}
+          />
         </>
       )}
     </div>
