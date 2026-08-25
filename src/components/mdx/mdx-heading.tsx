@@ -58,25 +58,25 @@ function MdxHeading({ level, id, className, children, ...props }: MdxHeadingProp
 }
 
 export function MdxH1(props: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <MdxHeading level={"h1"} {...props} />
+  return <MdxHeading level="h1" {...props} />
 }
 
 export function MdxH2(props: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <MdxHeading level={"h2"} {...props} />
+  return <MdxHeading level="h2" {...props} />
 }
 
 export function MdxH3(props: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <MdxHeading level={"h3"} {...props} />
+  return <MdxHeading level="h3" {...props} />
 }
 
 export function MdxH4(props: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <MdxHeading level={"h4"} {...props} />
+  return <MdxHeading level="h4" {...props} />
 }
 
 export function MdxH5(props: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <MdxHeading level={"h5"} {...props} />
+  return <MdxHeading level="h5" {...props} />
 }
 
 export function MdxH6(props: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <MdxHeading level={"h6"} {...props} />
+  return <MdxHeading level="h6" {...props} />
 }
