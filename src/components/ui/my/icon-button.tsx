@@ -14,6 +14,7 @@ type IconTooltipProps = {
   tooltip?: React.ReactNode | null
   tooltipSide?: React.ComponentProps<typeof TooltipContent>["side"]
   tooltipAlign?: React.ComponentProps<typeof TooltipContent>["align"]
+  tooltipCloseOnClick?: boolean
 }
 
 function withIconTooltip({
@@ -21,11 +22,13 @@ function withIconTooltip({
   tooltip,
   tooltipSide = "bottom",
   tooltipAlign = "center",
+  tooltipCloseOnClick = true,
 }: {
   trigger: React.ReactElement
   tooltip: React.ReactNode | null | undefined
   tooltipSide?: React.ComponentProps<typeof TooltipContent>["side"]
   tooltipAlign?: React.ComponentProps<typeof TooltipContent>["align"]
+  tooltipCloseOnClick?: boolean
 }) {
   if (!tooltip) {
     return trigger
@@ -33,7 +36,7 @@ function withIconTooltip({
 
   return (
     <Tooltip>
-      <TooltipTrigger render={trigger} />
+      <TooltipTrigger render={trigger} closeOnClick={tooltipCloseOnClick} />
       <TooltipContent side={tooltipSide} align={tooltipAlign}>
         {tooltip}
       </TooltipContent>
@@ -52,6 +55,7 @@ export function IconButton({
   tooltip = label,
   tooltipSide,
   tooltipAlign,
+  tooltipCloseOnClick,
   children,
   variant = "ghost",
   size = "icon-sm",
@@ -59,7 +63,13 @@ export function IconButton({
   ...props
 }: IconButtonProps) {
   const button = (
-    <Button type={type} variant={variant} size={size} aria-label={label} {...props}>
+    <Button
+      type={type}
+      variant={variant}
+      size={size}
+      aria-label={props["aria-label"] ?? label}
+      {...props}
+    >
       {children}
     </Button>
   )
@@ -69,6 +79,7 @@ export function IconButton({
     tooltip,
     tooltipSide,
     tooltipAlign,
+    tooltipCloseOnClick,
   })
 }
 
@@ -85,6 +96,7 @@ export function IconLinkButton({
   tooltip = label,
   tooltipSide,
   tooltipAlign,
+  tooltipCloseOnClick,
   children,
   variant = "ghost",
   size = "icon-sm",
@@ -107,5 +119,6 @@ export function IconLinkButton({
     tooltip,
     tooltipSide,
     tooltipAlign,
+    tooltipCloseOnClick,
   })
 }

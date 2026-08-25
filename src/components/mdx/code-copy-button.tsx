@@ -4,7 +4,7 @@ import * as React from "react"
 
 import { IconCheck, IconCopy } from "@tabler/icons-react"
 
-import { Button } from "@/components/ui/shadcn/button"
+import { IconButton } from "@/components/ui/my"
 
 type CodeCopyButtonProps = {
   value: string
@@ -41,15 +41,13 @@ export function CodeCopyButton({ value }: CodeCopyButtonProps) {
   }
 
   return (
-    <Button
-      type="button"
-      variant="ghost"
-      size="icon-sm"
+    <IconButton
+      label={copied ? "Copied" : "Copy code"}
+      tooltipCloseOnClick={false}
       onClick={handleCopy}
-      aria-label={copied ? "Copied" : "Copy code"}
-      className="shrink-0 text-muted-foreground hover:text-foreground"
+      className="text-muted-foreground hover:text-foreground"
     >
       {copied ? <IconCheck aria-hidden /> : <IconCopy aria-hidden />}
-    </Button>
+    </IconButton>
   )
 }

@@ -6,10 +6,9 @@ import { IconChevronDown, IconChevronUp } from "@tabler/icons-react"
 
 import { CodeCopyButton } from "@/components/mdx/code-copy-button"
 import { HStack } from "@/components/ui/layout"
-import { Button } from "@/components/ui/shadcn/button"
+import { IconButton } from "@/components/ui/my"
 import { cn } from "@/lib/utils"
 
-const COLLAPSED_LINE_COUNT = 10
 const COLLAPSIBLE_LINE_COUNT = 15
 
 type CodeBlockProps = {
@@ -28,12 +27,6 @@ export function CodeBlock({ title, languageName, code, lineCount, children }: Co
   const bodyId = React.useId()
 
   const isCollapsed = canCollapse && !isExpanded
-
-  const hiddenLineCount = lineCount - COLLAPSED_LINE_COUNT
-
-  const toggleLabel = isExpanded
-    ? "Collapse code block"
-    : `Show ${hiddenLineCount} more ${hiddenLineCount === 1 ? "line" : "lines"}`
 
   return (
     <>
@@ -63,19 +56,16 @@ export function CodeBlock({ title, languageName, code, lineCount, children }: Co
 
         <HStack gap="sm" className="ml-auto shrink-0 items-center">
           {canCollapse && (
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon-sm"
+            <IconButton
+              label={isExpanded ? "Collapse" : "Expand"}
+              tooltipCloseOnClick={false}
               aria-controls={bodyId}
               aria-expanded={isExpanded}
-              aria-label={toggleLabel}
-              title={toggleLabel}
               onClick={() => setIsExpanded((expanded) => !expanded)}
               className="text-muted-foreground hover:text-foreground print:hidden"
             >
               {isExpanded ? <IconChevronUp aria-hidden /> : <IconChevronDown aria-hidden />}
-            </Button>
+            </IconButton>
           )}
 
           <CodeCopyButton value={code} />
