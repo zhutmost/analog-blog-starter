@@ -26,7 +26,7 @@ const config: InputSiteConfig = {
       { label: "About", href: "/about" },
     ],
   },
-  content: {
+  post: {
     tagAliases: {
       Markdown: ["MDX"],
     },
