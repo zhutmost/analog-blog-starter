@@ -57,13 +57,13 @@ function parsePageParam(page: string | number | undefined | null): number {
  * @typeParam T - The type of each item in the input array.
  * @param items - The readonly array of items to paginate.
  * @param page - The 1-based page number requested by the caller.
- * @param pageSize - The number of items per page. Defaults to `siteConfig.content.pageSize`.
+ * @param pageSize - The number of items per page. Defaults to `siteConfig.post.pageSize`.
  * @returns A paginated result containing the current page items and pagination metadata.
  */
 export function paginate<T>(
   items: readonly T[],
   page: string | number | undefined | null,
-  pageSize: number = siteConfig.content.post.pageSize
+  pageSize: number = siteConfig.post.pageSize
 ): PaginatedResult<T> {
   if (!Number.isSafeInteger(pageSize) || pageSize <= 0) {
     throw new RangeError(`pageSize must be a positive safe integer, received ${pageSize}.`)

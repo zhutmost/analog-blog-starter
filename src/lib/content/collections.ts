@@ -30,11 +30,11 @@ export type Post = Omit<PostRaw, "authors"> & { authors: PostAuthor[] }
 export type PostMeta = Omit<Post, "content" | "toc">
 export type Userpage = PageRaw
 
-const tagResolver = createTaxonomyResolver(siteConfig.content.tagAliases)
-const categoryResolver = createTaxonomyResolver(siteConfig.content.categoryAliases)
+const tagResolver = createTaxonomyResolver(siteConfig.post.tagAliases)
+const categoryResolver = createTaxonomyResolver(siteConfig.post.categoryAliases)
 
 function isVisibleContent(c: { draft: boolean }) {
-  if (process.env.NODE_ENV !== "production" || siteConfig.content.includeDraft) {
+  if (process.env.NODE_ENV !== "production" || siteConfig.post.includeDraft) {
     return true
   }
   return !c.draft
@@ -81,7 +81,7 @@ export const posts: Post[] = allPostsRaw
       authors: post.authors.map((author) => resolvePostAuthor(author, `post "${post.slug}"`)),
     })
   )
-  .toSorted(comparePosts(siteConfig.content.post.sortKey, siteConfig.content.post.sortDirection))
+  .toSorted(comparePosts(siteConfig.post.sortKey, siteConfig.post.sortDirection))
 
 export const userpages: Userpage[] = allPagesRaw.filter(isVisibleContent)
 

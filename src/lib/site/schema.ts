@@ -2,15 +2,11 @@ import { z } from "zod"
 
 import { mz } from "@/lib/utils"
 
-const contentSchema = z.object({
+const postSchema = z.object({
   includeDraft: z.boolean().default(false),
-  post: z
-    .object({
-      pageSize: z.int().positive().default(10),
-      sortKey: z.enum(["datePublish", "dateUpdate", "title"]).default("datePublish"),
-      sortDirection: z.enum(["asc", "desc"]).default("desc"),
-    })
-    .prefault({}),
+  pageSize: z.int().positive().default(10),
+  sortKey: z.enum(["datePublish", "dateUpdate", "title"]).default("datePublish"),
+  sortDirection: z.enum(["asc", "desc"]).default("desc"),
   categoryAliases: z.record(mz.nonEmptyString(), z.array(mz.nonEmptyString())).default({}),
   tagAliases: z.record(mz.nonEmptyString(), z.array(mz.nonEmptyString())).default({}),
 })
@@ -110,7 +106,7 @@ export const siteConfigSchema = z.object({
     socialIcons: [{ label: "RSS Feed", icon: "IconRss", href: "/rss.xml" }],
   }),
 
-  content: contentSchema.prefault({}),
+  post: postSchema.prefault({}),
 
   analytics: analyticsSchema.prefault({}),
 
