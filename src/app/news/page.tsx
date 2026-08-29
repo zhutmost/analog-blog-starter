@@ -6,7 +6,7 @@ import { IconCalendarEvent } from "@tabler/icons-react"
 import { CommentSystem } from "@/components/comment"
 import { PageHeader } from "@/components/pages/basic/page-header"
 import { PageShell } from "@/components/pages/basic/page-shell"
-import { NewsTimeline } from "@/components/pages/news/news-timeline"
+import { Timeline } from "@/components/pages/news/timeline"
 import {
   Empty,
   EmptyDescription,
@@ -93,7 +93,7 @@ export default function NewsPage() {
                       {group.year}
                     </h2>
 
-                    <NewsTimeline items={group.items} highlightFirst={groupIndex === 0} />
+                    <Timeline items={group.items} highlightFirst={groupIndex === 0} />
                   </section>
                 )
               })}

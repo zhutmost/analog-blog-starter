@@ -54,9 +54,9 @@ export type TimelineProps = Omit<React.ComponentPropsWithoutRef<"ol">, "children
   highlightFirst?: boolean
 }
 
-export function NewsTimeline({ items, highlightFirst = true, className, ...props }: TimelineProps) {
+export function Timeline({ items, highlightFirst = true, className, ...props }: TimelineProps) {
   return (
-    <ol {...props} data-slot="timeline" className={cn("min-w-0", className)}>
+    <ol {...props} data-slot="timeline" className={cn("min-w-0", "py-8 sm:py-10", className)}>
       {items.map((item, index) => {
         const isFirst = index === 0
         const isLast = index === items.length - 1
