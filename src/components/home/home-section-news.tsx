@@ -3,7 +3,7 @@ import * as React from "react"
 import { IconCalendarEvent } from "@tabler/icons-react"
 
 import { HomeSection } from "@/components/home/home-section"
-import { NewsTimeline } from "@/components/pages/news/news-timeline"
+import { Timeline } from "@/components/pages/news/timeline"
 import {
   Empty,
   EmptyDescription,
@@ -49,7 +49,7 @@ export function HomeSectionNews({
 
       <HomeSection.Content>
         {items.length > 0 ? (
-          <NewsTimeline items={items} />
+          <Timeline items={items} />
         ) : (
           <Empty className="border">
             <EmptyHeader>
