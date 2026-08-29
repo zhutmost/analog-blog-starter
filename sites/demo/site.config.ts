@@ -27,10 +27,8 @@ const config: InputSiteConfig = {
     ],
   },
   content: {
-    tag: {
-      aliases: {
-        Markdown: ["MDX"],
-      },
+    tagAliases: {
+      Markdown: ["MDX"],
     },
   },
   analytics: {

@@ -30,8 +30,8 @@ export type Post = Omit<PostRaw, "authors"> & { authors: PostAuthor[] }
 export type PostMeta = Omit<Post, "content" | "toc">
 export type Userpage = PageRaw
 
-const tagResolver = createTaxonomyResolver(siteConfig.content.tag.aliases)
-const categoryResolver = createTaxonomyResolver(siteConfig.content.category.aliases)
+const tagResolver = createTaxonomyResolver(siteConfig.content.tagAliases)
+const categoryResolver = createTaxonomyResolver(siteConfig.content.categoryAliases)
 
 function isVisibleContent(c: { draft: boolean }) {
   if (process.env.NODE_ENV !== "production" || siteConfig.content.includeDraft) {
