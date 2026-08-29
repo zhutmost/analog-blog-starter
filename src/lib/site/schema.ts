@@ -11,16 +11,8 @@ const contentSchema = z.object({
       sortDirection: z.enum(["asc", "desc"]).default("desc"),
     })
     .prefault({}),
-  category: z
-    .object({
-      aliases: z.record(mz.nonEmptyString(), z.array(mz.nonEmptyString())).default({}),
-    })
-    .prefault({}),
-  tag: z
-    .object({
-      aliases: z.record(mz.nonEmptyString(), z.array(mz.nonEmptyString())).default({}),
-    })
-    .prefault({}),
+  categoryAliases: z.record(mz.nonEmptyString(), z.array(mz.nonEmptyString())).default({}),
+  tagAliases: z.record(mz.nonEmptyString(), z.array(mz.nonEmptyString())).default({}),
 })
 
 const pageSummariesSchema = z.object({
@@ -48,47 +40,25 @@ const socialShareSchema = z.object({
 const siteHeaderSchema = z.object({
   logo: z.string().optional(),
   title: z.string().optional(),
-  nav: z
-    .array(
-      z.object({
-        label: mz.nonEmptyString(),
-        href: mz.href(),
-      })
-    )
-    .default([
-      { label: "Home", href: "/" },
-      { label: "Articles", href: "/posts" },
-      { label: "Tags", href: "/posts" },
-      // { label: "News", href: "/news" },
-      // { label: "People", href: "/people" },
-      // { label: "About", href: "/about" },
-    ]),
+  nav: z.array(z.object({ label: mz.nonEmptyString(), href: mz.href() })).default([
+    { label: "Home", href: "/" },
+    { label: "Articles", href: "/posts" },
+    { label: "Tags", href: "/posts" },
+    // { label: "News", href: "/news" },
+    // { label: "People", href: "/people" },
+    // { label: "About", href: "/about" },
+  ]),
 })
 
 const siteFooterSchema = z.object({
   beian: z
     .object({
-      icp: z
-        .object({
-          code: mz.nonEmptyString(),
-        })
-        .optional(),
-      publicSecurity: z
-        .object({
-          code: mz.nonEmptyString(),
-          href: z.httpUrl(),
-        })
-        .optional(),
+      icp: z.object({ code: mz.nonEmptyString() }).optional(),
+      publicSecurity: z.object({ code: mz.nonEmptyString(), href: z.httpUrl() }).optional(),
     })
     .prefault({}),
   socialIcons: z
-    .array(
-      z.object({
-        label: mz.nonEmptyString(),
-        href: mz.href(),
-        icon: mz.optionalString(),
-      })
-    )
+    .array(z.object({ label: mz.nonEmptyString(), href: mz.href(), icon: mz.optionalString() }))
     .default([]),
 })
 
@@ -137,13 +107,7 @@ export const siteConfigSchema = z.object({
 
   header: siteHeaderSchema.prefault({}),
   footer: siteFooterSchema.prefault({
-    socialIcons: [
-      {
-        label: "RSS Feed",
-        icon: "IconRss",
-        href: "/rss.xml",
-      },
-    ],
+    socialIcons: [{ label: "RSS Feed", icon: "IconRss", href: "/rss.xml" }],
   }),
 
   content: contentSchema.prefault({}),

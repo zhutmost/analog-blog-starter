@@ -50,11 +50,11 @@ export function getSiteSearchData(): SiteSearchData {
       post.category?.name,
       ...post.tags.flatMap((tag) => [
         tag.name,
-        ...getTaxonomyAliases(tag.name, siteConfig.content.tag.aliases),
+        ...getTaxonomyAliases(tag.name, siteConfig.content.tagAliases),
       ]),
       ...post.authors.map((author) => author.name),
       ...(post.category
-        ? getTaxonomyAliases(post.category.name, siteConfig.content.category.aliases)
+        ? getTaxonomyAliases(post.category.name, siteConfig.content.categoryAliases)
         : []),
     ]),
     meta: post.category?.name,
@@ -77,7 +77,7 @@ export function getSiteSearchData(): SiteSearchData {
     href: `/posts/by-category/${category.slug}`,
     keywords: compactStrings([
       category.name,
-      ...getTaxonomyAliases(category.name, siteConfig.content.category.aliases),
+      ...getTaxonomyAliases(category.name, siteConfig.content.categoryAliases),
     ]),
     meta: formatArticleCount(category.count),
   }))
@@ -90,7 +90,7 @@ export function getSiteSearchData(): SiteSearchData {
     href: `/posts/by-tag/${tag.slug}`,
     keywords: compactStrings([
       tag.name,
-      ...getTaxonomyAliases(tag.name, siteConfig.content.tag.aliases),
+      ...getTaxonomyAliases(tag.name, siteConfig.content.tagAliases),
     ]),
     meta: formatArticleCount(tag.count),
   }))
