@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { GiscusComment } from "@/components/comment/giscus-comment"
-import { siteConfig } from "@/lib/site/config"
+import { siteConfig } from "@/lib/config"
 import { cn } from "@/lib/utils"
 
 export function CommentSystem({ className, ...props }: React.ComponentPropsWithoutRef<"section">) {

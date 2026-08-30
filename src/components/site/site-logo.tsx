@@ -1,7 +1,7 @@
 import NextImage from "next/image"
 
 import { HomeLink } from "@/components/site/home-link"
-import { siteConfig } from "@/lib/site/config"
+import { siteConfig } from "@/lib/config"
 
 export function SiteLogo() {
   return (

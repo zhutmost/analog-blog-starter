@@ -7,10 +7,10 @@ import {
   type Post as PostRaw,
 } from "content-collections"
 
+import { siteConfig } from "@/lib/config"
 import { createAuthorResolver } from "@/lib/content/author-resolver"
 import { comparePosts } from "@/lib/content/post-sort"
 import { createTaxonomyResolver } from "@/lib/content/taxonomy-resolver"
-import { siteConfig } from "@/lib/site/config"
 
 export type Author = AuthorRaw
 export type AuthorMeta = Omit<Author, "content" | "toc">

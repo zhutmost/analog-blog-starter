@@ -1,7 +1,7 @@
 import { Feed, type FeedOptions } from "feed"
 
+import { siteConfig } from "@/lib/config"
 import { type Post, posts } from "@/lib/content"
-import { siteConfig } from "@/lib/site/config"
 
 export function generateRssFeed(): Feed {
   const thisYear: number = new Date().getFullYear()

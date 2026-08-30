@@ -6,9 +6,8 @@ import { PageHeader } from "@/components/pages/basic/page-header"
 import { PageShell } from "@/components/pages/basic/page-shell"
 import { PostCard } from "@/components/pages/post/post-card"
 import { PostPagination } from "@/components/pages/post/post-pagination"
-import { postMetas } from "@/lib/content"
-import { createPaginatedStaticParams, paginate } from "@/lib/content/paginate"
-import { siteConfig } from "@/lib/site/config"
+import { siteConfig } from "@/lib/config"
+import { createPaginatedStaticParams, paginate, postMetas } from "@/lib/content"
 import { buildPageMetadata } from "@/lib/site/metadata"
 
 export function generateStaticParams(): Array<{ page: string }> {

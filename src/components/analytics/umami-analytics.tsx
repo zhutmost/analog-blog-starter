@@ -1,6 +1,6 @@
 import Script from "next/script"
 
-import { type SiteConfig } from "@/lib/site/schema"
+import { type SiteConfig } from "@/lib/config"
 
 type UmamiAnalyticsProps = NonNullable<SiteConfig["analytics"]["umami"]>
 

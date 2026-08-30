@@ -16,8 +16,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/shadcn/breadcrumb"
+import { siteConfig } from "@/lib/config"
 import { authorMetas, getAuthorMetaBySlug, getPostMetasByAuthorSlug, paginate } from "@/lib/content"
-import { siteConfig } from "@/lib/site/config"
 import { buildPageMetadata } from "@/lib/site/metadata"
 
 export async function generateStaticParams(): Promise<{ author: string }[]> {

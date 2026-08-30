@@ -9,7 +9,7 @@ import { BackToTop } from "@/components/site/back-to-top"
 import { SiteFooter } from "@/components/site/site-footer"
 import { SiteHeader } from "@/components/site/site-header"
 import { TooltipProvider } from "@/components/ui/shadcn/tooltip"
-import { siteConfig } from "@/lib/site/config"
+import { siteConfig } from "@/lib/config"
 
 import "@/app/globals.css"
 

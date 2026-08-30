@@ -1,4 +1,4 @@
-import { type InputSiteConfig } from "@/lib/site/schema"
+import { type InputSiteConfig } from "@/lib/config"
 
 const config: InputSiteConfig = {
   siteUrl: "https://analog-demo.zhutmost.com",

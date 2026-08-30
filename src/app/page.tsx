@@ -8,8 +8,8 @@ import { HomeSectionNews } from "@/components/home/home-section-news"
 import { HomeSectionResearch } from "@/components/home/home-section-research"
 import { PageShell } from "@/components/pages/basic/page-shell"
 import { JsonLd } from "@/components/seo/json-ld"
+import { siteConfig } from "@/lib/config"
 import { getPostMetaBySlug, newsConfig, postMetas } from "@/lib/content"
-import { siteConfig } from "@/lib/site/config"
 import { buildWebsiteJsonLd } from "@/lib/site/json-ld"
 
 export default function HomePage() {

@@ -17,8 +17,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/shadcn/breadcrumb"
+import { siteConfig } from "@/lib/config"
 import { getPostBySlug, getPostMetaBySlug, postMetas } from "@/lib/content"
-import { siteConfig } from "@/lib/site/config"
 import { buildPostJsonLd } from "@/lib/site/json-ld"
 import { buildRobotsMetadata } from "@/lib/site/metadata"
 

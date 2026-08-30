@@ -5,7 +5,7 @@ import { ThemeToggle } from "@/components/site/theme-toggle"
 import { HStack } from "@/components/ui/layout"
 import { AutoLink } from "@/components/ui/my"
 import { buttonVariants } from "@/components/ui/shadcn/button"
-import { siteConfig } from "@/lib/site/config"
+import { siteConfig } from "@/lib/config"
 import { cn } from "@/lib/utils"
 
 function MainNav() {
