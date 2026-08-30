@@ -22,8 +22,8 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/shadcn/empty"
+import { siteConfig } from "@/lib/config"
 import { tags } from "@/lib/content"
-import { siteConfig } from "@/lib/site/config"
 import { buildPageMetadata } from "@/lib/site/metadata"
 
 export const metadata: Metadata = buildPageMetadata({

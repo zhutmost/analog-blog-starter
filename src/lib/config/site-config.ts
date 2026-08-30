@@ -1,7 +1,7 @@
 import "server-only"
 import { ZodError } from "zod"
 
-import { type SiteConfig, siteConfigSchema } from "@/lib/site/schema"
+import { type SiteConfig, siteConfigSchema } from "@/lib/config/site-schema"
 
 async function loadSiteConfig(): Promise<SiteConfig> {
   const siteDir = process.env.SITE_DIR ?? "sites/demo"

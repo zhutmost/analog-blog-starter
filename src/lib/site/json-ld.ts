@@ -1,6 +1,6 @@
+import { siteConfig } from "@/lib/config"
 import { type AuthorMeta, type PostMeta } from "@/lib/content"
 import { classifyHref } from "@/lib/href"
-import { siteConfig } from "@/lib/site/config"
 
 const schemaContext = "https://schema.org"
 

@@ -2,8 +2,8 @@ import * as React from "react"
 
 import { PostUpdatedDate } from "@/components/pages/post/post-updated-date"
 import { TextLink, TwemojifyText } from "@/components/ui/my"
+import { siteConfig } from "@/lib/config"
 import { type PostMeta } from "@/lib/content"
-import { siteConfig } from "@/lib/site/config"
 import { formatDate, isSameDate } from "@/lib/site/format-date"
 import { cn } from "@/lib/utils"
 

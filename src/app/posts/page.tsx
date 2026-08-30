@@ -14,9 +14,9 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/shadcn/empty"
+import { siteConfig } from "@/lib/config"
 import { postMetas } from "@/lib/content"
 import { paginate } from "@/lib/content/paginate"
-import { siteConfig } from "@/lib/site/config"
 import { buildPageMetadata } from "@/lib/site/metadata"
 
 export const metadata: Metadata = buildPageMetadata({

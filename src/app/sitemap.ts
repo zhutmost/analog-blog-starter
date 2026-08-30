@@ -1,7 +1,7 @@
 import { type MetadataRoute } from "next"
 
+import { siteConfig } from "@/lib/config"
 import { authors, newsConfig, peopleConfig, postMetas, userpages } from "@/lib/content"
-import { siteConfig } from "@/lib/site/config"
 
 type SitemapEntry = MetadataRoute.Sitemap[number]
 

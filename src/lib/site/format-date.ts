@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/site/config"
+import { siteConfig } from "@/lib/config"
 
 /**
  * Converts a date-only value into a Date for Intl formatting.

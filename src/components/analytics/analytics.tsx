@@ -1,5 +1,5 @@
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics"
-import { siteConfig } from "@/lib/site/config"
+import { siteConfig } from "@/lib/config"
 
 export function Analytics() {
   const { umami } = siteConfig.analytics

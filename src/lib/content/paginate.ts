@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/site/config"
+import { siteConfig } from "@/lib/config"
 
 export type PaginatedResult<T> = {
   items: T[]

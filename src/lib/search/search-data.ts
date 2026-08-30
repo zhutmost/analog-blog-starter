@@ -1,4 +1,5 @@
 import "server-only"
+import { siteConfig } from "@/lib/config"
 import {
   authorMetas,
   categories,
@@ -8,7 +9,6 @@ import {
   tags,
   userpages,
 } from "@/lib/content"
-import { siteConfig } from "@/lib/site/config"
 import { formatDate } from "@/lib/site/format-date"
 
 export type SiteSearchDocumentKind = "article" | "page" | "category" | "tag" | "person"
