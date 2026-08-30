@@ -32,7 +32,7 @@ The optional `next.config.ts` is only needed for Next.js-specific settings such 
 A minimal configuration contains four required fields:
 
 ```ts title="sites/demo/site.config.ts"
-import { type InputSiteConfig } from "@/lib/site/schema"
+import { type InputSiteConfig } from "@/lib/config"
 
 const config: InputSiteConfig = {
   siteUrl: "https://example.com",
@@ -128,25 +128,19 @@ footer: {
 
 The `beian` section may be omitted when it is not applicable.
 
-## Content behavior
+## Post behavior
 
-The `content` section controls drafts, pagination, post ordering, and taxonomy aliases:
+The `post` section controls draft inclusion, pagination, post ordering, and taxonomy aliases:
 
 ```ts
-content: {
+post: {
   includeDraft: false,
-  post: {
-    pageSize: 10,
-    sortKey: "datePublish",
-    sortDirection: "desc",
-  },
-  category: {
-    aliases: {},
-  },
-  tag: {
-    aliases: {
-      Markdown: ["MDX"],
-    },
+  pageSize: 10,
+  sortKey: "datePublish",
+  sortDirection: "desc",
+  categoryAliases: {},
+  tagAliases: {
+    Markdown: ["MDX"],
   },
 },
 ```
@@ -265,6 +259,6 @@ See the [Next.js configuration reference](https://nextjs.org/docs/app/api-refere
 
 ## Validation
 
-The configuration is checked when the site starts or builds. Missing required values, invalid URLs, and unsupported options are reported as configuration errors.
+The configuration is checked when the site starts or builds. Missing required values and invalid options are reported as configuration errors. The `InputSiteConfig` annotation also catches unknown fields during type checking.
 
 Post dates, authors, categories, covers, and other content-specific fields belong in the corresponding content files and are covered in [Content Model](/post/docs/content-model).
