@@ -16,7 +16,7 @@ seo:
   description: Learn how posts, pages, authors, homepage sections, news, and people are organized in an Analog Starter site.
 ---
 
-Each site stores its content in one directory under `sites`. Posts, pages, authors, and the homepage use MDX, while the optional news and people pages use YAML.
+Each site stores its content in one directory under `sites`. Posts, pages, authors, and the optional homepage introduction use MDX. Structured site data can live in TypeScript modules, while the people directory uses YAML.
 
 For the demo site:
 
@@ -25,21 +25,23 @@ sites/demo/
 ├── _posts/
 ├── _pages/
 ├── _authors/
-├── home.mdx
-├── news.yml
+├── src/
+│   └── news/
+├── home-intro.mdx
 └── people.yml
 ```
 
 ## Content types
 
-| Content  | Source            | Example URL               | Required |
-| -------- | ----------------- | ------------------------- | -------- |
-| Posts    | `_posts/**/*.mdx` | `/post/notes/hello-world` | No       |
-| Pages    | `_pages/**/*.mdx` | `/about`                  | No       |
-| Authors  | `_authors/*.mdx`  | `/author/your-name`       | No       |
-| Homepage | `home.mdx`        | `/`                       | Yes      |
-| News     | `news.yml`        | `/news`                   | No       |
-| People   | `people.yml`      | `/people`                 | No       |
+| Content               | Source            | Example URL               | Required |
+| --------------------- | ----------------- | ------------------------- | -------- |
+| Posts                 | `_posts/**/*.mdx` | `/post/notes/hello-world` | No       |
+| Pages                 | `_pages/**/*.mdx` | `/about`                  | No       |
+| Authors               | `_authors/*.mdx`  | `/author/your-name`       | No       |
+| Homepage introduction | `home-intro.mdx`  | `/`                       | No       |
+| News                  | `_pages/news.mdx` | `/news`                   | No       |
+| News data             | `src/news/*.ts`   | Used by the homepage/page | No       |
+| People                | `people.yml`      | `/people`                 | No       |
 
 Nested directories are supported for posts and pages. Author MDX files are kept directly under `_authors`.
 
@@ -220,76 +222,61 @@ The `info` list contains label-value pairs. The `socials` list contains external
 
 ## Homepage
 
-The required `home.mdx` file controls the homepage hero and its sections:
+The homepage hero and section order are configured under `home` in `site.config.ts`. Three section types are available:
 
-```mdx title="sites/demo/home.mdx"
----
-hero:
-  greeting: Hi, I’m
-  name: Your Name
-  actions:
-    - label: Articles
-      href: /posts
-      primary: true
-    - label: About
-      href: /about
-
-sections:
-  - type: news
-    title: Latest News
-    limit: 5
-
-  - type: research
-    title: Research
-    areas:
-      - title: Research Area
-        description: A short description of the research area.
-        keywords:
-          - Keyword One
-          - Keyword Two
-
-  - type: posts
-    title: Recent Articles
-    limit: 4
----
-
-Write the homepage introduction here.
-```
-
-The MDX body becomes the hero introduction. Sections appear in the declared order.
-
-Three section types are available:
-
-- `news` uses inline entries or the optional `news.yml` file;
-- `research` lists areas written directly in `home.mdx`;
+- `news` displays the supplied news items;
+- `research` lists structured research areas;
 - `posts` uses selected post slugs or the globally sorted post collection.
 
-See the [demo homepage source](https://github.com/zhutmost/analog-blog-starter/blob/main/sites/demo/home.mdx) for a complete example.
+The optional `home-intro.mdx` body becomes the hero introduction and supports ordinary Markdown:
+
+```mdx title="sites/demo/home-intro.mdx"
+I work on **efficient computing systems** for emerging applications.
+
+This site collects publications, projects, and technical notes.
+```
+
+When the file is omitted, the hero is rendered without an introduction. Homepage configuration options are described in [Site Configuration](/post/docs/site-configuration#homepage).
 
 ## News
 
-The optional `news.yml` file creates the news page and can also supply the homepage news section:
+News is an ordinary user page, so its layout can combine Markdown headings, prose, and reusable MDX components. The demo keeps structured entries in TypeScript modules grouped by year:
 
-```yaml title="sites/demo/news.yml"
-title: News
-summary: Recent updates, publications, and events.
+```ts title="sites/demo/src/news/news-2026.ts"
+import { type InputNewsItem } from "@/lib/config"
 
-items:
-  - date: 2026-08-20
-    type: publication
-    title: A new paper has been published
-    description: The paper is now available online.
-
-  - date: 2026-07-12
-    type: talk
-    title: Talk at an example conference
+export const news2026 = [
+  {
+    date: "2026-08-20",
+    type: "publication",
+    title: "A new paper has been published",
+    description: "The paper is now available online.",
+  },
+] satisfies InputNewsItem[]
 ```
 
 `date` and `title` are required for each entry. `description` and `type` are optional.
 
-The supported types are `publication`, `talk`, `project`, `award`, `people`, and `event`. Entries are displayed in reverse chronological order.
+The supported types are `publication`, `talk`, `project`, `award`, `people`, and `event`. `Timeline` preserves the declared order, so keep entries and yearly exports in the order they should appear.
 
-See the complete [demo news file](https://github.com/zhutmost/analog-blog-starter/blob/main/sites/demo/news.yml) for a longer example.
+Create `_pages/news.mdx` and pass each group to the built-in `Timeline` component:
+
+```mdx title="sites/demo/_pages/news.mdx"
+---
+title: News
+summary: Recent updates, publications, and events.
+---
+
+import { news2026 } from "../sites/demo/src/news"
+
+## 2026
+
+<Timeline items={news2026} />
+```
+
+Replace `demo` in the import path with the active site directory name. Because News now uses the normal page model, its frontmatter supports the same `comment`, `draft`, and `seo` fields as other pages. To reuse the same entries on the homepage, export a combined array from `src/news/index.ts` and provide it to the homepage news section in `site.config.ts`.
+
+See the demo [news page](https://github.com/zhutmost/analog-blog-starter/blob/main/sites/demo/_pages/news.mdx) and [news data modules](https://github.com/zhutmost/analog-blog-starter/tree/main/sites/demo/src/news) for a complete example.
 
 ## People
 

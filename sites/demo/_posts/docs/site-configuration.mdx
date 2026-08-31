@@ -128,6 +128,38 @@ footer: {
 
 The `beian` section may be omitted when it is not applicable.
 
+## Homepage
+
+The `home` section configures the hero and the ordered sections below it:
+
+```ts
+home: {
+  hero: {
+    greeting: "Hi, I’m",
+    actions: [
+      { label: "Articles", href: "/posts", primary: true },
+      { label: "About", href: "/about" },
+    ],
+  },
+  sections: [
+    {
+      type: "news",
+      href: "/news",
+      items: news,
+      limit: 5,
+    },
+    {
+      type: "posts",
+      limit: 4,
+    },
+  ],
+},
+```
+
+Import `news` from the site's data module at the top of `site.config.ts`, for example `import { news } from "./src/news"`. News items must be supplied explicitly; omit the news section when it is not needed. The available section types are `news`, `research`, and `posts`, and each type may appear at most once.
+
+The optional `home-intro.mdx` file supplies the hero introduction. Its body supports Markdown and is separate from the structured homepage configuration.
+
 ## Post behavior
 
 The `post` section controls draft inclusion, pagination, post ordering, and taxonomy aliases:

@@ -78,7 +78,7 @@ bun install
 bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Changes to most MDX and YAML content are reflected automatically while the server is running.
+Open [http://localhost:3000](http://localhost:3000). Changes to most MDX, YAML, and site data files are reflected automatically while the server is running.
 
 ## Create your site directory
 
@@ -104,14 +104,14 @@ sites/my-site/
 ├── _pages/
 ├── _posts/
 ├── public/
-├── home.mdx
-├── news.yml
+├── src/
+├── home-intro.mdx
 ├── people.yml
 ├── site.config.ts
 └── next.config.ts
 ```
 
-Start by replacing the site configuration, homepage, example profiles, and posts. The `news.yml` and `people.yml` files are optional and may be removed when those pages are not needed.
+Start by replacing the site configuration, homepage introduction, example profiles, and posts. The demo news page and data modules, `home-intro.mdx`, and `people.yml` are optional and may be removed when they are not needed. Remove their navigation or homepage references from `site.config.ts` as well.
 
 ### Select the same directory on Vercel
 
