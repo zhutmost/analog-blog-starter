@@ -40,7 +40,7 @@ const siteHeaderSchema = z.object({
   nav: z.array(z.object({ label: mz.nonEmptyString(), href: mz.href() })).default([
     { label: "Home", href: "/" },
     { label: "Articles", href: "/posts" },
-    { label: "Tags", href: "/posts" },
+    { label: "Tags", href: "/posts/tags" },
     // { label: "News", href: "/news" },
     // { label: "People", href: "/people" },
     // { label: "About", href: "/about" },
