@@ -34,8 +34,8 @@ const homeNewsSectionSchema = z.object({
 
   limit: z.int().positive().default(5),
 
-  // Omitted => inherit from news.yml.
-  // Provided => use these items instead, preserving their declared order.
+  // Omitted => render the section without news items.
+  // Provided => preserve the declared item order.
   items: z.array(newsItemSchema).optional(),
 })
 
