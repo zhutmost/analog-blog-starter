@@ -65,6 +65,7 @@ export async function mdxTransform(file: { _meta: Meta; content: string }, ctx: 
     const toc: TocItem[] = []
 
     const content: string = await compileMDX(ctx, file, {
+      cwd: path.resolve(ctx.collection.directory, file._meta.directory),
       remarkPlugins: [remarkGfm, remarkMath, [remarkFlexibleToc, { tocRef: toc }]],
       rehypePlugins: [
         [rehypeGithubAlerts, githubAlertsOptions],
