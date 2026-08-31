@@ -16,11 +16,8 @@ export {
   getUserpageBySlug,
 } from "@/lib/content/query"
 
-export { newsConfig, peopleConfig } from "@/lib/content/singletons"
+export { peopleConfig } from "@/lib/content/singletons"
 export type {
-  NewsConfig,
-  NewsItem,
-  NewsType,
   PeopleConfig,
   CurrentPerson,
   AlumniPerson,

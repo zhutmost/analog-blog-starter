@@ -5,6 +5,7 @@ import * as React from "react"
 import { IconArrowRight } from "@tabler/icons-react"
 
 import { TextLink, TwemojifyText } from "@/components/ui/my"
+import { siteConfig } from "@/lib/config"
 import { type AuthorMeta, type PostMeta } from "@/lib/content"
 import { formatDate } from "@/lib/site/format-date"
 import { cn } from "@/lib/utils"
@@ -139,7 +140,7 @@ function RecentArticleCard({ post }: RecentArticleCardProps) {
           )}
 
           <time dateTime={post.datePublish} className="whitespace-nowrap tabular-nums">
-            {formatDate(post.datePublish)}
+            {formatDate(post.datePublish, siteConfig.locale)}
           </time>
         </div>
       </div>

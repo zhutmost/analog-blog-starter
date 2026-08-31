@@ -1,12 +1,12 @@
 import path from "node:path"
 
 import { defineCollection, defineConfig, defineSingleton } from "@content-collections/core"
+import { z } from "zod"
 
 import { authorContentSchema, authorTransform } from "@/content-collections/collections/authors"
+import { mdxTransform } from "@/content-collections/collections/basic"
 import { userpageContentSchema, userpageTransform } from "@/content-collections/collections/pages"
 import { postContentSchema, postTransform } from "@/content-collections/collections/posts"
-import { homeSingletonSchema, homeTransform } from "@/content-collections/singletons/home"
-import { newsSingletonSchema } from "@/content-collections/singletons/news"
 import { peopleSingletonSchema } from "@/content-collections/singletons/people"
 
 const siteDir = process.env.SITE_DIR ?? "sites/demo"
@@ -36,18 +36,16 @@ const authorCollection = defineCollection({
 })
 
 const homeSingleton = defineSingleton({
-  name: "homeConfig",
-  filePath: path.join(siteDir, "home.mdx"),
-  schema: homeSingletonSchema,
-  transform: homeTransform,
-})
-
-const newsSingleton = defineSingleton({
-  name: "newsConfig",
-  filePath: path.join(siteDir, "news.yml"),
+  name: "homeIntro",
+  filePath: path.join(siteDir, "home-intro.mdx"),
   optional: true,
-  parser: "yaml",
-  schema: newsSingletonSchema,
+  schema: z.object({
+    content: z.string(),
+  }),
+  transform: async (file, ctx) => {
+    const mdxTransformed = await mdxTransform(file, ctx)
+    return { ...file, ...mdxTransformed }
+  },
 })
 
 const peopleSingleton = defineSingleton({
@@ -59,12 +57,5 @@ const peopleSingleton = defineSingleton({
 })
 
 export default defineConfig({
-  content: [
-    postCollection,
-    pageCollection,
-    authorCollection,
-    homeSingleton,
-    newsSingleton,
-    peopleSingleton,
-  ],
+  content: [postCollection, pageCollection, authorCollection, homeSingleton, peopleSingleton],
 })

@@ -7,14 +7,7 @@ import {
   mdxTransform,
 } from "@/content-collections/collections/basic"
 
-const RESERVED_USERPAGE_ROOT_SEGMENTS = new Set([
-  "api",
-  "author",
-  "news",
-  "people",
-  "post",
-  "posts",
-])
+const RESERVED_USERPAGE_ROOT_SEGMENTS = new Set(["api", "author", "people", "post", "posts"])
 
 export const userpageContentSchema = mdxContentSchema.extend({
   draft: z.boolean().default(false),

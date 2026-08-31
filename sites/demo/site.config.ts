@@ -1,5 +1,7 @@
 import { type InputSiteConfig } from "@/lib/config"
 
+import { news } from "./src/news"
+
 const config: InputSiteConfig = {
   siteUrl: "https://analog-demo.zhutmost.com",
   siteTitle: "Demo Site",
@@ -24,6 +26,51 @@ const config: InputSiteConfig = {
       { label: "News", href: "/news" },
       { label: "People", href: "/people" },
       { label: "About", href: "/about" },
+    ],
+  },
+  home: {
+    hero: {
+      actions: [
+        { label: "Articles", href: "/posts", primary: true },
+        { label: "GitHub", href: "https://github.com/zhutmost/analog-blog-starter" },
+        { label: "Getting Started", href: "/post/docs/getting-started" },
+      ],
+    },
+    sections: [
+      {
+        type: "news",
+        href: "/news",
+        summary: "Sample updates demonstrating the news timeline.",
+        items: news.slice(0, 5),
+      },
+      {
+        type: "research",
+        summary: "Example topics showing how structured research areas can be presented.",
+        areas: [
+          {
+            title: "Magical Creatures",
+            description:
+              "Field observations, classification, and encounters with creatures best approached with curiosity and an open mind.",
+            keywords: ["Magizoology", "Field Work", "Creatures"],
+          },
+          {
+            title: "Wizarding Culture",
+            description:
+              "Notes on communities, customs, stories, and unusual phenomena across the wizarding world.",
+            keywords: ["Culture", "Travel", "History"],
+          },
+          {
+            title: "Unusual Phenomena",
+            description:
+              "Explorations of questions that do not always fit neatly into established categories.",
+            keywords: ["Discovery", "Observation", "Curiosity"],
+          },
+        ],
+      },
+      {
+        type: "posts",
+        summary: "Sample articles covering typography, media, taxonomy, and layout behavior.",
+      },
     ],
   },
   post: {

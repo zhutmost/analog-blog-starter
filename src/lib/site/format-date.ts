@@ -1,5 +1,3 @@
-import { siteConfig } from "@/lib/config"
-
 /**
  * Converts a date-only value into a Date for Intl formatting.
  *
@@ -10,15 +8,15 @@ function toCalendarDate(value: string): Date {
   return new Date(`${value}T00:00:00.000Z`)
 }
 
-export function formatDate(value: string): string {
-  return new Intl.DateTimeFormat(siteConfig.locale, {
+export function formatDate(value: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale, {
     dateStyle: "medium",
     timeZone: "UTC",
   }).format(toCalendarDate(value))
 }
 
-export function formatMonthYear(value: string): string {
-  return new Intl.DateTimeFormat(siteConfig.locale, {
+export function formatMonthYear(value: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale, {
     month: "short",
     year: "numeric",
     timeZone: "UTC",
