@@ -1,18 +1,9 @@
 import {
-  newsConfig as newsConfigRaw,
-  type NewsConfig as NewsConfigRaw,
   peopleConfig as peopleConfigRaw,
   type PeopleConfig as PeopleConfigRaw,
 } from "content-collections"
 
 import { type AuthorMeta, authorResolver } from "@/lib/content/collections"
-
-export const newsConfig = newsConfigRaw
-  ? {
-      ...newsConfigRaw,
-      items: newsConfigRaw.items.toSorted((a, b) => b.date.localeCompare(a.date)),
-    }
-  : undefined
 
 type CurrentPersonRaw = PeopleConfigRaw["current"][string][number]
 type AlumniPersonRaw = PeopleConfigRaw["alumni"][string][number]
@@ -55,10 +46,6 @@ export const peopleConfig: PeopleConfig | undefined = peopleConfigRaw
       })),
     }
   : undefined
-
-export type NewsConfig = NewsConfigRaw
-export type NewsItem = NewsConfig["items"][number]
-export type NewsType = NonNullable<NewsItem["type"]>
 
 function transformPerson<T extends CurrentPersonRaw | AlumniPersonRaw>(
   person: T

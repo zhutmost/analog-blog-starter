@@ -22,6 +22,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@/sites": ["./sites/*"],
       "content-collections": ["./.content-collections/generated"]
     }
   },

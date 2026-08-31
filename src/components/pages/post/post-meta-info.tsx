@@ -67,7 +67,7 @@ export function PostMetaInfo({
 
       <span className="sr-only">Published on</span>
 
-      <time dateTime={datePublish}>{formatDate(datePublish)}</time>
+      <time dateTime={datePublish}>{formatDate(datePublish, siteConfig.locale)}</time>
 
       {shouldShowUpdatedDate && (
         <>
@@ -77,7 +77,7 @@ export function PostMetaInfo({
 
           <PostUpdatedDate
             value={dateUpdate}
-            formattedValue={formatDate(dateUpdate)}
+            formattedValue={formatDate(dateUpdate, siteConfig.locale)}
             locale={siteConfig.locale}
           />
         </>

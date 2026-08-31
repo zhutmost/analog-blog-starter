@@ -21,6 +21,7 @@ import {
   MdxTableRow,
 } from "@/components/mdx/mdx-table"
 import { MdxDel, MdxEm, MdxParagraph, MdxStrong } from "@/components/mdx/mdx-text"
+import { Timeline } from "@/components/mdx/timeline"
 import { Kbd } from "@/components/ui/shadcn/kbd"
 import { cn } from "@/lib/utils"
 
@@ -61,6 +62,7 @@ const mdxComponents = {
 
   Kbd,
   GithubAlert,
+  Timeline,
 } satisfies MDXComponents
 
 type MdxProseProps = Omit<

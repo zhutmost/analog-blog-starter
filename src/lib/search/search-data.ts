@@ -1,14 +1,6 @@
 import "server-only"
 import { siteConfig } from "@/lib/config"
-import {
-  authorMetas,
-  categories,
-  newsConfig,
-  peopleConfig,
-  postMetas,
-  tags,
-  userpages,
-} from "@/lib/content"
+import { authorMetas, categories, peopleConfig, postMetas, tags, userpages } from "@/lib/content"
 import { formatDate } from "@/lib/site/format-date"
 
 export type SiteSearchDocumentKind = "article" | "page" | "category" | "tag" | "person"
@@ -58,7 +50,7 @@ export function getSiteSearchData(): SiteSearchData {
         : []),
     ]),
     meta: post.category?.name,
-    secondaryMeta: formatDate(post.datePublish),
+    secondaryMeta: formatDate(post.datePublish, siteConfig.locale),
   }))
 
   const userpageDocuments: SiteSearchDocument[] = userpages.map((page) => ({
@@ -166,16 +158,6 @@ export function getSiteSearchData(): SiteSearchData {
       href: "/",
       keywords: ["Home", "Homepage"],
     },
-    newsConfig
-      ? {
-          id: "page:singleton:news",
-          kind: "page",
-          title: newsConfig.title,
-          description: newsConfig.summary,
-          href: "/news",
-          keywords: [newsConfig.title, "News"],
-        }
-      : undefined,
 
     peopleConfig
       ? {

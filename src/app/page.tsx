@@ -1,15 +1,13 @@
 import * as React from "react"
 
-import { homeConfig } from "content-collections"
+import { homeIntro } from "content-collections"
 
 import { HomeHero } from "@/components/home/home-hero"
-import { HomeSectionArticles } from "@/components/home/home-section-articles"
-import { HomeSectionNews } from "@/components/home/home-section-news"
-import { HomeSectionResearch } from "@/components/home/home-section-research"
+import { HomeSections } from "@/components/home/home-sections"
 import { PageShell } from "@/components/pages/basic/page-shell"
 import { JsonLd } from "@/components/seo/json-ld"
 import { siteConfig } from "@/lib/config"
-import { getPostMetaBySlug, newsConfig, postMetas } from "@/lib/content"
+import { getPostMetaBySlug, postMetas } from "@/lib/content"
 import { buildWebsiteJsonLd } from "@/lib/site/json-ld"
 
 export default function HomePage() {
@@ -18,23 +16,23 @@ export default function HomePage() {
       <JsonLd data={buildWebsiteJsonLd()} />
 
       <HomeHero
-        greeting={homeConfig.hero.greeting}
-        name={homeConfig.hero.name ?? siteConfig.author}
-        introduction={homeConfig.content}
-        actions={homeConfig.hero.actions}
+        greeting={siteConfig.home.hero.greeting}
+        name={siteConfig.home.hero.name ?? siteConfig.author}
+        introduction={homeIntro?.content}
+        actions={siteConfig.home.hero.actions}
       />
 
-      {homeConfig.sections.map((section) => {
+      {siteConfig.home.sections.map((section) => {
         switch (section.type) {
           case "news":
-            const newsItems = section.items ?? newsConfig?.items ?? []
+            const newsItems = section.items ?? []
 
             return (
-              <HomeSectionNews
+              <HomeSections.News
                 key={section.type}
                 title={section.title}
                 summary={section.summary}
-                href={section.href}
+                href={section.href ?? null}
                 actionLabel={section.actionLabel}
                 items={newsItems.slice(0, section.limit)}
               />
@@ -42,7 +40,7 @@ export default function HomePage() {
 
           case "research":
             return (
-              <HomeSectionResearch
+              <HomeSections.Research
                 key={section.type}
                 title={section.title}
                 summary={section.summary}
@@ -66,7 +64,7 @@ export default function HomePage() {
               : postMetas
 
             return (
-              <HomeSectionArticles
+              <HomeSections.Articles
                 key={section.type}
                 title={section.title}
                 summary={section.summary}

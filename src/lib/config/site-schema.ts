@@ -1,5 +1,6 @@
 import { z } from "zod"
 
+import { homepageSchema } from "@/lib/config/home-schema"
 import { mz } from "@/lib/utils"
 
 const postSchema = z.object({
@@ -71,9 +72,11 @@ const umamiAnalyticsSchema = z.object({
   performance: z.boolean().default(false),
 })
 
-const analyticsSchema = z.object({
-  umami: umamiAnalyticsSchema.optional(),
-})
+const analyticsSchema = z
+  .object({
+    umami: umamiAnalyticsSchema,
+  })
+  .partial()
 
 const giscusCommentSchema = z.object({
   provider: z.literal("giscus"),
@@ -92,6 +95,10 @@ const giscusCommentSchema = z.object({
   lang: mz.nonEmptyString().default("en"),
 })
 
+const commentSchema = z
+  .discriminatedUnion("provider", [z.object({ provider: z.undefined() }), giscusCommentSchema])
+  .default({ provider: undefined })
+
 export const siteConfigSchema = z.object({
   siteUrl: z.httpUrl().normalize(),
   siteTitle: mz.nonEmptyString(),
@@ -106,13 +113,12 @@ export const siteConfigSchema = z.object({
     socialIcons: [{ label: "RSS Feed", icon: "IconRss", href: "/rss.xml" }],
   }),
 
+  home: homepageSchema.prefault({}),
   post: postSchema.prefault({}),
 
   analytics: analyticsSchema.prefault({}),
 
-  comment: z
-    .discriminatedUnion("provider", [z.object({ provider: z.undefined() }), giscusCommentSchema])
-    .default({ provider: undefined }),
+  comment: commentSchema,
   socialShare: socialShareSchema.prefault({}),
 
   pageSummaries: pageSummariesSchema.prefault({}),

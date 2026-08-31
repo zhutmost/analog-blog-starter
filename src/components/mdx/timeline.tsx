@@ -10,7 +10,7 @@ import {
 } from "@tabler/icons-react"
 
 import { TwemojifyText } from "@/components/ui/my"
-import { type NewsItem } from "@/lib/content/singletons"
+import { type NewsItem, siteConfig } from "@/lib/config"
 import { formatMonthYear } from "@/lib/site/format-date"
 import { cn } from "@/lib/utils"
 
@@ -86,7 +86,7 @@ export function Timeline({ items, highlightFirst = true, className, ...props }: 
                 "sm:block"
               )}
             >
-              {formatMonthYear(item.date)}
+              {formatMonthYear(item.date, siteConfig.locale)}
             </time>
 
             <div aria-hidden="true" className="relative flex justify-center">
@@ -117,7 +117,7 @@ export function Timeline({ items, highlightFirst = true, className, ...props }: 
                   "sm:hidden"
                 )}
               >
-                {formatMonthYear(item.date)}
+                {formatMonthYear(item.date, siteConfig.locale)}
               </time>
 
               <div

@@ -1,9 +1,13 @@
-import { type CollectionContext, type Meta } from "@content-collections/core"
 import { z } from "zod"
 
-import { mdxTransform } from "@/content-collections/collections/basic"
-import { newsItemSchema } from "@/content-collections/singletons/news"
 import { mz } from "@/lib/utils"
+
+export const newsItemSchema = z.object({
+  date: z.iso.date(),
+  type: z.enum(["publication", "talk", "project", "award", "people", "event"]).optional(),
+  title: mz.nonEmptyString(),
+  description: mz.optionalString(),
+})
 
 const homeHeroSchema = z
   .object({
@@ -17,13 +21,7 @@ const homeHeroSchema = z
           primary: z.boolean().default(false),
         })
       )
-      .prefault([
-        {
-          label: "Articles",
-          href: "/posts",
-          primary: true,
-        },
-      ]),
+      .prefault([{ label: "Articles", href: "/posts", primary: true }]),
   })
   .prefault({})
 
@@ -31,7 +29,7 @@ const homeNewsSectionSchema = z.object({
   type: z.literal("news"),
   title: mz.nonEmptyString().default("Latest News"),
   summary: mz.nonEmptyString().default("Recent updates, announcements, and milestones."),
-  href: mz.href().nullable().default("/news"),
+  href: mz.href().nullable().optional(),
   actionLabel: mz.nonEmptyString().default("All updates"),
 
   limit: z.int().positive().default(5),
@@ -103,24 +101,10 @@ const homeSectionsSchema = z
     },
   ])
 
-export const homeSingletonSchema = z.object({
+export const homepageSchema = z.object({
   hero: homeHeroSchema,
   sections: homeSectionsSchema,
-
-  // The MDX body becomes the Hero introduction.
-  content: z.string(),
 })
 
-export async function homeTransform(
-  file: {
-    _meta: Meta
-  } & z.infer<typeof homeSingletonSchema>,
-  ctx: CollectionContext
-) {
-  const mdxTransformed = await mdxTransform(file, ctx)
-
-  return {
-    ...file,
-    ...mdxTransformed,
-  }
-}
+export type InputNewsItem = z.input<typeof newsItemSchema>
+export type NewsItem = z.output<typeof newsItemSchema>

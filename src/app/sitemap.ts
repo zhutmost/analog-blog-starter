@@ -1,7 +1,7 @@
 import { type MetadataRoute } from "next"
 
 import { siteConfig } from "@/lib/config"
-import { authors, newsConfig, peopleConfig, postMetas, userpages } from "@/lib/content"
+import { authors, peopleConfig, postMetas, userpages } from "@/lib/content"
 
 type SitemapEntry = MetadataRoute.Sitemap[number]
 
@@ -31,10 +31,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     ...authors.filter(isIndexable).map((author) => createSitemapEntry(`/author/${author.slug}`)),
   ]
-
-  if (newsConfig && isIndexable(newsConfig)) {
-    entries.push(createSitemapEntry("/news"))
-  }
 
   if (peopleConfig && isIndexable(peopleConfig)) {
     entries.push(createSitemapEntry("/people"))

@@ -3,7 +3,7 @@ import * as React from "react"
 import { IconCalendarEvent } from "@tabler/icons-react"
 
 import { HomeSection } from "@/components/home/home-section"
-import { Timeline } from "@/components/pages/news/timeline"
+import { Timeline } from "@/components/mdx/timeline"
 import {
   Empty,
   EmptyDescription,
@@ -11,7 +11,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/shadcn/empty"
-import { type NewsItem } from "@/lib/content"
+import { type NewsItem } from "@/lib/config"
 
 export type HomeSectionNewsProps = Omit<React.ComponentPropsWithoutRef<"section">, "children"> & {
   items: readonly NewsItem[]
@@ -49,7 +49,7 @@ export function HomeSectionNews({
 
       <HomeSection.Content>
         {items.length > 0 ? (
-          <Timeline items={items} />
+          <Timeline className="py-0 sm:py-0" items={items} />
         ) : (
           <Empty className="border">
             <EmptyHeader>
