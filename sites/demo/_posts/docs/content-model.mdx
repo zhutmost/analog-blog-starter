@@ -267,14 +267,14 @@ title: News
 summary: Recent updates, publications, and events.
 ---
 
-import { news2026 } from "../sites/demo/src/news"
+import { news2026 } from "../src/news"
 
 ## 2026
 
 <Timeline items={news2026} />
 ```
 
-Replace `demo` in the import path with the active site directory name. Because News now uses the normal page model, its frontmatter supports the same `comment`, `draft`, and `seo` fields as other pages. To reuse the same entries on the homepage, export a combined array from `src/news/index.ts` and provide it to the homepage news section in `site.config.ts`.
+Relative imports are resolved from the MDX file. Because News uses the normal page model, its frontmatter supports the same `comment`, `draft`, and `seo` fields as other pages. To reuse the same entries on the homepage, export a combined array from `src/news/index.ts` and provide it to the homepage news section in `site.config.ts`.
 
 See the demo [news page](https://github.com/zhutmost/analog-blog-starter/blob/main/sites/demo/_pages/news.mdx) and [news data modules](https://github.com/zhutmost/analog-blog-starter/tree/main/sites/demo/src/news) for a complete example.
 
