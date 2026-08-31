@@ -119,11 +119,11 @@ Each site may contain:
 ```text
 sites/example/
 ├── _authors/               Internal author profiles
-├── _pages/                 Custom pages
+├── _pages/                 Custom pages, including an optional news page
 ├── _posts/                 Articles and local article assets
 ├── public/                 Site-level public assets
-├── home.mdx                Homepage content and sections
-├── news.yml                Optional news collection
+├── src/                    Optional site-specific data modules
+├── home-intro.mdx          Optional homepage introduction
 ├── people.yml              Optional people collection
 ├── site.config.ts          Site-wide configuration
 └── next.config.ts          Optional site-specific Next.js settings

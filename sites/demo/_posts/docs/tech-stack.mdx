@@ -44,7 +44,7 @@ This page gives a high-level overview of the technologies used by the project. E
 
 [TypeScript](https://www.typescriptlang.org) is used for application code and site configuration.
 
-[Zod](https://zod.dev) validates values read from `site.config.ts`, MDX frontmatter, `home.mdx`, `news.yml`, and `people.yml`. This allows content errors to be reported during development or builds rather than appearing as broken pages later.
+[Zod](https://zod.dev) validates values read from `site.config.ts`, MDX frontmatter, and `people.yml`. TypeScript checks site data modules such as `src/news`. This allows many content errors to be reported during development or builds rather than appearing as broken pages later.
 
 Users do not need to understand the schemas to write content. The accepted fields are documented in [Site Configuration](/post/docs/site-configuration) and [Content Model](/post/docs/content-model).
 
@@ -81,8 +81,8 @@ The current model includes:
 
 - posts and general pages;
 - internal author profiles;
-- homepage content and sections;
-- optional news and people data.
+- an optional homepage introduction;
+- news pages, typed site data, and optional people data.
 
 Content Collections also compiles MDX and makes the resulting content available to the Next.js routes. The file locations and accepted fields are described in [Content Model](/post/docs/content-model).
 
