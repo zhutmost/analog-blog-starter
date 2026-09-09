@@ -39,7 +39,7 @@
     "@shikijs/transformers": "^4.4.3",
     "@tailwindcss/postcss": "^4.3.3",
     "@twemoji/parser": "^17.0.2",
-    "@types/node": "^26.4.0",
+    "@types/node": "^26.4.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "@types/slug": "^5.0.9",
