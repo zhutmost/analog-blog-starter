@@ -16,3 +16,5 @@ updates:
         patterns: ["@content-collections/*"]
       react:
         patterns: ["react", "react-dom"]
+      oxc:
+        patterns: ["oxlint", "oxfmt"]
