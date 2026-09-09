@@ -1,9 +1,9 @@
 import { icons } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { Wrap } from "@/components/ui/layout"
 import { IconLinkButton, PersonAvatar } from "@/components/ui/my"
 import { type AuthorMeta } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 type AuthorProfileProps = Omit<React.ComponentPropsWithoutRef<"header">, "children"> & {
   author: AuthorMeta

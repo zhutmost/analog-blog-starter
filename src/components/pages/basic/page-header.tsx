@@ -1,8 +1,9 @@
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { VStack } from "@/components/ui/layout"
 import { TwemojifyText } from "@/components/ui/my"
-import { cn } from "@/lib/utils"
 
 type PageHeaderProps = {
   title: string

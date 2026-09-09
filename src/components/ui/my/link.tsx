@@ -2,9 +2,9 @@ import NextLink from "next/link"
 import * as React from "react"
 
 import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "cn"
 
 import { classifyHref } from "@/lib/href"
-import { cn } from "@/lib/utils"
 
 export type AutoLinkProps = Omit<React.ComponentPropsWithoutRef<"a">, "href"> & {
   href: string

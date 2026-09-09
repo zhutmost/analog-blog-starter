@@ -4,6 +4,7 @@ import NextLink from "next/link"
 import * as React from "react"
 
 import { IconSearch } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { TwemojifyText } from "@/components/ui/my"
 import {
@@ -16,7 +17,6 @@ import {
 import { Input } from "@/components/ui/shadcn/input"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/shadcn/toggle-group"
 import { type TaxonCount } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 type TagSortMode = "count" | "name"
 

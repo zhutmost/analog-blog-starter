@@ -4,6 +4,7 @@ import * as React from "react"
 
 import { IconCheck, IconSearch } from "@tabler/icons-react"
 import { Command as CommandPrimitive } from "cmdk"
+import { cn } from "cn"
 
 import {
   Dialog,
@@ -13,7 +14,6 @@ import {
   DialogTitle,
 } from "@/components/ui/shadcn/dialog"
 import { InputGroup, InputGroupAddon } from "@/components/ui/shadcn/input-group"
-import { cn } from "@/lib/utils"
 
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (

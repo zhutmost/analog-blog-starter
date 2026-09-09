@@ -3,12 +3,12 @@ import NextLink from "next/link"
 import * as React from "react"
 
 import { IconArrowRight } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { TextLink, TwemojifyText } from "@/components/ui/my"
 import { siteConfig } from "@/lib/config"
 import { type AuthorMeta, type PostMeta } from "@/lib/content"
 import { formatDate } from "@/lib/site/format-date"
-import { cn } from "@/lib/utils"
 
 const RECENT_ARTICLE_LIMIT = 3
 

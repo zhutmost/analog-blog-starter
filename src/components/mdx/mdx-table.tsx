@@ -1,5 +1,7 @@
 import * as React from "react"
 
+import { cn } from "cn"
+
 import {
   Table,
   TableBody,
@@ -10,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/shadcn/table"
-import { cn } from "@/lib/utils"
 
 export function MdxTable({ className, ...props }: React.ComponentPropsWithoutRef<"table">) {
   return (

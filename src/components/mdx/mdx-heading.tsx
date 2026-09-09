@@ -1,8 +1,7 @@
 import React from "react"
 
 import { IconLink } from "@tabler/icons-react"
-
-import { cn } from "@/lib/utils"
+import { cn } from "cn"
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
 

@@ -8,11 +8,11 @@ import {
   IconPresentation,
   IconUsers,
 } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { TwemojifyText } from "@/components/ui/my"
 import { type NewsItem, siteConfig } from "@/lib/config"
 import { formatMonthYear } from "@/lib/site/format-date"
-import { cn } from "@/lib/utils"
 
 type TimelineTypeMeta = {
   label: string

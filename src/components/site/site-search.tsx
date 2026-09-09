@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import * as React from "react"
 
 import { IconSearch } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { IconButton, PersonAvatar, TwemojifyText } from "@/components/ui/my"
 import { Button } from "@/components/ui/shadcn/button"
@@ -23,7 +24,6 @@ import {
   type SiteSearchDocument,
   type SiteSearchQuickLink,
 } from "@/lib/search/search-data"
-import { cn } from "@/lib/utils"
 
 type SearchDataStatus = "idle" | "loading" | "ready" | "error"
 

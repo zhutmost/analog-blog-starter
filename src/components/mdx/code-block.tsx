@@ -3,11 +3,11 @@
 import * as React from "react"
 
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { CodeCopyButton } from "@/components/mdx/code-copy-button"
 import { HStack } from "@/components/ui/layout"
 import { IconButton } from "@/components/ui/my"
-import { cn } from "@/lib/utils"
 
 const COLLAPSIBLE_LINE_COUNT = 15
 

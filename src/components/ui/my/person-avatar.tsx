@@ -1,7 +1,8 @@
 import NextImage from "next/image"
 
+import { cn } from "cn"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/shadcn/avatar"
-import { cn } from "@/lib/utils"
 
 const personAvatarSizes = {
   sm: {

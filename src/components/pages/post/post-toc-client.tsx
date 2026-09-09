@@ -2,9 +2,10 @@
 
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { TwemojifyText } from "@/components/ui/my"
 import { type Post } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 type TocItem = Post["toc"][number]
 

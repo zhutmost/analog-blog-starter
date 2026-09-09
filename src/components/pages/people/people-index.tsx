@@ -2,6 +2,7 @@ import NextLink from "next/link"
 import * as React from "react"
 
 import { IconUsers } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { PersonAvatar, TextLink, TwemojifyText } from "@/components/ui/my"
 import {
@@ -17,7 +18,6 @@ import {
   type CurrentPeopleGroup,
   type CurrentPerson,
 } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 type PeopleIndexProps = {
   current: CurrentPeopleGroup[]

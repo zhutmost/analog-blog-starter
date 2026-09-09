@@ -2,8 +2,6 @@ import { z } from "zod"
 
 import { classifyHref } from "@/lib/href"
 
-export { cn } from "cn"
-
 /** Zod schema helpers. */
 export const mz = {
   nonEmptyString: (message = "Nonempty string required") => z.string().trim().min(1, { message }),

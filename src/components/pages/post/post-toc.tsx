@@ -1,9 +1,10 @@
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { PageSidebar } from "@/components/pages/basic/page-sidebar"
 import { PostTocClient } from "@/components/pages/post/post-toc-client"
 import { type Post } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 export type PostTocProps = Omit<React.ComponentPropsWithoutRef<"nav">, "children"> & {
   toc: Post["toc"]

@@ -1,11 +1,12 @@
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { PostUpdatedDate } from "@/components/pages/post/post-updated-date"
 import { TextLink, TwemojifyText } from "@/components/ui/my"
 import { siteConfig } from "@/lib/config"
 import { type PostMeta } from "@/lib/content"
 import { formatDate, isSameDate } from "@/lib/site/format-date"
-import { cn } from "@/lib/utils"
 
 export type PostMetaInfoProps = Omit<React.ComponentPropsWithoutRef<"div">, "children"> & {
   category?: PostMeta["category"]

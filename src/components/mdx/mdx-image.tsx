@@ -1,7 +1,7 @@
 import NextImage from "next/image"
 import * as React from "react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "cn"
 
 type MdxImageProps = Omit<React.ComponentPropsWithoutRef<"img">, "src"> & {
   src?: string

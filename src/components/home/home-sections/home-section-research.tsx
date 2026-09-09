@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import { IconMicroscope } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { HomeSection } from "@/components/home/home-section"
 import {
@@ -10,7 +11,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/shadcn/empty"
-import { cn } from "@/lib/utils"
 
 type HomeSectionResearchArea = {
   title: string

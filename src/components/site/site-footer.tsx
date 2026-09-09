@@ -1,10 +1,10 @@
 import { icons } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { SiteLogo } from "@/components/site/site-logo"
 import { VStack } from "@/components/ui/layout"
 import { IconLinkButton, TextLink } from "@/components/ui/my"
 import { siteConfig } from "@/lib/config"
-import { cn } from "@/lib/utils"
 
 const thisYear = new Date().getFullYear()
 

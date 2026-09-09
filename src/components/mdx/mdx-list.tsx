@@ -1,8 +1,7 @@
 import * as React from "react"
 
 import { IconCheck } from "@tabler/icons-react"
-
-import { cn } from "@/lib/utils"
+import { cn } from "cn"
 
 function hasClassToken(className: string | undefined, token: string): boolean {
   return className?.split(/\s+/).includes(token) ?? false

@@ -1,6 +1,7 @@
 "use client"
 
 import { IconMenu2 } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { AutoLink, IconButton } from "@/components/ui/my"
 import { buttonVariants } from "@/components/ui/shadcn/button"
@@ -13,7 +14,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/shadcn/sheet"
-import { cn } from "@/lib/utils"
 
 type MobileNavItem = {
   label: string
