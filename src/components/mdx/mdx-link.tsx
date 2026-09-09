@@ -1,7 +1,8 @@
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { TextLink, textLinkVariants } from "@/components/ui/my"
-import { cn } from "@/lib/utils"
 
 type MdxLinkProps = React.ComponentPropsWithoutRef<"a"> & {
   "data-footnote-ref"?: string | boolean

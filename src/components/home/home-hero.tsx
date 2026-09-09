@@ -1,11 +1,11 @@
 import * as React from "react"
 
 import { IconArrowRight, IconArrowUpRight } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { MdxProse } from "@/components/mdx/mdx-prose"
 import { TextLink, TwemojifyText } from "@/components/ui/my"
 import { classifyHref } from "@/lib/href"
-import { cn } from "@/lib/utils"
 
 export type HomeHeroAction = {
   label: string

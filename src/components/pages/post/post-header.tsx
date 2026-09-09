@@ -1,12 +1,13 @@
 import NextImage from "next/image"
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { PostMetaInfo } from "@/components/pages/post/post-meta-info"
 import { PostTagList } from "@/components/pages/post/post-tag-list"
 import { VStack } from "@/components/ui/layout"
 import { TwemojifyText } from "@/components/ui/my"
 import { type Post } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 export type PostHeaderProps = Omit<React.ComponentPropsWithoutRef<"header">, "children"> & {
   post: Post

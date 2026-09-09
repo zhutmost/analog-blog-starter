@@ -1,7 +1,8 @@
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { CodeBlock } from "@/components/mdx/code-block"
-import { cn } from "@/lib/utils"
 
 type MdxCodeBlockProps = React.ComponentPropsWithoutRef<"figure"> & {
   "data-rehype-pretty-code-figure"?: string

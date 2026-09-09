@@ -1,8 +1,7 @@
 import { type ReactNode } from "react"
 
 import { parse as parseEmoji } from "@twemoji/parser"
-
-import { cn } from "@/lib/utils"
+import { cn } from "cn"
 
 export type TwemojiSize = "default" | "lg" | "2x" | "3x" | "4x" | "5x"
 

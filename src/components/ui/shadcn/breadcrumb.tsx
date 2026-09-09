@@ -3,8 +3,7 @@ import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { IconChevronRight, IconDots } from "@tabler/icons-react"
-
-import { cn } from "@/lib/utils"
+import { cn } from "cn"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return <nav aria-label="breadcrumb" data-slot="breadcrumb" className={cn(className)} {...props} />

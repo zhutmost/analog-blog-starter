@@ -1,9 +1,9 @@
 import * as React from "react"
 
 import { IconArrowRight } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { TextLink, type TextLinkProps } from "@/components/ui/my"
-import { cn } from "@/lib/utils"
 
 type HomeSectionRootProps = React.ComponentPropsWithoutRef<"section">
 

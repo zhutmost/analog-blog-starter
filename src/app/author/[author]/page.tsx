@@ -1,6 +1,8 @@
 import { type Metadata } from "next"
 import { notFound } from "next/navigation"
 
+import { cn } from "cn"
+
 import { CommentSystem } from "@/components/comment"
 import { MdxProse } from "@/components/mdx/mdx-prose"
 import { AuthorProfile } from "@/components/pages/author/author-profile"
@@ -10,7 +12,6 @@ import { JsonLd } from "@/components/seo/json-ld"
 import { authors, getAuthorBySlug, getPostMetasByAuthorSlug } from "@/lib/content"
 import { buildAuthorJsonLd } from "@/lib/site/json-ld"
 import { buildPageMetadata } from "@/lib/site/metadata"
-import { cn } from "@/lib/utils"
 
 export async function generateStaticParams(): Promise<{ author: string }[]> {
   return authors.map((author) => ({

@@ -8,8 +8,7 @@ import {
   IconInfoCircle,
 } from "@tabler/icons-react"
 import { cva } from "class-variance-authority"
-
-import { cn } from "@/lib/utils"
+import { cn } from "cn"
 
 const githubAlertKeywords = ["note", "tip", "important", "warning", "caution"] as const
 

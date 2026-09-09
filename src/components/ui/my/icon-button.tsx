@@ -1,11 +1,11 @@
 import * as React from "react"
 
 import { type VariantProps } from "class-variance-authority"
+import { cn } from "cn"
 
 import { AutoLink, type AutoLinkProps } from "@/components/ui/my"
 import { Button, buttonVariants } from "@/components/ui/shadcn/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/shadcn/tooltip"
-import { cn } from "@/lib/utils"
 
 type IconButtonSize = "icon" | "icon-xs" | "icon-sm" | "icon-lg"
 

@@ -2,11 +2,11 @@ import NextLink from "next/link"
 import * as React from "react"
 
 import { IconArrowRight, IconChevronDown } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { PageSidebar } from "@/components/pages/basic/page-sidebar"
 import { TwemojifyText } from "@/components/ui/my"
 import { categories, tags, type TaxonCount } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 const POPULAR_TAG_LIMIT = 8
 

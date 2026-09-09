@@ -3,9 +3,9 @@
 import * as React from "react"
 
 import { IconArrowUp } from "@tabler/icons-react"
+import { cn } from "cn"
 
 import { IconButton } from "@/components/ui/my"
-import { cn } from "@/lib/utils"
 
 function scrollToTop() {
   window.scrollTo({

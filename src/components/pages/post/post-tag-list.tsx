@@ -1,10 +1,11 @@
 import NextLink from "next/link"
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { TwemojifyText } from "@/components/ui/my"
 import { Badge } from "@/components/ui/shadcn/badge"
 import { type PostMeta } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 type PostTag = PostMeta["tags"][number]
 

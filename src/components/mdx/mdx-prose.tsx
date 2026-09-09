@@ -1,6 +1,7 @@
 import React from "react"
 
 import { MDXContent } from "@content-collections/mdx/react"
+import { cn } from "cn"
 import { type MDXComponents } from "mdx/types"
 
 import { GithubAlert } from "@/components/mdx/github-alert"
@@ -23,7 +24,6 @@ import {
 import { MdxDel, MdxEm, MdxParagraph, MdxStrong } from "@/components/mdx/mdx-text"
 import { Timeline } from "@/components/mdx/timeline"
 import { Kbd } from "@/components/ui/shadcn/kbd"
-import { cn } from "@/lib/utils"
 
 const mdxComponents = {
   a: MdxLink,

@@ -1,6 +1,6 @@
 import React from "react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "cn"
 
 export function MdxParagraph({ className, ...props }: React.ComponentPropsWithoutRef<"p">) {
   return (

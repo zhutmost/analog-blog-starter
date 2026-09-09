@@ -1,3 +1,5 @@
+import { cn } from "cn"
+
 import { MobileNav } from "@/components/site/mobile-nav"
 import { SiteLogo } from "@/components/site/site-logo"
 import { SiteSearch } from "@/components/site/site-search"
@@ -6,7 +8,6 @@ import { HStack } from "@/components/ui/layout"
 import { AutoLink } from "@/components/ui/my"
 import { buttonVariants } from "@/components/ui/shadcn/button"
 import { siteConfig } from "@/lib/config"
-import { cn } from "@/lib/utils"
 
 function MainNav() {
   const mainNav = siteConfig.header.nav

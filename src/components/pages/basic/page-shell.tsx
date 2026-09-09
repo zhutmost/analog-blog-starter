@@ -1,7 +1,8 @@
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { VStack, type VStackProps } from "@/components/ui/layout"
-import { cn } from "@/lib/utils"
 
 const pageShellWidthClassNames = {
   "5xl": "max-w-5xl",

@@ -2,12 +2,13 @@ import NextImage from "next/image"
 import NextLink from "next/link"
 import * as React from "react"
 
+import { cn } from "cn"
+
 import { PostMetaInfo } from "@/components/pages/post/post-meta-info"
 import { PostTagList } from "@/components/pages/post/post-tag-list"
 import { VStack } from "@/components/ui/layout"
 import { TextLink, TwemojifyText } from "@/components/ui/my"
 import { type PostMeta } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 export type PostCardProps = Omit<React.ComponentPropsWithoutRef<"article">, "children"> & {
   post: PostMeta
