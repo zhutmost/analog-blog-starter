@@ -18,7 +18,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@base-ui/react": "^1.7.0",
+    "@base-ui/react": "^1.8.0",
     "@giscus/react": "^3.1.0",
     "@tabler/icons-react": "^3.46.0",
     "@wrksz/themes": "^1.2.0",
