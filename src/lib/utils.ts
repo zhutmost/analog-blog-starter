@@ -1,12 +1,8 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
 import { z } from "zod"
 
 import { classifyHref } from "@/lib/href"
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+export { cn } from "cn"
 
 /** Zod schema helpers. */
 export const mz = {
