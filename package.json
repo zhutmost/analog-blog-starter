@@ -61,7 +61,7 @@
     "slug": "^12.0.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
-    "zod": "^4.5.4"
+    "zod": "^4.6.5"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
