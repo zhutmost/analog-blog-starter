@@ -21,7 +21,7 @@
     "@base-ui/react": "^1.8.0",
     "@giscus/react": "^3.1.0",
     "@tabler/icons-react": "^3.46.0",
-    "@wrksz/themes": "^1.2.0",
+    "@wrksz/themes": "^2.0.2",
     "class-variance-authority": "^0.7.1",
     "cmdk": "^1.1.1",
     "cn": "^0.2.6",
