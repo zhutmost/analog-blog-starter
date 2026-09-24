@@ -24,7 +24,7 @@
     "@wrksz/themes": "^2.0.2",
     "class-variance-authority": "^0.7.1",
     "cmdk": "^1.1.1",
-    "cn": "^0.2.6",
+    "cn": "^0.3.0",
     "feed": "^6.0.0",
     "next": "16.3.5",
     "react": "19.3.0",
