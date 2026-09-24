@@ -44,7 +44,7 @@
     "@types/slug": "^5.0.9",
     "babel-plugin-react-compiler": "1.0.0",
     "husky": "^9.1.7",
-    "lint-staged": "^17.5.0",
+    "lint-staged": "^17.5.1",
     "oxfmt": "^0.67.0",
     "oxlint": "^1.82.0",
     "oxlint-tsgolint": "^7.0.2001",
