@@ -84,7 +84,7 @@ Analog includes plentiful search, comment, sharing and other plugins out of the 
 
 - **Other**
 
-  RSS · Sitemap · Social Share (OpenGraph + Twitter Card)
+  Sitemap · Social Share (OpenGraph + Twitter Card)
 
 ### Responsive Design
 

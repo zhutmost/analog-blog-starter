@@ -67,9 +67,6 @@ export function buildPageMetadata({
 
     alternates: {
       canonical: pathname,
-      types: {
-        "application/rss+xml": new URL("/rss.xml", siteConfig.siteUrl),
-      },
     },
 
     openGraph: {

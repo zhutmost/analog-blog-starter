@@ -1,6 +1,6 @@
 ---
 title: Analog User Guide - Integrations
-summary: Connect an Analog Starter site to Giscus comments, Umami analytics, RSS readers, and other external services.
+summary: Connect an Analog Starter site to Giscus comments and Umami analytics.
 authors:
   - name: Haozhe Zhu
     href: https://github.com/zhutmost
@@ -11,21 +11,19 @@ tags:
   - Integrations
   - Comment
   - Analytics
-  - RSS
   - Giscus
   - Umami
 cover: banner.jpg
 seo:
-  description: Learn how Analog Starter works with Giscus comments, Umami analytics, RSS readers, and other external services.
+  description: Learn how Analog Starter works with Giscus comments and Umami analytics.
 ---
 
-Analog Starter includes three user-facing integration points: optional comments through Giscus, optional analytics through Umami, and a built-in RSS feed.
+Analog Starter supports optional comments through Giscus and optional analytics through Umami.
 
 | Integration     | Status   | External service required             |
 | --------------- | -------- | ------------------------------------- |
 | Giscus comments | Optional | GitHub Discussions                    |
 | Umami analytics | Optional | Umami Cloud or a self-hosted instance |
-| RSS feed        | Built in | No                                    |
 
 ## Giscus comments
 
@@ -48,20 +46,6 @@ comment: true
 ```
 
 Visitors use a GitHub account to comment. Discussions can be reviewed and moderated from the repository selected during Giscus setup.
-
-## RSS feed
-
-The site exposes its RSS feed at:
-
-```text
-/rss.xml
-```
-
-The feed is generated from the site's posts and advertised in the page metadata, so no external feed service is required.
-
-To make it easier to find, add an RSS link to the footer as described in [Site Configuration](/post/docs/site-configuration#header-and-footer).
-
-The feed URL can also be submitted to a feed directory or used by a separate email-subscription service.
 
 ## Umami analytics
 
