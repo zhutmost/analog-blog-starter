@@ -109,9 +109,7 @@ export const siteConfigSchema = z.object({
   favicon: faviconSchema.prefault({}),
 
   header: siteHeaderSchema.prefault({}),
-  footer: siteFooterSchema.prefault({
-    socialIcons: [{ label: "RSS Feed", icon: "IconRss", href: "/rss.xml" }],
-  }),
+  footer: siteFooterSchema.prefault({}),
 
   home: homepageSchema.prefault({}),
   post: postSchema.prefault({}),

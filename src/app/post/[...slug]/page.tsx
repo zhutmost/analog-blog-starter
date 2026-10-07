@@ -43,9 +43,6 @@ export async function generateMetadata(props: PageProps<"/post/[...slug]">): Pro
 
     alternates: {
       canonical: pathname,
-      types: {
-        "application/rss+xml": new URL("/rss.xml", siteConfig.siteUrl),
-      },
     },
 
     openGraph: {
