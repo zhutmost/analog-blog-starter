@@ -34,7 +34,7 @@
     "@content-collections/core": "^0.15.3",
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.11",
-    "@shikijs/transformers": "^4.4.3",
+    "@shikijs/transformers": "^4.5.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@twemoji/parser": "^17.0.2",
     "@types/node": "^26.6.3",
