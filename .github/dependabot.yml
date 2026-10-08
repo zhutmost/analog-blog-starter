@@ -9,6 +9,7 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
     groups:
       nextjs:
         patterns: ["next", "@next/*"]
@@ -17,4 +18,4 @@ updates:
       react:
         patterns: ["react", "react-dom"]
       oxc:
-        patterns: ["oxlint", "oxfmt"]
+        patterns: ["oxlint", "oxfmt", "oxlint-tsgolint"]
